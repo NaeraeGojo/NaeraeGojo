@@ -5040,3 +5040,27 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:29:42.526
 !MESSAGE loading file 'pom.properties'
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-11-25 00:47:47.116
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2018-11-25 00:47:47.206
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.491
+!MESSAGE properties loading for project 'NaeraeGojo'
+
+!ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.586
+!MESSAGE loading file 'message.properties'
+
+!ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.644
+!MESSAGE loading file 'message_en.properties'
+
+!ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.738
+!MESSAGE loading file 'message_jp.properties'
+
+!ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.803
+!MESSAGE loading file 'message_ko.properties'
+
+!ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.881
+!MESSAGE loading file 'pom.properties'
