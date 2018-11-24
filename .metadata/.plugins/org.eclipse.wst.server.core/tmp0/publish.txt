@@ -1,3 +1,0 @@
-#Tomcat publish data
-#Sat Nov 24 20:28:49 KST 2018
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\sora\\C_Lib\\mavenLocalRepo\\org\\springframework\\spring-web\\3.2.9.RELEASE\\spring-web-3.2.9.RELEASE.jar=WEB-INF/lib/spring-web-3.2.9.RELEASE.jar

@@ -1,5 +1,0 @@
-127.0.0.1 - - [21/Nov/2018:02:05:05 +0900] "GET / HTTP/1.1" 404 1036
-0:0:0:0:0:0:0:1 - - [21/Nov/2018:02:09:06 +0900] "GET /NaeRaeGojo/user/join/loginForm.do HTTP/1.1" 404 1069
-0:0:0:0:0:0:0:1 - - [21/Nov/2018:02:09:08 +0900] "GET /favicon.ico HTTP/1.1" 404 1047
-0:0:0:0:0:0:0:1 - - [21/Nov/2018:02:09:27 +0900] "GET /NaeraeGojo/user/join/loginForm.do HTTP/1.1" 404 1069
-0:0:0:0:0:0:0:1 - - [21/Nov/2018:02:11:20 +0900] "GET /NaeraeGojo/user/join/loginForm.do HTTP/1.1" 404 1069
