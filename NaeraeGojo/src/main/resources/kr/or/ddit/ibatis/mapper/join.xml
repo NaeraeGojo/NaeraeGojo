@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="join">
+	<typeAlias alias="joinVO" type="kr.or.ddit.vo.JoinVO"/>
+	<typeAlias alias="joNameVO" type="kr.or.ddit.vo.JoNameVO"/>
+	<typeAlias alias="rqppsVO" type="kr.or.ddit.vo.RqppsVO"/>
+	<typeAlias alias="mpJoinVO" type="kr.or.ddit.vo.MpJoinVO"/>
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
+	
+	<!-- column이 select와 같이 사용되면 select의 파라메터로 전달된다 -->
+	<!-- fileitem.fileItems의 결과가 리스트로 만들어지고 items에 저장된다. -->
+	
+	<sql id="selectAll">
+		select * from join
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
+					rqpps_name like '%' || #search_keyword# ||'%'
+					or rqpps_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="TITLE" >
+					rqpps_name like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="WRITER" >
+					rqpps_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<insert id="insertJoin" parameterClass="joinVO">
+		<selectKey keyProperty="join_code" resultClass="string">
+			select join_seq.nextval from dual
+		</selectKey>
+		INSERT JOIN
+		INTO ()
+		VALUES()
+		
+		
+	</insert>
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		select count(join_code)
+		  from join
+		<include refid="searchCondition"/>
+	</select>
+	
+	<select id="joinList" parameterClass="map" resultClass="joinVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (<include refid="selectAll"/>
+						<include refid="searchCondition"/>
+						order by join_code asc
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startCount#
+		and b.rnum >= #endCount#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
+	<select id="rqppsNm" resultClass="rqppsVO">
+		select rqpps_name,rqpps_code from rqpps
+	</select>
+	<select id="empList1" parameterClass="map" resultClass="empVO">
+		 SELECT EMP_NAME, EMP_LEVEL, EMP_CODE 
+		 FROM EMP
+		 WHERE EMP_LEVEL = #emp_level# 
+	</select>
+	
+	<select id="mpList" parameterClass="map" resultClass ="MpJoinVO">
+		SELECT C.MP_BEGIN,C.MP_INTER,C.MP_HIGH,C.MP_SPEC 
+		FROM RQPPS A, EMP B, MP C 
+		WHERE A.EMP_CODE = B.EMP_CODE 
+		AND A.MP_CODE = C.MP_CODE 
+		AND A.RQPPS_CODE = #rqpps_code#
+	</select>
+	
+	
+
+<!-- 	<select id="joinInfo" parameterClass="map" resultClass="joinVO"> -->
+<!-- 		<include refid="selectAll"/> -->
+<!-- 		and join_code = #join_code# -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updateRfp" parameterClass="rfpVO"> -->
+<!-- 		update rqpps -->
+<!-- 			set rqpps_budget = #rqpps_budget#  -->
+<!-- 				, rqpps_contents = #rqpps_contents# -->
+<!-- 				, rqpps_date = sysdate -->
+<!-- 				, rqpps_end_date = #rqpps_end_date# -->
+<!-- 				, rqpps_name = #rqpps_name# -->
+<!-- 				, rqpps_nickname = #rqpps_nickname# -->
+<!-- 				, rqpps_notice_agency = #rqpps_notice_agency# -->
+<!-- 				, rqpps_qualification = #rqpps_qualification# -->
+<!-- 			where rqpps_code = #rqpps_code# -->
+<!-- 	</update> -->
+	
+<!-- 	<update id="deleteRfp" parameterClass="map"> -->
+<!-- 		update rqpps -->
+<!-- 			set rqpps_delete = 'y' -->
+<!-- 			where rqpps_code = #rqpps_code# -->
+<!-- 	</update> -->
+	
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

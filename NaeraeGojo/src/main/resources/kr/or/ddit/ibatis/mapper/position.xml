@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="position">
+	<typeAlias alias="positionVO" type="kr.or.ddit.vo.PositionVO"/>
+	
+	<resultMap id="positionMap" class="positionVO">
+        <result property="position_name" column="position_name"/>
+    </resultMap>
+
+	<!-- 전체직책 조회 -->
+	<sql id="selectAll">
+		SELECT *
+		  FROM POSITION
+	</sql>
+	
+	<!-- 직책목록 -->
+	<select id="positionList" resultClass="positionVO">
+        SELECT POSITION_NAME
+			FROM POSITION
+    </select>    
+	
+	<!-- 직책Info(객체 받아오기) -->
+	<select id="positionInfo" parameterClass="map" resultClass="positionVO">
+		<include refid="selectAll"/>
+			WHERE POSITION_NAME= #position_name#
+	</select>
+</sqlMap>
+
+

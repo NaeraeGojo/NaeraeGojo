@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="pmd-eclipse"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+   <description>PMD Plugin preferences rule set</description>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AvoidThrowingNullPointerException"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AvoidThrowingRawExceptionTypes"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EqualsNull"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/VariableNamingConventions"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AvoidReassigningParameters"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/StringInstantiation"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AbstractClassWithoutAbstractMethod"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AssignmentInOperand"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AssignmentToNonFinalStatic"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AvoidArrayLoops"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AvoidConstantsInterface"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/AvoidSynchronizedAtMethodLevel"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EmptyCatchBlock"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EmptyFinallyBlock"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EmptyIfStmt"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EmptyStatementNotInLoop"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EmptyTryBlock"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/EmptyWhileStmt"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/FinalFieldCouldBeStatic"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/ImmutableField"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/ImportFromSamePackage"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/InefficientEmptyStringCheck"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/InefficientStringBuffering"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/MisleadingVariableName"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/SimpleDateFormatNeedsLocale"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/SimplifyBooleanExpressions"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/StringToString"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/SwitchStmtsShouldHaveDefault"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UncommentedEmptyMethod"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UnnecessaryConversionTemporary"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UnnecessaryParentheses"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UnnecessaryWrapperObjectCreation"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UnusedFormalParameter"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UnusedPrivateField"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UnusedPrivateMethod"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/UselessStringValueOf"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/WhileLoopsMustUseBraces"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/DuplicateImports"/>
+   <rule ref="C:\Users\Administrator\Downloads\egovinspectionrules-2.7\EgovInspectionRules_kor-2.7.xml/SystemPrintln"/>
+</ruleset>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="meetingFile">
+	<typeAlias alias="meetFileVO" type="kr.or.ddit.vo.MeetFileVO"/>
+	
+	<insert id="insertMeetingFile">
+        <selectKey keyProperty="meeting_file_code" resultClass="string">
+            select meeting_file_seq.nextval from dual
+        </selectKey>
+        
+        insert into meeting_file (meeting_file_code
+								, meeting_file_name
+								, meeting_file_save_name
+								, meeting_file_volume
+								, meeting_code)	  
+								
+						  values (#meeting_file_code#
+                                , #meeting_file_name#
+                                , #meeting_file_save_name#
+                                , #meeting_file_volume#
+                                , #meeting_code#) 
+	</insert>
+	
+	
+    <statement id="meetFileItems" resultClass="meetFileVO">
+        select * 
+        from meeting_file
+        where meeting_code = #meeting_code#
+    </statement>	
+    
+    <select id="getMeetingFile" parameterClass="map" resultClass="meetFileVO">
+    	select * 
+    	from meeting_file
+    	where meeting_file_code = #meeting_file_code#
+    </select>
+	
+	
+    
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

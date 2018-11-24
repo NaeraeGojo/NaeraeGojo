@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;empForm.jsp&apos; to &apos;emp&apos;&#x0D;&#x0A;- Original project: &apos;NaeraeGojo&apos;&#x0D;&#x0A;- Destination element: &apos;emp&apos;&#x0D;&#x0A;- Original element: &apos;empForm.jsp&apos;" description="Copy file" element1="src/main/webapp/WEB-INF/views/user/emp/empForm.jsp" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1542904161530" target="/NaeraeGojo/src/main/webapp/WEB-INF/views/user/emp" units="0" version="1.0"/>
+</session>

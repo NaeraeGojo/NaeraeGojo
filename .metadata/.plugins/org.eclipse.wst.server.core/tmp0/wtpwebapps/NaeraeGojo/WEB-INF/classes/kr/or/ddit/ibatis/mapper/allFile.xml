@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="allFile">
+	<typeAlias alias="allFileVO" type="kr.or.ddit.vo.AllFileVO"/>
+	
+	<sql id="selectAll">
+		SELECT * 
+		FROM ALL_FILE
+		WHERE ALL_FILE_DELETE = 'n'
+		
+	</sql>
+	
+	<insert id="insertAllFile" parameterClass="allFileVO">
+		<selectKey keyProperty="all_file_code" resultClass="string">
+			select all_file_seq.nextval from dual
+		</selectKey>
+		
+		insert into all_file(
+							all_file_code
+							,all_file_save_name
+							,all_file_board_code
+							,all_file_name
+							,all_file_volume
+							,all_file_kind_code
+						)
+		 
+					values(
+							 #all_file_code#
+							,#all_file_save_name#
+							,#all_file_board_code#
+							,#all_file_name#
+							,#all_file_volume#
+							,#all_file_kind_code#
+					)
+	</insert>
+	
+	<statement id="allFiles" resultClass="allFileVO">
+		<include refid="selectAll"/>
+				AND ALL_FILE_BOARD_CODE = #notice_all_code#	
+	
+	</statement>
+<!-- 	<select id="getMp" parameterClass="map" resultClass="mpVO"> -->
+<!-- 		select * from mp -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updateMp" parameterClass="mpVO"> -->
+<!-- 		update mp -->
+<!-- 			set mp_begin = #mp_begin# -->
+<!-- 				, mp_inter = #mp_inter# -->
+<!-- 				, mp_high = #mp_high# -->
+<!-- 				, mp_spec = #mp_spec# -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</update> -->
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

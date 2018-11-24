@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="pblancboard">
+	<typeAlias alias="pblancboardVO" type="kr.or.ddit.vo.PblancBoardVO"/>
+	
+	<resultMap id="pblancboardMap" class="pblancboardVO">
+		<result property="pblanc_board_code" column="pblanc_board_code"/>
+		<result property="pblanc_board_title" column="pblanc_board_title"/>
+		<result property="pblanc_board_com" column="pblanc_board_com"/>
+		<result property="pblanc_board_com_date" column="pblanc_board_com_date"/>
+		<result property="pblanc_board_link" column="pblanc_board_link"/>
+		<result property="pblanc_board_budget" column="pblanc_board_budget"/>
+		<result property="pblanc_board_end_proposal" column="pblanc_board_end_proposal"/>
+<!-- 		<result property="items" column="bo_no" select="fileitem.fileItems"/> -->
+	</resultMap>
+	
+	<sql id="selectAll">
+		SELECT * 
+		FROM PBLANC_BOARD
+		WHERE PBLANC_BOARD_DELETE = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic>
+	 		<isNotEmpty property="search_keyword" prepend="and">
+	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
+	 				   PBLANC_BOARD_TITLE LIKE '%' || #search_keyword# || '%'
+	 				OR PBLANC_BOARD_COM   LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="TITLE" >  
+	 					PBLANC_BOARD_TITLE LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="PBLANC" >  
+	 					PBLANC_BOARD_COM LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 		</isNotEmpty>
+	 	</dynamic>
+	</sql>
+	
+	<select id="pblancboardList" resultClass="pblancboardVO" parameterClass="map">
+		SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.*
+				FROM ( <include refid="selectAll"/> 
+						<include refid="searchCondition"/> 
+						ORDER BY PBLANC_BOARD_CODE) A ) B
+ 		<![CDATA[				
+		WHERE B.RNUM <= #startCount#
+		 AND  B.RNUM >= #endCount#
+		]]>
+		ORDER BY B.RNUM DESC
+	</select>	
+	
+	<select id="pblancboardInfo" parameterClass="map" resultMap="pblancboardMap">
+		SELECT PBLANC_BOARD_CODE
+			   ,PBLANC_BOARD_TITLE
+			   ,PBLANC_BOARD_COM
+			   ,TO_CHAR(PBLANC_BOARD_COM_DATE, 'YYYY-MM-DD') as pblanc_board_com_date
+			   ,PBLANC_BOARD_LINK
+			   ,PBLANC_BOARD_BUDGET
+			   ,TO_CHAR(PBLANC_BOARD_END_PROPOSAL, 'YYYY-MM-DD') as pblanc_board_end_proposal
+			   ,PBLANC_BOARD_END_PROPOSAL
+		FROM PBLANC_BOARD
+      	WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
+	</select>
+	
+	<update id="updatePblancboard" parameterClass="pblancboardVO">
+		UPDATE PBLANC_BOARD
+		   SET PBLANC_BOARD_TITLE        = #pblanc_board_title# 
+		      ,PBLANC_BOARD_COM          = #pblanc_board_com#
+		      ,PBLANC_BOARD_COM_DATE     = #pblanc_board_com_date#
+		      ,PBLANC_BOARD_LINK         = #pblanc_board_link#
+		      ,PBLANC_BOARD_BUDGET       = #pblanc_board_budget#
+		      ,PBLANC_BOARD_END_PROPOSAL = #pblanc_board_end_proposal#
+		 WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
+	</update>
+	
+	<update id="deletePblancboard" parameterClass="map">
+		UPDATE PBLANC_BOARD
+		   SET PBLANC_BOARD_DELETE = 'y'
+		 WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
+	</update>
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		SELECT COUNT(PBLANC_BOARD_CODE)
+		FROM PBLANC_BOARD
+		WHERE PBLANC_BOARD_DELETE = 'n'
+		<include refid="searchCondition"/> 
+	</select>
+	
+	<update id="updateHIT" parameterClass="map">
+		UPDATE PBLANC_BOARD
+		   SET PBLANC_BOARD_HIT = PBLANC_BOARD_HIT + 1
+		 WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
+	</update>
+	
+</sqlMap>
+
+

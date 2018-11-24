@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="suggest">
+	<typeAlias alias="sugVO" type="kr.or.ddit.vo.SuggestVO"/>
+	
+	<sql id="selectAll">
+		select * from suggest
+			where suggest_delete = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
+					suggest_name like '%' || #search_keyword# ||'%'
+					or suggest_content like '%' || #search_keyword# ||'%'
+					or suggest_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="TITLE" >
+					suggest_name like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="CONTENT" >
+					suggest_content like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="WRITER" >
+					suggest_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		select count(suggest_code)
+		  from suggest
+		 where suggest_delete = 'n'
+		<include refid="searchCondition"/>
+	</select>
+	
+	<select id="getSuggestList" parameterClass="map" resultClass="sugVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (<include refid="selectAll"/>
+						<include refid="searchCondition"/>
+						order by suggest_code asc
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startNo#
+		and b.rnum >= #endNo#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
+	
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

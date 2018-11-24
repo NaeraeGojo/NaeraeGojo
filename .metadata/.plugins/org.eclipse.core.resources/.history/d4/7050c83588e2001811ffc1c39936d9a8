@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<!-- 
+		definition : UI 레이아웃 구성 단위
+			  name - 해당 definition 을 기타 definition 구분을 구분자
+			  		 특정 definition의 작성 내용을 다른 definition 상속시 활용
+			  template - 실제 레이아웃을 구성하는 jsp
+			  			put-attribute 선언시의 name 을 활용
+			  extends  - 다른 definition 상속 선언
+	 -->
+	<definition name="usermain" template="/WEB-INF/views/user/mainTemplate.jsp">
+		<put-attribute name="title" value="PMS"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/user/layout/header.jsp"></put-attribute>
+		<put-attribute name="left" value="/WEB-INF/views/user/layout/left.jsp"></put-attribute>
+		<put-attribute name="content_header" value="/WEB-INF/views/user/content_header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/user/layout/footer.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 
+		포워딩 : /user/freeboard/freeboardForm
+	-->
+	<definition name="user/*/*" extends="usermain">
+		<put-attribute name="content" value="/WEB-INF/views/user/{1}/{2}.jsp"></put-attribute>
+	</definition>
+<!-- 	<definition name="user/loginForm" template="/WEB-INF/views/user/loginForm.jsp"></definition> -->
+</tiles-definitions>

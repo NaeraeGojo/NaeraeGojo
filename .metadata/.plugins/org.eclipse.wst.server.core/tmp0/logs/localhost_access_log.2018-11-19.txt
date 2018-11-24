@@ -1,0 +1,11 @@
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:48:33 +0900] "GET /NaeraeGojo/user/project/project_manage.do HTTP/1.1" 200 28407
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:48:38 +0900] "GET /NaeraeGojo/user/join/join_list.do HTTP/1.1" 200 30270
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:48:41 +0900] "GET /NaeraeGojo/user/join/join_view.do HTTP/1.1" 200 31576
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:48:47 +0900] "GET /NaeraeGojo/pages/layout/boxed.html HTTP/1.1" 404 8100
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:48:57 +0900] "GET /NaeraeGojo/user/rfp/rfpList.do HTTP/1.1" 500 8123
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:49:02 +0900] "GET /NaeraeGojo/user/video/chatList.do HTTP/1.1" 500 8123
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:49:08 +0900] "GET /NaeraeGojo/user/meetingFile/meetingFileList.do HTTP/1.1" 200 28603
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:49:11 +0900] "GET /NaeraeGojo/user/meetingFile/meetingFileView.do HTTP/1.1" 200 27763
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:49:21 +0900] "GET /NaeraeGojo/user/pblancboard/pblancboardList.do HTTP/1.1" 200 28489
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:49:23 +0900] "GET /NaeraeGojo/user/pblancboard/pblancboardView.do?pblanc_board_code=4&rnum=4 HTTP/1.1" 200 29114
+0:0:0:0:0:0:0:1 - - [19/Nov/2018:00:49:29 +0900] "GET /NaeraeGojo/user/noticeAll/notice_allList.do HTTP/1.1" 500 8123

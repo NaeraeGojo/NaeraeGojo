@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="emp">
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
+	
+	<resultMap id="empMap" class="empVO">
+        <result property="emp_code" column="emp_code"/>
+        <result property="emp_pass" column="emp_pass"/>
+        <result property="emp_name" column="emp_name"/>
+        <result property="emp_email" column="emp_email"/>
+        <result property="emp_encpn" column="emp_encpn"/>
+        <result property="emp_major" column="emp_major"/>
+        <result property="emp_gender" column="emp_gender"/>
+        <result property="emp_marriage" column="emp_marriage"/>
+        <result property="emp_level" column="emp_level"/>
+        <result property="emp_army" column="emp_army"/>
+        <result property="emp_delete" column="emp_delete"/>
+        <result property="emp_phone" column="emp_phone"/>
+        <result property="emp_role" column="emp_role"/>
+        <result property="part_code" column="part_code"/>
+        <result property="part_name" column="part_name"/>
+    </resultMap>
+
+	<!-- 전체직원 조회 -->
+	<sql id="selectAll">
+		SELECT A.*
+			  ,B.PART_NAME
+		  FROM EMP A, PART B
+		  WHERE A.PART_CODE = B.PART_CODE
+		  AND A.EMP_DELETE = 'n'
+	</sql>
+	
+	<!-- 검색 -->
+	<sql id="searchCondition">
+        <dynamic prepend="AND">
+            <isNotEmpty property="search_keyword" >
+                <isEqual property="search_keycode" compareValue="ALL" open="(" close=")">
+                        EMP_CODE LIKE '%'||#search_keyword#||'%'
+                    EMP_CODE LIKE '%'||#search_keyword#||'%'
+                    OR EMP_NAME LIKE '%'||#search_keyword#||'%'
+                    OR EMP_ROLE LIKE '%'||#search_keyword#||'%'
+                </isEqual>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+	<!-- 직원목록 -->
+	<select id="empList" resultClass="empVO" parameterClass="map">
+        SELECT B.*
+        FROM  (SELECT ROWNUM RNUM, A.*
+                FROM ( <include refid="selectAll"/> 
+                        <include refid="searchCondition"/> 
+                        ORDER BY EMP_CODE) A ) B
+<!--         <![CDATA[                 -->
+<!--         WHERE B.rnum <= #startCount# -->
+<!--          AND  B.rnum >= #endCount# -->
+<!--         ]]> -->
+        ORDER BY B.RNUM DESC
+    </select>    
+	
+	
+	<!-- 휴먼상태의 회원을 임시로그인 시켜줌 -->
+	<update id="empInfoW" parameterClass="map">
+		UPDATE EMP
+		   SET EMP_DELETE = 'n'
+		 WHERE EMP_CODE = #emp_code#
+	</update>
+
+	<!-- 직원Info(객체 받아오기) -->
+	<select id="empInfo" parameterClass="map" resultClass="empVO">
+		<include refid="selectAll"/>
+		 AND EMP_CODE = #emp_code#
+		   <dynamic>
+		   		<isNotEmpty property="emp_pass" prepend="AND">
+				   EMP_PASS = #emp_pass#
+		   		</isNotEmpty> 	
+		   </dynamic>
+	</select>
+	
+	<!-- 직원등록 -->
+	<insert id="insertEmpInfo" parameterClass="empVO">
+		<selectKey keyProperty="emp_code" resultClass="string">
+         select emp_seq.nextval from dual
+      	</selectKey>
+		INSERT INTO EMP(EMP_CODE
+						,EMP_PASS
+						,EMP_NAME
+						,EMP_EMAIL
+						,EMP_ENCPN
+						,EMP_GENDER
+						,EMP_MARRIAGE
+						,EMP_LEVEL
+						,EMP_MAJOR
+						,EMP_ARMY
+						,EMP_PHONE
+						,EMP_ROLE
+						,PART_CODE)		
+		  	     VALUES(#emp_code#
+						,#emp_pass#
+						,#emp_name#
+						,#emp_email#
+						,#emp_encpn#
+						,#emp_gender#
+						,#emp_marriage#
+						,#emp_level#
+						,#emp_major#
+						,#emp_army#
+						,#emp_phone#
+						,#emp_role#
+						,#part_code#)
+	</insert>
+	
+	
+	<!-- 페이징 -->
+<!-- 	<select id="totalCount" parameterClass="map" resultClass="int"> -->
+<!--         SELECT COUNT(EMP_CODE) -->
+<!--         FROM EMP -->
+<!--         WHERE EMP_DELETE = 'n' -->
+<!--         <include refid="searchCondition"/>  -->
+<!--     </select> -->
+
+<!-- 	<select id=findEmpId parameterType="String"	resultType="String"> -->
+<!-- 		SELECT EMP_CODE -->
+<!-- 		FROM EMP -->
+<!-- 		WHERE EMP_NAME = #emp_name# -->
+<!-- 		AND EMP_EMAIL = #emp_email# -->
+<!-- 	</select> -->
+</sqlMap>
+
+

@@ -1,0 +1,9 @@
+diff a/src/main/java/kr/or/ddit/scheduler/controller/user/SchedulerController.java b/src/main/java/kr/or/ddit/scheduler/controller/user/SchedulerController.java	(rejected hunks)
+@@ -20,7 +20,6 @@
+ 	@Autowired
+ 	ISchedulerService service;
+ 
+-	@RequestMapping("schedulerForm")
+ 	
+ 	public void SchedulerForm(){}
+ 	
