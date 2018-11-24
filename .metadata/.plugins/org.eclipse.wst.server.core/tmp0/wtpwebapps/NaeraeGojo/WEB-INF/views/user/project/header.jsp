@@ -9,7 +9,10 @@
           <div class="info-box">
             <span class="info-box-icon bg-teal"><i class="ion ion-ios-gear-outline"></i></span>
             <div class="info-box-content">
-              <span class="info-box-number">업무</span>
+	            <a href="${pageContext.request.contextPath}/user/project/pw/pwList.do">
+	            	<span class="info-box-number">업무</span>
+	            </a>
+              
             </div>
             <!-- /.info-box-content -->
           </div>

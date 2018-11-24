@@ -4,79 +4,16 @@
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <script>
 $(function() {
-
-	$('form').submit(function() {
-		if (!$('input[name=emp_name]').val().validationNM()) {
-			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
-			return false;
-		}
-		if (!$('input[name=emp_pass]').val().validationPASS()) {
-			alert("비밀번호를 바르게 입력해주세요.");
-			return false;
-		}
-		if (($('input[name=emp_pass]').val()) != ($('input[name=emp_pass_confirm]').val())) {
-			alert("비밀번호와 동일하게 입력해주세요.");
-			return false;
-		}
-
-		phone = $('select[name=emp_phone1]').val() + '-' + $('input[name=emp_phone2]').val() + '-' + $('input[name=emp_phone3]').val(); 
-		if (!phone.validationPHONE()) {
-			alert("전화번호를 바르게 입력해주세요.");
-			return false;
-		}
-		$('input[name=emp_phone]').val(phone);
-					
-		email = $('input[name=emp_email1]').val() + '@' + $('select[name=emp_email2]').val();
-		if (!email.validationMAIL()) {
-			alert("이메일을 바르게 입력해주세요.");
-			return false;
-		}
-		$('input[name=emp_email]').val(email);
-		
-		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
-			alert("입사일을 입력해주세요.");
-			return false;
-		}
-		$('select[name=emp_department]').val();
-		$('input[name=emp_major]').val();
-		
-		if($('select[name=emp_email2]').val()!='이메일을 선택해주세요'){
-			mail = $('input[name=emp_email1]').val() + '@' + $('select[name=emp_email2]').val();
-			$('input[name=emp_email]').val(mail);
-			var email = $('#emailtext').val();
-			
-			
-			$.ajax({
-			    type : 'post',
-			    url : '${pageContext.request.contextPath}/mail/send.do?email=',
-			    dataType : "json",
-			    data : { email : $('#emailtext').val() & 
-			    	emp_code : $('#emp_code').val() },
-			    success : function(result) {
-// 					$('#code').val(result.code);
-			    	// result.flag = "true" or "false"
-					// boolean type false : undefined, null
-					// "1" + 1 = '11'
-					// eval("1" + 1) = 2
-						alert("인증메일 발송을 성공하였습니다.");
-				},
-			    error : function(request, status, error) {
-					alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
-				}
-			});
-		}
-		if($('select[name=emp_email2]').val()=='이메일을 선택해주세요' || $('input[name=emp_email1]').val()=='' || $('input[name=emp_email1]').val()==null){
-			alert("이메일이 잘못되었습니다. 다시 입력해주세요");
-			return false;
-		}
-		return true;
-	});	
-	
 // 	$('#email_com').click(function(){
 // 	});
 	
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
+		//(이전 페이지 이동으로 수정할 예정)
+	});
+	$('input[value=수정]').click(function(){
+		emp_code=$('label[name=emp_code]').text();
+		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empUpdate.do?emp_code=' + emp_code);
 		//(이전 페이지 이동으로 수정할 예정)
 	});
 	
@@ -101,40 +38,7 @@ $(function() {
 		window.open(url, "증명사진업로드", options);
 	});
 });
-			
-function idCheck() {
-	if (!$('#memberId').val().validationID()) {
-		alert("아이디를 바르게 입력해주세요.");
-		return;
-	}
-	
-	$.ajax({
-	    type : "post",
-	    
-	    url : "${pageContext.request.contextPath}/user/member/memberIDCheck.do",
-	    dataType : "json",
-	    data : { mem_id : $('#memberId').val() },
-	    
-	    success : function(result) {
-		
-	    	// result.flag = "true" or "false"
-			// boolean type false : undefined, null
-			// "1" + 1 = '11'
-			// eval("1" + 1) = 2
-			
-			if (eval(result.flag)) {
-				alert("사용할 수 있는 아이디 입니다.");
-			
-			} else {
-				alert("사용할 수 없는 아이디 입니다.");
-			
-			}
-		},
-	    error : function(request, status, error) {
-			alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
-		}
-	});
-};
+
 $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
@@ -154,7 +58,7 @@ $(function () {
       checkboxClass: 'icheckbox_flat-red',
       radioClass   : 'iradio_flat-red'
     })
-  })
+})
 </script>
 <style>
 	.fieldName {text-align: center; background-color: #f4f4f4;}
@@ -166,19 +70,34 @@ $(function () {
 		font-size: 18px;
 		margin-right: -20px;
 	}
+	label{
+		font-size: 15px;
+	}
+	  .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
+	
+    .example-modal .modal {
+      background: transparent !important;
+    }
+ 
 </style>
 	<br/>
 <div class="row">
 	<br/>
-<!-- 	<input type="hidden" value="" id="code"> -->
 	<div class="col-md-11" style="margin-left: 40px;">
 		<div class="box box-info">		<!-- 테이블을 넣을 박스 기본설정 warning일 경우 진한 노랑색 (수정해도 됨)-->
            	<div class="box-header with-border">	<!-- 테이블 위에 header부분(기본설정) -->
-       			<b class="box-title"><h2>직원등록</h2></b>	
+       			<b class="box-title"><h2>직원 상세정보 조회</h2></b>	
            		<div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
            			<br/>
-           			<div class=form-horizontal">
-						<form method="POST" action="${pageContext.request.contextPath}/user/emp/insertEmp.do">
+						<form method="POST" class=form-horizontal">
 						<div class="form-group">
                				<div class="row">
                					<div class="col-md-4" style="margin: 10px;">
@@ -186,11 +105,13 @@ $(function () {
 										<tr><td class="tLine" colspan="2"></td></tr>
 										<tr>
 											<td class="pic" style="vertical-align: bottom; width: 150px; height: 300px; text-align: center;">
-												<div id = "idPicViewDiv"></div>
-												<img src="${pageContext.request.contextPath }/image/btn_pic.gif" alt="사진올리기" class="btn" id = "picUpload" title="인적사항에 올릴 증명을 검색합니다." style="cursor: pointer;"/><br/>
-												<div style="width: 100%" align="center">
-													size : 235x315 이하
+												<div id = "idPicViewDiv" >
+													<img src = "/image/${facePictureFileName}" width="235" height="315">
 												</div>
+<%-- 												<img src="${pageContext.request.contextPath }/image/btn_pic.gif" alt="사진올리기" class="btn" id = "picUpload" title="인적사항에 올릴 증명을 검색합니다." style="cursor: pointer;"/><br/> --%>
+<!-- 												<div style="width: 100%" align="center"> -->
+<!-- 													size : 235x315 이하 -->
+<!-- 												</div> -->
 											</td>
 										</tr>
 									</table>
@@ -199,119 +120,71 @@ $(function () {
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">사원번호</label>
 			                  			<div class="col-sm-6">
-				                  			<input type="text" name="emp_code" class="form-control" placeholder="이름을 입력해주세요" style="border-radius: 1em;">
+			                  				<label name="emp_code">${empInfo.emp_code}</label>
 	               						</div>                
-	               						<div class="col-sm-2" style="margin-left: -15px !important;">
-			                  				<input type="hidden" name="emp_code" class="form-control" value="'pro201800'||emp_seq.nextval" style="border-radius: 1em;">
-	               							<input type="button" class="form-control bg-light-blue color-palette" value="사원번호조회" style="border-radius: 1em;">
-	               						</div>
                						</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">이름</label>
 		                  				<div class="col-sm-6">
-		                  					<input type="text" name="emp_name" class="form-control" placeholder="이름을 입력해주세요" style="border-radius: 1em;">
-               							</div>                
-               						</div>
-			                		<div class="row">
-			                			<label class="col-sm-3 control-label">비밀번호</label>
-		                  				<div class="col-sm-6">
-		                  					<input type="password" name="emp_pass" class="form-control" placeholder="비밀번호를 입력해주세요" style="border-radius: 1em;">
-               							</div>                
-               						</div>
-			                		<div class="row">
-			                			<label class="col-sm-3 control-label">비밀번호 확인</label>
-		                  				<div class="col-sm-6">
-		                  					<input type="password" name="emp_pass_confirm" class="form-control" placeholder="비밀번호를 다시 입력해주세요" style="border-radius: 1em;">
+		                  					<label name="emp_name">${empInfo.emp_name}</label>
                							</div>                
                						</div>
 			                		<div class="row">
 		                				<label class="col-sm-3 control-label">성별</label>
 		                  				<div class="col-sm-6">
-						        			<label>
-						            			남&nbsp;	
-						            			<input type="radio" name="emp_gender" value="m" class="flat-red" checked>
-						            		</label>
-						            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
-						            		<label>
-						              			여&nbsp;	
-						               			<input type="radio" name="emp_gender" value="w" class="flat-red">
-						            		</label>
+		                  					<c:if test="${empInfo.emp_gender eq 'm'}">
+						            			<label name="emp_gender" class="flat-red" >남성</label>
+		                  					</c:if>
+		                  					<c:if test="${empInfo.emp_gender eq 'w'}">
+		                  						<label name="emp_gender" class="flat-red" >여성</label>
+		                  					</c:if>
 						        		</div>
                						</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label" style="margin-top: 3px;">병역여부</label>
-			                  			<div class="col-sm-6" style="margin-top: 3px;">
-						        			<label>
-						            			군필&nbsp;	
-						            			<input type="radio" name="emp_army" value="y" class="flat-red" checked>
-						            		</label>
-						            		&nbsp;&nbsp;&nbsp;		
-						            		<label>
-						              			미필&nbsp;	
-						               			<input type="radio" name="emp_army" value="n" class="flat-red">
-						            		</label>
+			                  			<div class="col-sm-6">
+			                  				<c:if test="${empInfo.emp_gender eq 'm'}">
+						            			<c:if test="${empInfo.emp_army eq 'y'}">
+							            			<label name="emp_army" class="flat-red" >군필</label>
+						            			</c:if>
+						            			<c:if test="${empInfo.emp_army eq 'n'}">
+							            			<label name="emp_army" class="flat-red" >미필</label>
+						            			</c:if>
+		                  					</c:if>
+		                  					<c:if test="${empInfo.emp_gender eq 'w'}">
+		                  						<c:if test="${empInfo.emp_army eq 'y'}">
+							            			<label name="emp_army" class="flat-red" >해당사항 없음</label>
+						            			</c:if>
+		                  					</c:if>
 						        		</div>          
                						</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">혼인여부</label>
-			                  			<div class="col-sm-6" style="margin-top: 3px;">
-						        			<label>
-						            			미혼&nbsp;	
-						            			<input type="radio" name="emp_marriage" value="n" class="flat-red" checked>
-						            		</label>
-						            		&nbsp;&nbsp;&nbsp;		
-						            		<label>
-						              			기혼&nbsp;	
-						               			<input type="radio" name="emp_marriage" value="y" class="flat-red">
-						            		</label>
+			                  			<div class="col-sm-6">
+						        			<c:if test="${empInfo.emp_marriage eq 'y'}">
+						            			<label name="emp_marriage" class="flat-red" >기혼</label>
+		                  					</c:if>
+		                  					<c:if test="${empInfo.emp_marriage eq 'n'}">
+		                  						<label name="emp_marriage" class="flat-red" >미혼</label>
+		                  					</c:if>
 						        		</div>          
                						</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label" style="margin-top: 3px;">전화번호</label>
-		                  				<div class="col-sm-2">
-		                  					<input type="hidden" name="emp_phone" value="" />
-			                  				<select class="form-control" style="border-radius: 1em;" name="emp_phone1">
-			                  					<option value="010" selected="selected">010</option>
-			                  					<option value="011">011</option>
-			                  					<option value="016">016</option>
-			                  					<option value="017">017</option>
-			                  					<option value="019">019</option>
-			                  				</select> 
-		                  				</div>
-		                  				<div class="col-sm-1" style="margin: -10px; margin-right: -30px;">
-			                  				<b style="font-size: 30px;">-</b>
-		                  				</div>
-										<div class="col-sm-2">
-			                  				<input type="text" name="emp_phone2" class="form-control" style="border-radius: 1em;">
-										</div>
-										<div class="col-sm-1" style="margin:-10px; margin-right: -30px;">
-			                  				<b style="font-size: 30px;">-</b>
+		                  				<div class="col-sm-6">
+		                  					<label name="emp_phone">${empInfo.emp_phone}</label>
 			                  			</div>
-			                  			<div class="col-sm-2">
-				                  			<input type="text" name="emp_phone3" class="form-control" style="border-radius: 1em;">
-				                  		</div>
 	                				</div>
 			                		<div class="row">
 					                	<label class="col-sm-3 control-label" style="margin-top: 3px;">이메일</label>
-										<div class="col-sm-3">
-					                  		<input type="text" name="emp_email1" class="form-control" style="border-radius: 1em;">
+										<div class="col-sm-6">
+					                  		<label name="emp_email">${empInfo.emp_email}</label>
 										</div>
-				                  		<div class="col-sm-1">
-					                  		<b style="font-size: 20px; margin-right: -50px;">@</b>
-				                  		</div>
-					                  	<div class="col-sm-3" style="margin-left: -15px !important;">
-				                  			<select class="form-control" name="emp_email2" style="border-radius: 1em;">
-					                  			<option selected="selected">이메일을 선택해주세요</option>
-				                  				<option value="naver.com">naver.com</option>
-				                  				<option value="google.com">google.com</option>
-				                  			</select> 
-				                  		</div>
-					                		<input type="hidden" id="emailtext" name="emp_email" value="" />
 			                		</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">전공</label>
 		                  				<div class="col-sm-6">
-		                  					<input type="text" name="emp_major" class="form-control" placeholder="전공을 입력해주세요" value="" style="border-radius: 1em;">
+		                  					<label name="emp_major">${empInfo.emp_major}</label>
                							</div>                
                						</div>
 			                		<div class="row">
@@ -326,49 +199,43 @@ $(function () {
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
-				                  			<select name="emp_department" class="form-control" style="border-radius: 1em;">
-				                  				<c:forEach items="${partList }" var="list">
-				                  					<option>${list.part_name }</option>
-				                  				</c:forEach>
-				                  			</select>
+				                  			<label name="part_code">${empInfo.part_name}</label>
 		               					</div>
 		                			</div>
 	                				<div class="row">
                 						<label class="col-sm-3 control-label" style="margin-top: 3px;">권한</label>
 			                  			<div class="col-sm-3">
-				                  			<input type="text" name="emp_role" value="DEP"></option>
+			                  				<c:if test="${empInfo.emp_role eq 'DEP'}">
+				                  				<label name="emp_role">개발자</option>
+			                  				</c:if>
+			                  				<c:if test="${empInfo.emp_role eq 'PL'}">
+				                  				<label name="emp_role">PL</label></option>
+			                  				</c:if>
+			                  				<c:if test="${empInfo.emp_role eq 'PM'}">
+				                  				<label name="emp_role">PM</option>
+			                  				</c:if>
+			                  				<c:if test="${empInfo.emp_role eq 'MANAGER'}">
+				                  				<label name="emp_role">관리자</option>
+			                  				</c:if>
 		               					</div>
-                					</div>
-		                			<div class="row">
-	                					<label class="col-sm-3 control-label" style="margin-top: 3px;">직책</label>
-				                  		<div class="col-sm-3">
-			                  			<select class="form-control" style="border-radius: 1em;">
-			                  				<option selected="selected">직책을 선택해주세요</option>
- 				                  			<c:forEach items="${pList}" var="plist">
- 			                  					<option value="${plist.position_code}">${plist.position_name}</option> 
-				                  			</c:forEach>
-			                  			</select>
-	               						</div>
                 					</div>
                 					<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">레벨</label>
 				                  		<div class="col-sm-3">
-				                  			<input type="text" name="emp_level" value="초급"></option>
+				                  			<label name="emp_level">${empInfo.emp_level}</label>
 		               					</div>
                 					</div>
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
 				                  		<div class="col-sm-5">
-				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;">
+				                  			<select class="form-control" style="border-radius: 1em;">
+				                  			</select>
 		               					</div>                
-		               					<div class="col-sm-2" style="margin-left: -15px !important;">
-		               						<input type="button" class="form-control bg-light-blue color-palette" value="자격증 등록" style="border-radius: 1em;">
-		               					</div>
 			              			</div>
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
-				                  			<input type="date" name="emp_encpn" class="form-control" placeholder="입사일을 입력해주세요" style="border-radius: 1em;">
+											<label name="emp_encpn">${empInfo.emp_encpn}</label>
 			              				</div>
 			              			</div>
 			              			<input type="hidden" name="emp_delete" value="n" />
@@ -376,13 +243,15 @@ $(function () {
                				</div>
                			</div>
                 		<div class="box-footer clearfix">
-			              <input value="삭제" type="button" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
-			              <input name="list" value="목록" type="button" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
-			              <input value="수정" type="submit" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
+			              <input value="삭제" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
+			              <input name="list" type="button" value="목록" class="btn btn-sm btn-info btn-flat pull-right">
+			              <input value="수정" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 			          	</div>
 						</form>
 					</div>
 					</div>
+					
+				
 				</div>
 			</div>
 		</div>

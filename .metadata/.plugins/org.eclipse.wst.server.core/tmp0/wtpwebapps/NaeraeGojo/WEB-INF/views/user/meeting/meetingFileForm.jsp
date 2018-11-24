@@ -203,6 +203,7 @@ $(function(){
         myArray=[];
         $('input[name=chkbox]:checked').each(function(index){
         	myArray.push( $(this).val());
+        	
         });
         
 //         alert(myArray);

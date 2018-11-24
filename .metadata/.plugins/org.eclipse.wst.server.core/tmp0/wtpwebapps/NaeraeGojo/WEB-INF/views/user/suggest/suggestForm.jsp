@@ -132,6 +132,10 @@
  	height: auto;
  }
  
+ .btn-flat{
+ 	margin-left: 5px;
+ }
+ 
 </style>
 <script type="text/javascript">
 $(function(){
@@ -162,7 +166,31 @@ $(function(){
                 alert(error);
             },
             success : function(json){
-            	boalert(json.rv.rqpps_code);
+            	// json (제안요청서, 인력계획 정보 담고있음)
+            	
+            	// 제안요청서 정보 세팅
+            	$('input[name=rqpps_code]').val(json.rv.rqpps_code);
+            	$('input[name=rqpps_name]').val(json.rv.rqpps_name);
+            	$('input[name=rqpps_nickname]').val(json.rv.rqpps_nickname);
+            	$('input[name=rqpps_notice_agency]').val(json.rv.rqpps_notice_agency);
+            	$('input[name=rqpps_end_date]').val(json.rv.rqpps_end_date);
+            	$('input[name=rqpps_qualification]').val(json.rv.rqpps_qualification);
+            	$('input[name=rqpps_budget]').val(json.rv.rqpps_budget);
+            	$('textarea[name=rqpps_contents]').val(json.rv.rqpps_contents);
+            	$('.a_files').each(function(i,v){
+            		$(this).attr('href','${pageContext.request.contextPath}/user/suggfi/suggfiDownload.do?suggfi_code='
+            				 + json.rv.items[i].suggfi_code);
+            		$(this).text(json.rv.items[i].suggfi_name);
+            	})
+            	
+            	
+            	// 요구인력 세팅
+            	$('.table_rp td:eq(0)').text(json.mv.mp_begin);
+            	$('.table_rp td:eq(1)').text(json.mv.mp_inter);
+            	$('.table_rp td:eq(2)').text(json.mv.mp_high);
+            	$('.table_rp td:eq(3)').text(json.mv.mp_spec);
+            	
+            	$('.rfpRow').show();
             }
         });
 		
@@ -173,46 +201,45 @@ $(function(){
 	});
 	
 	$('#suggestForm').submit(function(){
-		var mp_code = $('#suggestForm input[name=mp_code]').val();
-		var suggest_notice_agency = $('input[name=suggest_notice_agency]').val();
-		var suggest_name = $('input[name=suggest_name]').val();
-		var suggest_contents = $('#contents').val();
+		var rqpps_code = $('input[name=rqpps_code]').val();
+		var suggest_title = $('input[name=suggest_title]').val();
+		var suggest_content = $('textarea[name=suggest_content]').val();
+		var suggest_start_date = $('input[name=suggest_start_date]').val();
 		var suggest_end_date = $('input[name=suggest_end_date]').val();
-		var suggest_budget = $('input[name=suggest_budget]').val();
-		var suggest_qualification = $('input[name=suggest_qualification]').val();
+		var suggest_cost = $('input[name=suggest_cost]').val();
 		var file1 = $('#file01').val();
-		var file2 = $('#file02').val();
 		
 		
-		if(suggest_notice_agency == '' || suggest_name == '' || suggest_contents == ''||
-				suggest_end_date == ''|| suggest_budget == '' || suggest_qualification == ''){
+		if(suggest_title == '' || suggest_start_date == '' || suggest_end_date == ''||
+				suggest_cost == ''|| suggest_content == ''){
 			boalert("빈 항목이 존재합니다.");
 			return false;
 		}
 		
-		if(mp_code == null || mp_code == ''){
-			boalert("인력비었다");
+		if(rqpps_code == ''){
+			boalert("관련 제안요청서를 선택해주세요.");
 			return false;
 		}
 		
+		var dateArr = suggest_start_date.split('-');
+		var start_date = new Date(dateArr[0] , dateArr[1] -1, dateArr[2]);
+		
+		var dateArr2 = suggest_end_date.split('-');
+		var end_date = new Date(dateArr2[0] , dateArr2[1] -1, dateArr2[2]);
+		
+		
+		
+		if(end_date.getTime() < start_date.getTime()){
+			boalert("소요기간의 시작일과 종료일을 확인해주세요.")
+			return false;
+		}
+		
+		
 		if(file1 == ''){
-			boalert("제안요청서 첨부파일을 등록해 주세요.")
+			boalert("제안서 첨부파일을 등록해 주세요.")
 			return false;
 		}
 
-		if(file2 == ''){
-			boalert("공고서 첨부파일을 등록해 주세요.")
-			return false;
-		}
-		var dateArr = suggest_end_date.split('-');
-		
-		var rq_date = new Date(dateArr[0] , dateArr[1] -1, dateArr[2]);
-		
-		if(rq_date.getTime() < today.getTime()){
-			boalert("이미 지난날짜는 제안서의 마감기한으로 설정할 수 없습니다.")
-			return false;
-		}
-		
 		
 		return true;
 	});
@@ -232,29 +259,31 @@ $(function(){
         </div>
         <!-- /.box-header -->
         <div class="box-body" >
+        
+        
          <form role="form" id="suggestForm" class="form-horizontal" enctype="multipart/form-data" 
          method="post" action="${pageContext.request.contextPath }/user/suggest/suggestInsert.do">
-         
+         	<input type="hidden" name="rqpps_code">
             <!-- text input -->
             
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >제안서 명</label>
               <div class="col-sm-8">
-                <input id="name" type="text" name="suggest_name" class="form-control" style="border-radius: 1em;" placeholder="제안서 명">
+                <input id="name" type="text" name="suggest_title" class="form-control" style="border-radius: 1em;" placeholder="제안서 명">
               </div>
             </div>
             
             <div class="form-group">
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
               <div class="col-sm-8">
-                <input id="writer" type="text" name="suggest_nickname" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_department }_${LOGIN_EMPINFO.emp_name}"
+                <input id="writer" type="text" name="suggest_nickname" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
                  readonly="readonly" >
               </div>
             </div>
 
 			
 		<div class="form-group">
-            <label for="pr" class="col-sm-2 control-label">제안요청서</label>
+            <label for="sel_rfp" class="col-sm-2 control-label">제안요청서</label>
             <div class="col-sm-6">
 			    <select id="sel_rfp" class="form-control select2" style="border-radius: 1em;">
 			    	<option value="" selected disabled>작성된&nbsp;&nbsp;제안요청서</option>
@@ -271,14 +300,12 @@ $(function(){
             <table class="date_table">
             	<tr>
             		<td>
-            		<input id="edate" type="date" name="suggest_end_date" class="form-control" style="border-radius: 1em;" placeholder="제안서 마감">
+            		<input type="date" name="suggest_start_date" class="form-control" style="border-radius: 1em;">
             		</td>
 	              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
 	              	<td>
-	              	<input id="edate" type="date" name="suggest_end_date" class="form-control" style="border-radius: 1em;" placeholder="제안서 마감">
+	              	<input type="date" name="suggest_end_date" class="form-control" style="border-radius: 1em;">
 	              	</td>
-	              
-            
             	</tr>
             </table>
             </div> 
@@ -287,7 +314,7 @@ $(function(){
           <div class="form-group">
             <label for="pmoney" class="col-sm-2 control-label">사업비</label>
             <div class="col-sm-3">
-              <input id="pmoney" type="number" name="suggest_budget" class="form-control" style="border-radius: 1em;" placeholder="￦">
+              <input id="pmoney" type="number" name="suggest_cost" class="form-control" style="border-radius: 1em;" placeholder="￦">
             </div> 
           </div>
                 
@@ -333,10 +360,7 @@ $(function(){
         <!-- /.box-header -->
         <div class="box-body" >
          <form role="form" id="rfpView" class="form-horizontal"
-         method="post" action="${pageContext.request.contextPath }/user/rfp/rfpUpdate.do">
-         <input type="hidden" name="rqpps_code" value="${rv.rqpps_code }">
-         <input type="hidden" name="mp_code" value="${rv.mp_code }">
-         <input type="hidden" name="emp_code" value="${rv.emp_code }">
+         method="post">
          
             <!-- text input -->
             
@@ -384,13 +408,24 @@ $(function(){
           <div class="form-group ">
             <label for="rp" class="col-sm-2 control-label">요구 인력</label>
             <div class="col-md-1 " style="width: auto;">
-             	<div id="dres" style=" margin-top: 10px; padding: 5px;"></div>
-	            <input id="btn_rpre" type="button" class=" bg-teal btn form-control btn-sm upForm" 
-	            data-toggle="modal" data-target="#modal-update"
-	            value="수정" style="border-radius: 1em; display:none;">
-	           
-	            
-<!--               <input id="rp" type="select" class="form-control" style="border-radius: 1em;" placeholder="제안서 마감"> -->
+             	<div id="dres" style=" margin-top: 10px; padding: 5px;">
+             		<div class="box">
+             		<table class="table_rp table">
+						<tr>
+				    		<th>초급</th>
+				    		<th>중급</th>
+				    		<th>고급</th>
+				    		<th>특급</th>
+				    	</tr>
+				    	<tr>
+				    		<td></td>
+				    		<td></td>
+				    		<td></td>
+				    		<td></td>
+				    	</tr>
+				    </table>
+				    </div>
+             	</div>
             </div> 
           </div>
                 
@@ -422,8 +457,7 @@ $(function(){
 	    <div class="form-group">
 			 <label for="file01" class="col-sm-2 control-label">제안요청서 첨부</label>
 			 <div class="col-sm-10 div_files">
-					<a id="${rv.items[0].suggfi_code }" class="a_files" href="${pageContext.request.contextPath }/user/suggfi/suggfiDownload.do?suggfi_code=${rv.items[0].suggfi_code}">
-					${rv.items[0].suggfi_name }</a>
+					<a class="a_files" ></a>	
 			 </div>
         </div>				
 	    <div class="form-group">
@@ -431,9 +465,7 @@ $(function(){
 			 <div class="col-sm-10 div_files">
 <!-- 			 	<input type="file" class="filestyle" id="file01" name="files" data-buttonName="btn-primary" -->
 <!-- 				 style="display: none;"> -->
-			 	<a id="${rv.items[1].suggfi_code }" class="a_files" href="${pageContext.request.contextPath }/user/suggfi/suggfiDownload.do?suggfi_code=${rv.items[1].suggfi_code}">
-			 	${rv.items[1].suggfi_name }</a>
-			 	
+			 	<a class="a_files"></a>
 			 </div>
         </div>				
               

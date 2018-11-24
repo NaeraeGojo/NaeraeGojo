@@ -4,7 +4,6 @@
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <script>
 $(function() {
-
 	$('form').submit(function() {
 		if (!$('input[name=emp_name]').val().validationNM()) {
 			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
@@ -32,43 +31,20 @@ $(function() {
 			return false;
 		}
 		$('input[name=emp_email]').val(email);
+		$('input[name=emailId]').val($('input[name=emp_email1]').val());
 		
 		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
 			alert("입사일을 입력해주세요.");
 			return false;
 		}
-		$('select[name=emp_department]').val();
+// 		if ($('input[name=emp_code]').val() == null || $('input[name=emp_code]').val()== '') {
+// 			alert("emp_code가 존재하지 않습니다.");
+// 			return false;
+// 		}
+		$('select[name=part_code]').val();
 		$('input[name=emp_major]').val();
 		
-		if($('select[name=emp_email2]').val()!='이메일을 선택해주세요'){
-			mail = $('input[name=emp_email1]').val() + '@' + $('select[name=emp_email2]').val();
-			$('input[name=emp_email]').val(mail);
-			var email = $('#emailtext').val();
-			
-			
-			$.ajax({
-			    type : 'post',
-			    url : '${pageContext.request.contextPath}/mail/send.do?email=',
-			    dataType : "json",
-			    data : { email : $('#emailtext').val() & 
-			    	emp_code : $('#emp_code').val() },
-			    success : function(result) {
-// 					$('#code').val(result.code);
-			    	// result.flag = "true" or "false"
-					// boolean type false : undefined, null
-					// "1" + 1 = '11'
-					// eval("1" + 1) = 2
-						alert("인증메일 발송을 성공하였습니다.");
-				},
-			    error : function(request, status, error) {
-					alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
-				}
-			});
-		}
-		if($('select[name=emp_email2]').val()=='이메일을 선택해주세요' || $('input[name=emp_email1]').val()=='' || $('input[name=emp_email1]').val()==null){
-			alert("이메일이 잘못되었습니다. 다시 입력해주세요");
-			return false;
-		}
+		
 		return true;
 	});	
 	
@@ -166,11 +142,24 @@ $(function () {
 		font-size: 18px;
 		margin-right: -20px;
 	}
+	  .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
+	
+    .example-modal .modal {
+      background: transparent !important;
+    }
+ 
 </style>
 	<br/>
 <div class="row">
 	<br/>
-<!-- 	<input type="hidden" value="" id="code"> -->
 	<div class="col-md-11" style="margin-left: 40px;">
 		<div class="box box-info">		<!-- 테이블을 넣을 박스 기본설정 warning일 경우 진한 노랑색 (수정해도 됨)-->
            	<div class="box-header with-border">	<!-- 테이블 위에 header부분(기본설정) -->
@@ -201,7 +190,7 @@ $(function () {
 <!-- 			                  			<div class="col-sm-6"> -->
 <!-- 	               						</div>                 -->
 <!-- 	               						<div class="col-sm-2" style="margin-left: -15px !important;"> -->
-<!-- 			                  				<input type="hidden" name="emp_code" class="form-control" value="'pro201800'||emp_seq.nextval" style="border-radius: 1em;"> -->
+			                  				<input type="hidden" name="emailId" class="form-control">
 <!-- 	               							<input type="button" class="form-control bg-light-blue color-palette" value="사원번호조회" style="border-radius: 1em;"> -->
 <!-- 	               						</div> -->
 <!--                						</div> -->
@@ -293,19 +282,15 @@ $(function () {
 			                		<div class="row">
 					                	<label class="col-sm-3 control-label" style="margin-top: 3px;">이메일</label>
 										<div class="col-sm-3">
+					                		<input type="hidden" id="emailtext" name="emp_email" value="" />
 					                  		<input type="text" name="emp_email1" class="form-control" style="border-radius: 1em;">
 										</div>
 				                  		<div class="col-sm-1">
 					                  		<b style="font-size: 20px; margin-right: -50px;">@</b>
 				                  		</div>
 					                  	<div class="col-sm-3" style="margin-left: -15px !important;">
-				                  			<select class="form-control" name="emp_email2" style="border-radius: 1em;">
-					                  			<option selected="selected">이메일을 선택해주세요</option>
-				                  				<option value="naver.com">naver.com</option>
-				                  				<option value="google.com">google.com</option>
-				                  			</select> 
-				                  		</div>
-					                		<input type="hidden" id="emailtext" name="emp_email" value="" />
+				                  			<label class="form-control" name="emp_email2" style="border-radius: 1em;" value="naver.com">naver.com</label>
+										</div>
 			                		</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">전공</label>
@@ -325,9 +310,11 @@ $(function () {
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
-				                  			<select name="emp_department" class="form-control" style="border-radius: 1em;">
+				                  			<select name="part_code" class="form-control" style="border-radius: 1em;">
 				                  				<c:forEach items="${partList }" var="list">
-				                  					<option>${list.part_name }</option>
+				                  					<option value="${list.part_code}">
+				                  					${list.part_name }
+				                  					</option>
 				                  				</c:forEach>
 				                  			</select>
 		               					</div>
@@ -382,6 +369,8 @@ $(function () {
 						</form>
 					</div>
 					</div>
+					
+				
 				</div>
 			</div>
 		</div>

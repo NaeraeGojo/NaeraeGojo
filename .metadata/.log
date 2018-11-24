@@ -4279,3 +4279,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-24 20:01:03.306
 !MESSAGE loading file 'pom.properties'
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2018-11-24 20:28:50.413
+!MESSAGE The Tomcat server configuration at \Servers\Tomcat v7.0 Server at localhost-config is missing. Check the server for errors.

@@ -13,12 +13,22 @@
 		<result property="pblanc_board_link" column="pblanc_board_link"/>
 		<result property="pblanc_board_budget" column="pblanc_board_budget"/>
 		<result property="pblanc_board_end_proposal" column="pblanc_board_end_proposal"/>
-<!-- 		<result property="items" column="bo_no" select="fileitem.fileItems"/> -->
+		<result property="items" column="pblanc_board_code" select="allFile.allFilesPblanc" />
 	</resultMap>
 	
 	<sql id="selectAll">
-		SELECT * 
-		FROM PBLANC_BOARD
+		SELECT 
+		    PBLANC_BOARD_CODE
+		    ,PBLANC_BOARD_TITLE
+		    ,PBLANC_BOARD_COM
+		    ,PBLANC_BOARD_COM_DATE
+		    ,PBLANC_BOARD_LINK
+            ,LTRIM(TO_CHAR(PBLANC_BOARD_BUDGET,'9,999,999,999,999')) AS PBLANC_BOARD_BUDGET
+		    ,PBLANC_BOARD_END_PROPOSAL
+		    ,PBLANC_BOARD_DELETE
+		    ,EMP_CODE
+		    ,PBLANC_BOARD_HIT
+		FROM  PBLANC_BOARD
 		WHERE PBLANC_BOARD_DELETE = 'n'
 	</sql>
 	
@@ -56,14 +66,41 @@
 		SELECT PBLANC_BOARD_CODE
 			   ,PBLANC_BOARD_TITLE
 			   ,PBLANC_BOARD_COM
-			   ,TO_CHAR(PBLANC_BOARD_COM_DATE, 'YYYY-MM-DD') as pblanc_board_com_date
+			   ,TO_CHAR(PBLANC_BOARD_COM_DATE, 'YYYY-MM-DD') AS PBLANC_BOARD_COM_DATE
 			   ,PBLANC_BOARD_LINK
-			   ,PBLANC_BOARD_BUDGET
-			   ,TO_CHAR(PBLANC_BOARD_END_PROPOSAL, 'YYYY-MM-DD') as pblanc_board_end_proposal
+   	           ,LTRIM(TO_CHAR(PBLANC_BOARD_BUDGET,'9,999,999,999,999')) AS PBLANC_BOARD_BUDGET
+			   ,TO_CHAR(PBLANC_BOARD_END_PROPOSAL, 'YYYY-MM-DD') AS PBLANC_BOARD_END_PROPOSAL
 			   ,PBLANC_BOARD_END_PROPOSAL
 		FROM PBLANC_BOARD
       	WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
 	</select>
+	
+	<insert id="insertPblancboard" parameterClass="pblancboardVO">
+		<selectKey keyProperty="pblanc_board_code" resultClass="string">
+			SELECT PBLANC_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO PBLANC_BOARD(
+							PBLANC_BOARD_CODE
+							,PBLANC_BOARD_TITLE
+							,PBLANC_BOARD_COM
+							,PBLANC_BOARD_COM_DATE
+							,PBLANC_BOARD_LINK
+							,PBLANC_BOARD_BUDGET
+							,PBLANC_BOARD_END_PROPOSAL
+							,EMP_CODE
+							)
+					values(
+							#pblanc_board_code#
+							,#pblanc_board_title#
+							,#pblanc_board_com#
+							,#pblanc_board_com_date#
+							,#pblanc_board_link#
+							,#pblanc_board_budget#
+							,#pblanc_board_end_proposal#
+							,#emp_code#
+					        )
+	</insert>
+	
 	
 	<update id="updatePblancboard" parameterClass="pblancboardVO">
 		UPDATE PBLANC_BOARD
@@ -73,7 +110,7 @@
 		      ,PBLANC_BOARD_LINK         = #pblanc_board_link#
 		      ,PBLANC_BOARD_BUDGET       = #pblanc_board_budget#
 		      ,PBLANC_BOARD_END_PROPOSAL = #pblanc_board_end_proposal#
-		 WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
+		 WHERE PBLANC_BOARD_CODE         = #pblanc_board_code#
 	</update>
 	
 	<update id="deletePblancboard" parameterClass="map">
@@ -84,8 +121,8 @@
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">
 		SELECT COUNT(PBLANC_BOARD_CODE)
-		FROM PBLANC_BOARD
-		WHERE PBLANC_BOARD_DELETE = 'n'
+		  FROM PBLANC_BOARD
+		 WHERE PBLANC_BOARD_DELETE = 'n'
 		<include refid="searchCondition"/> 
 	</select>
 	

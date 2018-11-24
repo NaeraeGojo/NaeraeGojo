@@ -95,7 +95,7 @@
 		from (select rownum rnum, a.*
 				from (<include refid="selectAll"/>
 						<include refid="searchCondition"/>
-						order by rqpps_code asc
+						order by to_number(rqpps_code) asc
 						) a ) b
 		<![CDATA[						
 		where b.rnum <= #startNo#

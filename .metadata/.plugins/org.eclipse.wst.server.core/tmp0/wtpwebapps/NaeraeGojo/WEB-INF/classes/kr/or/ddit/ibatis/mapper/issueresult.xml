@@ -4,6 +4,8 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="issueResult">
 	<typeAlias alias="issueResultVO" type="kr.or.ddit.vo.IssueResultVO"/>
+	<typeAlias alias="issueVO" type="kr.or.ddit.vo.IssueVO"/>
+	
 	
 	<resultMap id="issueResultMap" class="issueResultVO">
 		<result property="issue_result_code" column="issue_result_code"/>
@@ -19,7 +21,27 @@
 	</resultMap>
 	
 	<sql id="selectAll">
-		SELECT B.ISSUE_RESULT_CODE
+		SELECT TO_NUMBER(B.ISSUE_RESULT_CODE) AS ISSUE_RESULT_CODE
+               ,A.ISSUE_CODE
+               ,A.ISSUE_NAME
+			   ,B.ISSUE_RESULT_CONTENT
+			   ,B.ISSUE_RESULT_DAY
+			   ,A.ISSUE_EVENT_DAY
+			   ,B.ISSUE_RESULT_STATUS
+			   ,D.ISLEV_NAME AS ISSUE_LEVEL
+			   ,C.EMP_NAME AS EMP_DAMDANG
+			   ,B.ISSUE_RESULT_HIT
+			   ,B.RISK_HIT
+		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D, PW E
+      	WHERE A.EMP_DAMDANG = C.EMP_CODE
+        and A.ISSUE_CODE = B.ISSUE_CODE
+        AND A.ISSUE_LEVEL = D.ISLEV_CODE
+        AND A.PW_CODE = E.PW_CODE
+        AND E.PROJECT_CODE = #project_code#
+	</sql>
+	
+	<sql id="selectAll2">
+		SELECT TO_NUMBER(B.ISSUE_RESULT_CODE) AS ISSUE_RESULT_CODE
                ,A.ISSUE_CODE
                ,A.ISSUE_NAME
 			   ,B.ISSUE_RESULT_CONTENT
@@ -29,11 +51,11 @@
 			   ,D.ISLEV_NAME AS ISSUE_LEVEL
 			   ,C.EMP_NAME AS EMP_CODE_IR
 			   ,B.ISSUE_RESULT_HIT
+			   ,B.RISK_HIT
 		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
-      	WHERE B.EMP_CODE_IR = C.EMP_CODE
+      	WHERE A.EMP_DAMDANG = C.EMP_CODE
         AND A.ISSUE_CODE = B.ISSUE_CODE
         AND A.ISSUE_LEVEL = D.ISLEV_CODE
-        
 	</sql>
 	
 	<select id="issueResultInfo" parameterClass="map" resultMap="issueResultMap">
@@ -47,11 +69,31 @@
 			   ,B.ISSUE_RESULT_STATUS
 			   ,A.ISSUE_LEVEL
 			   ,C.EMP_NAME AS EMP_CODE_IR
+			   ,B.RISK_HIT
+		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
+      	WHERE A.EMP_DAMDANG = C.EMP_CODE
+        AND A.ISSUE_LEVEL = D.ISLEV_CODE
+        AND A.ISSUE_CODE = B.ISSUE_CODE
+      	AND B.ISSUE_RESULT_CODE = #issue_result_code#
+	</select>
+	
+	<select id="issueResultViewInfo" parameterClass="map" resultMap="issueResultMap">
+		SELECT B.ISSUE_RESULT_CODE
+               ,A.ISSUE_CODE
+               ,A.ISSUE_NAME
+               ,A.ISSUE_CONTENT
+			   ,B.ISSUE_RESULT_CONTENT
+			   ,TO_CHAR(issue_event_day, 'YYYY-MM-DD') as issue_event_day
+			   ,TO_CHAR(issue_result_day, 'YYYY-MM-DD') as issue_result_day
+			   ,B.ISSUE_RESULT_STATUS
+			   ,A.ISSUE_LEVEL
+			   ,C.EMP_NAME AS EMP_CODE_IR
+			   ,B.RISK_HIT
 		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
       	WHERE B.EMP_CODE_IR = C.EMP_CODE
         AND A.ISSUE_LEVEL = D.ISLEV_CODE
         AND A.ISSUE_CODE = B.ISSUE_CODE
-      	AND B.ISSUE_RESULT_CODE = #issue_result_code#
+      	AND A.ISSUE_CODE = #issue_code#
 	</select>
 	
 	<sql id="searchCondition">
@@ -59,7 +101,7 @@
 	 		<isNotEmpty property="search_keyword" prepend="and">
 	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
 	 				   ISSUE_NAME LIKE '%' || #search_keyword# || '%'
-	 				OR ISSUE_LEVEL   LIKE '%' || #search_keyword# || '%'
+	 				OR ISSUE_LEVEL LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
 	 			<isEqual property="search_keycode" compareValue="NAME" >  
 	 					ISSUE_NAME LIKE '%' || #search_keyword# || '%'
@@ -84,15 +126,6 @@
 		ORDER BY B.RNUM DESC
 	</select>	
 	
-	<update id="updateIsssueResultInfo" parameterClass="issueResultVO">
-		UPDATE ISSUE_RESULT
-		   SET ISSUE_RESULT_CONTENT  = #issue_result_content# 
-		      ,ISSUE_RESULT_DAY      = #issue_result_day#
-		      ,ISSUE_RESULT_STATUS   = #issue_result_status#
-<!-- 		      ,EMP_CODE_IR = #emp_code_ir# -->
-		 WHERE ISSUE_CODE     = #issue_code#
-	</update>
-	
 	<insert id="insertIssueResultInfo" parameterClass="issueResultVO">
 		<selectKey keyProperty="issue_result_code" resultClass="string">
 			SELECT ISSUE_RESULT_SEQ.NEXTVAL FROM DUAL
@@ -108,12 +141,59 @@
 				       ,#issue_code#
 				       ,#issue_result_day#
 				       ,#emp_code_ir#
-				       ,#issue_result_status#)
+				       ,'y')
 	</insert>
+	
+	<update id="updateIsssueResultInfo" parameterClass="issueResultVO">
+		UPDATE ISSUE_RESULT
+		   SET
+		   	  ISSUE_RESULT_CONTENT = #issue_result_content# 
+ 			  ,ISSUE_RESULT_DAY    = #issue_result_day#
+		      ,EMP_CODE_IR         = #emp_code_ir#
+		 WHERE ISSUE_CODE          = #issue_code#
+	</update>
+	
+	<delete id="deleteIssueResultInfo" parameterClass="map">
+		DELETE ISSUE_RESULT
+		 WHERE ISSUE_CODE = #issue_code#
+	</delete>
+	
+	<update id="updateResultHIT" parameterClass="map">
+		UPDATE ISSUE_RESULT
+		   SET ISSUE_RESULT_HIT = ISSUE_RESULT_HIT + 1
+		 WHERE ISSUE_CODE = #issue_code#
+	</update>
+	
+	<update id="updateIssueStatus" parameterClass="issueVO">
+		UPDATE ISSUE
+		   SET
+		   	  ISSUE_STATUS  = 'y' 
+		 WHERE ISSUE_CODE = #issue_code#
+	</update>
+	
+	<update id="updateIssueStatusDel" parameterClass="issueVO">
+		UPDATE ISSUE
+		   SET
+		   	  ISSUE_STATUS  = 'n' 
+		 WHERE ISSUE_CODE = #issue_code#
+	</update>
+	
+	<select id="riskList" resultClass="issueResultVO" parameterClass="map">
+		SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.*
+				FROM ( <include refid="selectAll2"/> 
+						<include refid="searchCondition"/> 
+						ORDER BY ISSUE_RESULT_CODE) A ) B
+<!--  		<![CDATA[				 -->
+<!-- 		WHERE B.RNUM <= #startCount# -->
+<!-- 		 AND  B.RNUM >= #endCount# -->
+<!-- 		]]> -->
+		ORDER BY B.RNUM DESC
+	</select>	
 	
 	<update id="updateRiskHIT" parameterClass="map">
 		UPDATE ISSUE_RESULT
-		   SET ISSUE_RESULT_HIT = ISSUE_RESULT_HIT + 1
+		   SET RISK_HIT = RISK_HIT + 1
 		 WHERE ISSUE_RESULT_CODE = #issue_result_code#
 	</update>
 	

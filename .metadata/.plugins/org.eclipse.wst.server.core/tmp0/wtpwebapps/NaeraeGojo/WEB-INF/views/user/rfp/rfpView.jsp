@@ -71,6 +71,10 @@
  	margin-left: auto;
  	margin-right: auto;
  }
+ 
+ .btn-flat{
+ 	margin-left: 5px;
+ }
 </style>
 <script type="text/javascript">
 $(function(){

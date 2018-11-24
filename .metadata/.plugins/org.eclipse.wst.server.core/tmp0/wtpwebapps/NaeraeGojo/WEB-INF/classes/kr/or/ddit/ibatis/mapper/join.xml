@@ -7,6 +7,7 @@
 	<typeAlias alias="joNameVO" type="kr.or.ddit.vo.JoNameVO"/>
 	<typeAlias alias="rqppsVO" type="kr.or.ddit.vo.RqppsVO"/>
 	<typeAlias alias="mpJoinVO" type="kr.or.ddit.vo.MpJoinVO"/>
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
 	
 	<!-- column이 select와 같이 사용되면 select의 파라메터로 전달된다 -->
 	<!-- fileitem.fileItems의 결과가 리스트로 만들어지고 items에 저장된다. -->
@@ -36,6 +37,10 @@
 		<selectKey keyProperty="join_code" resultClass="string">
 			select join_seq.nextval from dual
 		</selectKey>
+		INSERT JOIN
+		INTO ()
+		VALUES()
+		
 		
 	</insert>
 	
@@ -60,7 +65,12 @@
 	</select>
 	
 	<select id="rqppsNm" resultClass="rqppsVO">
-		select rqpps_name from rqpps
+		select rqpps_name,rqpps_code from rqpps
+	</select>
+	<select id="empList1" parameterClass="map" resultClass="empVO">
+		 SELECT EMP_NAME, EMP_LEVEL, EMP_CODE 
+		 FROM EMP
+		 WHERE EMP_LEVEL = #emp_level# 
 	</select>
 	
 	<select id="mpList" parameterClass="map" resultClass ="MpJoinVO">
@@ -68,8 +78,7 @@
 		FROM RQPPS A, EMP B, MP C 
 		WHERE A.EMP_CODE = B.EMP_CODE 
 		AND A.MP_CODE = C.MP_CODE 
-		AND A.RQPPS_NAME = #rqpps_name#
-	
+		AND A.RQPPS_CODE = #rqpps_code#
 	</select>
 	
 	

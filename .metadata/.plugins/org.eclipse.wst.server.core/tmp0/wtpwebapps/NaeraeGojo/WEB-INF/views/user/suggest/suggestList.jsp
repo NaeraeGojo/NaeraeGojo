@@ -1,6 +1,7 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
     <!-- 요청주소 :
     	화면 : 개발자 로그인 시 화면
     -->
@@ -96,29 +97,36 @@ p {
     
     <div class="suggestcont">
     	
-       <c:forEach items="${rl }" var="item">
+       <c:forEach items="${sl }" var="sv">
          <div class="col-md-6 ">
           <div class="box box-solid callout callout-warning suggests">
             <div class="box-header with-border">
-              <a class="a_view" name="${item.suggest_code }"
+              <a class="a_view" name="${sv.suggest_code }"
                href="">
-              	<span class="label label-success">완료임박</span>
-              	<h2 >${item.suggest_name }</h2>
+              	<span class="label label-success">${sv.suggest_result }</span>
+              	<h2 title="${sv.suggest_title }">
+              	<c:if test="${ sv.suggest_title.length() <= 12}">
+              		${sv.suggest_title }
+              	</c:if>
+              	<c:if test="${ sv.suggest_title.length() > 12}">
+              		${fn:substring(sv.suggest_title,0,11) }...
+              	</c:if>
+              	</h2>
               </a>
-              <i style="font-size: 15px; margin-right:5px;" class="pull-right"> </i>
+              <i style="font-size: 15px; margin-right:5px;" class="pull-right">${sv.rqpps_nickname } </i>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-             	<h4>제안서 마감기한&nbsp; : &nbsp;<i style="font-size: 20px;">~ </i></h4>
-             	<h4>예산&nbsp; : &nbsp;<i style="font-size: 20px;"> ￦</i></h4>
-             	<h4>작성일자&nbsp; : &nbsp;<i style="font-size: 20px;"> </i></h4>
+             	<h4>예상 진행기간&nbsp; : &nbsp;<i style="font-size: 20px;">${sv.suggest_start_date }&nbsp;~&nbsp;${sv.suggest_end_date } </i></h4>
+             	<h4>사업비&nbsp; : &nbsp;<i style="font-size: 20px;"> ${sv.suggest_cost }￦</i></h4>
+             	<h4>작성일자&nbsp; : &nbsp;<i style="font-size: 20px;">${sv.suggest_reg_date } </i></h4>
             </div>
             
           </div>
        </div>
          
          </c:forEach>
-         <c:if test="${empty rl}">
+         <c:if test="${empty sl}">
        	  등록된 제안서가 존재하지 않습니다.
          </c:if>
          

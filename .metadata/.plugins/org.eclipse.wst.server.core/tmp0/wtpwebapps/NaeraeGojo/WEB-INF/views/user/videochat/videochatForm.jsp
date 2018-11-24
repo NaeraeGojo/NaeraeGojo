@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
     
 <style>
  .no-margin {
@@ -153,7 +154,6 @@ function onoff(){
                                 
                                 <td width="50" height="50"><img src="${pageContext.request.contextPath }/images/icons/person2.jpeg" > </td>
                                 <td width="200" height="50">최동동</td>
-                                
                             </tr>
                             <tr >
                                 <td width="50" height="50"><img src="${pageContext.request.contextPath }/images/icons/person2.jpeg" > </td>
@@ -196,7 +196,7 @@ function onoff(){
 <!--               </form> -->
                 <div class="box-footer clearfix">
                 <div class="col-sm-10">
-                <input value="개설" type="button" href="${pageContext.request.contextPath}/user/meeting/meetingList.do" style="width:80px;"  class="btn btn-info btn-lg btn-flat pull-right">
+                <input value="다음" type="button" href="${pageContext.request.contextPath}/user/meeting/meetingList.do" style="width:80px;"  class="btn btn-info btn-lg btn-flat pull-right">
                 </div>
                 </div>
                 </div>

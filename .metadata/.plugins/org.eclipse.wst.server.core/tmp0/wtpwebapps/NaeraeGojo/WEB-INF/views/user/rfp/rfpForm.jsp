@@ -55,6 +55,9 @@
  	margin-right: 20px;
  }
  
+ .btn-flat{
+ 	margin-left: 5px;
+ }
  
 </style>
 <script type="text/javascript">
@@ -262,7 +265,7 @@ $(function(){
             <div class="form-group">
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
               <div class="col-sm-8">
-                <input id="writer" type="text" name="rqpps_nickname" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_department }_${LOGIN_EMPINFO.emp_name}"
+                <input id="writer" type="text" name="rqpps_nickname" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
                  readonly="readonly" >
               </div>
             </div>

@@ -107,7 +107,7 @@
 <!--       	AND	B.EMP_CODE = A.EMP_CODE -->
 <!-- 	</select> -->
 	
-	<select id="noticeAllInfo" parameterClass="map" resultMap="noticeAllMap">
+	<select id="noticeAllInfo" parameterClass="map" resultMap="noticeAllMap" >
 		SELECT A.NOTICE_ALL_CODE, B.EMP_NAME,A.NOTICE_ALL_TITLE,A.NOTICE_ALL_CONTENT,A.NOTICE_ALL_PASS,
 		A.NOTICE_ALL_DATE,A.NOTICE_ALL_DELETE,A.NOTICE_ALL_HIT
 		FROM NOTICE_ALL A, EMP B 

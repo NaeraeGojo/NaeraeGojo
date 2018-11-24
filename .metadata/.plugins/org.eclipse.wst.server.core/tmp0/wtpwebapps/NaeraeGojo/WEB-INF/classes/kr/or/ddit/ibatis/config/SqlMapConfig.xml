@@ -23,9 +23,17 @@
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/notice.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/join.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/suggest.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/project.xml" />
 
-<sqlMap resource="kr/or/ddit/ibatis/mapper/position.xml" />
-<sqlMap resource="kr/or/ddit/ibatis/mapper/part.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/position.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/part.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/bell.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/feedback.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/pwc.xml" />
+
+
+
+
 </sqlMapConfig>
 
 

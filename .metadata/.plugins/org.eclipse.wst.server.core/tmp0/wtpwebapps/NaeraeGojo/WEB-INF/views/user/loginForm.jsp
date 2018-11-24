@@ -89,6 +89,30 @@ $(function(){
 		$(document.body).append($frm);
 		$frm.submit();
 	});
+	if (eval('${!empty param.emp_code}')) {
+// 		$('#modal-primary').modal();
+			var emp_code = '${param.emp_code}';
+			$.ajax({
+			    type : 'post',
+			    url : '${pageContext.request.contextPath}/user/join/check.do?emp_code='+emp_code,
+			    dataType : "json",
+// 			    data : { emp_code : emp_code },
+			    success : function() {
+//						$('#code').val(result.code);
+			    	// result.flag = "true" or "false"
+					// boolean type false : undefined, null
+					// "1" + 1 = '11'
+					// eval("1" + 1) = 2
+						alert("직원등록 완료!!!!!!");
+				}
+// 			    error : function(request, status, error) {
+// 					alert("code : " + request.status );
+// 							+ "\r\nmessage : " + request.reponseText);
+// 				}
+			});
+		}
+		return ture;
+	
 });
 
 
@@ -155,9 +179,6 @@ $(function(){
     .example-modal .modal {
       background: transparent !important;
     }
- 
- 
- 
  </style>
 
 
@@ -232,7 +253,6 @@ $(function(){
 	                        	</a>
                         	</div>
                		
-               		
                		<!-- 모달시작 -->
                		<div class="modal modal-primary fade" id="modal-primary">
           				<div class="modal-dialog">
@@ -252,7 +272,6 @@ $(function(){
 										<select>
 											<option selected="selected">이메일을 선택해주세요</option>
 											<option>naver.com</option>
-											<option>google.com</option>
 										</select>
 								    </div>
               					</div>

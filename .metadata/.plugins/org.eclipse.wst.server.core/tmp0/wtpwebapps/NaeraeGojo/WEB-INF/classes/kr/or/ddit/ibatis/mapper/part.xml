@@ -18,8 +18,7 @@
 	
 	<!-- 직책목록 -->
 	<select id="partList" resultClass="partVO">
-        SELECT PART_NAME
-			FROM PART
+      <include refid="selectAll"/>
     </select>    
 	
 	<!-- 직책Info(객체 받아오기) -->

@@ -39,8 +39,18 @@
 	<statement id="allFiles" resultClass="allFileVO">
 		<include refid="selectAll"/>
 				AND ALL_FILE_BOARD_CODE = #notice_all_code#	
-	
+				AND ALL_FILE_KIND_CODE = 1
 	</statement>
+	
+	<statement id="allFilesPblanc" resultClass="allFileVO">
+		<include refid="selectAll"/>
+			AND ALL_FILE_BOARD_CODE = #pblanc_board_code#
+			AND ALL_FILE_KIND_CODE = 2	
+				AND ALL_FILE_BOARD_CODE = #notice_all_code#
+				
+	</statement>
+	
+	
 <!-- 	<select id="getMp" parameterClass="map" resultClass="mpVO"> -->
 <!-- 		select * from mp -->
 <!-- 			where mp_code = #mp_code# -->

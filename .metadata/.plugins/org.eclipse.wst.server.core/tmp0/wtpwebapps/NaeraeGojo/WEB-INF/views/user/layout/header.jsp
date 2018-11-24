@@ -135,7 +135,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-	
+	<!-- jQuery UI CSS파일  -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+	<!-- jQuery 기본 js파일 -->
+<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>   -->
+	<!-- jQuery UI 라이브러리 js파일 -->
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 	
 		<body class="hold-transition skin-blue sidebar-mini">
   		<header class="main-header">

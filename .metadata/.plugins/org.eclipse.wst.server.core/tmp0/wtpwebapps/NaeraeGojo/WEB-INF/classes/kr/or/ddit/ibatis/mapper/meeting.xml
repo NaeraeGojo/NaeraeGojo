@@ -21,6 +21,8 @@
         <result property="meeting_content" column="meeting_content"/>
         <result property="meeting_code" column="meeting_code"/>
         <result property="pw_function" column="pw_function"/>
+        <result property="project_code" column="project_code"/>
+        <result property="pw_code" column="pw_code"/>
         <result property="items" column="meeting_code" select="meetingFile.meetFileItems"/> 
     </resultMap>
 
@@ -57,10 +59,11 @@
 		 select z.*
 		  from (select rownum rnum, y.*
 				from(select d.project_name, c.emp_name, a.meeting_title, a.meeting_hit, a.meeting_date, a.meeting_code
-                        from meeting a, pw b, emp c, project d
+                        from meeting a, pw b, emp c, project d, meet_pw e
                         where b.project_code = d.project_code
                             and a.meeting_delete = 'n'
                             and a.emp_code = c.emp_code
+                             and e.pw_code = b.pw_code
 					<include refid = "searchCondition"/>
 					   group by d.project_name, c.emp_name,  a.meeting_title, a.meeting_content, a.meeting_hit, 
 					       a.meeting_date, a.meeting_code
@@ -74,14 +77,14 @@
     </select>
     
     <select id="meetingInfo" parameterClass="map" resultMap="meetingMap">
-        select    a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function
+        select    a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code
         from      meeting a, meet_pw b, pw c, project d
         where     a.meeting_code=b.meeting_code 
                     and c.pw_code = b.pw_code
                     and c.project_code = d.project_code
                     and a.meeting_code = #meeting_code#
                     and a.meeting_delete = 'n'
-                    group by a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function
+                    group by a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code
     </select>
     
     
@@ -152,6 +155,25 @@
                                ,#pw_code#
                                , sysdate)    
     </insert>
+    
+    <update id="updateMeetingInfo" parameterClass="meetingVO">
+        update meeting
+        set meeting_title = #meeting_title#
+            , meeting_content = #meeting_content#
+        where meeting_code = #meeting_code#
+    </update>
+    
+    <delete id="deleteMeetPw" parameterClass="map">
+        delete 
+        from meet_pw
+        where meeting_code =#meeting_code#
+    </delete>
+    
+    <update id="deleteMeetingInfo" parameterClass="map">
+        update meeting
+        set meeting_delete = 'y'
+        where meeting_code = #meeting_code#
+    </update>
     
 </sqlMap>
 

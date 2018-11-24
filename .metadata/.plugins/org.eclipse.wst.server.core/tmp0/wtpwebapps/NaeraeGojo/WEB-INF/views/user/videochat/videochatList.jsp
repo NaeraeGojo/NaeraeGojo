@@ -8,13 +8,60 @@
 .box-title {
     font-size: 30px !important;
 }
+#modal-container {
+  width: 200%;
+  /* One Modal --> 100%, Two modals --> 200%*/
+  overflow: hidden
+}
+
+.modal-dialog {
+  float: left;
+  width: 50%;
+  margin: 5px auto;
+}
+
+.modal-content {
+    width: 720px;
+    height : 350px;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 200px;
+}
+
+.modal-body{
+    
+    height: 60%;
+/*     margin: auto; */
+    overflow-y:auto;
+    overflow-x:hidden;
+    margin: 15px;
+/*     border: 1px solid ; */
+    
+}
+
+table th {
+    font-size: large;
+}
+
+
+table td {
+    font-size: medium;
+}
+
+
 </style>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 
 $(function(){
+	
+//     $('input[type="checkbox"].flat-red').iCheck({
+//         checkboxClass: 'icheckbox_flat-blue'
+//       });
+    
+    
 	//상세내용
-    $('table tr:gt(0)').click(function(){
+    $('#listTable tr:gt(0)').click(function(){
         var video_chat_room_code = $(this).find('td:eq(0) input').val();
         $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatView/'+video_chat_room_code+'.do');
     });
@@ -23,6 +70,48 @@ $(function(){
     $('#btn1').click(function(){
     	 $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatForm.do');
     });
+    
+//     $('#btn1').click(function(){
+//     	 $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatForm.do');
+//     });
+
+    $('#modal1').click(function(){
+        
+    	$('#myModal').modal('show');
+    	
+//         $.ajax({
+            
+//              type : "POST"
+//                  , url : "${pageContext.request.contextPath}/user/video/modalProject.do"
+//                  , dataType : "json"
+//                  , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+//                  , error : function(request, status, error) {
+//                         alert("error : " + request.status );
+//                  }
+//                  , success : function(modalPro) {
+//                      $('#mymodal').modal('show');
+                     
+//                      for (var i = 0; i < modalPro.modalPro.length; i++) {
+                         
+//                          $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label>');
+//                      }
+//                 }
+//         });
+    });   
+
+
+    $(".btn-next").click(function() {
+    	  $('#modal-container').animate({
+    	    'margin-left': '-=100%'
+    	  }, 500);
+    });
+
+   	$(".btn-back").click(function() {
+   	    $('#modal-container').animate({
+   	        'margin-left': '+=100%'
+   	    }, 500);
+   	});
+    
     
 });
 
@@ -33,7 +122,7 @@ $(function(){
     <section class="content"> 
     <br/>
     <div class="col-md-2"  style="float:right;">
-      <input id="btn1" value="+ 화상회의 개설" type="button" class="btn btn-block btn-default btn-lg "  style="float:right; background-color:#c8c8c8; border:1px outset;">
+      <input id="modal1" value="+ 화상회의 개설" type="button" class="btn btn-block btn-warning btn-lg "   style="float:right;  border:1px outset;">
     </div>
     <br/>
      <br/>
@@ -52,7 +141,7 @@ $(function(){
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin table-hover" style="margin:auto;" >
+                <table class="table no-margin table-hover" style="margin:auto;" id="listTable">
                   <thead>
                   <tr>
                     <th>No.</th>
@@ -109,3 +198,99 @@ $(function(){
         <input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
         <button type="submit" class="btn btn-primary form-control">검색</button>
         </form>
+        
+  
+ <!-- 모달 -->       
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div id="modal-container">
+  
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="myModalLabel">관련 프로젝트</h3>
+        </div>
+        
+        <div class="modal-body" style="margin-bottom:auto;">
+            <div class="col-md-6">
+              <div class="box box-solid box-primary">
+              <div class="box box-primary">
+              
+                <div class="box-header with-border" >
+                  <a type="next" class="btn-next"><h3>정부청사관리본부 정보시스템 통합유지보수</h3></a>
+                </div>
+                <div class="box-body">
+                    <h5>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"></i></h5>
+                  </div>
+              </div>
+              </div>
+             </div>
+            <div class="col-md-6">
+              <div class="box box-solid box-primary">
+              <div class="box box-primary">
+                <div class="box-header with-border" >
+                  <a class="btn-next"><h3>정부청사관리본부 정보시스템 통합유지보수</h3> </a>
+                </div>
+                <div class="box-body">
+                    <h5>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"></i></h5>
+                  </div>
+              </div>
+              </div>
+             </div>
+	    </div> 
+        <div class="modal-footer" >
+<!--           <button type="next" class="btn btn-primary btn-next">Move Next</button> -->
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    </div>
+    
+    <div class="modal-dialog" role="document" ">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="myModalLabel">직원초대</h3>
+        </div>
+        <div class="modal-body">
+           
+            <table class="table table-striped">
+                <tr>
+                  <th  style="width:10px"></th>
+                  <th style="width: 70px">사원번호</th>
+                  <th style="width: 70px">이름</th>
+                  <th style="width: 70px">담당부서</th>
+                  <th style="width: 60px">역할</th>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="chkbox" class="flat-red" value=""></td>
+	               <td>25125</td>
+	               <td>최동화</td>
+	               <td>개발1팀</td>
+	               <td>DA</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="chkbox" class="flat-red" value=""></td>
+	               <td>25125</td>
+	               <td>이동화</td>
+	               <td>개발2팀</td>
+	               <td>DA</td>
+                </tr>
+             </table>
+          
+        </div>
+        <div class="modal-footer" style="padding-bottom : 5px !important;  padding-top : 5px !important;">
+          <button type="back" class="btn btn-default btn-back">뒤로가기</button>
+          <input type="button" value="등록" class="btn btn-primary ">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  </div>

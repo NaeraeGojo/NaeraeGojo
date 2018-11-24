@@ -24,6 +24,73 @@ $(function(){
 		$('#filediv').empty();
 		$('#filediv').append('<input type="file" name="files">');
 	});
+	
+	 $('#modalBtn').click(function(){
+	       
+	        $('#ff').empty();
+	        $('#pwdiv').empty();
+	        $.ajax({
+	            
+	             type : "POST"
+	                 , url : "${pageContext.request.contextPath}/user/meetingFile/modalPW.do"
+	                 , dataType : "json"
+	                 , data: {project_code : $('input[name=project_code]').val()}
+	                 , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+	                 , error : function(request, status, error) {
+	                        alert("error : " + request.status );
+	                 }
+	                 , success : function(modalPro) {
+	                     $('#modal1').modal('show');
+// 	                   alert(modalPro.modalPro[0].pw_function);
+	                     
+	                     for (var i = 0; i < modalPro.modalPro.length; i++) {
+	                         
+	                         $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label>');
+	                     }
+	                }
+	        });
+	  });
+	 
+	  $('#modalAdd').click(function(){
+	        myArray=[];
+	        $('input[name=chkbox]:checked').each(function(index){
+	            myArray.push( $(this).val());
+	        });
+	        
+//	         alert(myArray);
+	        
+	        $.ajax({
+	            
+	            type : "POST"
+	                , url : "${pageContext.request.contextPath}/user/meetingFile/modalAdd.do"
+	                , dataType : "json"
+	                , data: {myArray : myArray}
+	                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+	                , error : function(request, status, error) {
+	                    boalert("error : " + request.status );
+	                }
+	                , success : function(list) {
+// 	                	alert(list.list[0].pw_function);
+	                    for (var i = 0; i < list.list.length; i++) {
+	                        $('#pwdiv').append('<label><input type="hidden" name="pw_code" value="'+myArray[i]+'">'+list.list[i]+'</label><br/>');
+	                    }
+	               }
+	       });
+	  });
+	  
+	  $('form').submit(function(){
+		  
+	  });
+	  
+	  $('#btn3').click(function(){
+		  var meeting_code = $('input[name=meeting_code]').val();
+		  $(location).attr('href', '${pageContext.request.contextPath}/user/meetingFile/deleteMeeting/'+meeting_code+'.do');
+	  });
+	  
+	  $('#deletebtn').click(function() {
+		  $('#deleteModal').modal('show');
+   	});
+	 
 });
 
 
@@ -75,6 +142,7 @@ label {
                   <label for="inputEmail3" class="col-sm-2 control-label" >회의제목</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" name="meeting_title" style="border-radius: 1em;" placeholder="회의제목">
+                    <input type="hidden" name="meeting_code" value="${meetingInfo[0].meeting_code}" >
                   </div>
                 </div>
                 
@@ -83,6 +151,7 @@ label {
                   <label for="inputEmail3" class="col-sm-2 control-label">관련 프로젝트</label>
 	                <div class="col-sm-8">
                      <input type="text" class="form-control" name="project_name" style="border-radius: 1em;" placeholder="관련프로젝트">
+                     <input type="hidden" class="form-control" name="project_code" value="${meetingInfo[0].project_code}" >
                     </div>
                  </div>
                  
@@ -90,18 +159,16 @@ label {
                 <br/><br/><br/>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">관련 업무</label>
-                  <div class="col-sm-8">
-                  <table>
-                  	<tr>
-                    <c:forEach items="${meetingInfo }" var="meetingList">
-                  		<td><input type="text" class="form-control" name="pw_function" value="${meetingList.pw_function }"  style="border-radius: 1em;" ></td>
+                  <div class="col-sm-8" >
+                    <button type="button" id="modalBtn"  class="btn btn-block btn-info pull-right" >관련 업무수정</button>
+                    <div id="pwdiv">
+                    <c:forEach items="${meetingInfo}" var="meetingList" >
+                  		<input type="text" class="form-control" name="pw_function" value="${meetingList.pw_function }"  style="border-radius: 1em;" >
+                  		<input type="hidden" class="form-control" name="pw_code" value="${meetingList.pw_code }"  style="border-radius: 1em;" >
                     </c:forEach>
-                  	</tr>
-                  </table>
-                    
+                    </div>
                   </div>           
                 </div>
-                 
                 <br/><br/><br/>
           
                 
@@ -119,20 +186,78 @@ label {
                     </c:forEach>
                       <input type="button" value="파일수정" id="filebtn">
                   </div>
+                  
                  </div>
                 
 				<div class="box-footer clearfix">
-              	<input value="삭제" type="button" href="${pageContext.request.contextPath}/user/meeting/meetingList.do" style="width:80px;" class="btn btn-warning btn-flat pull-right">
+              	<input value="삭제"  type="button" id="deletebtn"  style="width:80px;" class="btn btn-warning btn-flat pull-right">
               	<input value="목록" id="btn2" type="button" style="width:80px;"  class="btn btn-info btn-flat pull-right">
-              	<button  type="submit"  style="width:80px;" class="btn btn-danger btn-flat pull-right">수정</button>
+              	<button  type="submit"    style="width:80px;" class="btn btn-danger btn-flat pull-right">수정</button>
             	</div>
           <!-- /.box -->
              </div>
 				</form>
-        
       	  </div>
        	 </div>
        	 </div>
 	</section>
 	
+	   <!--모달  -->
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="container">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"   >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="exampleModalLabel">관련 업무 선택</h3>
+      </div>
+      <div class="modal-body" style=" border-top:1px solid orange;">
+<!--          <div  class="row" style="padding-left:35px"> -->
+<!--            <select class="col-sm-3" id="pw_function" style="margin:5px; height:30px;" > -->
+<!--             <option selected="selected">분류</option> -->
+<!--            </select> -->
+<!--            <input class="col-sm-4"type="text" style="margin:5px; height:30px;"> -->
+<!--            <button class="col-sm-2" class="btn btn-flat" style="margin:5px; height:30px;">검색</button> -->
+<!--            </div > -->
+            <div  class="row"  style="padding:30px;">
+                <div class="form-group">
+                    <div id="ff"></div>
+              </div>                
+             </div>
+      <div class="modal-footer">
+           <button type="button" id="modalAdd" class="btn btn-primary" data-dismiss="modal">추가</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+<!-- 삭제확인 모달창 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="container">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"   >
+      <div class="modal-header">
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
+        <h3 class="modal-title" id="exampleModalLabel">삭제하시겠습니까?</h3>
+      </div>
+      <div class="modal-body" style=" border-top:1px solid gray;">
+            <div  class="row" align="center" style="padding:10px;">
+                <table >
+                    <tr>
+                        <td style="width:80px; padding:10px;" ><input value="삭제" id="btn3" type="button" style="width:80px;" class="btn btn-block btn-default "></td>
+                        <td style="width:80px; padding:10px;" ><input value="취소"  data-dismiss="modal" type="button" style="width:80px; " class="btn btn-block btn-default "></td>
+                    </tr>
+                </table>
+             </div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
 	

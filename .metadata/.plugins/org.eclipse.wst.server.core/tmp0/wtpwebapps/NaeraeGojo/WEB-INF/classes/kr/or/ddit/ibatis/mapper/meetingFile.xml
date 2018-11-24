@@ -35,6 +35,20 @@
     	from meeting_file
     	where meeting_file_code = #meeting_file_code#
     </select>
+    
+    <update id="updateMeetingFile" parameterClass="meetFileVO">
+        update meeting_file
+        set meeting_file_name = #meeting_file_name#
+			, meeting_file_save_name = #meeting_file_save_name#
+			, meeting_file_volume = #meeting_file_volume#
+		where meeting_file_code = #meeting_file_code#
+    </update>
+    
+    <select id="getfileCode" parameterClass="string" resultClass="string">
+        select meeting_file_code
+        from meeting_file
+        where  meeting_code = #meeting_code#
+    </select>
 	
 	
     

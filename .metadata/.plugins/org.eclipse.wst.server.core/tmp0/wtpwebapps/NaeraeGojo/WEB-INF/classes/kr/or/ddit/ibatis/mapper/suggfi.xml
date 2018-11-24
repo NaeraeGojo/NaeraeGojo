@@ -54,6 +54,12 @@
 		and suggfi_kind_code between 1 and 2
 	</statement>
 
+	<statement id="sugFiles" resultClass="suggfiVO">
+		<include refid="selectAll"/>
+		and suggfi_doc_code = #suggest_code#
+		and suggfi_kind_code = 3
+	</statement>
+
 
 	<select id="getSuggestFile" resultClass="suggfiVO" parameterClass="map">
 		<include refid="selectAll"/>

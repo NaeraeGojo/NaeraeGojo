@@ -291,7 +291,7 @@ p {
 $(function(){
 	
 	$('#joinForm').click(function(){
-		$(location).attr('href','${pageContext.request.contextPath}/user/join/join_insert.do');
+		$(location).attr('href','${pageContext.request.contextPath}/user/join/join_insertFinal.do');
 	});
 	
     $('.a_view').click(function(){

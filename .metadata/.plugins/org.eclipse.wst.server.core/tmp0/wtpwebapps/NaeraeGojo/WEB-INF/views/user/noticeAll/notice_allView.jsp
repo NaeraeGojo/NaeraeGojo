@@ -79,7 +79,9 @@ label {
                   <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력</font></font></label>
                 <c:forEach items="${vo.items }" var="allFileItem" varStatus="stat">
                   <div class="col-sm-10 control-label">
-	                  <input type="file" id="file01" name="files" value="/ALL_FILE_SAVE_NAME/${allFileItem.all_file_save_name}">
+<%--                   <a id="${allFileItem.meeting_file_name}" href="${pageContext.request.contextPath }/user/meetingFile2/meetFileDownload.do?meeting_file_code=${meetFileInfo.meeting_file_code}">${meetFileInfo.meeting_file_name}</a> --%>
+	                  <a>${allFileItem.all_file_name}</a>
+<%-- 	                  <input type="file" id="file01" name="files" value="/ALL_FILE_SAVE_NAME/${allFileItem.all_file_save_name}"> --%>
                   </div>
                 </c:forEach>
                 </div>

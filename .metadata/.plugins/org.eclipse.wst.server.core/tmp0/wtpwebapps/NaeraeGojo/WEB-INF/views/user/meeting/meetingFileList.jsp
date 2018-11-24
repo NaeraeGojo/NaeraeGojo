@@ -8,6 +8,15 @@
 .box-title {
     font-size: 30px !important;
 }
+
+table th {
+    font-size: large;
+}
+
+
+table td {
+    font-size: medium;
+}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
