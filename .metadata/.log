@@ -5064,3 +5064,9 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY jp.gr.java_conf.ussiy.app.propedit 1 0 2018-11-25 00:47:47.881
 !MESSAGE loading file 'pom.properties'
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2018-11-25 01:24:03.869
+!MESSAGE Several ports (8005, 80, 8009) required by Tomcat v7.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2018-11-25 01:24:27.209
+!MESSAGE Several ports (8005, 80, 8009) required by Tomcat v7.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).

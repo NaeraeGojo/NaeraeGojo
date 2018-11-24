@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="pwc">
+	<typeAlias alias="pwcVO" type="kr.or.ddit.vo.ProjectWorkClassVO"/>
+		
+	<sql id="selectAll">
+		select * from pwc
+			where pwc_delete = 'n'
+	</sql>
+	
+	<insert id="insertPwc" parameterClass="pwcVO">
+		<selectKey keyProperty="pwc_code" resultClass="string">
+			select pwc_seq.nextval from dual
+		</selectKey>
+		
+		insert into pwc (
+						pwc_code
+						, pwc_name
+						, project_code
+						, emp_code
+						)
+						
+					values(
+							#pwc_code#
+							,#pwc_name#
+							,#project_code#
+							,#emp_code#
+					)
+	</insert>
+	
+	<select id="getPwcList" parameterClass="map" resultClass="pwcVO">
+		<include refid="selectAll"/>
+			and project_code = #project_code#
+			order by to_number(pwc_code) desc
+	</select>
+	
+	<update id="deletePwc" parameterClass="map">
+		update pwc
+			set pwc_delete = 'y'
+			where pwc_code = #pwc_code#
+	</update>
+
+	<select id="getPwc" parameterClass="map" resultClass="pwcVO">
+		<include refid="selectAll"/>
+		and pwc_code = #pwc_code#
+	</select>
+	
+	<update id="updatePwc" parameterClass="pwcVO">
+		update pwc
+			set pwc_name = #pwc_name#
+			where pwc_code = #pwc_code#
+	</update>
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

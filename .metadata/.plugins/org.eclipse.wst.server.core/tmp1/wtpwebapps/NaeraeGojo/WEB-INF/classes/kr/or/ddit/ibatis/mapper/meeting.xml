@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="meeting">
+	<typeAlias alias="meetingVO" type="kr.or.ddit.vo.MeetingVO"/>
+	<typeAlias alias="tempMeetingVO" type="kr.or.ddit.vo.TempMeetingVO"/>
+	<typeAlias alias="proVO" type="kr.or.ddit.vo.ProjectVO"/>
+	<typeAlias alias="meetpwVO" type="kr.or.ddit.vo.MeetPwVO"/>
+
+
+    <sql id="selectAll">
+        select * 
+        from meeting
+        where meeting_delete = 'n'
+    </sql>
+    
+    <resultMap  id="meetingMap" class="tempMeetingVO">
+        <result property="project_name" column="project_name"/>
+        <result property="meeting_title" column="meeting_title"/>
+        <result property="meeting_content" column="meeting_content"/>
+        <result property="meeting_code" column="meeting_code"/>
+        <result property="pw_function" column="pw_function"/>
+        <result property="project_code" column="project_code"/>
+        <result property="pw_code" column="pw_code"/>
+        <result property="items" column="meeting_code" select="meetingFile.meetFileItems"/> 
+    </resultMap>
+
+    <sql id="searchCondition">
+        <dynamic>
+            <isNotEmpty property="search_keyword" prepend="AND">
+                <isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
+                        MEETING_TITLE LIKE '%' || #search_keyword# || '%'
+                    OR MEETING_CONTENT LIKE '%' || #search_keyword# || '%'
+                    OR EMP_CODE LIKE '%' || #search_keyword# || '%'
+                </isEqual>
+                <isEqual property="search_keycode" compareValue="TITLE" >  
+                        MEETING_TITLE LIKE '%' || #search_keyword# || '%'
+                </isEqual>
+                <isEqual property="search_keycode" compareValue="CONTENT" >  
+                        MEETING_CONTENT LIKE '%' || #search_keyword# || '%'
+                </isEqual>
+                <isEqual property="search_keycode" compareValue="WRITER" >  
+                        EMP_CODE LIKE '%' || #search_keyword# || '%'
+                </isEqual>
+            </isNotEmpty>
+        
+        </dynamic>
+    </sql>
+
+    <select id="totalCount" parameterClass="map" resultClass="int">
+        select count(meeting_code)
+        from meeting
+        where meeting_delete = 'n'
+        <include refid="searchCondition"/>
+    </select>
+    
+    <select id="getMeetingList" parameterClass="map" resultClass="TempMeetingVO">
+		 select z.*
+		  from (select rownum rnum, y.*
+				from(select d.project_name, c.emp_name, a.meeting_title, a.meeting_hit, a.meeting_date, a.meeting_code
+                        from meeting a, pw b, emp c, project d, meet_pw e
+                        where b.project_code = d.project_code
+                            and a.meeting_delete = 'n'
+                            and a.emp_code = c.emp_code
+                             and e.pw_code = b.pw_code
+					<include refid = "searchCondition"/>
+					   group by d.project_name, c.emp_name,  a.meeting_title, a.meeting_content, a.meeting_hit, 
+					       a.meeting_date, a.meeting_code
+					   order by a.meeting_date 
+					) y ) z
+		 <![CDATA[
+ 		 where z.rnum <= #startCount#
+ 		   and z.rnum >= #endCount#
+ 		 ]]>
+		 order by z.rnum desc
+    </select>
+    
+    <select id="meetingInfo" parameterClass="map" resultMap="meetingMap">
+        select    a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code
+        from      meeting a, meet_pw b, pw c, project d
+        where     a.meeting_code=b.meeting_code 
+                    and c.pw_code = b.pw_code
+                    and c.project_code = d.project_code
+                    and a.meeting_code = #meeting_code#
+                    and a.meeting_delete = 'n'
+                    group by a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code
+    </select>
+    
+    
+    <update id="updateHit" parameterClass="map">
+        update meeting
+        set meeting_hit = meeting_hit + 1
+        where meeting_code = #meeting_code#
+    </update>
+    
+    <!-- 화상 제목, 내용 수정 -->
+    <update id="updateVideoChat" parameterClass="videoRoomVO">
+        update video_chat_room
+        set video_chat_room_title = #video_chat_room_title#
+            , video_chat_room_content = #video_chat_room_content#
+        where video_chat_room_code = #video_chat_room_code#
+    </update>
+    
+    <update id="deleteVideoChat" parameterClass="map">
+        update video_chat_room
+        set video_chat_room_delete = 'y'
+        where video_chat_room_code = #video_chat_room_code#
+    </update>
+    
+    <select id="getProjectNM" resultClass="proVO">
+        select project_name, project_code
+        from project
+        where project_delete = 'n'
+    </select>
+    
+    <select id="getProjectModal" parameterClass="map" resultClass="tempMeetingVO">
+		select b.pw_function,  b.pw_code
+		from project a, pw b
+		where a.project_code=#project_code#
+		and b.project_code = a.project_code
+		group by b.pw_function, b.pw_code
+    </select>
+    
+    
+    <select id="getProjectname" parameterClass="map" resultClass="string">
+        select pw_function
+        from pw
+        where pw_code= #pw_code#
+    </select>
+    
+    <insert id="insertMeetingInfo" parameterClass="meetingVO" >
+        <selectKey keyProperty="meeting_code" resultClass="string">
+            select meeting_seq.nextval from dual
+        </selectKey>
+        
+        insert into meeting(meeting_code
+							,meeting_title
+							,meeting_content
+							,meeting_date
+							,emp_code)
+							
+					values ( #meeting_code#
+                            ,#meeting_title#
+                            ,#meeting_content#
+                            ,sysdate
+                            ,#emp_code#)
+    </insert>
+    
+    <insert id="insertmeetPw" parameterClass="map">
+        insert into meet_pw (meeting_code
+                            , pw_code
+                            , meet_pw_date)
+                       values (#meeting_code#
+                               ,#pw_code#
+                               , sysdate)    
+    </insert>
+    
+    <update id="updateMeetingInfo" parameterClass="meetingVO">
+        update meeting
+        set meeting_title = #meeting_title#
+            , meeting_content = #meeting_content#
+        where meeting_code = #meeting_code#
+    </update>
+    
+    <delete id="deleteMeetPw" parameterClass="map">
+        delete 
+        from meet_pw
+        where meeting_code =#meeting_code#
+    </delete>
+    
+    <update id="deleteMeetingInfo" parameterClass="map">
+        update meeting
+        set meeting_delete = 'y'
+        where meeting_code = #meeting_code#
+    </update>
+    
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

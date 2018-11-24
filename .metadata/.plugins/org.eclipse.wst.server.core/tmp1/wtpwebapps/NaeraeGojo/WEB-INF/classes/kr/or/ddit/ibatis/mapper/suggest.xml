@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="suggest">
+	<typeAlias alias="sugVO" type="kr.or.ddit.vo.SuggestVO"/>
+	
+	<resultMap class="sugVO" id="sugMap">
+		<result property="suggest_code" column="suggest_code"/>
+		<result property="suggest_title" column="suggest_title"/>
+		<result property="suggest_content" column="suggest_content"/>
+		<result property="suggest_result" column="suggest_result"/>
+		<result property="suggest_delete" column="suggest_delete"/>
+		<result property="suggest_start_date" column="suggest_start_date"/>
+		<result property="suggest_end_date" column="suggest_end_date"/>
+		<result property="suggest_cost" column="suggest_cost"/>
+		<result property="suggest_reg_date" column="suggest_reg_date"/>
+		<result property="rqpps_code" column="rqpps_code"/>
+		<result property="items" column="suggest_code" select="suggfi.sugFiles"/>
+	</resultMap>
+	
+	<sql id="selectAll">
+		select * from suggest
+			where suggest_delete = 'n'
+	</sql>
+	
+	<sql id="nick">
+		select suggest.* , rqpps.rqpps_nickname
+			from suggest , rqpps
+            where suggest_delete = 'n'
+            and suggest.rqpps_code = rqpps.rqpps_code
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
+					suggest_title like '%' || #search_keyword# ||'%'
+					or suggest_content like '%' || #search_keyword# ||'%'
+					or rqpps.rqpps_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="TITLE" >
+					suggest_title like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="CONTENT" >
+					suggest_content like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="WRITER" >
+					rqpps.rqpps_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		select count(suggest_code)
+		  from suggest ,rqpps
+		 where suggest_delete = 'n'
+		 and	suggest.rqpps_code = rqpps.rqpps_code
+		<include refid="searchCondition"/>
+	</select>
+	
+	<select id="getSuggestList" parameterClass="map" resultClass="sugVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (<include refid="nick"/>
+						<include refid="searchCondition"/>
+						order by to_number(suggest_code) asc
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startNo#
+		and b.rnum >= #endNo#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
+	<insert id="insertSuggest" parameterClass="sugVO">
+		<selectKey keyProperty="suggest_code" resultClass="string">
+			select suggest_seq.nextval from dual
+		</selectKey>
+		insert into suggest(
+							suggest_code
+							,suggest_title
+							,suggest_content
+							,suggest_start_date
+							,suggest_end_date
+							,suggest_cost
+							,suggest_reg_date
+							,rqpps_code
+							)
+					values(
+							 #suggest_code#
+							,#suggest_title#
+							,#suggest_content#
+							,#suggest_start_date#
+							,#suggest_end_date#
+							,#suggest_cost#
+							,sysdate
+							,#rqpps_code#
+						)
+		
+			
+	</insert>
+	
+	<select id="getSuggest" parameterClass="map" resultMap="sugMap">
+		<include refid="selectAll"/>
+		and suggest_code = #suggest_code#
+	</select>
+	
+	<update id="updateSuggest">
+		update suggest
+			set suggest_title = #suggest_title#
+				, suggest_content = #suggest_content#
+				, suggest_result = #suggest_result#
+				, suggest_start_date = #suggest_start_date#
+				, suggest_end_date = #suggest_end_date#
+				, suggest_reg_date = sysdate
+				, suggest_cost = #suggest_cost#
+			where suggest_code = #suggest_code#
+	</update>
+	
+	<update id="deleteSuggest" parameterClass="map">
+		update suggest
+			set suggest_delete = 'y'
+			where suggest_code = #suggest_code#
+	</update>
+	
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

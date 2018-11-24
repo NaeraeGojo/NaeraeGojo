@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 
+		@RequestBody : 클라이언트가 요청시 전송되는 파라메터 전체 문자열 취득	
+		@ResponseBody : 서버단 컨트롤러 메서드에서 반환값이 ViewResolver에 전달되지 않으며
+						클라이언트에 전송되는 응답 객체에 저장 후 전송.
+		RedirectAttribute : 특정 컨트롤러 클래스 내 컨트롤러 메서드에서
+							리다이렉트를 통해 다른 컨트롤러 클래스의 컨트롤러 메서드 요청이 
+							전달될 때 마치 POST전송방식으로 파라메터가 전송.
+							ex) public String 컨트롤러 메서드1(){
+									return "redirect:/user/join/loginForm.do?message=회원아님";
+								}
+								====>
+								전송
+								public String 컨트롤러 메서드1(RedirectAttribute redirectAttr){
+									redirectAttr.addFlashAttribute("message", "회원아님");
+									return ""redirect:/user/join/loginForm.do";
+								}
+								취득
+								public void 컨트롤러 메서드2(){
+									Map paramMap = RequestContextUtiles.getInputFlashMap(request);
+									paramMap.get("message"); ==> 회원아님
+								
+								}	
+	-->
+		
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+</beans>
