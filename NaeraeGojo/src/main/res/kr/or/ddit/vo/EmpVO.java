@@ -26,4 +26,6 @@ public class EmpVO {
 	private String rnum;
 	
 	
+	
+	
 }

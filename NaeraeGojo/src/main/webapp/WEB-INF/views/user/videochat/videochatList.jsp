@@ -95,7 +95,7 @@ $(function(){
                     	 projectListt += '<div class="box box-primary" >';
                     	 projectListt += '<div class="box-header with-border" style="height:95px;">';
                     	 
-                    	 projectListt += '<a type="next" class="btn-next"><h3>'+projectList.projectList[i].project_name+'</h3></a>';
+                    	 projectListt += '<a id="empList" class="btn-next"><h3>'+projectList.projectList[i].project_name+'</h3></a>';
 //                     	 projectListt += '<input type="hidden" name=project_code value="'+projectList.projectList[i].project_code+'">';
                     	 projectListt += ' </div>';
                     	 
@@ -124,6 +124,28 @@ $(function(){
    	    $('#modal-container').animate({
    	        'margin-left': '+=100%'
    	    }, 500);
+   	});
+   	
+   	$('#empList').click(function(){
+   		var projectcode = $('input[nanme=proejct_code]').val();
+   		$.ajax({
+            
+            type : "POST"
+                , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
+                , dataType : "json"
+                , data : {project_code : projectcode}
+                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                , error : function(request, status, error) {
+                       alert("error : " + request.status );
+                }
+                , success : function(projectList) {
+                    for (var i = 0; i < projectList.projectList.length; i++) {
+                   	 projectListt += '</div></div></div>';
+                   	 
+                    }
+               }
+       });
+   		
    	});
     
     
@@ -239,7 +261,8 @@ $(function(){
 	    </div> 
         <div class="modal-footer" >
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <a type="next" class="btn-next">asdf</a>
+<!--             <a type="next" class="btn-next">asdf</a> -->
+<!--             <a type="next" class="btn-next">sdf</a> -->
         </div>
     </div>
     </div>

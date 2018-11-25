@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.videochatroom.dao.IVideoChatDao;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 import kr.or.ddit.vo.ChatListTempVO;
@@ -63,6 +64,12 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 	public List<ProjectVO> getProjectList(Map<String, String> params)
 			throws SQLException {
 		return dao.getProjectList(params);
+	}
+
+	@Override
+	public List<EmpVO> getEmpList(Map<String, String> params)
+			throws SQLException {
+		return dao.getEmpList(params);
 	}
 
 }

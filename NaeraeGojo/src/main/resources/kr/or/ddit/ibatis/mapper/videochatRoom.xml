@@ -6,6 +6,7 @@
 	<typeAlias alias="videoRoomVO" type="kr.or.ddit.vo.VideoChatRoomVO"/>
 	<typeAlias alias="chatTempVO" type="kr.or.ddit.vo.ChatListTempVO"/>
 	<typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
 	
 
 
@@ -98,6 +99,13 @@
 		and b.emp_code = c.emp_code
 		and b.project_code = a.project_code
 		group by a.project_code, a.project_name, a.project_start, a.project_end
+    </select>
+    
+    <select id="getEmpList" parameterClass="map" resultClass="empVO">
+    	select a.emp_code, a.emp_name, a.emp_role, c.part_name
+		from emp a, project b, part c
+		where a.part_code = c.part_code
+		and b.project_code=#project_code#
     </select>
     
 </sqlMap>

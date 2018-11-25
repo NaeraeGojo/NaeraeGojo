@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 import kr.or.ddit.vo.ChatListTempVO;
@@ -22,5 +23,7 @@ public interface IVideoChatDao {
 	public int totalCount(Map<String, String> params) throws SQLException;
 
 	public List<ProjectVO> getProjectList(Map<String, String> params) throws SQLException;
+
+	public List<EmpVO> getEmpList(Map<String, String> params) throws SQLException;
 	
 }
