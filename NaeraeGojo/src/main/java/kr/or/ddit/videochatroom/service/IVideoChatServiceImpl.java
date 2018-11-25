@@ -53,6 +53,12 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 		return dao.totalCount(params);
 	}
 
+//	@Override
+//	public List<ProjectVO> getProject(Map<String, String> params)
+//			throws SQLException {
+//		return dao.getProjectList(params);
+//	}
+	
 	@Override
 	public List<ProjectVO> getProjectList(Map<String, String> params)
 			throws SQLException {

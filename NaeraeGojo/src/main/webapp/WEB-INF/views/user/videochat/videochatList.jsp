@@ -78,25 +78,39 @@ $(function(){
     $('#modal1').click(function(){
         
     	$('#myModal').modal('show');
-    	
-//         $.ajax({
+    	var projectListt ="";
+        $.ajax({
             
-//              type : "POST"
-//                  , url : "${pageContext.request.contextPath}/user/video/modalProject.do"
-//                  , dataType : "json"
-//                  , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-//                  , error : function(request, status, error) {
-//                         alert("error : " + request.status );
-//                  }
-//                  , success : function(modalPro) {
-//                      $('#mymodal').modal('show');
-                     
-//                      for (var i = 0; i < modalPro.modalPro.length; i++) {
-                         
-//                          $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label>');
-//                      }
-//                 }
-//         });
+             type : "POST"
+                 , url : "${pageContext.request.contextPath}/user/video/modalProject.do"
+                 , dataType : "json"
+                 , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                 , error : function(request, status, error) {
+                        alert("error : " + request.status );
+                 }
+                 , success : function(projectList) {
+                     for (var i = 0; i < projectList.projectList.length; i++) {
+                    	 projectListt += '<div class="col-md-6">';
+                    	 projectListt += ' <div class="box box-solid box-primary"style="width:280px; height:200px;">';
+                    	 projectListt += '<div class="box box-primary" >';
+                    	 projectListt += '<div class="box-header with-border" style="height:95px;">';
+                    	 
+                    	 projectListt += '<a type="next" class="btn-next"><h3>'+projectList.projectList[i].project_name+'</h3></a>';
+//                     	 projectListt += '<input type="hidden" name=project_code value="'+projectList.projectList[i].project_code+'">';
+                    	 projectListt += ' </div>';
+                    	 
+                    	 projectListt += '<div class="box-body">';
+                    	 projectListt += '<h5>프로젝트 기간 : &nbsp;<i style="font-size: 20px;">';
+                    	 projectListt += projectList.projectList[i].project_start + '-' + projectList.projectList[i].project_end;
+                         projectListt += '</i></h5>';
+                    	 projectListt += ' </div>';
+                    	 projectListt += '</div></div></div>';
+                    	 
+                     }
+//                      $('#projectdiv').empty().append(projectListt);
+                     $('#projectdiv').append(projectListt);
+                }
+        });
     });   
 
 
@@ -214,41 +228,23 @@ $(function(){
           <h3 class="modal-title" id="myModalLabel">관련 프로젝트</h3>
         </div>
         
-        <div class="modal-body" style="margin-bottom:auto;">
-            <div class="col-md-6">
-              <div class="box box-solid box-primary">
-              <div class="box box-primary">
+        <div class="modal-body" style="margin-bottom:auto;" id="projectdiv">
+<!--             <div class="col-md-6"> -->
+<!--               <div class="box box-solid box-primary"> -->
+<!--               <div class="box box-primary" > -->
               
-                <div class="box-header with-border" >
-                  <a type="next" class="btn-next"><h3>정부청사관리본부 정보시스템 통합유지보수</h3></a>
-                </div>
-                <div class="box-body">
-                    <h5>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"></i></h5>
-                  </div>
-              </div>
-              </div>
-             </div>
-            <div class="col-md-6">
-              <div class="box box-solid box-primary">
-              <div class="box box-primary">
-                <div class="box-header with-border" >
-                  <a class="btn-next"><h3>정부청사관리본부 정보시스템 통합유지보수</h3> </a>
-                </div>
-                <div class="box-body">
-                    <h5>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"></i></h5>
-                  </div>
-              </div>
-              </div>
-             </div>
+<!--               </div> -->
+<!--               </div> -->
+<!--              </div> -->
 	    </div> 
         <div class="modal-footer" >
-<!--           <button type="next" class="btn btn-primary btn-next">Move Next</button> -->
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a type="next" class="btn-next">asdf</a>
         </div>
     </div>
     </div>
     
-    <div class="modal-dialog" role="document" ">
+    <div class="modal-dialog" role="document" >
       <div class="modal-content">
       
         <div class="modal-header">
@@ -258,7 +254,6 @@ $(function(){
           <h3 class="modal-title" id="myModalLabel">직원초대</h3>
         </div>
         <div class="modal-body">
-           
             <table class="table table-striped">
                 <tr>
                   <th  style="width:10px"></th>

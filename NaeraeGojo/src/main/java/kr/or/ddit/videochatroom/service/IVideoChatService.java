@@ -21,6 +21,8 @@ public interface IVideoChatService {
 
 	public int totalCount(Map<String, String> params) throws SQLException;
 
+//	public List<ProjectVO> getProject(Map<String, String> params) throws SQLException;
+	
 	public List<ProjectVO> getProjectList(Map<String, String> params) throws SQLException;
 	
 }

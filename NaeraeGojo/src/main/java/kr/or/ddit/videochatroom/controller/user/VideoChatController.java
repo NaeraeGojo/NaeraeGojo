@@ -124,11 +124,12 @@ public class VideoChatController {
 	@RequestMapping("modalProject")
 	public ModelAndView modalProject(ModelAndView andView, HttpSession session, Map<String, String> params) throws SQLException{
 		
-//		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
-//		params.put("emp_code", emp_code);		
-//		
-//		List<ProjectVO> projectList = service.getProjectList(params);
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);		
 		
+		List<ProjectVO> projectList = service.getProjectList(params);
+		
+		andView.addObject("projectList", projectList);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
