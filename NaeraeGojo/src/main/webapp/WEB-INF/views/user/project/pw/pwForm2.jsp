@@ -15,15 +15,14 @@
 .table_pwc>tbody>tr>td{
 	vertical-align: middle;
 }
+.table_pwc{
+	font-size: 1.3em;
+}
  .no-margin {
     padding: 10px !important;
 }
 .box-title {
 	font-size: 30px !important;
-}
-
-.cont_pwc .box-title{
-	font-size: 20px !important;
 }
 
 .pwcont{
@@ -76,25 +75,20 @@ $(function(){
 		});
 	};
 	
-	$('#btn_show_pwc').click(function(){
-		$(this).hide();
-		$('.div_pwc_search').show();
+	
+	
+	
+	$('#pwForm').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwForm.do');
 	});
 	
-	$('#btn_hide_pwc').click(function(){
-		$('.div_pwc_search').hide();
-		$('#btn_show_pwc').show();	
-	});
-	
-
-	rePwc = function(mes){
+	//--------------------------------pwc-------------------------------------------	
+	rePwc = function(){
 		$('.table_pwc tbody').empty();
 		
 		$.ajax({
 			url :'${pageContext.request.contextPath}/user/project/pwc/pwcList.do'
 			, dataType : 'json'
-			, data : {mes : mes}
-			, type : 'post'
 			, async : false
 			, error: function(xhr, status, error){
 	            alert(error);
@@ -110,52 +104,99 @@ $(function(){
 	        				 		+'</td>'
 	        		tdtag += '<td>'
 	        					+'<input type="button" code="'+v.pwc_code 
-	        					+'"<input type="button" class="btn_choice_pwc btn btn-default hideUp'+v.pwc_code+'" code="'
-	        					+ v.pwc_code+'" value="선택">'
+	        					+'" class="btn btn-warning btn_pwc_upForm upForm'+v.pwc_code+'" value="수정">'
+	        					+'<input type="button" class="btn_updatePwc btn btn-warning hideUp'+v.pwc_code+'" code="'
+	        					+ v.pwc_code+'" value="등록" style="display:none;">'
 	        					+'</td>'
+	        		tdtag += '<td><input code="'+v.pwc_code
+	        				+'" type="button" class="btn btn-danger btn_pwc_del upForm'+v.pwc_code+'" value="삭제">'
+	        				+'<input type="button" class="btn btn-default btn_pwc_cancle hideUp'+v.pwc_code+'" code="'
+        					+ v.pwc_code+'" value="취소" style="display:none;">'
+	        				+'</td>'
 	        		tdtag += '</tr>'
 	        	})
-	        	
 	        	$('.table_pwc tbody').append(tdtag);
 	        	
-	        	$('.btn_choice_pwc').click(function(){
+	        	$('.btn_pwc_upForm').click(function(){
 	        		var code = $(this).attr('code');
+	        		$('.upForm'+code).hide();
+	        		$('.hideUp'+code).show();
+	        		$('input[name='+code+']').focus();
+	        	});
+	        	
+	        	$('.btn_pwc_cancle').click(function(){
+	        		var code = $(this).attr('code');
+	        		$('.hideUp'+code).hide();
+	        		$('.upForm'+code).show();
+	        	});
+	        	
+	        	$('.btn_pwc_del').click(function(){
+	        		var code = $(this).attr('code');
+	        		$.ajax({
+	        			url: '${pageContext.request.contextPath}/user/project/pwc/pwcDelete.do'
+	        			, data : {pwc_code : code}
+	        			, type : 'post'
+	        			, error: function(xhr, status, error){
+	        		        alert(error);
+	        		    }
+	        		    , success : function(json){
+	        		    	rePwc();
+	        		    }
+	        		});
+	        	});
+	        	
+	        	/* 업무 분류 수정 폼에서 등록 클릭 시 */
+	        	$('.btn_updatePwc').click(function(){
+	        		var code = $(this).attr('code');
+	        		var pwc_name = $('input[name='+code+']').val();
 	        		
-	        		var pwc_name = $('p[class=upForm'+code+']').text();
+	        		if(pwc_name == ''){
+	        			boalert("업무명을 입력해주세요.")
+	        			return false;
+	        		}
 	        		
-	        		$('input[name=pwc_code]').val(code);
-	        		$('input[name=show_pwc_name]').val(pwc_name);
+	        		$.ajax({
+	        			url : '${pageContext.request.contextPath}/user/project/pwc/pwcUdpate.do'
+	        			, data : {pwc_code:code,pwc_name:pwc_name}
+	        			, type : 'post'
+	        			, error : function(xhr, status, error){
+	        				boalert(error);
+	        			}
+	        			, success : function(json){
+	        				rePwc();
+	        			}
+	        		});
 	        		
 	        	});
+	        	
 	        }
 		});
 	};
 	
-	$('input[name=pwc_search]').on('input',function(e){
-		var mes = $('input[name=pwc_search]').val();
-		setTimeout(function() {
-			var mes2 = $('input[name=pwc_search]').val();
-			
-			if(mes == mes2){
-				if(mes2 == ''){
-					$('.table_pwc tbody').empty();
-					return false;
-				}
-				rePwc(mes2);
-			}
-		}, 800);
+	$('#btn_pwcForm').click(function(){
+		rePwc();
+	});
+	
+	
+	$('#pwForm').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwForm.do');
 	});
 
+// 	$('table tr:gt(0)').click(function(){
+// 		var pblanc_board_code = $(this).find('td:eq(0) input').val();
+// 		var rnum = $(this).find('td:eq(0)').text();
+// 		$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardView.do?pblanc_board_code='+pblanc_board_code+'&rnum='+rnum);
+// 	})
 
 	$('#btn_insert_pwc').click(function(){
-		var pwc_name = $('#pwcForm input[name=text_pwc]').val();
+		var pwc_name = $('#pwcForm input[name=pwc_name]').val();
 		
 		if(pwc_name == ''){
 			boalert('분류명을 입력해주세요.');
 			return false;
 		}
 		
-		$('#pwcForm input[name=text_pwc]').val('');
+		$('#pwcForm input[name=pwc_name]').val('');
 		
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/project/pwc/pwcInsert.do'
@@ -167,8 +208,7 @@ $(function(){
 	            alert(error);
 	        }
 	        , success : function(json){
-	        	var mes = $('input[name=pwc_search]').val();
-	        	rePwc(mes);
+	        	rePwc();
 	        }
 	        
 		});
@@ -200,87 +240,56 @@ $(function(){
             
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >분류</label>
-	          <div class="col-sm-3">
-	            <input readonly="readonly" type="text" name="show_pwc_name" class="form-control" style="border-radius: 1em;">
-	            <input type="hidden" name="pwc_code">
-	          </div>
-	          <div class="col-sm-1">
-	          <input id="btn_show_pwc" type="button" class="bg-teal btn form-control btn-sm" 
-	            value="선택" style="border-radius: 1em;">
-	          <input id="btn_hide_pwc" type="button" class="bg-teal btn form-control btn-sm div_pwc_search" 
-	            value="접기" style="border-radius: 1em; display: none;">
-	           </div>
-            </div>
-            
-            
-            
-            
-            <div class="form-group div_pwc_search" style="display: none;">
-              <label style="visibility: hidden;" for="name" class="col-sm-2 control-label" >분류 선택</label>
-              
-              <div class="col-sm-4 cont_pwc">
-              
-              <div class="box box-success">		
+	              <div class="col-sm-4">
+	                <input id="name" type="text" name="pwc_name" class="form-control" style="border-radius: 1em;">
+	              </div>
+<!-- 	              <div class="col-sm-1" style="padding-left:0px;"> -->
+<!-- 	                <input type="button" class="bg-teal btn form-control btn-sm"  -->
+<!-- 	           			 value="검색" style="border-radius: 1em;"> -->
+<!-- 	              </div> -->
+
+			<div class="box box-warning">		
+		          
 		            <div class="box-header with-border">	
-		              <b class="box-title">조회 :</b>	
-		            	<input id="name" type="text" name="pwc_search" class="form-control"
-		            	 style="border-radius: 1em; border-radius: 1em;width: 70%;display: inline-block;margin-left: 15px;">
+		              <b class="box-title">분류</b>	
 		            </div>
 		            
 		            <div class="box-body">			
 		            
-		              <div class="table-responsive" style="height: 200px;">
+		              <div class="table-responsive">
 		                <table class="table no-margin table-hover table_pwc" >
 		                  <thead>						
 		                  <tr id="trtr">
 		                    <th scope="col" width="20%">분류 No.</th>
 		                    <th scope="col" width="45%">분류 명</th>
 		                    <th scope="col" width="15%"></th>
+		                    <th scope="col" width="15%"></th>
 		                  </tr>
 		                  </thead>
 		                  
-		                  <tbody >
+		                  <tbody>
 		                  
 		                  </tbody>
 		                  
 		                </table>
 		              </div>
 		              
-		              <div style="width: 70%; margin-top: 3%" class="center">
-		              	<table id="pwcForm" class="perful">
-		              		<tr>
-		              			<td width="10%"></td>
-			              		<td colspan="2">
-			              		<input type="text" name="text_pwc" class="form-control input_foot" style="border-radius: 1em;"
-			              		 placeholder="업무 분류 추가">
-			              		</td>
-			              		<td style="width:10%;"></td>
-			              		<td  style="width: 20%">
-			              		<button id="btn_insert_pwc" type="button" class="btn btn-primary">추가</button>
-			              		</td>
-			              	</tr>
-			             </table>
-		                </div>
-		              
 		            </div>
 		          </div>
-		          
-              	</div>
-              	
+
             </div>
             
-            
             <div class="form-group">
-              <label for="name" class="col-sm-2 control-label" >업무 명</label>
-              <div class="col-sm-6">
-                <input id="name" type="text" name="pw_function" class="form-control" style="border-radius: 1em;" placeholder="업무 명">
+              <label for="name" class="col-sm-2 control-label" >제안서 명</label>
+              <div class="col-sm-8">
+                <input id="name" type="text" name="suggest_title" class="form-control" style="border-radius: 1em;" placeholder="제안서 명">
               </div>
             </div>
             
             <div class="form-group">
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
               <div class="col-sm-8">
-                <input id="writer" type="text" name="pw_writer" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
+                <input id="writer" type="text" name="suggest_nickname" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
                  readonly="readonly" >
               </div>
             </div>

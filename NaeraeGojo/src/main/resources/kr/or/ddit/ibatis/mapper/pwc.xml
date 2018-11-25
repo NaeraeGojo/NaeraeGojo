@@ -10,6 +10,15 @@
 			where pwc_delete = 'n'
 	</sql>
 	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="mes" open="(" close=")">
+				pwc_code like '%' || #mes# ||'%'
+				or pwc_name like '%' || #mes# ||'%'
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+	
 	<insert id="insertPwc" parameterClass="pwcVO">
 		<selectKey keyProperty="pwc_code" resultClass="string">
 			select pwc_seq.nextval from dual
@@ -33,6 +42,7 @@
 	<select id="getPwcList" parameterClass="map" resultClass="pwcVO">
 		<include refid="selectAll"/>
 			and project_code = #project_code#
+			<include refid="searchCondition"/>
 			order by to_number(pwc_code) desc
 	</select>
 	

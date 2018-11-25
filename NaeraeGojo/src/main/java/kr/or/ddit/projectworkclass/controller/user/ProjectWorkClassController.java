@@ -29,11 +29,14 @@ public class ProjectWorkClassController {
 	public void ProjectWorkClassForm(){}
 	
 	@RequestMapping("pwcList")
-	public ModelAndView ProjectWorkClassList(ModelAndView mav, Map<String, String> params 
+	public ModelAndView ProjectWorkClassList(ModelAndView mav , String mes
+								, Map<String, String> params 
 								, HttpSession session
 								, String currentPage) throws Exception{
 		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
+		
+		params.put("mes", mes);
 		
 		List<ProjectWorkClassVO> pwcl = service.getPwcList(params);
 		
@@ -42,7 +45,6 @@ public class ProjectWorkClassController {
 		
 		return mav;
 	}
-	
 	
 	public Model ProjectWorkClassView(String bo_no,Model model) throws Exception{
 		
