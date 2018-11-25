@@ -65,6 +65,10 @@
 .form-control[readonly]{
 	background-color: white;
 }
+
+ .btn-flat{
+ 	margin-left: 5px;
+ }
 </style>
 <script type="text/javascript">
 $(function(){
@@ -278,65 +282,70 @@ $(function(){
             </div>
             
             <div class="form-group">
+		      <label for="contents" class="col-sm-2 control-label">업무 내용</label>
+		      <div  class="col-sm-8">
+		      <textarea name="pw_content" class="form-control" rows="10" placeholder="업무 내용" 
+		      style=" border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+		       </div>
+		    </div>
+            
+            <div class="form-group">
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
-              <div class="col-sm-8">
-                <input id="writer" type="text" name="pw_writer" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
+              <div class="col-sm-3">
+              	<input type="hidden" name="pw_writer" value="${LOGIN_EMPINFO.emp_code }">
+                <input type="text" name="pw_writer_show" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
                  readonly="readonly" >
               </div>
             </div>
-
-			
-		<div class="form-group">
-            <label for="sel_rfp" class="col-sm-2 control-label">제안요청서</label>
-            <div class="col-sm-6">
+            
+         <div class="form-group">
+            <label for="sel_rfp" class="col-sm-2 control-label">담당자</label>
+            <div class="col-sm-3">
 			    <select id="sel_rfp" class="form-control select2" style="border-radius: 1em;">
-			    	<option value="" selected disabled>작성된&nbsp;&nbsp;제안요청서</option>
-			      	<c:forEach items="${rl }" var="rv">
-			      		<option value="${rv.rqpps_code }">${rv.rqpps_name }</option>
-			      	</c:forEach>
+			    	<option value="" selected>인력 R해오기</option>
 			    </select>
 		    </div>
         </div>
-                 
+
+			
           <div class="form-group">
             <label for="edate" class="col-sm-2 control-label">예상 소요기간</label>
             <div class="col-md-8">
             <table class="date_table">
             	<tr>
             		<td>
-            		<input type="date" name="suggest_start_date" class="form-control" style="border-radius: 1em;">
+            		<input type="date" name="pw_est" class="form-control" style="border-radius: 1em;">
             		</td>
 	              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
 	              	<td>
-	              	<input type="date" name="suggest_end_date" class="form-control" style="border-radius: 1em;">
+	              	<input type="date" name="pw_eet" class="form-control" style="border-radius: 1em;">
 	              	</td>
             	</tr>
             </table>
             </div> 
           </div>
-
+          
+          
           <div class="form-group">
-            <label for="pmoney" class="col-sm-2 control-label">사업비</label>
-            <div class="col-sm-3">
-              <input id="pmoney" type="number" name="suggest_cost" class="form-control" style="border-radius: 1em;" placeholder="￦">
+            <label for="pmoney" class="col-sm-2 control-label">진척도</label>
+            <div class="col-sm-2">
+            	<select id="pw_percent" class="form-control select2" style="border-radius: 1em;">
+			    	<option value="" selected>0%</option>
+			    	<option value="">0%</option>
+			    	<option value="">10%</option>
+			    	<option value="">20%</option>
+			    	<option value="">30%</option>
+			    	<option value="">40%</option>
+			    	<option value="">50%</option>
+			    	<option value="">60%</option>
+			    	<option value="">70%</option>
+			    	<option value="">80%</option>
+			    	<option value="">90%</option>
+			    	<option value="">100%</option>
+			    </select>
             </div> 
           </div>
                 
-                
-                
-	    <div class="form-group">
-	      <label for="contents" class="col-sm-2 control-label">제안서 내용</label>
-	      <textarea id="contents" name="suggest_content" class="col-sm-10"
-	       rows="10" placeholder="제안서 내용" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
-	      
-	    </div>
-	    
-	    <div class="form-group">
-			 <label for="file01" class="col-sm-2 control-label">제안서 첨부</label>
-			 <div class="col-sm-10">
-				 <input type="file" class="filestyle" id="file01" name="files" data-buttonName="btn-primary">
-			 </div>
-        </div>				
               
 		<div class="box-footer clearfix">
 	          	<input value="등록" type="submit" href="${pageContext.request.contextPath}/user/meeting/meetingList.do" style="width:80px;"  class="btn btn-warning btn-flat pull-right">
