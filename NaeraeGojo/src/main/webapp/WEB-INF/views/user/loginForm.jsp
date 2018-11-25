@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
-		로그인 페이지
+		프로토스 로그인 창
 		</title>
 	
 		<!-- CSS -->

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+	<definition name="usermain" template="/WEB-INF/views/user/mainTemplate.jsp">
+		<put-attribute name="title" value="엄마 미안해!!"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/user/layout/header.jsp"></put-attribute>
+		<put-attribute name="left" value="/WEB-INF/views/user/layout/left.jsp"></put-attribute>
+		<put-attribute name="content_header" value="/WEB-INF/views/user/content_header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/user/layout/footer.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="main_project" template="/WEB-INF/views/user/mainTemplate_prev.jsp">
+		<put-attribute name="title" value="엄마 미안해!!"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/user/layout/header.jsp"></put-attribute>
+		<put-attribute name="left" value="/WEB-INF/views/user/layout/left.jsp"></put-attribute>
+		<put-attribute name="content_header" value="/WEB-INF/views/user/content_header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/user/layout/footer.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="user/join/loginForm" template="/WEB-INF/views/user/loginForm.jsp"></definition>
+
+	<definition name="user/*/*" extends="usermain">
+		<put-attribute name="content" value="/WEB-INF/views/user/{1}/{2}.jsp"></put-attribute>
+	</definition>
+	<definition name="user/project/*/*" extends="main_project">
+		<put-attribute name="header_contentMenu" value="/WEB-INF/views/user/project/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/user/project/{1}/{2}.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>

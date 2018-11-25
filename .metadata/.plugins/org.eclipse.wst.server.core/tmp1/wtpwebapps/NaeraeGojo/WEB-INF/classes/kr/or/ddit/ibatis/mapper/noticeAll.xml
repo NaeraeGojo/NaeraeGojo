@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="noticeAll">
+	<typeAlias alias="noticeAllVO" type="kr.or.ddit.vo.NoticeAllVO"/>
+	<typeAlias alias="notEmpVO" type="kr.or.ddit.vo.NotEmpVO"/>
+	
+	<sql id="selectAll">
+		SELECT * 
+		FROM NOTICE_ALL
+		WHERE NOTICE_ALL_DELETE = 'n'
+		
+	</sql>
+	
+	<resultMap class="notEmpVO" id="noticeAllMap">
+		<result property="notice_all_code" column="notice_all_code"/>
+		<result property="notice_all_title" column="notice_all_title"/>
+		<result property="notice_all_content" column="notice_all_content"/>
+		<result property="notice_all_date" column="notice_all_date"/>
+		<result property="notice_all_delete" column="notice_all_delete"/>
+		<result property="notice_all_hit" column="notice_all_hit"/>
+		<result property="notice_all_pass" column="notice_all_pass"/>
+		<result property="emp_name" column="emp_name"/>
+		<result property="items" column="notice_all_code" select="allFile.allFiles" />
+	</resultMap>
+	
+	<insert id="insertNoticeAll" parameterClass="noticeAllVO">
+		<selectKey keyProperty="notice_all_code" resultClass="string">
+			select notice_all_seq.nextval from dual
+		</selectKey>
+		
+		INSERT INTO NOTICE_ALL(
+							NOTICE_ALL_CODE
+							,NOTICE_ALL_TITLE
+							,NOTICE_ALL_CONTENT
+							,NOTICE_ALL_PASS
+							,NOTICE_ALL_DATE
+							,NOTICE_ALL_HIT
+							,NOTICE_ALL_DELETE
+							,EMP_CODE
+						)
+		 
+					values(
+							 #notice_all_code#
+							,#notice_all_title#
+							,#notice_all_content#
+							,#notice_all_pass#
+							,sysdate
+							,default
+							,default
+							,#emp_code#
+					)
+	</insert>
+	
+	<sql id="searchCondition">
+		<dynamic>
+	 		<isNotEmpty property="search_keyword" prepend="and">
+	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
+	 				   NOTICE_ALL_TITLE LIKE '%' || #search_keyword# || '%'
+	 				OR NOTICE_ALL_CONTENT   LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="TITLE" >  
+	 					NOTICE_ALL_TITLE LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="CONTENT" >  
+	 					NOTICE_ALL_CONTENT LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 		</isNotEmpty>
+	 	</dynamic>
+	</sql>
+	
+	<select id="noticeAllList" resultClass="notEmpVO" parameterClass="map">
+		SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.NOTICE_ALL_CODE, A.NOTICE_ALL_TITLE , A.NOTICE_ALL_DATE, A.EMP_NAME, A.NOTICE_ALL_HIT
+				FROM ( SELECT * 
+						FROM NOTICE_ALL C, EMP D
+						WHERE C.EMP_CODE = D.EMP_CODE
+						AND C.NOTICE_ALL_DELETE = 'n'
+						<include refid="searchCondition"/>
+<!-- 						<dynamic> -->
+<!-- 					 		<isNotEmpty property="search_keyword" prepend="and"> -->
+<!-- 					 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">   -->
+<!-- 					 				   (C.NOTICE_ALL_TITLE LIKE '%' || #search_keyword# || '%' -->
+<!-- 					 				OR C.NOTICE_ALL_CONTENT   LIKE '%' || #search_keyword# || '%') -->
+<!-- 					 			</isEqual> -->
+<!-- 					 			<isEqual property="search_keycode" compareValue="TITLE" >   -->
+<!-- 					 					C.NOTICE_ALL_TITLE LIKE '%' || #search_keyword# || '%' -->
+<!-- 					 			</isEqual> -->
+<!-- 					 			<isEqual property="search_keycode" compareValue="CONTENT" >   -->
+<!-- 					 					C.NOTICE_ALL_CONTENT LIKE '%' || #search_keyword# || '%' -->
+<!-- 					 			</isEqual> -->
+<!-- 					 		</isNotEmpty> -->
+<!-- 						</dynamic>  -->
+						ORDER BY NOTICE_ALL_CODE) A ) B
+		<![CDATA[				
+ 		WHERE RNUM <= #startCount# 
+ 		 AND  RNUM >= #endCount# 
+ 		]]> 
+		ORDER BY RNUM DESC
+	</select>	
+	
+<!-- 	<select id="noticeAllInfo" parameterClass="map" resultClass="notEmpVO"> -->
+<!-- 		SELECT A.NOTICE_ALL_CODE, B.EMP_NAME,A.NOTICE_ALL_TITLE,A.NOTICE_ALL_CONTENT,A.NOTICE_ALL_PASS -->
+<!-- 		FROM NOTICE_ALL A, EMP B  -->
+<!--       	WHERE A.NOTICE_ALL_CODE = #notice_all_code# -->
+<!--       	AND	B.EMP_CODE = A.EMP_CODE -->
+<!-- 	</select> -->
+	
+	<select id="noticeAllInfo" parameterClass="map" resultMap="noticeAllMap" >
+		SELECT A.NOTICE_ALL_CODE, B.EMP_NAME,A.NOTICE_ALL_TITLE,A.NOTICE_ALL_CONTENT,A.NOTICE_ALL_PASS,
+		A.NOTICE_ALL_DATE,A.NOTICE_ALL_DELETE,A.NOTICE_ALL_HIT
+		FROM NOTICE_ALL A, EMP B 
+      	WHERE A.NOTICE_ALL_CODE = #notice_all_code#
+      	AND	B.EMP_CODE = A.EMP_CODE
+	</select>
+	
+	<update id="updateNoticeAll" parameterClass="notEmpVO">
+		UPDATE NOTICE_ALL
+		   SET NOTICE_ALL_TITLE         = #notice_all_title# 
+		      ,NOTICE_ALL_CONTENT       = #notice_all_content#
+		      ,NOTICE_ALL_DATE     		= sysdate
+		 WHERE NOTICE_ALL_CODE 			= #notice_all_code#
+	</update>
+	
+	<update id="deleteNoticeAll" parameterClass="map">
+		UPDATE NOTICE_ALL
+		   SET NOTICE_ALL_DELETE = 'y'
+		 WHERE NOTICE_ALL_CODE = #notice_all_code#
+	</update>
+	
+	<update id="updateHit" parameterClass="map">
+          	UPDATE NOTICE_ALL 
+          		SET NOTICE_ALL_HIT = NOTICE_ALL_HIT+1 
+          	WHERE NOTICE_ALL_CODE =#notice_all_code#
+    </update>
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		SELECT COUNT(NOTICE_ALL_CODE)
+			FROM NOTICE_ALL
+		WHERE 1=1<!-- BO_STATUS = 'y' -->
+		<include refid="searchCondition"/>
+	</select>
+	
+	
+	
+</sqlMap>
+
+

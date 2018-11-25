@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="suggfi">
+	<typeAlias alias="suggfiVO" type="kr.or.ddit.vo.SuggestFileVO"/>
+	
+	<sql id="selectAll">
+		select * 
+			from suggfi
+			where suggfi_delete = 'n' 
+	</sql>
+
+	<insert id="insertSuggfi" parameterClass="suggfiVO">
+		<selectKey keyProperty="suggfi_code" resultClass="string">
+			select suggfi_seq.nextval from dual
+		</selectKey>
+		
+		insert into suggfi(
+							suggfi_code
+							,suggfi_save_name
+							,suggfi_name
+							,suggfi_volume
+							,suggfi_doc_code
+							,suggfi_kind_code
+						)
+		 
+					values(
+							 #suggfi_code#
+							,#suggfi_save_name#
+							,#suggfi_name#
+							,#suggfi_volume#
+							,#suggfi_doc_code#
+							,#suggfi_kind_code#
+					)
+	</insert>
+	
+<!-- 	<select id="getMp" parameterClass="map" resultClass="mpVO"> -->
+<!-- 		select * from mp -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updateMp" parameterClass="mpVO"> -->
+<!-- 		update mp -->
+<!-- 			set mp_begin = #mp_begin# -->
+<!-- 				, mp_inter = #mp_inter# -->
+<!-- 				, mp_high = #mp_high# -->
+<!-- 				, mp_spec = #mp_spec# -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</update> -->
+	<statement id="rfpFiles" resultClass="suggfiVO">
+		<include refid="selectAll"/>
+		and suggfi_doc_code = #rqpps_code#
+		and suggfi_kind_code between 1 and 2
+	</statement>
+
+	<statement id="sugFiles" resultClass="suggfiVO">
+		<include refid="selectAll"/>
+		and suggfi_doc_code = #suggest_code#
+		and suggfi_kind_code = 3
+	</statement>
+
+
+	<select id="getSuggestFile" resultClass="suggfiVO" parameterClass="map">
+		<include refid="selectAll"/>
+		and suggfi_code = #suggfi_code#
+	</select>
+
+	<update id="updateSuggfi" parameterClass="suggfiVO">
+		update suggfi
+			set suggfi_save_name = #suggfi_save_name#
+				,suggfi_name = #suggfi_name#
+				,suggfi_volume = #suggfi_volume#
+			where suggfi_code = #suggfi_code#
+	</update>
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

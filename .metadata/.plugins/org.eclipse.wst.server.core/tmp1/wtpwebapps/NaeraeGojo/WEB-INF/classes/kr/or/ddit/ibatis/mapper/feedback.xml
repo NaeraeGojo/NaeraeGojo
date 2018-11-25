@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="feedback">
+    <typeAlias alias="feedbackVO" type="kr.or.ddit.vo.FeedbackVO"/>
+    
+    <select id="feedbackInfo" parameterClass="map" resultClass="feedbackVO">
+		select  a.feedback_content, b.emp_name , a.receive_emp, c.pw_function, a.feedback_st, 
+		          d.project_name, a.feedback_rt, a.feedback_alarm
+		from feedback a, emp b, pw c, project d
+		where a.send_emp = b.emp_code
+		and a.pw_code = c.pw_code
+		and a.send_emp = '1'
+		and a.send_delete ='n'
+		and c.project_code = d.project_code
+		and a.feedback_code=#feedback_code#
+    </select>
+    
+    <update id="fbAlarmCk" parameterClass="map">
+        update feedback
+        set feedback_alarm ='y'
+            , feedback_rt = sysdate
+        where feedback_code = #feedback_code#
+    </update>
+    
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

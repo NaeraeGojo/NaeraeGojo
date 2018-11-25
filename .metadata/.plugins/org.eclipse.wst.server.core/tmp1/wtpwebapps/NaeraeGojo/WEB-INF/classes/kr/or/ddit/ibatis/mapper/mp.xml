@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="mp">
+	<typeAlias alias="mpVO" type="kr.or.ddit.vo.MpVO"/>
+
+	<insert id="insertMp" parameterClass="mpVO">
+		<selectKey keyProperty="mp_code" resultClass="string">
+			select mp_seq.nextval from dual
+		</selectKey>
+		
+		insert into mp 
+					values(
+							#mp_code#
+							,#mp_begin#
+							,#mp_inter#
+							,#mp_high#
+							,#mp_spec#
+					)
+	</insert>
+	
+	<select id="getMp" parameterClass="map" resultClass="mpVO">
+		select * from mp
+			where mp_code = #mp_code#
+	</select>
+	
+	<update id="updateMp" parameterClass="mpVO">
+		update mp
+			set mp_begin = #mp_begin#
+				, mp_inter = #mp_inter#
+				, mp_high = #mp_high#
+				, mp_spec = #mp_spec#
+			where mp_code = #mp_code#
+	</update>
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
