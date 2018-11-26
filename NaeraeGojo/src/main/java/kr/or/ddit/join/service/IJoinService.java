@@ -13,7 +13,7 @@ import kr.or.ddit.vo.RqppsVO;
 public interface IJoinService {
 	public JoinVO joinInfo(Map<String,String> params) throws SQLException;
 	public List<JoinVO> joinList(Map<String, String> params) throws SQLException;
-	public void insertJoinInfo(JoinVO joinInfo) throws SQLException;
+	public void insertJoinInfo(Map<String, String> params) throws SQLException;
 	public void deleteJoinInfo(Map<String,String> params) throws SQLException;
 	public void updateJoinInfo(JoinVO joinInfo) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;

@@ -20,7 +20,12 @@
 .filefile{
 	margin-top: 5px;
 }
-
+.form-control[readonly]{
+   background-color: white;
+}
+.form-control[disabled]{
+   background-color: white;
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -119,7 +124,7 @@ $(function(){
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">공고일자</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="공고일자"
+								<input type="date" class="form-control" style="border-radius: 1em;" placeholder="공고일자"
 								id="pblanc_board_com_date" name="pblanc_board_com_date">
 							</div>
 						</div>
@@ -143,7 +148,7 @@ $(function(){
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">제안서 마감일자</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="공고일자"
+								<input type="date" class="form-control" style="border-radius: 1em;" placeholder="공고일자"
 								id="pblanc_board_end_proposal" name="pblanc_board_end_proposal">
 							</div>
 						</div>

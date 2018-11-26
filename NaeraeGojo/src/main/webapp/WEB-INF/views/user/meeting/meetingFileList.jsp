@@ -42,7 +42,7 @@ $(function(){
     <section class="content"> 
       <div class="col-md-12">
         <!-- TABLE: LATEST ORDERS -->
-          <div class="box box-warning">
+          <div class="box box-2team">
             <div class="box-header with-border">
               <b class="box-title">회의록 목록</b>
               <br/><br/>

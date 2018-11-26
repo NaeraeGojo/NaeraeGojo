@@ -56,4 +56,41 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 		feedbackDao.fbAlarmCk(params);
 	}
 
+	@Override
+	public String getFeedbackCnt(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.getFeedbackCnt(params);
+	}
+
+	@Override
+	public List<FeedbackVO> receivefbList(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.receivefbList(params);
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return feedbackDao.totalCount(params);
+	}
+
+	@Override
+	public FeedbackVO feedbackInfo2(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.feedbackInfo2(params);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void confirmStatus(Map<String, String> params) throws SQLException {
+		feedbackDao.confirmStatus(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteReceive(Map<String, String> params) throws SQLException {
+		feedbackDao.deleteReceive(params);
+	}
+
+
+
 }

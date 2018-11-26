@@ -36,18 +36,29 @@
 					)
 	</insert>
 	
+	<update id="updateAllFile" parameterClass="allFileVO">
+		UPDATE ALL_FILE
+		SET ALL_FILE_SAVE_NAME = #all_file_save_name#
+			,ALL_FILE_NAME     = #all_file_name#
+			,ALL_FILE_VOLUME   = #all_file_volume#
+		WHERE ALL_FILE_CODE    = #all_file_code#
+	</update>
+	
+	<select id="getAllFile" resultClass="allFileVO" parameterClass="map">
+		<include refid="selectAll"/>
+		AND ALL_FILE_CODE = #all_file_code#
+	</select>
+	
 	<statement id="allFiles" resultClass="allFileVO">
 		<include refid="selectAll"/>
-				AND ALL_FILE_BOARD_CODE = #notice_all_code#	
-				AND ALL_FILE_KIND_CODE = 1
+			AND ALL_FILE_BOARD_CODE = #notice_all_code#
+			AND ALL_FILE_KIND_CODE = 1
 	</statement>
 	
 	<statement id="allFilesPblanc" resultClass="allFileVO">
 		<include refid="selectAll"/>
-			AND ALL_FILE_BOARD_CODE = #pblanc_board_code#
-			AND ALL_FILE_KIND_CODE = 2	
-				AND ALL_FILE_BOARD_CODE = #notice_all_code#
-				
+		AND ALL_FILE_BOARD_CODE = #pblanc_board_code#
+		AND ALL_FILE_KIND_CODE = 2
 	</statement>
 	
 	

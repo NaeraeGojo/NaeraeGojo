@@ -1,5 +1,6 @@
 package kr.or.ddit.emp.controller.user;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,24 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
+import kr.or.ddit.history.service.IHistoryService;
 import kr.or.ddit.part.service.IPartService;
 import kr.or.ddit.position.service.IPositionService;
-import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.vo.EmpVO;
-import kr.or.ddit.vo.NotEmpVO;
 import kr.or.ddit.vo.PartVO;
-import kr.or.ddit.vo.PositionVO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
+
 
 @Controller
 @RequestMapping("/user/emp/")
@@ -35,7 +29,7 @@ public class EmpController {
 	private IEmpService service;
 	
 	@Resource
-	private IPositionService pService;
+	private IHistoryService hiService;
 
 	@Resource
 	private IPartService partService;
@@ -44,6 +38,15 @@ public class EmpController {
 	@RequestMapping("empList2")
 	public void empList2(){}
 
+	/**
+	 * 직원정보 수정창 
+	 * @author 이소라	
+	 * @param emp_code
+	 * @param andView
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("empUpdate")
 	public ModelAndView empUpdate(String emp_code,
 			ModelAndView andView,
@@ -52,7 +55,6 @@ public class EmpController {
 		params.put("emp_code", emp_code);
 
 		EmpVO empInfo = service.empInfo(params);
-		
 		List<PartVO> partList = partService.partList();		
 		
 		andView.addObject("partList", partList);
@@ -62,17 +64,16 @@ public class EmpController {
 		return andView;
 	}
 	
-
-	@RequestMapping("empForm")
-	public ModelAndView empForm(ModelAndView andView) throws Exception{
-		
-		List<PartVO> partList = partService.partList();		
-			
-		andView.addObject("partList", partList);
-		andView.setViewName("user/emp/empForm");
-		return andView;
-	}
-	
+	/**
+	 * 직원상세조회 창 View
+	 * View를 통해 정보 수정창으로 넘어가거나 해당 정보를 삭제할 수 있다.
+	 * @author 이소라
+	 * @param emp_code
+	 * @param andView
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("empView")
 	public ModelAndView empView(String emp_code,
 			ModelAndView andView,
@@ -88,8 +89,14 @@ public class EmpController {
 		return andView;
 	}
 
-	
-	
+	/**
+	 * 직원전체 조회List
+	 * @author 이소라
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("empList")
 	public ModelAndView empList(HttpServletRequest request,
 								HttpSession session) throws Exception{
@@ -106,21 +113,37 @@ public class EmpController {
 		return andView;
 	}
 			
-			
-			
-			
-	
-	
-//	public ModelAndView empList(HttpServletRequest request, HttpSession session) throws Exception{
-//	
-//		return null;
-//	}
-	
-	public ModelAndView updateEmp(ModelAndView andView) throws Exception{
+	/**
+	 * 직원등록 Form
+	 * @author 이소라
+	 * @param andView
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("empForm")
+	public ModelAndView empForm(ModelAndView andView) throws Exception{
 		
-		return null;
+		List<PartVO> partList = partService.partList();		
+		
+		andView.addObject("partList", partList);
+		andView.setViewName("user/emp/empForm");
+		return andView;
 	}
+
 	
+	/**
+	 * 직원등록 Insert
+	 * 직원의 정보를 등록 후 List창에서 이메일 인증단계가 진행된다.
+	 * @author 이소라
+	 * @param empInfo
+	 * @param session
+	 * @param emailId
+	 * @param emp_code
+	 * @param params
+	 * @param andView
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("insertEmp")
 	public ModelAndView insertEmp(EmpVO empInfo
 				,HttpSession session
@@ -129,7 +152,6 @@ public class EmpController {
 				,Map<String, String> params
 				,ModelAndView andView) throws Exception{
 		service.insertEmpInfo(empInfo);
-
 		session.setAttribute("INSERT_EMP", empInfo);
 		
 		emp_code = empInfo.getEmp_code();
@@ -139,10 +161,17 @@ public class EmpController {
 //		redirectAttribute.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 		return andView;
 	}
-	
-	public String deleteEmp() throws Exception{
-		
-		return null;
+	@RequestMapping("updateEmp")
+	public String updateEmp(EmpVO empInfo)throws Exception{
+		service.updateEmpInfo(empInfo);
+		return "redirect:/user/emp/empList.do";
+	}
+	@RequestMapping("deleteEmp")
+	public String deleteEmp(String emp_code,
+			Map<String, String> params) throws Exception{
+		params.put("emp_code", emp_code);
+		service.deleteEmpInfo(params);
+		return "redirect:/user/emp/empList.do";
 	}
 }
 

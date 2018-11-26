@@ -46,6 +46,7 @@ public class AllFileMapper {
 		fileItemInfo.setAll_file_kind_code(all_file_kind_code);
 		
 		String fileName = FilenameUtils.getName(file.getOriginalFilename());
+
 		fileItemInfo.setAll_file_name(fileName);
 		
 		// a.png => a

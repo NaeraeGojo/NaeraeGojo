@@ -2,9 +2,24 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
-<script>
+
+<script type="text/javascript">
+
+function add_div(){
+    var div = document.createElement('div');
+
+    div.innerHTML = document.getElementById('room_type').innerHTML;
+    document.getElementById('field').appendChild(div);
+}
+
+function remove_div(obj){
+
+document.getElementById('field').removeChild(obj.parentNode);
+
+}
+
 $(function() {
-	$('form').submit(function() {
+	$('#form_emp').submit(function() {
 		if (!$('input[name=emp_name]').val().validationNM()) {
 			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
 			return false;
@@ -25,7 +40,7 @@ $(function() {
 		}
 		$('input[name=emp_phone]').val(phone);
 					
-		email = $('input[name=emp_email1]').val() + '@' + $('select[name=emp_email2]').val();
+		email = $('input[name=emp_email1]').val() + '@' + $('label[name=emp_email2]').text();
 		if (!email.validationMAIL()) {
 			alert("이메일을 바르게 입력해주세요.");
 			return false;
@@ -167,7 +182,7 @@ $(function () {
            		<div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
            			<br/>
            			<div class=form-horizontal">
-						<form method="POST" action="${pageContext.request.contextPath}/user/emp/insertEmp.do">
+						<form id="form_emp" method="POST" action="${pageContext.request.contextPath}/user/emp/insertEmp.do">
 						<div class="form-group">
                				<div class="row">
                					<div class="col-md-4" style="margin: 10px;">
@@ -289,7 +304,7 @@ $(function () {
 					                  		<b style="font-size: 20px; margin-right: -50px;">@</b>
 				                  		</div>
 					                  	<div class="col-sm-3" style="margin-left: -15px !important;">
-				                  			<label class="form-control" name="emp_email2" style="border-radius: 1em;" value="naver.com">naver.com</label>
+				                  			<label class="form-control" name="emp_email2" style="border-radius: 1em;">naver.com</label>
 										</div>
 			                		</div>
 			                		<div class="row">
@@ -298,15 +313,6 @@ $(function () {
 		                  					<input type="text" name="emp_major" class="form-control" placeholder="전공을 입력해주세요" value="" style="border-radius: 1em;">
                							</div>                
                						</div>
-			                		<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 이력</label>
-				                  		<div class="col-sm-6">
-			                  				<input type="text" class="form-control" placeholder="프로젝트 이력을 입력해주세요" style="border-radius: 1em;">
-		               					</div>                
-		               					<div class="col-sm-2" style="margin-left: -15px !important;">
-		               						<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력" style="border-radius: 1em;">
-		               					</div>
-                					</div>
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
@@ -358,19 +364,82 @@ $(function () {
 			              				</div>
 			              			</div>
 			              			<input type="hidden" name="emp_delete" value="n" />
+			                		<div class="row">
+				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 이력</label>
+				                  		<div class="col-sm-6">
+			                  				<input type="text" class="form-control" placeholder="프로젝트 이력을 입력해주세요" style="border-radius: 1em;">
+		               					</div>                
+		               					<div class="col-sm-2" style="margin-left: -15px !important;">
+		               						<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력" style="border-radius: 1em;">
+		               					</div>
+                					</div>
 	                			</div>
                				</div>
                			</div>
+						</form>
                 		<div class="box-footer clearfix">
 			              <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
 			              <input name="list" value="목록" type="button" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
 			              <input value="등록" type="submit" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
 			          	</div>
-						</form>
 					</div>
 					</div>
-					
-				
+<div class="col-sm-2" style="margin-left: -15px !important;">			
+<input type="button" value="추가" class="form-control bg-light-blue color-palette" style="border-radius: 1em;" onclick="add_div()"><br/>
+</div>
+<br/>
+<br/>
+<br/>
+<div id="room_type">
+
+<div class="row">
+	<label class="col-sm-2 control-label" style="margin-top: 3px;">프로젝트 명</label>
+ 	<div class="col-sm-6">
+		<input type="text" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em;">
+	</div>                
+	<div class="col-sm-3" style="margin-left: -15px !important;">
+		<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력등록" style="border-radius: 1em;">
+	</div>
+	<label class="col-sm-2 control-label" style="margin-top: 3px;">공고기관</label>
+ 	<div class="col-sm-4">
+		<input type="text" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
+	</div>   
+	<label class="col-sm-2 control-label" style="margin-top: 3px !important; margin-left: 30px !important;">수요기관</label>
+ 	<div class="col-sm-4">
+		<input type="text" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
+	</div>   
+	<div class="form-group">
+           <label for="edate" class="col-sm-2 control-label">프로젝트 기간</label>
+           <div class="col-md-8">
+           <table class="date_table">
+           	<tr>
+           		<td>
+           		<input type="date" name="suggest_start_date" class="form-control upForm" style="border-radius: 1em;">
+           		</td>
+              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
+              	<td>
+              	<input type="date" name="suggest_end_date" class="form-control upForm" style="border-radius: 1em;">
+              	</td>
+           	</tr>
+           </table>
+           </div> 
+     </div>
+     <label class="col-sm-3 control-label">맡은업무</label>
+ 	 <div class="col-sm-3" style="">
+		<select class="form-control" style="border-radius: 1em;">
+			<option>PM</option>
+			<option>PL</option>
+			<option>TA</option>
+			<option>DA</option>
+			<option>AA</option>
+			<option>UA</option>
+		</select>
+	 </div> 
+</div>
+<input type="button" value="삭제" onclick="remove_div(this)">
+</div>
+
+<div id="field"></div>
 				</div>
 			</div>
 		</div>

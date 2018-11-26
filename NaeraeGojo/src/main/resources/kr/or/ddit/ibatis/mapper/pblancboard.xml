@@ -13,6 +13,7 @@
 		<result property="pblanc_board_link" column="pblanc_board_link"/>
 		<result property="pblanc_board_budget" column="pblanc_board_budget"/>
 		<result property="pblanc_board_end_proposal" column="pblanc_board_end_proposal"/>
+		<result property="emp_code" column="emp_code"/>
 		<result property="items" column="pblanc_board_code" select="allFile.allFilesPblanc" />
 	</resultMap>
 	
@@ -63,16 +64,18 @@
 	</select>	
 	
 	<select id="pblancboardInfo" parameterClass="map" resultMap="pblancboardMap">
-		SELECT PBLANC_BOARD_CODE
-			   ,PBLANC_BOARD_TITLE
-			   ,PBLANC_BOARD_COM
+		SELECT A.PBLANC_BOARD_CODE
+			   ,A.PBLANC_BOARD_TITLE
+			   ,A.PBLANC_BOARD_COM
 			   ,TO_CHAR(PBLANC_BOARD_COM_DATE, 'YYYY-MM-DD') AS PBLANC_BOARD_COM_DATE
-			   ,PBLANC_BOARD_LINK
-   	           ,LTRIM(TO_CHAR(PBLANC_BOARD_BUDGET,'9,999,999,999,999')) AS PBLANC_BOARD_BUDGET
+			   ,A.PBLANC_BOARD_LINK
+   	           ,A.PBLANC_BOARD_BUDGET
 			   ,TO_CHAR(PBLANC_BOARD_END_PROPOSAL, 'YYYY-MM-DD') AS PBLANC_BOARD_END_PROPOSAL
-			   ,PBLANC_BOARD_END_PROPOSAL
-		FROM PBLANC_BOARD
-      	WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
+			   ,A.PBLANC_BOARD_END_PROPOSAL
+               ,B.EMP_NAME AS EMP_CODE
+		FROM PBLANC_BOARD A, EMP B
+        WHERE A.EMP_CODE = B.EMP_CODE
+      	AND PBLANC_BOARD_CODE = #pblanc_board_code#
 	</select>
 	
 	<insert id="insertPblancboard" parameterClass="pblancboardVO">

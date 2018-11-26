@@ -33,13 +33,28 @@
 		</dynamic>
 	</sql>
 
-	<insert id="insertJoin" parameterClass="joinVO">
+	<insert id="insertJoin" parameterClass="map">
 		<selectKey keyProperty="join_code" resultClass="string">
 			select join_seq.nextval from dual
 		</selectKey>
-		INSERT JOIN
-		INTO ()
-		VALUES()
+		INSERT INTO
+		JOIN (	 JOIN_CODE
+				,JOIN_START
+				,JOIN_END
+				,JOIN_ALARM
+				,EMP_CODE
+				,RQPPS_CODE
+				,POSITION_NAME
+				,PROJECT_CODE)
+		VALUES(
+				 #join_code#
+				,#join_start#
+				,#join_end#
+				,#join_alarm#
+				,#emp_code#
+				,#rqpps_code#
+				,#position_name#
+				,#project_code# )
 		
 		
 	</insert>

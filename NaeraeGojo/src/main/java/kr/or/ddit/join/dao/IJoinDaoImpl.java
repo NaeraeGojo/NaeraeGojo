@@ -34,8 +34,8 @@ public class IJoinDaoImpl implements IJoinDao{
 	}
 
 	@Override
-	public String insertJoinInfo(JoinVO joinInfo) throws SQLException {
-		return (String) client.insert("join.insertJoin",joinInfo);
+	public void insertJoinInfo(Map<String, String> params) throws SQLException {
+		client.insert("join.insertJoin",params);
 	}
 
 	@Override
