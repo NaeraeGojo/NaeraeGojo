@@ -1,59 +1,61 @@
 package kr.or.ddit.allfile.controller.user;
 
+
+import java.io.File;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import kr.or.ddit.suggestfile.service.ISuggestFileService;
+import kr.or.ddit.allfile.service.IAllFileService;
+import kr.or.ddit.global.GlobalConstant;
+import kr.or.ddit.utils.AllFileMapper;
+import kr.or.ddit.vo.AllFileVO;
 import kr.or.ddit.vo.SuggestFileVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
+@RequestMapping("/user/allfile/")
 public class AllFileController {
+	
 	@Autowired
-	ISuggestFileService service;
-
+	IAllFileService service;
 	
-	public void SuggestFileForm(){}
+	private AllFileMapper fileMapper;
 	
-	
-	public Model SuggestFileList(Model model, Map<String, String> params 
-								, HttpServletRequest request
-								, HttpSession session
-								, String currentPage) throws Exception{
+	@RequestMapping("allFileDownload")
+	public ModelAndView downloadFile(ModelAndView andView,String all_file_code
+			, Map<String, String> params) throws Exception{
+		params.put("all_file_code", all_file_code);
+		AllFileVO afv =service.getAllFile(params);
 		
-		return model;
+		File targetFile = new File(GlobalConstant.ALL_FILE_SAVE_PATH, afv.getAll_file_save_name()); 
+		andView.addObject("downloadFile", targetFile);
+		andView.addObject("downloadFileName",afv.getAll_file_name());
+		andView.setViewName("downloadView");
+		return andView;
 	}
 	
-	
-	public Model SuggestFileView(String bo_no,Model model) throws Exception{
+	@RequestMapping("allFileUpdate")
+	public ModelAndView updateAllFile(ModelAndView andView ,MultipartFile file
+			,String all_file_code ,Map<String, String> params) throws Exception{
+		params.put("all_file_code", all_file_code);
+		AllFileVO afv = service.getAllFile(params);
 		
-		return model;
+		AllFileVO uafv = fileMapper.mapping(file, afv.getAll_file_board_code(), afv.getAll_file_kind_code());
+		
+		afv.setAll_file_name(uafv.getAll_file_name());
+		afv.setAll_file_save_name(uafv.getAll_file_save_name());
+		afv.setAll_file_volume(uafv.getAll_file_volume());
+		
+		service.updateAllFile(afv);
+		
+		andView.addObject("all_file_name" , afv.getAll_file_name());
+		andView.setViewName("jsonConvertView");
+		return andView;
 	}
 	
-	
-	public String insertSuggestFile(SuggestFileVO sv
-									, @RequestParam("files") MultipartFile[] files) throws Exception{
-		
-		return "";
-	}
-	
-	
-	public String deleteSuggestFile(String bo_no) throws Exception{
-		
-		return "";
-	}
-	
-	
-	public String updateSuggestFile(SuggestFileVO sv ,HttpServletRequest request) throws Exception{
-		
-		return "";
-	}
 }

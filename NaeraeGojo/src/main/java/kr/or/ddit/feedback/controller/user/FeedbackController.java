@@ -1,5 +1,6 @@
 package kr.or.ddit.feedback.controller.user;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.feedback.service.IFeedbackService;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.FeedbackVO;
 
 import org.springframework.stereotype.Controller;
@@ -43,9 +45,20 @@ public class FeedbackController {
 		return andView;
 	}
 	
-	public ModelAndView feedbackList(HttpServletRequest request, HttpSession session) throws Exception{
+	@RequestMapping("feedbackList")
+	public ModelAndView feedbackList(ModelAndView andview, HttpServletRequest request, HttpSession session
+						, Map<String, String> params) throws Exception{
 	
-		return null;
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		
+		String receivefeedCnt = service.getFeedbackCnt(params);  //받은 피드백 count
+		List<FeedbackVO> receivefbList = service.receivefbList(params);
+		
+		andview.addObject("receivefeedCnt", receivefeedCnt); // 받은 피드백 count		
+		andview.addObject("receivefbList", receivefbList); // 받은 피드백 리스트
+		andview.setViewName("user/project/feedback/feedbackList");
+		return andview;
 	}
 	
 	

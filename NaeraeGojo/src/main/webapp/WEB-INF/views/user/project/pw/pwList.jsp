@@ -173,6 +173,10 @@ $(function(){
 		rePwc();
 	});
 	
+	$('#feedback').click(function(){
+		$(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList.do');
+	});
+	
 	
 	$('#pwForm').click(function(){
 		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwForm.do');
@@ -220,11 +224,12 @@ $(function(){
       <div class="row">	
       
       <div class="pwcont">
-    	<div class="col-md-4 pull-right" style="width: fit-content;" >
+    	<div class="col-md-4 pull-right" style="width: auto;" >
 	      <input id="btn_pwcForm" value="+ 분류" type="button" 
 	      class="btn btn-lg btn_pw_upper" style="background-color: #dd4b39;"
 	      data-toggle="modal" data-target="#modal-default">
 	      <input id="pwForm" value="+ 업무 등록" type="button" class="btn btn-lg btn_pw_upper">
+	      <input id="feedback" value="피드백 관리" type="button" class="btn btn-lg btn_pw_upper">
 	    </div>
     </div>
     

@@ -1,5 +1,5 @@
-<%@ page language="JAVA" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="JAVA" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <style>
  .no-margin {
     padding: 10px !important;
@@ -17,24 +17,54 @@
 .col-md-11 {
 	margin: 10px;
 }
-.filefile{
+#filefile{
 	margin-top: 5px;
 }
 
 </style>
 <script type="text/javascript">
 $(function(){
-	$('body').on('change','select', function (ev){
-	    if($(this).find('option:selected').val() == ""){
-	        $(this).css('color','#999');
-	        $(this).children().css('color','black');
-	    }
-	    else {
-	        $(this).css('color','black');
-	        $(this).children().css('color','black');
-	    }
-	});
+
+// 	$('.upForm').hide();
 	
+// 	$('.btn_refile').click(function(){
+// 		all_file_code = $(this).attr('name');
+// 		$('#fileUpForm input[name=all_file_code]').val(all_file_code);
+// 	});
+	
+// 	$('.btn_fileUp').click(function(){
+// 		var file01 = $('#file01').val();
+		
+// 		if(file01 == ''){
+// 			boalert("파일을 선택해 주세요.")
+// 			return false;
+// 		}
+		
+// 		var formData = new FormData(); 
+// 		formData.append("all_file_code", all_file_code); 
+// 		formData.append("file", $("input[name=files]")[0].files[0]);
+		
+// 		$.ajax({
+//             type : 'post',
+//             enctype: 'multipart/form-data',
+//             processData: false,  // Important!
+//             contentType: false,
+//             cache: false,
+//             url : '${pageContext.request.contextPath}/user/allfile/allFileUpdate.do',
+//             data : formData,
+//             dataType : 'json',
+//             error: function(xhr, status, error){
+//                 alert(error);
+//             },
+//             success : function(json){
+//             	$('#'+all_file_code).text(json.all_file_name);
+            	
+//                 $('#fileUpForm').modal('hide');
+//             }
+//         });
+		
+// 	});
+
 	$('#deleteBtn').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/deletePblancboard/${pblancboardInfo.pblanc_board_code}.do')
     });
@@ -72,14 +102,15 @@ $(function(){
 						<label for="pblanc_board_title" class="col-sm-2 control-label">공고제목</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="공고제목"
-								id="pblanc_board_title" name="pblanc_board_title" value="${pblancboardInfo.pblanc_board_title}">
+							id="pblanc_board_title" name="pblanc_board_title" value="${pblancboardInfo.pblanc_board_title}">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">작성자</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="작성자">
+							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="작성자"
+							id="emp_code" name="emp_code" value="${pblancboardInfo.emp_code}">
 						</div>
 					</div>
 
@@ -87,7 +118,7 @@ $(function(){
 						<label for="pblanc_board_com" class="col-sm-2 control-label">공고기관</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control"	style="border-radius: 1em;" placeholder="공고기관"
-								id="pblanc_board_com" name="pblanc_board_com" value="${pblancboardInfo.pblanc_board_com}">
+							id="pblanc_board_com" name="pblanc_board_com" value="${pblancboardInfo.pblanc_board_com}">
 						</div>
 					</div>
 
@@ -95,7 +126,7 @@ $(function(){
 						<label for="pblanc_board_com_date" class="col-sm-2 control-label">공고일자</label>
 						<div class="col-sm-8">
 							<input type="date" class="form-control" style="border-radius: 1em;" placeholder="공고일자"
-								id="pblanc_board_com_date" name="pblanc_board_com_date" value="${pblancboardInfo.pblanc_board_com_date}">
+							id="pblanc_board_com_date" name="pblanc_board_com_date" value="${pblancboardInfo.pblanc_board_com_date}">
 						</div>
 					</div>
 
@@ -103,8 +134,8 @@ $(function(){
 						<label for="pblanc_board_link" class="col-sm-2 control-label">공고링크</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" style="border-radius: 1em; cursor: pointer" placeholder="공고링크"
-								id="pblanc_board_link" name="pblanc_board_link" value="${pblancboardInfo.pblanc_board_link}"
-								onClick="window.open('${pblancboardInfo.pblanc_board_link}')">
+							id="pblanc_board_link" name="pblanc_board_link" value="${pblancboardInfo.pblanc_board_link}"
+							onClick="window.open('${pblancboardInfo.pblanc_board_link}')">
 						</div>
 					</div>
 
@@ -123,27 +154,65 @@ $(function(){
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label>
-						<div class="col-sm-8">
-							<input type="file" id="file01" class="files" style="background-color: transparent; border: 0;">
+		            <c:forEach items="${pblancboardInfo.items }" var="allFileItem" varStatus="stat">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label>
+							<div class="col-sm-8" id="filefile" >
+<%-- 				            	<a>${allFileItem.all_file_name}</a> --%>
+								<a id="${allFileItem.all_file_code }" href="${pageContext.request.contextPath }/user/allfile/allFileDownload.do?all_file_code=${allFileItem.all_file_code}">
+								${allFileItem.all_file_name }</a>
+<!-- 								<input type="button" class="btn_refile upForm"  data-toggle="modal" data-target="#fileUpForm" -->
+<%-- 								name="${allFileItem.all_file_code }" value="수정"> --%>
+							</div>
 						</div>
-					</div>
+					</c:forEach>	
+						
+<!-- 						<div class="form-group"> -->
+<!-- 							<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label> -->
+<!-- 							<div class="col-sm-8" id="filefile" > -->
+<%-- 				            	<a>${allFileItem.all_file_name}</a> --%>
+<%-- 								<a id="${allFileItem.items[1].all_file_code }"> --%>
+<%-- 								${allFileItem.all_file_name }</a> --%>
+<!-- 								<input type="button" class="btn_refile upForm"  data-toggle="modal" data-target="#fileUpForm" -->
+<%-- 								name="${allFileItem.items[0].all_file_code }" value="수정"> --%>
+<!-- 							</div> -->
+<!-- 						</div> -->
 
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label>
-						<div class="col-sm-8">
-							<input type="file" id="file02" class="files" style="background-color: transparent; border: 0;">
-						</div>
-					</div>
-					
 					<div class="box-footer clearfix">
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
-						<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button>
+						<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">삭제</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="fileUpForm">
+		<div class="modal-dialog" style="top: 50%;">
+			<div class="modal-content" style="width: 60%">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">파일 변경</h4>
+				</div>
+				<div class="modal-body">
+					<form id="refileForm" enctype="multipart/form-data" method="post">
+						<input type="hidden" name="all_file_code"> <inputtype="file" class="filestyle" id="file01" name="files"
+						data-buttonName="btn-primary">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary btn_fileUp">수정</button>
+				</div>
+			</div>
+			</form>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
 </section>
