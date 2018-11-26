@@ -8,37 +8,37 @@
 .box-title {
     font-size: 30px !important;
 }
-#modal-container {
-  width: 200%;
-  /* One Modal --> 100%, Two modals --> 200%*/
-  overflow: hidden
-}
+ #modal-container {
+   width: 200%;
+/*    One Modal  100%, Two modals  200% */
+   overflow: hidden;
+ } 
 
-.modal-dialog {
-  float: left;
-  width: 50%;
-  margin: 5px auto;
-}
+ .modal-dialog {
+   float: left;
+   width: 50%;
+   margin: 5px auto;
+ } 
 
-.modal-content {
-    width: 720px;
-    height : 350px;
-    margin-top: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 200px;
-}
+ .modal-content {
+     width: 720px; 
+     height : 350px; 
+     margin-top: 200px; 
+     margin-left: auto; 
+     margin-right: auto; 
+     margin-bottom: 200px; 
+ } 
 
-.modal-body{
-    
-    height: 60%;
-/*     margin: auto; */
-    overflow-y:auto;
-    overflow-x:hidden;
-    margin: 15px;
-/*     border: 1px solid ; */
-    
-}
+ .modal-body{ 
+  
+     height: 60%; 
+    margin: auto; 
+     overflow-y:auto; 
+     overflow-x:hidden; 
+     margin: 15px; 
+/*      border: 1px solid ;  */
+  
+ } 
 
 table th {
     font-size: large;
@@ -51,6 +51,7 @@ table td {
 
 
 </style>
+<script src="multi-step-modal.js"></script>
 <script type="text/javascript">
 
 $(function(){
@@ -101,52 +102,54 @@ $(function(){
                     	 
                     	 projectListt += '<div class="box-body">';
                     	 projectListt += '<h5>프로젝트 기간 : &nbsp;<i style="font-size: 20px;">';
-                    	 projectListt += projectList.projectList[i].project_start + '-' + projectList.projectList[i].project_end;
+                    	 projectListt += projectList.projectList[i].project_start + ' - ' + projectList.projectList[i].project_end;
                          projectListt += '</i></h5>';
                     	 projectListt += ' </div>';
                     	 projectListt += '</div></div></div>';
                     	 
                      }
-//                      $('#projectdiv').empty().append(projectListt);
-                     $('#projectdiv').append(projectListt);
+                     $('#projectdiv').empty().append(projectListt);
+//                      $('#projectdiv').append(projectListt);
                 }
         });
-    });   
+    });            
 
 
-    $(".btn-next").click(function() {
+    $(document).on('click', '.btn-next', function() {
     	  $('#modal-container').animate({
     	    'margin-left': '-=100%'
     	  }, 500);
     });
 
-   	$(".btn-back").click(function() {
+    $(document).on('click', '.btn-back', function() {
    	    $('#modal-container').animate({
    	        'margin-left': '+=100%'
    	    }, 500);
    	});
    	
-   	$('#empList').click(function(){
-   		var projectcode = $('input[nanme=proejct_code]').val();
-   		$.ajax({
-            
-            type : "POST"
-                , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
-                , dataType : "json"
-                , data : {project_code : projectcode}
-                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-                , error : function(request, status, error) {
-                       alert("error : " + request.status );
-                }
-                , success : function(projectList) {
-                    for (var i = 0; i < projectList.projectList.length; i++) {
-                   	 projectListt += '</div></div></div>';
-                   	 
-                    }
-               }
-       });
+//    	$(document).on('click', '#empList', function(){
    		
-   	});
+//    		var projectcode = $('input[nanme=proejct_code]').val();
+//    		alert(projectcode);
+//    		$.ajax({
+            
+//             type : "POST"
+//                 , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
+//                 , dataType : "json"
+//                 , data : {project_code : projectcode}
+//                 , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+//                 , error : function(request, status, error) {
+//                        alert("error : " + request.status );
+//                 }
+//                 , success : function(projectList) {
+//                     for (var i = 0; i < projectList.projectList.length; i++) {
+//                    	 projectListt += '</div></div></div>';
+                   	 
+//                     }
+//                }
+//        });
+   		
+//    	});
     
     
 });
@@ -261,8 +264,6 @@ $(function(){
 	    </div> 
         <div class="modal-footer" >
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--             <a type="next" class="btn-next">asdf</a> -->
-<!--             <a type="next" class="btn-next">sdf</a> -->
         </div>
     </div>
     </div>
@@ -309,6 +310,49 @@ $(function(){
         </div>
       </div>
     </div>
+
+
+<!--   <div class="modal-dialog"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-header"> -->
+<!--         <h4 class="modal-title step-1" data-step="1">Step 1</h4> -->
+<!--         <h4 class="modal-title step-2" data-step="2">Step 2</h4> -->
+<!--         <h4 class="modal-title step-3" data-step="3">Final Step</h4> -->
+<!--         <div class="m-progress"> -->
+<!--           <div class="m-progress-bar-wrapper"> -->
+<!--             <div class="m-progress-bar"> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--           <div class="m-progress-stats"> -->
+<!--             <span class="m-progress-current"> -->
+<!--             </span> -->
+<!--             / -->
+<!--             <span class="m-progress-total"> -->
+<!--             </span> -->
+<!--           </div> -->
+<!--           <div class="m-progress-complete"> -->
+<!--             Completed -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--       <div class="modal-body step-1" data-step="1"> -->
+<!--         This is step 1. -->
+<!--       </div> -->
+<!--       <div class="modal-body step-2" data-step="2"> -->
+<!--         This is the second step. -->
+<!--       </div> -->
+<!--       <div class="modal-body step-3" data-step="3"> -->
+<!--         This is the final step. -->
+<!--       </div> -->
+<!--       <div class="modal-footer"> -->
+<!--         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+<!--         <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#demo-modal', 2)">Continue</button> -->
+<!--         <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="sendEvent('#demo-modal', 1)">Back</button> -->
+<!--         <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="sendEvent('#demo-modal', 3)">Continue</button> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   </form> -->
     
   </div>
   </div>

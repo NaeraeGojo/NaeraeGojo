@@ -24,6 +24,29 @@
         where feedback_code = #feedback_code#
     </update>
     
+    <select id="getFeedbackCnt" parameterClass="map" resultClass="string">
+        select count(a.feedback_code)
+		from feedback a, emp b, project c, pw d
+		where a.send_emp = b.emp_code
+		and a.pw_code = d.pw_code
+		and a.receive_emp = #emp_code#
+		and d.project_code = c.project_code
+		and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
+		and a.receive_delete = 'n'
+    </select>
+    
+    <select id="receivefbList" parameterClass="map" resultClass="feedbackVO">
+        select c.project_code, c.project_name, d.pw_function, a.send_emp, b.emp_name, a.feedback_st, a.feedback_alarm, a.feedback_code
+		from feedback a, emp b, project c, pw d
+		where a.send_emp = b.emp_code
+		and a.pw_code = d.pw_code
+		and a.receive_emp = #emp_code#
+		and d.project_code = c.project_code
+		and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
+		and a.receive_delete = 'n'
+		group by c.project_code, c.project_name, d.pw_function, a.send_emp, b.emp_name, a.feedback_st, a.feedback_alarm, a.feedback_code
+    </select>
+    
 </sqlMap>
 
 

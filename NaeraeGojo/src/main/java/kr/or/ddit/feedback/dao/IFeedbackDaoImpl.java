@@ -55,4 +55,16 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 		client.update("feedback.fbAlarmCk", params);
 	}
 
+	@Override
+	public String getFeedbackCnt(Map<String, String> params)
+			throws SQLException {
+		return (String) client.queryForObject("feedback.getFeedbackCnt",params);
+	}
+
+	@Override
+	public List<FeedbackVO> receivefbList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("feedback.receivefbList", params);
+	}
+
 }
