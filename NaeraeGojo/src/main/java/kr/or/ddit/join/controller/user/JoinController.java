@@ -250,26 +250,22 @@ public class JoinController {
 	@RequestMapping("join_levelInsert")
 	public  ModelAndView join_levelInsert(String list,
 			String select,
+			String listHigh,
+			String selectHigh,
 			Map<String, String> params,
 			ModelAndView andView) throws Exception{
 		
 		System.out.println(list);//EMP코드
 		System.out.println(select);//제안요청서코드
-		String[] sp = list.split("/");
-		for (int i = 0; i < sp.length; i++) {
-			
-			
-		}
-//		params.put("emp_level", list);
-//		
-//		List<EmpVO> empLeveltest = service.empList1(params);
-//		
-//		andView.addObject("empLeveltest",empLeveltest);
-//		// application-views.xml 내 선언된 빈의 id
+			String[] sp = list.split("/");
+			for (int i = 0; i < sp.length; i++) {
+				params.put("emp_code", sp[i]);
+				params.put("rqpps_code", select);
+				service.insertJoinInfo(params);
+				params.clear();
+			}
 		andView.setViewName("jsonConvertView");
 		
-		// InternalResourceViewResolvers
-		//  		/WEB-INF/views/jsonConvertView.jsp
 		return andView;
 	}
 }

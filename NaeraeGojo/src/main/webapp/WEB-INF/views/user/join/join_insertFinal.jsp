@@ -99,7 +99,8 @@ label {
                     <td width="15%"><label id="spec"></label></td>
                     <th scope="col" width="10%">
 <!--                     <button value="특급"  onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
-                    <input value="등록" name="특급" onclick="level(this.name)"  type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">
+<!--                     <input value="등록" name="특급" onclick="level(this.name)"  type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right"> -->
+                    <input value="등록" name="특급" id="vaseSpec" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
                     </th>
                     <th scope="col" width="10%">
                     <input value="수정" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-info btn-flat pull-right">
@@ -110,6 +111,7 @@ label {
                     <th scope="col" width="30%" id="cho">&emsp;&emsp;&emsp;&emsp;고급</th>
                     <td width="15%"><label id="high"></label></td>
                     <th scope="col" width="10%">
+                    <input value="등록" name="고급" id="vaseHigh" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
 <!--                     <button value="고급" onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
@@ -121,18 +123,21 @@ label {
                     <th scope="col" width="30%" id="cho">&emsp;&emsp;&emsp;&emsp;중급</th>
                     <td width="15%"><label id="inter"></label></td>
                     <th scope="col" width="10%">
+                    <input value="등록" name="중급" id="vaseInter" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
 <!--                     <button value="중급"  onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
                     <input value="수정" type="button" style="width : 150px; height : 50px;" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
                     <input type="hidden" value="" id="bb">
+<!--                     <input type="hidden" value="" id="bc"> -->
                     </th>
                   </tr>
                   
                    
                     <th scope="col" width="30%" id="cho">&emsp;&emsp;&emsp;&emsp;초급</th>
-                    <td width="15%"><label id="begin"></label></td>
+                    <td width="15%"><label id="begin"></label></td> 
                     <th scope="col" width="10%">
+                    <input value="등록" name="초급" id="vaseBegin" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
 <!--                     <button value="초급" onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
@@ -159,6 +164,8 @@ label {
           <div class="box box-info">
             <div class="box-header with-border" >
               <h3 class="box-title">레벨별 직원 리스트</h3>
+              &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+              <input value="등록" id="lastCheck" style="width:200px; height:50px; font-size: 25px;" type="button" disabled="" class="btn btn-sm btn-warning btn-flat pull-right">
             </div>
 <!--             /.box-header -->
 <!--             form start -->
@@ -172,7 +179,7 @@ label {
                 <div class="row">
 	<div class="col-md-12">
 <!--           Horizontal Form -->
-          <div class="box box-info">
+          <div class="box box-info" style="overflow:scroll; width:775px; height:320px;">
             <form name="select_machine" class="form-horizontal">
               <div class="box-body">
               
@@ -206,8 +213,9 @@ label {
 <!--                <button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right" >다음</button> -->
                
                <div>
-               <label id="spec1"></label>
+               <input type="hidden" id="spec1" value=""/>
                </div>
+               
           </div>
           </div>
                 
@@ -260,7 +268,7 @@ label {
           </div>
       </div>
       <div class="modal-footer">
-              <input value="등록" id="aa" type="button" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
+              <input value="등록" id="aa" type="button" data-dismiss="modal" class="btn btn-sm btn-danger btn-flat pull-right">
               <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
 <!-- 	       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
 <!-- 	       <button type="button" class="btn btn-primary">Save changes</button> -->
@@ -272,7 +280,7 @@ label {
 
 
 <script type="text/javascript">
-	$(function () {
+$(function () {
 	    //Initialize Select2 Elements
 	    $('.select2').select2()
 	
@@ -312,10 +320,74 @@ label {
 //            });
 //            $('#nextList').empty().append(appendList);
 // 		 });
+	    
+	    $('#aa').click(function(){
+	    	var len = $('#nextList tr').length;
+	    	var insertNm=""; 
+	    	for(var i=0; i< len; i++){ 
+               var str = $('#nextList tr:eq('+i+')').find('td:eq(0) input').val();//<f로 준이유
+               insertNm += str+"/";
+            }
+		
+    		var select = $('#bb').val();
+	    	
+	    	$.ajax({
+				url : '${pageContext.request.contextPath}/user/join/join_levelInsert.do',
+				dataType: 'json',
+				data : {
+					
+						"list":insertNm,
+						"select":select
+						
+						},
+				success : function(data){
+					console.log(data);
+					alert(name);
+					if(name == "특급"){
+						$('#vaseSpec').attr("disabled", true);
+					}
+					if(name == "고급"){
+						$('#vaseHigh').attr("disabled", true);
+					}
+					if(name == "중급"){
+						$('#vaseInter').attr("disabled", true);
+					}
+					if(name == "초급"){
+						$('#vaseBegin').attr("disabled", true);
+					}
+					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' && $('#vaseSpec').attr('disabled') == 'disabled'){
+						$('#lastCheck').attr("disabled", false);
+					}
+					
+					
+// 					 $('#exampleModal').removeClass('in');
+// 					 $('#aa').removeClass('in');
+// 					info = data.mpJoinInfo;
+// 					$('#spec1').text(info.mp_spec);
+				},
+				error : function(res){
+					alert(res.status);
+				}
+			});
+	    });
+});
+
+
+	name = "";
 	
-	  });
 	
-	function level(name){
+$(document).on('click', '.level', function(){
+		name = $(this).parent().parent().find('th:eq(0)').text().trim();
+		alert(name);
+		
+		
+		
+		
+		var sel = $(this).parent().parent().find('label').text();
+		alert(sel);
+		$('#spec1').attr('value', sel);
+		
+		
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/join/join_specialList.do?emp_level='+ name,
 			dataType: 'json',
@@ -358,7 +430,7 @@ label {
 			
 		});
 		
-	};
+	});
 	
 	
 	
@@ -377,10 +449,6 @@ label {
 					$('#inter').text(info.mp_inter);
 					$('#high').text(info.mp_high);
 					$('#spec').text(info.mp_spec);
-					$('#begin1').text(info.mp_begin);
-					$('#inter1').text(info.mp_inter);
-					$('#high1').text(info.mp_high);
-					$('#spec1').text(info.mp_spec);
 				},
 				error : function(res){
 					alert(res.status);
@@ -411,9 +479,10 @@ label {
 // 			});
 // 	};	
 	
-	// 없어졌다 사라졌다를 생기는거는 document로 해야함
+	// 없어졌다 사라졌다를 생기는거는 document로 해야함 정적
 	$(document).on('click', '#modalNext', function(){
-        var limitNum = parseInt($('#spec1').text());
+		//특급
+        var limitNum = parseInt($('#spec1').val());
         var num = 0;
         var insertNm = "";
         $("input[name='micro']:checked").each(function() {
@@ -437,52 +506,13 @@ label {
                              + '<td>'
                              + arrstr[0]
                              + '</td>'+
-                         '<tr>';
+                         '</tr>';
            });
            $('#nextList').empty().append(appendList);
 		   
 	    }else {
 	       alert(limitNum + "명에 맞게 선택해 주세요.");
 		}
-	    
-	    
-	    $('#aa').click(function(){
-	    	alert($('#nextList tr').length);
-	    	alert($('#nextList tr').length/2);
-	    	var len = $('#nextList tr').length/2;
-	    	var insertNm=""; 
-	    	for(var i=0; i<=len; i=i+2){
-               var str = $('#nextList tr:eq('+i+')').find('td:eq(0) input').val();
-//                var str = $('#nextList tr:eq('+i+')').find('#test111').text();
-               insertNm += str+"/";
-            }
-
-
-    		var select = $('#bb').val();
-	    	
-	    	
-	    	$.ajax({
-				url : '${pageContext.request.contextPath}/user/join/join_levelInsert.do',
-				dataType: 'json',
-				data : {
-					
-						"list":insertNm,
-						"select":select
-						
-						},
-				success : function(data){
-					console.log(data);
-// 					info = data.mpJoinInfo;
-// 					$('#spec1').text(info.mp_spec);
-				},
-				error : function(res){
-					alert(res.status);
-				}
-			});
-	    	
-           
-	    	
-	    })
 	});
 	
 	
