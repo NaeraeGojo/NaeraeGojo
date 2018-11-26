@@ -25,7 +25,7 @@ public class IAllFileDaoImpl implements IAllFileDao{
 
 	@Override
 	public void updateAllFile(AllFileVO afv) throws SQLException {
-		// TODO Auto-generated method stub
+		client.update("allFile.updateAllFile",afv);
 		
 	}
 
@@ -44,8 +44,7 @@ public class IAllFileDaoImpl implements IAllFileDao{
 
 	@Override
 	public AllFileVO getAllFile(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (AllFileVO) client.queryForObject("allFile.getAllFile", params);
 	}
 
 	

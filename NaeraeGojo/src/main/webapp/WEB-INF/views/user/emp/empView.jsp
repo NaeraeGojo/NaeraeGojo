@@ -4,39 +4,40 @@
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <script>
 $(function() {
-// 	$('#email_com').click(function(){
-// 	});
-	
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
 		//(이전 페이지 이동으로 수정할 예정)
 	});
+	$('input[value=탈퇴]').click(function(){
+		emp_code=$('label[name=emp_code]').text();
+		alert("탈퇴되었습니다.");
+		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/deleteEmp.do?emp_code=' + emp_code);
+	});
 	$('input[value=수정]').click(function(){
 		emp_code=$('label[name=emp_code]').text();
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empUpdate.do?emp_code=' + emp_code);
-		//(이전 페이지 이동으로 수정할 예정)
 	});
 	
 	
 	
 	
 	// 주소찾기	
-	$('#zipCodeBtn').click(function() {
+// 	$('#zipCodeBtn').click(function() {
 		// 팝업 : 모달 - 해당 팝업이 포커스 점유
 		//      모달리스 - 팝업의 포커스 다른 윈도우와 천이
-		var url = "${pageContext.request.contextPath}/user/member/zipcodeSearch.do";
-		var options = "width = 375, height = 400, scrollbars = no";
+// 		var url = "${pageContext.request.contextPath}/user/member/zipcodeSearch.do";
+// 		var options = "width = 375, height = 400, scrollbars = no";
 		
-		window.open(url, "우편번호검색", options);
-	});
+// 		window.open(url, "우편번호검색", options);
+// 	});
 	
 	// 프로필 사진 업로드				
-	$('#picUpload').click(function() {
-		var url = "${pageContext.request.contextPath}/user/member/idPicFileUpload.do";
-		var options = "width = 375, height = 400, scrollbars = no";
+// 	$('#picUpload').click(function() {
+// 		var url = "${pageContext.request.contextPath}/user/member/idPicFileUpload.do";
+// 		var options = "width = 375, height = 400, scrollbars = no";
 	
-		window.open(url, "증명사진업로드", options);
-	});
+// 		window.open(url, "증명사진업로드", options);
+// 	});
 });
 
 $(function () {
@@ -243,7 +244,7 @@ $(function () {
                				</div>
                			</div>
                 		<div class="box-footer clearfix">
-			              <input value="삭제" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
+			              <input value="탈퇴" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
 			              <input name="list" type="button" value="목록" class="btn btn-sm btn-info btn-flat pull-right">
 			              <input value="수정" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 			          	</div>
