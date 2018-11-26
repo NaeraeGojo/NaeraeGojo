@@ -25,45 +25,50 @@
 <script type="text/javascript">
 $(function(){
 
-// 	$('.upForm').hide();
+	$('.upForm').hide();
 	
-// 	$('.btn_refile').click(function(){
-// 		all_file_code = $(this).attr('name');
-// 		$('#fileUpForm input[name=all_file_code]').val(all_file_code);
-// 	});
+	$('.btn_refile').click(function(){
+		all_file_code = $(this).attr('name');
+		$('#fileUpForm input[name=all_file_code]').val(all_file_code);
+	});
 	
-// 	$('.btn_fileUp').click(function(){
-// 		var file01 = $('#file01').val();
+	$('.btn_fileUp').click(function(){
+		var file01 = $('#file01').val();
 		
-// 		if(file01 == ''){
-// 			boalert("파일을 선택해 주세요.")
-// 			return false;
-// 		}
+		if(file01 == ''){
+			boalert("파일을 선택해 주세요.")
+			return false;
+		}
 		
-// 		var formData = new FormData(); 
-// 		formData.append("all_file_code", all_file_code); 
-// 		formData.append("file", $("input[name=files]")[0].files[0]);
+		var formData = new FormData(); 
+		formData.append("all_file_code", all_file_code); 
+		formData.append("file", $("input[name=files]")[0].files[0]);
 		
-// 		$.ajax({
-//             type : 'post',
-//             enctype: 'multipart/form-data',
-//             processData: false,  // Important!
-//             contentType: false,
-//             cache: false,
-//             url : '${pageContext.request.contextPath}/user/allfile/allFileUpdate.do',
-//             data : formData,
-//             dataType : 'json',
-//             error: function(xhr, status, error){
-//                 alert(error);
-//             },
-//             success : function(json){
-//             	$('#'+all_file_code).text(json.all_file_name);
+		$.ajax({
+            type : 'post',
+            enctype: 'multipart/form-data',
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            url : '${pageContext.request.contextPath}/user/allfile/allFileUpdate.do',
+            data : formData,
+            dataType : 'json',
+            error: function(xhr, status, error){
+                alert(error);
+            },
+            success : function(json){
+            	$('#'+all_file_code).text(json.all_file_name);
             	
-//                 $('#fileUpForm').modal('hide');
-//             }
-//         });
-		
-// 	});
+                $('#fileUpForm').modal('hide');
+            }
+        });
+	});
+	
+	$('#btn_upForm').click(function(){
+		$('#btn_upForm').hide();
+		$('#btn_update').attr('style','display:inline-block');
+		$('.upForm').show();
+	});
 
 	$('#deleteBtn').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/deletePblancboard/${pblancboardInfo.pblanc_board_code}.do')
@@ -90,7 +95,7 @@ $(function(){
 <section class="content">
 	<br/><br/>
 	<div class="col-md-11">
-		<div class="box box-warning">
+		<div class="box box-2team">
 			<div class="box-header with-border">
 				<b class="box-title">공고 상세 정보</b> <br/><br/>
 			</div>
@@ -156,32 +161,23 @@ $(function(){
 
 		            <c:forEach items="${pblancboardInfo.items }" var="allFileItem" varStatus="stat">
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label>
+							<label for="file01" class="col-sm-2 control-label">첨부 파일</label>
 							<div class="col-sm-8" id="filefile" >
-<%-- 				            	<a>${allFileItem.all_file_name}</a> --%>
 								<a id="${allFileItem.all_file_code }" href="${pageContext.request.contextPath }/user/allfile/allFileDownload.do?all_file_code=${allFileItem.all_file_code}">
 								${allFileItem.all_file_name }</a>
-<!-- 								<input type="button" class="btn_refile upForm"  data-toggle="modal" data-target="#fileUpForm" -->
-<%-- 								name="${allFileItem.all_file_code }" value="수정"> --%>
+								<input type="button" class="btn_refile upForm"  data-toggle="modal" data-target="#fileUpForm"
+								name="${allFileItem.all_file_code }" value="수정">
 							</div>
 						</div>
 					</c:forEach>	
 						
-<!-- 						<div class="form-group"> -->
-<!-- 							<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label> -->
-<!-- 							<div class="col-sm-8" id="filefile" > -->
-<%-- 				            	<a>${allFileItem.all_file_name}</a> --%>
-<%-- 								<a id="${allFileItem.items[1].all_file_code }"> --%>
-<%-- 								${allFileItem.all_file_name }</a> --%>
-<!-- 								<input type="button" class="btn_refile upForm"  data-toggle="modal" data-target="#fileUpForm" -->
-<%-- 								name="${allFileItem.items[0].all_file_code }" value="수정"> --%>
-<!-- 							</div> -->
-<!-- 						</div> -->
 
 					<div class="box-footer clearfix">
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
-						<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button>
-						<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">삭제</button>
+						<input value="수정" id="btn_upForm" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
+						<button type="submit" class="btn btn-sm btn-danger btn-flat pull-right">삭제</button>
+						<input id="btn_update" value="등록" type="submit" class="btn btn-sm btn-warning btn-flat pull-right"
+						type="submit" href="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" style="display:none;">
 					</div>
 				</form>
 			</div>
@@ -192,16 +188,15 @@ $(function(){
 		<div class="modal-dialog" style="top: 50%;">
 			<div class="modal-content" style="width: 60%">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title">파일 변경</h4>
 				</div>
 				<div class="modal-body">
 					<form id="refileForm" enctype="multipart/form-data" method="post">
-						<input type="hidden" name="all_file_code"> <inputtype="file" class="filestyle" id="file01" name="files"
-						data-buttonName="btn-primary">
+						<input type="hidden" name="all_file_code"> 
+						<input type="file" class="filestyle" id="file01" name="files" data-buttonName="btn-primary">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>

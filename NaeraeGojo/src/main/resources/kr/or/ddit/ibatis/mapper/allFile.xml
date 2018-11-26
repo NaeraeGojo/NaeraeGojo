@@ -37,7 +37,7 @@
 	</insert>
 	
 	<update id="updateAllFile" parameterClass="allFileVO">
-		UPDATE SUGGFI
+		UPDATE ALL_FILE
 		SET ALL_FILE_SAVE_NAME = #all_file_save_name#
 			,ALL_FILE_NAME     = #all_file_name#
 			,ALL_FILE_VOLUME   = #all_file_volume#
