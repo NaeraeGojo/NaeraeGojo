@@ -25,7 +25,7 @@ $(function() {
 		}
 		$('input[name=emp_phone]').val(phone);
 					
-		email = $('input[name=emp_email1]').val() + '@' + $('select[name=emp_email2]').val();
+		email = $('input[name=emp_email1]').val() + '@' + $('label[name=emp_email2]').val();
 		if (!email.validationMAIL()) {
 			alert("이메일을 바르게 입력해주세요.");
 			return false;

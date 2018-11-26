@@ -40,14 +40,13 @@ public class IEmpDaoImpl implements IEmpDao{
 
 	@Override
 	public void deleteEmpInfo(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
+		client.update("emp.deleteEmpInfo", params);
 		
 	}
 
 	@Override
 	public void updateEmpInfo(EmpVO empInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("emp.updateEmpInfo", empInfo);
 	}
 
 //	@Override

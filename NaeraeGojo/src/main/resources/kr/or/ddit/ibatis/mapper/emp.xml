@@ -112,21 +112,27 @@
 						,#part_code#)
 	</insert>
 	
-	
-	<!-- 페이징 -->
-<!-- 	<select id="totalCount" parameterClass="map" resultClass="int"> -->
-<!--         SELECT COUNT(EMP_CODE) -->
-<!--         FROM EMP -->
-<!--         WHERE EMP_DELETE = 'n' -->
-<!--         <include refid="searchCondition"/>  -->
-<!--     </select> -->
+	<update id="updateEmpInfo" parameterClass="empVO">
+		UPDATE EMP
+		   SET EMP_PASS			=	#emp_pass#
+		   	  ,EMP_MARRIAGE		=	#emp_marriage# 
+		      ,EMP_ARMY			=	#emp_army#
+		      ,EMP_PHONE     	=	#emp_phone#
+		      ,EMP_EMAIL     	=	#emp_email#
+		      ,PART_CODE     	=	#part_code#
+		      ,EMP_ROLE     	=	#emp_role#
+		      ,EMP_LEVEL     	=	#emp_level#
+		 WHERE EMP_CODE 		=	#emp_code#
+	</update>
 
-<!-- 	<select id=findEmpId parameterType="String"	resultType="String"> -->
-<!-- 		SELECT EMP_CODE -->
-<!-- 		FROM EMP -->
-<!-- 		WHERE EMP_NAME = #emp_name# -->
-<!-- 		AND EMP_EMAIL = #emp_email# -->
-<!-- 	</select> -->
+	<update id="deleteEmpInfo" parameterClass="map">
+		UPDATE EMP
+		   SET EMP_DELETE = 'y'
+		 WHERE EMP_CODE = #emp_code#
+	</update>
+
+
+
 </sqlMap>
 
 
