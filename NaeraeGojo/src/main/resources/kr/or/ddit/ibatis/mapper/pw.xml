@@ -6,8 +6,11 @@
 	<typeAlias alias="pwVO" type="kr.or.ddit.vo.ProjectWorkVO"/>
 		
 	<sql id="selectAll">
-		select * from pw
-			where pw_delete = 'n'
+		select pw.*, pwc.pwc_name, emp.emp_name
+			        from pw , pwc , emp
+			    	where pw_delete = 'n'
+				        and pwc.pwc_code = pw.pwc_code
+				        and emp.emp_code(+) = pw.pw_damdang
 	</sql>
 	
 	<sql id="searchCondition">
@@ -44,7 +47,6 @@
 						, pw_writer
 						, pw_est
 						, pw_eet
-						, pw_reg_date
 						, pw_damdang
 						, pwc_code
 						, project_code
@@ -58,7 +60,6 @@
 							, #pw_writer#
 							, #pw_est#
 							, #pw_eet#
-							, #pw_reg_date#
 							, #pw_damdang#
 							, #pwc_code#
 							, #project_code#
@@ -103,10 +104,10 @@
 <!-- 			where pw_code = #pw_code# -->
 <!-- 	</update> -->
 
-<!-- 	<select id="getpw" parameterClass="map" resultClass="pwVO"> -->
-<!-- 		<include refid="selectAll"/> -->
-<!-- 		and pw_code = #pw_code# -->
-<!-- 	</select> -->
+	<select id="getPw" parameterClass="map" resultClass="java.util.HashMap">
+		<include refid="selectAll"/>
+		and pw_code = #pw_code#
+	</select>
 	
 <!-- 	<update id="updatepw" parameterClass="pwVO"> -->
 <!-- 		update pw -->

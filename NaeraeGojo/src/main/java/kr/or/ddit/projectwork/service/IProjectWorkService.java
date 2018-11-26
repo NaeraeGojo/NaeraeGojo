@@ -15,7 +15,7 @@ public interface IProjectWorkService {
 	
 	public List<Map<String, String>> getProjectWorkList(Map<String, String> params) throws SQLException;
 	
-	public ProjectWorkVO getProjectWork(Map<String, String> params) throws SQLException;
+	public Map<String, String> getProjectWork(Map<String, String> params) throws SQLException;
 
 	public int totalCount(Map<String, String> params) throws SQLException;
 

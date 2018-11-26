@@ -66,9 +66,30 @@ public class ProjectWorkController {
 		return model;
 	}
 	
-	
-	public Model ProjectWorkView(String bo_no,Model model) throws Exception{
+	@RequestMapping("pwView")
+	public Model ProjectWorkView(String pw_code
+								, Map<String, String> pwv
+								, Map<String, String> params
+								, Model model) throws Exception{
+		params.put("pw_code", pw_code);
 		
+		pwv = service.getProjectWork(params);
+		
+		String start_date = String.valueOf(pwv.get("PW_EST"));
+		start_date = start_date.substring(0,10);
+		pwv.put("PW_EST", start_date);
+		
+		String end_date = String.valueOf(pwv.get("PW_EET"));
+		end_date = end_date.substring(0,10);
+		pwv.put("PW_EET", end_date);
+		
+		String reg_date = String.valueOf(pwv.get("PW_REG_DATE"));
+		reg_date = reg_date.substring(0,10);
+		pwv.put("PW_REG_DATE", reg_date);
+		
+		
+
+		model.addAttribute("pwv",pwv);
 		return model;
 	}
 	

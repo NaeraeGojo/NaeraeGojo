@@ -235,12 +235,22 @@ $(function(){
 		
 		return true;
 	});
+	
+	
+	
+	$('.pw_up_form input[name=show_pwc_name]').val('${pwv.EMP_NAME}');
+	$('.pw_up_form input[name=pwc_code]').val('${pwv.PWC_CODE}');
+	$('.pw_up_form input[name=show_pwc_name]').val('${pwv.PWC_NAME}');
+	$('.pw_up_form input[name=pwc_code]').val('${pwv.PWC_CODE}');
+	$('.pw_up_form input[name=pw_function]').val('${pwv.PW_FUNCTION}');
+	$('.pw_up_form textarea[name=pw_content]').val('${pwv.PW_CONTENT}');
+	
 });
 
 
 </script>
     
-<div class="row">
+<div class="row pw_up_form">
     <div class="pwcont">
       <div class="col-md-12">	
           <div class="box box-2team">		
@@ -259,8 +269,8 @@ $(function(){
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >분류</label>
 	          <div class="col-sm-3">
-	            <input readonly="readonly" type="text" name="show_pwc_name" class="form-control" style="border-radius: 1em;">
-	            <input type="hidden" name="pwc_code">
+	            <input readonly="readonly" type="text" name="show_pwc_name" value="${pwv.PWC_NAME }" class="form-control" style="border-radius: 1em;">
+	            <input type="hidden" name="pwc_code" value="${pwv.PWC_CODE }">
 	          </div>
 	          <div class="col-sm-1">
 	          <input id="btn_show_pwc" type="button" class="bg-teal btn form-control btn-sm" 
@@ -331,14 +341,14 @@ $(function(){
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >업무 명</label>
               <div class="col-sm-6">
-                <input id="name" type="text" name="pw_function" class="form-control" style="border-radius: 1em;" placeholder="업무 명">
+                <input id="name" type="text" name="pw_function" value="${pwv.PW_FUNCTION }" class="form-control" style="border-radius: 1em;" placeholder="업무 명">
               </div>
             </div>
             
             <div class="form-group">
 		      <label for="contents" class="col-sm-2 control-label">업무 내용</label>
 		      <div  class="col-sm-8">
-		      <textarea name="pw_content" class="form-control" rows="10" placeholder="업무 내용" 
+		      <textarea name="pw_content" value="${pwv.PW_CONTENT }" class="form-control" rows="10" placeholder="업무 내용" 
 		      style=" border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
 		       </div>
 		    </div>
@@ -346,8 +356,8 @@ $(function(){
             <div class="form-group">
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
               <div class="col-sm-3">
-              	<input type="hidden" name="pw_writer" value="${LOGIN_EMPINFO.emp_code }">
-                <input type="text" name="pw_writer_show" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
+              	<input type="hidden" name="pw_writer" value="${pwv.EMP_WRITER }">
+                <input type="text" name="pw_writer_show" value="${pwv.EMP_NAME }" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
                  readonly="readonly" >
               </div>
             </div>

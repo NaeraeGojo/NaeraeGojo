@@ -4,6 +4,7 @@
 
 <html>
 <style>
+
 .perful{
 	width: 100% 
 }
@@ -93,7 +94,27 @@ $(function(){
 		});
 	};
 	
-	
+	$('.table_pw tr:gt(0)').click(function(){
+		var pw_code = $(this).attr('code');
+		
+		var query = '?pw_code='+pw_code;
+		
+		var currentPage = '${param.currentPage}';
+		
+		if(currentPage != null && currentPage != ''){
+			query += '&currentPage=' + currentPage;
+		}
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwView.do' + query);
+	});
 	
 	
 	$('#pwForm').click(function(){
@@ -272,7 +293,7 @@ $(function(){
               <div class="table-responsive">
                 <table class="table no-margin table-hover table_pw" >
                   <thead>						
-                  <tr id="trtr">
+                  <tr>
                     <th scope="col" width="5%" tex>No.</th>
                     <th scope="col" width="15%">분류</th>
                     <th scope="col" width="40%">업무명</th>
@@ -284,7 +305,7 @@ $(function(){
                   </thead>
                   <tbody>
                   <c:forEach items="${pwl }" var="pwv">
-		                 <tr>
+		                 <tr code="${pwv.PW_CODE }">
        						<td>${pwv.RNUM }</td>
 		                   	<td>${pwv.PWC_NAME }</td>
 		                   	<td>${pwv.PW_FUNCTION }</td>

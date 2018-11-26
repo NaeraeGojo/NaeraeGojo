@@ -41,10 +41,9 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 	}
 
 	@Override
-	public ProjectWorkVO getProjectWork(Map<String, String> params)
+	public Map<String, String> getProjectWork(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (Map<String, String>) client.queryForObject("pw.getPw",params);
 	}
 
 	@Override
