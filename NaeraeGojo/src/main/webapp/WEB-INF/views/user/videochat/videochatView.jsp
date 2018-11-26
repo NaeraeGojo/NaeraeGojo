@@ -66,7 +66,7 @@ label {
       <div class="row" >
       <div class="col-md-12">
   		<!-- TABLE: LATEST ORDERS -->
-          <div class="box box-warning">
+          <div class="box box-2team">
             <div class="box-header with-border">
               <b class="box-title">회의 상세내용</b>
               <br/><br/>

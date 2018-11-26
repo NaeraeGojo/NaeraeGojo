@@ -5,13 +5,37 @@
 <sqlMap namespace="feedback">
     <typeAlias alias="feedbackVO" type="kr.or.ddit.vo.FeedbackVO"/>
     
+    <sql id="searchCondition">
+        <dynamic>
+            <isNotEmpty property="search_keyword" prepend="AND">
+<!--                 <isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">   -->
+<!--                         MEETING_TITLE LIKE '%' || #search_keyword# || '%' -->
+<!--                     OR MEETING_CONTENT LIKE '%' || #search_keyword# || '%' -->
+<!--                     OR EMP_CODE LIKE '%' || #search_keyword# || '%' -->
+<!--                 </isEqual> -->
+                <isEqual property="search_keycode" compareValue="SEND" >  
+                        B.EMP_NAME LIKE '%' || #search_keyword# || '%'
+                </isEqual>
+<!--                 <isEqual property="search_keycode" compareValue="CONTENT" >   -->
+<!--                         MEETING_CONTENT LIKE '%' || #search_keyword# || '%' -->
+<!--                 </isEqual> -->
+<!--                 <isEqual property="search_keycode" compareValue="WRITER" >   -->
+<!--                         EMP_CODE LIKE '%' || #search_keyword# || '%' -->
+<!--                 </isEqual> -->
+            </isNotEmpty>
+        
+        </dynamic>
+    </sql>
+    
+    
+    <!-- 알림 피드백 -->
     <select id="feedbackInfo" parameterClass="map" resultClass="feedbackVO">
 		select  a.feedback_content, b.emp_name , a.receive_emp, c.pw_function, a.feedback_st, 
 		          d.project_name, a.feedback_rt, a.feedback_alarm
 		from feedback a, emp b, pw c, project d
 		where a.send_emp = b.emp_code
 		and a.pw_code = c.pw_code
-		and a.send_emp = '1'
+		and a.send_emp = #emp_code#
 		and a.send_delete ='n'
 		and c.project_code = d.project_code
 		and a.feedback_code=#feedback_code#
@@ -24,28 +48,89 @@
         where feedback_code = #feedback_code#
     </update>
     
+    
+    
+    
+<!-- 업무 피드백 관리  -->    
+    
+    <select id="totalCount" parameterClass="map" resultClass="int">
+        select count(a.feedback_code)
+        from feedback a, emp b, project c, pw d
+        where a.send_emp = b.emp_code
+        and a.pw_code = d.pw_code
+        and a.receive_emp = #emp_code#
+        and d.project_code = c.project_code
+        and c.project_code = #project_code#
+        and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
+        and a.receive_delete = 'n'
+        <include refid = "searchCondition"/>
+    </select>
+    
+    
     <select id="getFeedbackCnt" parameterClass="map" resultClass="string">
         select count(a.feedback_code)
-		from feedback a, emp b, project c, pw d
-		where a.send_emp = b.emp_code
-		and a.pw_code = d.pw_code
-		and a.receive_emp = #emp_code#
-		and d.project_code = c.project_code
-		and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
-		and a.receive_delete = 'n'
+        from feedback a, emp b, project c, pw d
+        where a.send_emp = b.emp_code
+        and a.pw_code = d.pw_code
+        and a.receive_emp = #emp_code#
+        and c.project_code = #project_code#
+        and d.project_code = c.project_code
+        and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
+        and a.receive_delete = 'n'
     </select>
     
     <select id="receivefbList" parameterClass="map" resultClass="feedbackVO">
-        select c.project_code, c.project_name, d.pw_function, a.send_emp, b.emp_name, a.feedback_st, a.feedback_alarm, a.feedback_code
-		from feedback a, emp b, project c, pw d
-		where a.send_emp = b.emp_code
-		and a.pw_code = d.pw_code
-		and a.receive_emp = #emp_code#
-		and d.project_code = c.project_code
-		and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
-		and a.receive_delete = 'n'
-		group by c.project_code, c.project_name, d.pw_function, a.send_emp, b.emp_name, a.feedback_st, a.feedback_alarm, a.feedback_code
+        select z.*
+         from (select rownum rnum, y.*
+          from (select c.project_code, c.project_name, d.pw_function, a.send_emp, b.emp_name, a.feedback_st
+                , a.feedback_alarm, a.feedback_code
+                from feedback a, emp b, project c, pw d
+                where a.send_emp = b.emp_code
+                and a.pw_code = d.pw_code
+                and a.receive_emp = #emp_code#
+                and c.project_code = #project_code#
+                and d.project_code = c.project_code
+                and a.feedback_st  &gt; to_char(sysdate - 14, 'YYYYMMDD')
+                and a.receive_delete = 'n'
+                <include refid = "searchCondition"/>
+                group by c.project_code, c.project_name, d.pw_function, a.send_emp, b.emp_name, a.feedback_st
+                 , a.feedback_alarm, a.feedback_code
+                 order by a.feedback_st
+                    ) y ) z
+         <![CDATA[
+         where z.rnum <= #startCount#
+           and z.rnum >= #endCount#
+         ]]>
+         order by z.rnum desc
     </select>
+    
+    
+    
+    <select id="feedbackInfo2" parameterClass="map" resultClass="feedbackVO">
+        select  a.feedback_content, b.emp_name , a.receive_emp, c.pw_function, a.feedback_st, 
+                  d.project_name, a.feedback_rt, a.feedback_alarm
+        from feedback a, emp b, pw c, project d
+        where a.send_emp = b.emp_code
+        and d.project_code = #project_code#
+        and a.pw_code = c.pw_code
+        and a.send_emp = '1'
+        and a.receive_delete ='n'
+        and c.project_code = d.project_code
+        and a.feedback_code=#feedback_code#
+    </select>
+    
+    <update id="confirmStatus" parameterClass="map">
+        update feedback
+        set feedback_alarm ='y'
+            , feedback_rt = sysdate
+        where feedback_code = #feedback_code#
+    </update>
+    
+    <update id="deleteReceive" parameterClass="map">
+        update feedback
+        set receive_delete ='y'
+        where feedback_code = #feedback_code#
+    </update>
     
 </sqlMap>
 

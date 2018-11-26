@@ -206,7 +206,7 @@ table th,td{
       <div class="row">
       <div class="col-md-12">
         <!-- TABLE: LATEST ORDERS -->
-          <div class="box box-warning">
+          <div class="box box-2team">
             <div class="box-header with-border">
              <h3 class="box-title">이슈 알림
               <span class="label label-warning pull-right">${listCnt }</span></h3>
@@ -271,7 +271,7 @@ table th,td{
       <div class="col-md-12">
   		<!-- TABLE: LATEST ORDERS -->
   		<div class="nav-tabs-custom">
-          <div class="box box-warning">
+          <div class="box box-2team">
             <div class="box-header with-border">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab"><font size="4.5">받은 피드백
@@ -409,7 +409,7 @@ table th,td{
         <div class="row">
         <div class="col-md-12">
   		<!-- TABLE: LATEST ORDERS -->
-          <div class="box box-warning">
+          <div class="box box-2team">
             <div class="box-header with-border">
               <h3 class="box-title">화상회의 초대
               <span class="label label-warning pull-right">2</span></h3>
@@ -464,7 +464,7 @@ table th,td{
         <div class="row">
         <div class="col-md-12">
         <!-- TABLE: LATEST ORDERS -->
-          <div class="box box-warning">
+          <div class="box box-2team">
             <div class="box-header with-border">
               <h3 class="box-title">프로젝트 초대 알림
               <span class="label label-warning pull-right">2</span></h3>
