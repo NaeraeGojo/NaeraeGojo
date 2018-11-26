@@ -17,6 +17,7 @@ import kr.or.ddit.join.service.IJoinService;
 import kr.or.ddit.utils.CryptoGenerator;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.NotEmpVO;
@@ -162,6 +163,9 @@ public class JoinController {
 		if(currentPage==null){
 			currentPage = "1";
 		}
+		List<JoinVO> joinLast = service.joinFinalList();
+		andView.addObject("joinLast",joinLast);
+		andView.setViewName("user/join/join_list");
 //		Map<String, String> params = new HashMap<String, String>();
 //		
 //		params.put("search_keyword", search_keyword);
