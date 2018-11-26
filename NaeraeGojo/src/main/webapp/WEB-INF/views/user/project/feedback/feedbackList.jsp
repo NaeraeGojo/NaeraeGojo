@@ -87,39 +87,48 @@ $(function(){
 	
 	
 	$(document).on('click', '#deleteBtn', function() {   
-		$('#deleteModal').modal('show');
+// 		$('#deleteModal').modal('show');
 		
+		BootstrapDialog.show({
+            message: '받은 피드백을 삭제하시겠습니까?',
+            buttons: [{
+                label: '삭제',
+                cssClass: 'btn-danger',
+                action: function(){
+            		var feedback_code3 = $('#deleteBtn').attr('value');
+            		$('#deleteModal').modal('hide');
+            		
+            	    $.ajax({
+                        
+                        type : "POST"
+                            , url : "${pageContext.request.contextPath}/user/feedback/deleteReceive.do"
+                            , dataType : "json"
+                            , data : {feedback_code : feedback_code3}
+                            , async : false
+                            , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                            , error : function(request, status, error) {
+                                   alert("error : " + request.status );
+                            }
+                            , success : function(result) {
+                            	
+                                boalert('받은 피드백이 삭제되었습니다.');
+                                
+                                setTimeout(function(){
+                                    $(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList.do');
+                                },2000);
+                           }
+                    });
+                }
+            }, {
+                label: 'Close',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+            }]
+        });
 // 		var feedback_code = $(this).attr('value');
 	});
 	
-	
-	$('#btn3').click(function(){
-		
-		var feedback_code3 = $('#deleteBtn').attr('value');
-		$('#deleteModal').modal('hide');
-		
-	    $.ajax({
-            
-            type : "POST"
-                , url : "${pageContext.request.contextPath}/user/feedback/deleteReceive.do"
-                , dataType : "json"
-                , data : {feedback_code : feedback_code3}
-                , async : false
-                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-                , error : function(request, status, error) {
-                       alert("error : " + request.status );
-                }
-                , success : function(result) {
-                	
-                    boalert('받은 피드백이 삭제되었습니다.');
-                    
-                    setTimeout(function(){
-                        $(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList.do');
-                    },2000);
-                    
-               }
-        });
-	});
 });
 
 </script>
@@ -136,20 +145,14 @@ $(function(){
 		<div class="nav-tabs-custom" id="divdiv"
 			style="width: 47%; float: left; margin-right: 20px; height: 680px !important;">
 			<ul class="nav nav-tabs">
-				<li class="active"><a
-					href="${pageContext.request.contextPath}/user/feedback/feedbackList.do">받은
-						피드백</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/user/feedback/feedbackList.do">보낸
-						피드백</a></li>
+				<li class="active"><a href="${pageContext.request.contextPath}/user/feedback/feedbackList.do">
+					받은피드백</a></li>
+				<li><a href="${pageContext.request.contextPath}/user/feedback/feedbackList2.do">
+					보낸피드백</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab_1">
 					<div class="box box-2team">
-						<!--                         <div class="box-header with-border"> -->
-						<!--                             <b class="box-title"></b><br/> -->
-						<!--                             <br/> -->
-						<!--                         </div> -->
 						<div class="box-body">
 							<div class="table-responsive">
 								<table class="table no-margin table-hover" id="feedbackList">
@@ -165,8 +168,8 @@ $(function(){
 
 										<c:if test="${empty receivefbList}">
 											<tr>
-												<td onclick='event.cancelBubble=true;' colspan="6">받은
-													피드백이 없습니다.</td>
+												<td onclick='event.cancelBubble=true;' colspan="6">
+													받은피드백이 없습니다.</td>
 											</tr>
 										</c:if>
 
@@ -196,8 +199,66 @@ $(function(){
 						${paging}
 					</div>
 
-					<form
-						action="${pageContext.request.contextPath}/user/feedback/feedbackList.do"
+					<form action="${pageContext.request.contextPath}/user/feedback/feedbackList.do"
+						method="post" class="form-inline pull-right">
+						<select class="form-control" name="search_keycode">
+							<!--                             <option value="TOTAL">전체</option> -->
+							<option value="SEND">보낸사람</option>
+						</select> <input id="search_keyword" name="search_keyword" type="text"
+							placeholder="검색어 입력" class="form-control" />
+						<button type="submit" class="btn btn-primary form-control" >검색</button>
+					</form>
+				</div>
+				
+				
+				<div class="tab-pane active" id="tab_2">
+					<div class="box box-2team">
+						<div class="box-body">
+							<div class="table-responsive">
+								<table class="table no-margin table-hover" id="feedbackList">
+									<thead>
+										<tr>
+											<th scope="col" width="3%" tex>No.</th>
+											<th scope="col" width="20%"></th>
+											<th scope="col" width="7%">보낸날짜</th>
+											<th scope="col" width="5%">상태</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										<c:if test="${empty receivefbList}">
+											<tr>
+												<td onclick='event.cancelBubble=true;' colspan="6">
+													보낸 피드백이 없습니다.</td>
+											</tr>
+										</c:if>
+
+										<c:if test="${!empty receivefbList}">
+											<c:forEach items="${receivefbList }" var="receiveInfo">
+												<tr>
+													<td><input type="hidden" name="feedback_code"
+														value="${receiveInfo.feedback_code}">${receiveInfo.rnum}</td>
+													<td><label>${receiveInfo.emp_name }</label> 님께서 피드백을
+														보냈습니다.</td>
+													<td>${receiveInfo.feedback_st }</td>
+													<c:if test="${receiveInfo.feedback_alarm=='n'}">
+														<td>미확인</td>
+													</c:if>
+													<c:if test="${receiveInfo.feedback_alarm=='y'}">
+														<td>확인</td>
+													</c:if>
+												</tr>
+											</c:forEach>
+										</c:if>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						${paging}
+					</div>
+
+					<form action="${pageContext.request.contextPath}/user/feedback/feedbackList.do"
 						method="post" class="form-inline pull-right">
 						<select class="form-control" name="search_keycode">
 							<!--                             <option value="TOTAL">전체</option> -->
@@ -284,28 +345,3 @@ $(function(){
 </div>
 
 
-<!-- 삭제확인 모달창 -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="container">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content"   >
-      <div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-        <h3 class="modal-title" id="exampleModalLabel">삭제하시겠습니까?</h3>
-      </div>
-      <div class="modal-body" style=" border-top:1px solid gray;">
-            <div  class="row" align="center" style="padding:10px;">
-                <table >
-                    <tr>
-                        <td style="width:80px; padding:10px;" ><input value="삭제" id="btn3" type="button" style="width:80px;" class="btn btn-block btn-default "></td>
-                        <td style="width:80px; padding:10px;" ><input value="취소"  data-dismiss="modal" type="button" style="width:80px; " class="btn btn-block btn-default "></td>
-                    </tr>
-                </table>
-             </div>
-      </div>
-  </div>
-  </div>
-</div>
-</div>

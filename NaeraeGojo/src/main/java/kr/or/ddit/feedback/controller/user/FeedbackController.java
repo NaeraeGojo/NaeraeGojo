@@ -146,21 +146,45 @@ public class FeedbackController {
 	}
 	
 	
-	public ModelAndView updateFeedback(ModelAndView andView) throws Exception{
+	@RequestMapping("feedbackList2")
+	public ModelAndView feedbackList2(ModelAndView andview, HttpServletRequest request, HttpSession session
+								, Map<String, String> params, String search_keycode
+								, String search_keyword
+								, String currentPage
+								, String project_code) throws Exception{
 		
-		return null;
-	}
-	
-	
-	public String insertFeedback() throws Exception{
-		
-		return null;
-	}
-	
-	
-	public String deleteFeedback() throws Exception{
-		
-		return null;
+//		// 프로젝트 코드
+//		project_code = (String) session.getAttribute("project_code");
+//		params.put("project_code", project_code);
+//		
+//		// 로그인 아이디
+//		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+//		params.put("emp_code", emp_code);
+//		
+//		String sendfeedCnt = service.getFeedbackCnt2(params);  //보낸 피드백 count
+//		
+//		currentPage = request.getParameter("currentPage");
+//		if(currentPage==null){
+//			currentPage="1";
+//		}
+//		
+//		params.put("search_keycode", search_keycode);
+//		params.put("search_keyword", search_keyword);
+//		
+//		int totalCount = service.totalCount(params);
+//		
+//		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage), totalCount, request);
+//		
+//		params.put("startCount", String.valueOf(paging.getStartCount()));
+//		params.put("endCount", String.valueOf(paging.getEndCount()));
+//		
+//		List<FeedbackVO> receivefbList = service.receivefbList(params);
+//		
+//		andview.addObject("paging", paging.getPagingHtmls());
+//		andview.addObject("sendfeedCnt", sendfeedCnt); // 받은 피드백 count		
+//		andview.addObject("receivefbList", receivefbList); // 받은 피드백 리스트
+//		andview.setViewName("user/project/feedback/feedbackList");
+		return andview;
 	}
 }
 

@@ -95,6 +95,13 @@
 		AND A.MP_CODE = C.MP_CODE 
 		AND A.RQPPS_CODE = #rqpps_code#
 	</select>
+	<select id="joinFinalList" resultClass="joinVO">
+		SELECT C.RQPPS_NAME,C.RQPPS_CODE
+		FROM JOIN A, EMP B, RQPPS C
+		WHERE A.EMP_CODE = B.EMP_CODE
+		AND   A.RQPPS_CODE = C.RQPPS_CODE
+		GROUP BY C.RQPPS_NAME,C.RQPPS_CODE
+	</select>
 	
 	
 
