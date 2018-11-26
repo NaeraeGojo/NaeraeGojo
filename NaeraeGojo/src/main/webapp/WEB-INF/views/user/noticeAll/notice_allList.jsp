@@ -98,7 +98,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin">
+                <table class="table no-margin table-hover">
                   <thead>
                   <tr>
                     <th scope="col" width="10%">No.</th>

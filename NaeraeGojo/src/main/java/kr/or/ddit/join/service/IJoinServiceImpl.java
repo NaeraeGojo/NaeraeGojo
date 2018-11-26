@@ -35,8 +35,8 @@ public class IJoinServiceImpl implements IJoinService{
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
-	public void insertJoinInfo(JoinVO joinInfo) throws SQLException {
-		joinDao.insertJoinInfo(joinInfo);
+	public void insertJoinInfo(Map<String, String> params) throws SQLException {
+		joinDao.insertJoinInfo(params);
 	}
 
 	@Override

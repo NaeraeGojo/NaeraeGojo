@@ -24,6 +24,7 @@ public class AllFileController {
 	@Autowired
 	IAllFileService service;
 	
+	@Autowired
 	private AllFileMapper fileMapper;
 	
 	@RequestMapping("allFileDownload")
