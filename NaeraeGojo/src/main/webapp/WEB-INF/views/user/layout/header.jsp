@@ -142,6 +142,13 @@
 	<!-- jQuery UI 라이브러리 js파일 -->
 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 	
+	<style>
+	 .box.box-2team {
+    border-top-color: #63a3ff;
+	}
+	
+	</style>
+	
 		<body class="hold-transition skin-blue sidebar-mini">
   		<header class="main-header">
     <!-- Logo -->

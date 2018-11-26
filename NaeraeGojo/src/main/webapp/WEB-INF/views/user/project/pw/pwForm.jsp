@@ -176,10 +176,50 @@ $(function(){
 	        }
 	        
 		});
-		
 	});
 	
+	$('#pwForm').submit(function(){
+		var project_code = $('input[name=rqpps_code]').val();
+		var pwc_code = $('input[name=suggest_title]').val();
+		var pw_function = $('textarea[name=suggest_content]').val();
+		var pw_content = $('input[name=suggest_start_date]').val();
+		var pw_percent = $('input[name=suggest_end_date]').val();
+		var pw_writer = $('input[name=suggest_cost]').val();
+		
+		
+		if(suggest_title == '' || suggest_start_date == '' || suggest_end_date == ''||
+				suggest_cost == ''|| suggest_content == ''){
+			boalert("빈 항목이 존재합니다.");
+			return false;
+		}
+		
+		if(rqpps_code == ''){
+			boalert("관련 제안요청서를 선택해주세요.");
+			return false;
+		}
+		
+		var dateArr = suggest_start_date.split('-');
+		var start_date = new Date(dateArr[0] , dateArr[1] -1, dateArr[2]);
+		
+		var dateArr2 = suggest_end_date.split('-');
+		var end_date = new Date(dateArr2[0] , dateArr2[1] -1, dateArr2[2]);
+		
+		
+		
+		if(end_date.getTime() < start_date.getTime()){
+			boalert("소요기간의 시작일과 종료일을 확인해주세요.")
+			return false;
+		}
+		
+		
+		if(file1 == ''){
+			boalert("제안서 첨부파일을 등록해 주세요.")
+			return false;
+		}
 
+		
+		return true;
+	});
 });
 
 
@@ -197,10 +237,9 @@ $(function(){
             
             <!-- /.box-header -->
             <div class="box-body">			
-            	<form role="form" id="suggestForm" class="form-horizontal" enctype="multipart/form-data" 
-         method="post" action="${pageContext.request.contextPath }/user/suggest/suggestInsert.do">
-         	<input type="hidden" name="rqpps_code">
-            <!-- text input -->
+            <form role="form" id="pwForm" class="form-horizontal" enctype="multipart/form-data" 
+        		 method="post" action="${pageContext.request.contextPath }/user/project/pw/pwInsert.do">
+         	<input type="hidden" name="project_code" value="${project_code}"/>
             
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >분류</label>
@@ -330,18 +369,17 @@ $(function(){
             <label for="pmoney" class="col-sm-2 control-label">진척도</label>
             <div class="col-sm-2">
             	<select id="pw_percent" class="form-control select2" style="border-radius: 1em;">
-			    	<option value="" selected>0%</option>
-			    	<option value="">0%</option>
-			    	<option value="">10%</option>
-			    	<option value="">20%</option>
-			    	<option value="">30%</option>
-			    	<option value="">40%</option>
-			    	<option value="">50%</option>
-			    	<option value="">60%</option>
-			    	<option value="">70%</option>
-			    	<option value="">80%</option>
-			    	<option value="">90%</option>
-			    	<option value="">100%</option>
+			    	<option value="0" selected>0%</option>
+			    	<option value="10">10%</option>
+			    	<option value="20">20%</option>
+			    	<option value="30">30%</option>
+			    	<option value="40">40%</option>
+			    	<option value="50">50%</option>
+			    	<option value="60">60%</option>
+			    	<option value="70">70%</option>
+			    	<option value="80">80%</option>
+			    	<option value="90">90%</option>
+			    	<option value="100">100%</option>
 			    </select>
             </div> 
           </div>

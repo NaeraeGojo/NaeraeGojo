@@ -40,11 +40,11 @@ public class ProjectWorkController {
 		return model;
 	}
 	
-	
+	@RequestMapping("pwInsert")
 	public String insertProjectWork(ProjectWorkVO pwv
-									, @RequestParam("files") MultipartFile[] files) throws Exception{
+									) throws Exception{
 		
-		return "";
+		return "redirect:/user/project/pw/pwList.do";
 	}
 	
 	

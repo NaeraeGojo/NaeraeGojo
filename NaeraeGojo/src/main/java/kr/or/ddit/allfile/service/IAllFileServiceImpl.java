@@ -11,6 +11,8 @@ import kr.or.ddit.vo.SuggestFileVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IAllFileServiceImpl implements IAllFileService{
@@ -23,10 +25,10 @@ public class IAllFileServiceImpl implements IAllFileService{
 		
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	@Override
 	public void updateAllFile(AllFileVO afv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.updateAllFile(afv);
 	}
 
 	@Override
@@ -36,16 +38,13 @@ public class IAllFileServiceImpl implements IAllFileService{
 	}
 
 	@Override
-	public List<AllFileVO> getAllFileList(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public List<AllFileVO> getAllFileList(Map<String, String> params) throws SQLException {
 		return null;
 	}
 
 	@Override
 	public AllFileVO getAllFile(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getAllFile(params);
 	}
 
 	

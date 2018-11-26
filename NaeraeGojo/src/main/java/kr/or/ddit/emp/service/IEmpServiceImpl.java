@@ -42,17 +42,18 @@ public class IEmpServiceImpl implements IEmpService {
 		String emp_code = dao.insertEmpInfo(empInfo);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void deleteEmpInfo(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
+		dao.deleteEmpInfo(params);
+	}
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateEmpInfo(EmpVO empInfo) throws SQLException {
+		dao.updateEmpInfo(empInfo);
 		
 	}
 
-	@Override
-	public void updateEmpInfo(EmpVO empInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 //    @Override
 //    public int totalCount(Map<String, String> params) {
