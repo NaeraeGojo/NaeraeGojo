@@ -82,13 +82,37 @@ $(function(){
 		  
 	  });
 	  
-	  $('#btn3').click(function(){
-		  var meeting_code = $('input[name=meeting_code]').val();
-		  $(location).attr('href', '${pageContext.request.contextPath}/user/meetingFile/deleteMeeting/'+meeting_code+'.do');
-	  });
+// 	  $('#btn3').click(function(){
+// 		  var meeting_code = $('input[name=meeting_code]').val();
+// 		  $(location).attr('href', '${pageContext.request.contextPath}/user/meetingFile/deleteMeeting/'+meeting_code+'.do');
+// 	  });
 	  
 	  $('#deletebtn').click(function() {
-		  $('#deleteModal').modal('show');
+// 		  $('#deleteModal').modal('show');
+		  
+		  BootstrapDialog.show({
+	            message: '회의록을 삭제하시겠습니까?',
+	            buttons: [{
+	                label: '삭제',
+	                cssClass: 'btn-danger',
+	                action: function(){
+	                	 boalert('회의록이 삭제되었습니다.');
+	                	 var meeting_code = $('input[name=meeting_code]').val();
+                         
+                         setTimeout(function(){
+                        	 $(location).attr('href', '${pageContext.request.contextPath}/user/meetingFile/deleteMeeting/'+meeting_code+'.do');
+                         },1800);
+	          		  
+	                }
+	            }, {
+	                label: '닫기',
+	                action: function(dialogItself){
+	                    dialogItself.close();
+	                }
+	            }]
+	        });
+		  
+		  
    	});
 	 
 });
