@@ -7,7 +7,7 @@
 .perful{
 	width: 100% 
 }
- .row, .table_pwc, .table_pw>thead>tr>th , .table_pwc>thead>tr>th {
+ .row, .table_pw, .table_pw>thead>tr>th , .table_pw>thead>tr>th {
 	vertical-align : middle;
     text-align: center;
 }
@@ -63,6 +63,28 @@
 </style>
 <script type="text/javascript">
 $(function(){
+	
+// 	BootstrapDialog.show({
+//         message: 'Hi Apple!',
+//         buttons: [{
+//             label: 'Button 1'
+//         }, {
+//             label: 'Button 2',
+//             cssClass: 'btn-primary',
+//             action: function(){
+//                 alert('Hi Orange!');
+//             }
+//         }, {
+//             icon: 'glyphicon glyphicon-ban-circle',
+//             label: 'Button 3',
+//             cssClass: 'btn-warning'
+//         }, {
+//             label: 'Close',
+//             action: function(dialogItself){
+//                 dialogItself.close();
+//             }
+//         }]
+//     });
 	
 	boalert = function(mes){
 		BootstrapDialog.show({
@@ -232,7 +254,7 @@ $(function(){
     <div class="pwcont">
     
       <div class="col-md-12">	
-          <div class="box box-warning">		
+          <div class="box box-2team">		
           
             <div class="box-header with-border">	
               <b class="box-title">업무 목록</b>	
@@ -248,23 +270,26 @@ $(function(){
                   <tr id="trtr">
                     <th scope="col" width="5%" tex>No.</th>
                     <th scope="col" width="15%">분류</th>
-                    <th scope="col" width="20%">업무명</th>
+                    <th scope="col" width="40%">업무명</th>
                     <th scope="col" width="10%">담당자</th>
-                    <th scope="col" width="20%">시작예정</th>
-                    <th scope="col" width="20%">종료예정</th>
-                    <th scope="col" width="10%">진행도</th>
+                    <th scope="col" width="11%">시작예정</th>
+                    <th scope="col" width="11%">종료예정</th>
+                    <th scope="col" width="8%">진행도</th>
                   </tr>
                   </thead>
                   <tbody>
+                  <c:forEach items="${pwl }" var="pwv">
 		                 <tr>
-       						<td></td>
-		                   	<td></td>
-		                   	<td></td>
-		                   	<td></td>
-		                   	<td></td>
-		                   	<td></td>
-		                   	<td></td>
+       						<td>${pwv.RNUM }</td>
+		                   	<td>${pwv.PWC_NAME }</td>
+		                   	<td>${pwv.PW_FUNCTION }</td>
+		                   	<td>${pwv.EMP_NAME }</td>
+		                   	<td>${pwv.PW_EST }</td>
+		                   	<td>${pwv.PW_EET }</td>
+		                   	<td>${pwv.PW_PERCENT} %</td>
 		                 </tr>
+		          </c:forEach>
+			                 
                   </tbody>
                 </table>
               </div>
@@ -281,9 +306,10 @@ $(function(){
 	   style="margin-right: 200px;">
 			<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 			<select class="form-control" name="search_keycode" >
-				<option value="TOTAL">전체</option>
-				<option value="TITLE">제목</option>
-				<option value="PBLANC">공고기관</option>
+				<option value="total">전체</option>
+				<option value="function">업무명</option>
+				<option value="pwc">분류</option>
+				<option value="damdang">담당자</option>
 			</select>
 		    <button type="submit" class="btn btn-primary form-control">검색</button>
 		</form>

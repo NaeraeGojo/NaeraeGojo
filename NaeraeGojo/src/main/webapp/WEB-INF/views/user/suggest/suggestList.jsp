@@ -53,7 +53,7 @@ p {
 	padding-left: 200px;
 	padding-right: 200px;
 }
-.pull-right{
+.div_search .pull-right{
 	margin-right: 200px;
 }
 .suggestIn{
@@ -99,7 +99,7 @@ p {
     	
        <c:forEach items="${sl }" var="sv">
          <div class="col-md-6 ">
-          <div class="box box-solid callout callout-warning suggests">
+          <div class="box box-solid callout callout-2team suggests">
             <div class="box-header with-border">
               <a class="a_view" name="${sv.suggest_code }"
                href="">
@@ -134,7 +134,7 @@ p {
 		</div>
 		${page }
 		
-		
+		<div class="div_search">
 		<form action="${pageContext.request.contextPath }/user/suggest/suggestList.do" method="post" class="form-inline pull-right">
 		
 		<select class="form-control" name="search_keycode">
@@ -147,7 +147,7 @@ p {
 		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control">
 	    <button type="submit" class="btn btn-primary form-control">검색</button>
 		</form>
-		
+		</div>
       </div>
       
       

@@ -30,6 +30,7 @@
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/bell.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/feedback.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/pwc.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/pw.xml" />
 
 
 

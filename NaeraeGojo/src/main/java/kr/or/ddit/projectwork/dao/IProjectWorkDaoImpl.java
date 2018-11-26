@@ -15,12 +15,10 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 public class IProjectWorkDaoImpl implements IProjectWorkDao{
 	@Autowired
 	private SqlMapClient client;
-
+	
 	@Override
-	public void insertProjectWork(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void insertProjectWork(ProjectWorkVO pwv) throws SQLException {
+		client.insert("pw.insertPw",pwv);
 	}
 
 	@Override
@@ -37,10 +35,9 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 	}
 
 	@Override
-	public List<ProjectWorkVO> getProjectWorkList(Map<String, String> params)
+	public List<Map<String, String>> getProjectWorkList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("pw.getPwList",params);
 	}
 
 	@Override
@@ -48,6 +45,11 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("pw.totalCount",params);
 	}
 
 }

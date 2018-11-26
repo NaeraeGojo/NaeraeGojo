@@ -1,6 +1,8 @@
 package kr.or.ddit.suggestfile.controller.user;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.global.GlobalConstant;
 import kr.or.ddit.suggestfile.service.ISuggestFileService;
 import kr.or.ddit.utils.AttachFileMapper;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.SuggestFileVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +44,14 @@ public class SuggestFileController {
 		
 		File targetFile = new File(GlobalConstant.SUG_SAVE_PATH, sfv.getSuggfi_save_name()); 
 		mav.addObject("downloadFile", targetFile);
-		mav.addObject("downloadFileName",sfv.getSuggfi_name());
-		mav.setViewName("downloadView");
 		
+		String encodedFilename = sfv.getSuggfi_name();
+		encodedFilename = URLEncoder.encode(encodedFilename, "UTF-8");
+//		String encodedFilename = "\"" + new String(sfv.getSuggfi_name().getBytes("UTF-8"), "8859_1") + "\"";
+//        encodedFilename = URLDecoder.decode(encodedFilename);
+
+		mav.addObject("downloadFileName", encodedFilename);
+		mav.setViewName("downloadView");
 		return mav;
 	}
 	

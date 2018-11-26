@@ -147,6 +147,10 @@
     border-top-color: #63a3ff;
 	}
 	
+	.callout.callout-2team {
+    border-color: #63a3ff;
+	}
+	
 	</style>
 	
 		<body class="hold-transition skin-blue sidebar-mini">

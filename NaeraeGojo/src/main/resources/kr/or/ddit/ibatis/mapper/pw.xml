@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="pw">
+	<typeAlias alias="pwVO" type="kr.or.ddit.vo.ProjectWorkVO"/>
+		
+	<sql id="selectAll">
+		select * from pw
+			where pw_delete = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="total" open="(" close=")">
+					pw_function like '%' || #search_keyword# ||'%'
+					or pwc.pwc_name like '%' || #search_keyword# ||'%'
+					or emp.emp_name like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="function" >
+					pw_function like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="pwc" >
+					pwc.pwc_name like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="damdang" >
+					emp.emp_name like '%' || #search_keyword# ||'%'
+				</isEqual>				
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+	
+	<insert id="insertPw" parameterClass="pwVO">
+		<selectKey keyProperty="pw_code" resultClass="string">
+			select pw_seq.nextval from dual
+		</selectKey>
+		
+		insert into pw (
+						pw_code
+						, pw_function
+						, pw_content
+						, pw_percent
+						, pw_writer
+						, pw_est
+						, pw_eet
+						, pw_reg_date
+						, pw_damdang
+						, pwc_code
+						, project_code
+						)
+						
+					values(
+							  #pw_code#
+							, #pw_function#
+							, #pw_content#
+							, #pw_percent#
+							, #pw_writer#
+							, #pw_est#
+							, #pw_eet#
+							, #pw_reg_date#
+							, #pw_damdang#
+							, #pwc_code#
+							, #project_code#
+					)
+	</insert>
+	
+	<select id="getPwList" parameterClass="map" resultClass="java.util.HashMap">
+	select b.*
+		from (select rownum rnum, a.*
+				from (
+					select pw.*, pwc.pwc_name, emp.emp_name
+			        from pw , pwc , emp
+			    	where pw_delete = 'n'
+				        and pw.project_code = #project_code#
+				        and pwc.pwc_code = pw.pwc_code
+				        and emp.emp_code(+) = pw.pw_damdang
+			        <include refid="searchCondition"/>
+							order by to_number(pw_code) asc
+							) a ) b
+		<![CDATA[						
+		where b.rnum <= #startNo#
+		and b.rnum >= #endNo#
+		]]>		
+		order by b.rnum desc
+		
+		
+	</select>
+	
+		<select id="totalCount" parameterClass="map" resultClass="int">
+		select count(pw_code)
+		  from pw , pwc , emp
+		 where pw_delete = 'n'
+		 	and pw.project_code = #project_code#
+		 	and pwc.pwc_code = pw.pwc_code
+		 	and emp.emp_code(+) = pw.pw_damdang	
+		<include refid="searchCondition"/>
+	</select>
+	
+<!-- 	<update id="deletepw" parameterClass="map"> -->
+<!-- 		update pw -->
+<!-- 			set pw_delete = 'y' -->
+<!-- 			where pw_code = #pw_code# -->
+<!-- 	</update> -->
+
+<!-- 	<select id="getpw" parameterClass="map" resultClass="pwVO"> -->
+<!-- 		<include refid="selectAll"/> -->
+<!-- 		and pw_code = #pw_code# -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updatepw" parameterClass="pwVO"> -->
+<!-- 		update pw -->
+<!-- 			set pw_name = #pw_name# -->
+<!-- 			where pw_code = #pw_code# -->
+<!-- 	</update> -->
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

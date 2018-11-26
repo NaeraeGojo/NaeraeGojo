@@ -9,6 +9,8 @@ import kr.or.ddit.vo.ProjectWorkVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IProjectWorkServiceImpl implements IProjectWorkService{
@@ -16,37 +18,44 @@ public class IProjectWorkServiceImpl implements IProjectWorkService{
 	private IProjectWorkDao dao;
 	
 	@Override
-	public void insertProjectWork(Map<String, String> params)
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void insertProjectWork(ProjectWorkVO pwv)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.insertProjectWork(pwv);
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void updateProjectWork(ProjectWorkVO pv) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void deleteProjectWork(Map<String, String> params)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public List<ProjectWorkVO> getProjectWorkList(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ProjectWorkVO getProjectWork(Map<String, String> params)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return dao.totalCount(params);
+	}
+
+	@Override
+	public List<Map<String, String>> getProjectWorkList(
+			Map<String, String> params) throws SQLException {
+		return dao.getProjectWorkList(params);
 	}
 
 }
