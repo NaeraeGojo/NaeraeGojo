@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
+import kr.or.ddit.history.service.IHistoryService;
 import kr.or.ddit.part.service.IPartService;
 import kr.or.ddit.position.service.IPositionService;
 import kr.or.ddit.vo.EmpVO;
@@ -28,7 +29,7 @@ public class EmpController {
 	private IEmpService service;
 	
 	@Resource
-	private IPositionService pService;
+	private IHistoryService hiService;
 
 	@Resource
 	private IPartService partService;
@@ -151,7 +152,6 @@ public class EmpController {
 				,Map<String, String> params
 				,ModelAndView andView) throws Exception{
 		service.insertEmpInfo(empInfo);
-
 		session.setAttribute("INSERT_EMP", empInfo);
 		
 		emp_code = empInfo.getEmp_code();
