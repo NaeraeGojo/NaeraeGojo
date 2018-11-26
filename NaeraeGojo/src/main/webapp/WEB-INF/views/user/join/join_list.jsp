@@ -67,28 +67,21 @@ p {
     
     <div class="joincont">
     	
-<%--        <c:forEach items="${rl }" var="item"> --%>
-<!--          <div class="col-md-6 "> -->
-<!--           <div class="box box-solid callout callout-warning rfps"> -->
-<!--             <div class="box-header with-border"> -->
-<%--               <a class="a_view" name="${item.rqpps_code }" --%>
-<!--                href=""> -->
-<!--               	<span class="label label-success">완료임박</span> -->
-<%--               	<h2 >${item.rqpps_name }</h2> --%>
-<!--               </a> -->
-<%--               <i style="font-size: 15px; margin-right:5px;" class="pull-right"> ${item.rqpps_nickname }</i> --%>
-<!--             </div> -->
-<!--             /.box-header -->
-<!--             <div class="box-body"> -->
-<%--              	<h4>제안서 마감기한&nbsp; : &nbsp;<i style="font-size: 20px;">~ ${item.rqpps_end_date }</i></h4> --%>
-<%--              	<h4>예산&nbsp; : &nbsp;<i style="font-size: 20px;"> ${item.rqpps_budget }￦</i></h4> --%>
-<%--              	<h4>작성일자&nbsp; : &nbsp;<i style="font-size: 20px;"> ${item.rqpps_date }</i></h4> --%>
-<!--             </div> -->
+       <c:forEach items="${joinLast }" var="item">
+         <div class="col-md-6 ">
+          <div class="box box-solid callout callout-warning rfps">
+            <div class="box-header with-border">
+              <a class="a_view" name="${item.rqpps_code }"
+               href="">
+              	<h2 >${item.rqpps_name }</h2>
+              </a>
+              <i style="font-size: 15px; margin-right:5px;" class="pull-right"> 창렬스럽다</i>
+            </div>
             
-<!--           </div> -->
-<!--        </div> -->
+          </div>
+       </div>
          
-<!--          </c:forEach> -->
+         </c:forEach>
          <div class="col-md-6 ">
           <div class="box box-solid callout callout-warning rfps">
             <div class="box-header with-border">
@@ -102,9 +95,9 @@ p {
             <!-- /.box-header -->
           </div>
        </div>
-         <c:if test="${empty rl}">
-       	  등록된 제안요청서가 존재하지 않습니다.
-         </c:if>
+<%--          <c:if test="${empty rl}"> --%>
+<!--        	  등록된 제안요청서가 존재하지 않습니다. -->
+<!--          </c:if> -->
          
          
 		</div>

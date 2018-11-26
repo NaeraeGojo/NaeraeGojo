@@ -72,4 +72,9 @@ public class IJoinServiceImpl implements IJoinService{
 		return joinDao.empList1(params);
 	}
 
+	@Override
+	public List<JoinVO> joinFinalList() throws SQLException {
+		return joinDao.joinFinalList();
+	}
+
 }
