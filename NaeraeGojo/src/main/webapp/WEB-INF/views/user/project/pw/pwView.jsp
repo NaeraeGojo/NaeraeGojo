@@ -301,7 +301,7 @@ $(function(){
 	$('.pw_up_form input[name=pw_percent_view]').val('${pwv.PW_PERCENT}');
 	
 	
-	('#btn_feedback').click(function(){
+	$('#btn_feedback').click(function(){
 		$('#feedbackmodal').modal('show');
 	});
 });
@@ -498,7 +498,7 @@ $(function(){
 	          	  class="btn btn-info btn-flat pull-right btn_bottom">
 	          	  
 	          	<input value="피드백 보내기" type="button" id="btn_feedback" 
-	          	 class="btn btn-warning btn-flat pull-right view_form btn_bottom">
+	          	 class="btn btn-warning btn-flat pull-right view_form btn_bottom" name="feedback" readonly="readonly">
          </div>
             
         </form>
