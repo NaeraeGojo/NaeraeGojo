@@ -160,12 +160,12 @@ $(function(){
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label>
-							<div class="col-sm-8">
-								<input type="file" id="file02" class="files" name="files" style="background-color: transparent; border: 0;">
-							</div>
-						</div>
+<!-- 						<div class="form-group"> -->
+<!-- 							<label for="inputEmail3" class="col-sm-2 control-label">첨부 파일</label> -->
+<!-- 							<div class="col-sm-8"> -->
+<!-- 								<input type="file" id="file02" class="files" name="files" style="background-color: transparent; border: 0;"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 						
 						<div class="box-footer clearfix">
 							<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
