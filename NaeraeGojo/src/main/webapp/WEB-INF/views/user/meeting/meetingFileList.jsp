@@ -89,9 +89,6 @@ $(function(){
             </div>
             <!-- /.box-footer -->
           </div>
-          <!-- /.box -->
-        </div>
-        </section> 
         <form action="${pageContext.request.contextPath}/user/meetingFile/meetingFileList.do" method="post" class="form-inline pull-right col-sm-3.5">
         <select class="form-control" name="search_keycode" >
 <!--            <option>검색조건</option> -->
@@ -104,3 +101,6 @@ $(function(){
         <button type="submit" class="btn btn-default form-control">검색</button>
         <input type="button" id="btn1" value="등록" class="btn btn-primary form-control ">
         </form>
+          <!-- /.box -->
+        </div>
+        </section> 
