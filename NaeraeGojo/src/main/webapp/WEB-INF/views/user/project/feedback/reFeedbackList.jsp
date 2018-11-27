@@ -14,7 +14,7 @@ $(function(){
         });
     };
 	
-	$('#feedbackList tr:gt(0)').click(function(){
+	$('#feedbackList1 tr:gt(0)').click(function(){
 		
 		$('#hiddenDiv').show();
 		
@@ -78,7 +78,7 @@ $(function(){
                 	boalert('읽음표시로 변경되었습니다.');
                 	
                 	setTimeout(function(){
-                		$(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList.do');
+                		$(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList1.do');
                 	},1500);
                     
                }
@@ -114,7 +114,7 @@ $(function(){
                                 boalert('받은 피드백이 삭제되었습니다.');
                                 
                                 setTimeout(function(){
-                                    $(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList.do');
+                                    $(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList1.do');
                                 },2000);
                            }
                     });
@@ -145,17 +145,17 @@ $(function(){
 		<div class="nav-tabs-custom" id="divdiv"
 			style="width: 47%; float: left; margin-right: 20px; height: 680px !important;">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="${pageContext.request.contextPath}/user/feedback/feedbackList.do">
-					받은피드백</a></li>
-				<li><a href="${pageContext.request.contextPath}/user/feedback/feedbackList2.do">
-					보낸피드백</a></li>
+				<li class="active"><a href="${pageContext.request.contextPath}/user/feedback/feedbackList1.do">받은피드백</a></li>
+				<li><a href="${pageContext.request.contextPath}/user/feedback/feedbackList2.do">보낸피드백</a></li>
 			</ul>
 			<div class="tab-content">
+			
+			  <!-- 받은 피드백 -->
 				<div class="tab-pane active" id="tab_1">
 					<div class="box box-2team">
 						<div class="box-body">
 							<div class="table-responsive">
-								<table class="table no-margin table-hover" id="feedbackList">
+								<table class="table no-margin table-hover" id="feedbackList1">
 									<thead>
 										<tr>
 											<th scope="col" width="3%" tex>No.</th>
@@ -165,7 +165,6 @@ $(function(){
 										</tr>
 									</thead>
 									<tbody>
-
 										<c:if test="${empty receivefbList}">
 											<tr>
 												<td onclick='event.cancelBubble=true;' colspan="6">
@@ -199,7 +198,7 @@ $(function(){
 						${paging}
 					</div>
 
-					<form action="${pageContext.request.contextPath}/user/feedback/feedbackList.do"
+					<form action="${pageContext.request.contextPath}/user/feedback/feedbackList1.do"
 						method="post" class="form-inline pull-right">
 						<select class="form-control" name="search_keycode">
 							<!--                             <option value="TOTAL">전체</option> -->
@@ -209,64 +208,7 @@ $(function(){
 						<button type="submit" class="btn btn-primary form-control" >검색</button>
 					</form>
 				</div>
-				
-				
-				<div class="tab-pane active" id="tab_2">
-					<div class="box box-2team">
-						<div class="box-body">
-							<div class="table-responsive">
-								<table class="table no-margin table-hover" id="feedbackList">
-									<thead>
-										<tr>
-											<th scope="col" width="3%" tex>No.</th>
-											<th scope="col" width="20%"></th>
-											<th scope="col" width="7%">보낸날짜</th>
-											<th scope="col" width="5%">상태</th>
-										</tr>
-									</thead>
-									<tbody>
 
-										<c:if test="${empty receivefbList}">
-											<tr>
-												<td onclick='event.cancelBubble=true;' colspan="6">
-													보낸 피드백이 없습니다.</td>
-											</tr>
-										</c:if>
-
-										<c:if test="${!empty receivefbList}">
-											<c:forEach items="${receivefbList }" var="receiveInfo">
-												<tr>
-													<td><input type="hidden" name="feedback_code"
-														value="${receiveInfo.feedback_code}">${receiveInfo.rnum}</td>
-													<td><label>${receiveInfo.emp_name }</label> 님께서 피드백을
-														보냈습니다.</td>
-													<td>${receiveInfo.feedback_st }</td>
-													<c:if test="${receiveInfo.feedback_alarm=='n'}">
-														<td>미확인</td>
-													</c:if>
-													<c:if test="${receiveInfo.feedback_alarm=='y'}">
-														<td>확인</td>
-													</c:if>
-												</tr>
-											</c:forEach>
-										</c:if>
-
-									</tbody>
-								</table>
-							</div>
-						</div>
-						${paging}
-					</div>
-
-					<form action="${pageContext.request.contextPath}/user/feedback/feedbackList.do"
-						method="post" class="form-inline pull-right">
-						<select class="form-control" name="search_keycode">
-							<!--                             <option value="TOTAL">전체</option> -->
-							<option value="SEND">보낸사람</option>
-						</select> <input id="search_keyword" name="search_keyword" type="text"
-							placeholder="검색어 입력" class="form-control" />
-						<button type="submit" class="btn btn-primary form-control" >검색</button>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -292,8 +234,7 @@ $(function(){
 						<div class="box-body">
 
 							<div class="form-group">
-								<label for="name" class="col-sm-2 control-label">관련
-									프로젝트</label>
+								<label for="name" class="col-sm-2 control-label">관련프로젝트</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="project_name"
 										class="form-control" style="border-radius: 1em;">
@@ -307,7 +248,7 @@ $(function(){
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="name" class="col-sm-2 control-label">보낸날짜</label>
+								<label for="name" class="col-sm-2 control-label">받은날짜</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="feedback_st"
 										class="form-control" style="border-radius: 1em;">

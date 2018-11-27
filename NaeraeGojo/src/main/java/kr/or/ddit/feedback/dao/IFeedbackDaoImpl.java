@@ -88,5 +88,27 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 		client.update("feedback.deleteReceive", params);
 	}
 
+	@Override
+	public List<FeedbackVO> sendfbList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("feedback.sendfbList", params);
+	}
+
+	@Override
+	public int totalCount2(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("feedback.totalCount2", params);
+	}
+
+	@Override
+	public void deleteSend(Map<String, String> params) throws SQLException {
+		client.update("feedback.deleteSend", params);
+	}
+
+	@Override
+	public FeedbackVO sendfeedbackInfo(Map<String, String> params)
+			throws SQLException {
+		return (FeedbackVO) client.queryForObject("feedback.sendfeedbackInfo",params);
+	}
+
 
 }

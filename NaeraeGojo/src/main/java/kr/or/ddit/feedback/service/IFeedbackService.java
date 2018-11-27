@@ -19,4 +19,8 @@ public interface IFeedbackService {
 	public FeedbackVO feedbackInfo2(Map<String, String> params) throws SQLException;
 	public void confirmStatus(Map<String, String> params) throws SQLException;
 	public void deleteReceive(Map<String, String> params) throws SQLException;
+	public List<FeedbackVO> sendfbList(Map<String, String> params) throws SQLException;
+	public int totalCount2(Map<String, String> params) throws SQLException;
+	public void deleteSend(Map<String, String> params) throws SQLException;
+	public FeedbackVO sendfeedbackInfo(Map<String, String> params) throws SQLException;
 }

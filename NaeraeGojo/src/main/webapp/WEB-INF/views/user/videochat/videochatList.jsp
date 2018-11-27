@@ -79,6 +79,7 @@ $(function(){
     $('#modal1').click(function(){
         
     	$('#myModal').modal('show');
+    	
     	var projectListt ="";
         $.ajax({
             
@@ -90,14 +91,17 @@ $(function(){
                         alert("error : " + request.status );
                  }
                  , success : function(projectList) {
+                	 
+                	 
+                	 
                      for (var i = 0; i < projectList.projectList.length; i++) {
                     	 projectListt += '<div class="col-md-6">';
                     	 projectListt += ' <div class="box box-solid box-primary"style="width:280px; height:200px;">';
                     	 projectListt += '<div class="box box-primary" >';
                     	 projectListt += '<div class="box-header with-border" style="height:95px;">';
                     	 
-                    	 projectListt += '<a id="empList" class="btn-next"><h3>'+projectList.projectList[i].project_name+'</h3></a>';
-//                     	 projectListt += '<input type="hidden" name=project_code value="'+projectList.projectList[i].project_code+'">';
+                    	 projectListt += '<a id="empList" class="btn-next"><input type="hidden" name="project_code" value="'+projectList.projectList[i].project_code+'"><h3>'+projectList.projectList[i].project_name+'</h3>';
+                    	 projectListt += '</a>';
                     	 projectListt += ' </div>';
                     	 
                     	 projectListt += '<div class="box-body">';
@@ -127,29 +131,45 @@ $(function(){
    	    }, 500);
    	});
    	
-//    	$(document).on('click', '#empList', function(){
+   	$(document).on('click', '#empList', function(){
    		
-//    		var projectcode = $('input[nanme=proejct_code]').val();
-//    		alert(projectcode);
-//    		$.ajax({
+   		var project_code = $('a input[name=project_code]').val();
+   		alert(project_code);
+   		$.ajax({
             
-//             type : "POST"
-//                 , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
-//                 , dataType : "json"
-//                 , data : {project_code : projectcode}
-//                 , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-//                 , error : function(request, status, error) {
-//                        alert("error : " + request.status );
-//                 }
-//                 , success : function(projectList) {
-//                     for (var i = 0; i < projectList.projectList.length; i++) {
-//                    	 projectListt += '</div></div></div>';
-                   	 
-//                     }
-//                }
-//        });
+            type : "POST"
+                , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
+                , dataType : "json"
+                , data : {project_code : project_code}
+                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                , error : function(request, status, error) {
+                       alert("error : " + request.status );
+                }
+                , success : function(result) {
+                	$('#empTable tr').empty();
+                	var text = "";
+                	text += '<tr><th style="width:10px"></th>'
+                	    +'<th style="width: 70px">사원번호</th>'
+                       + '<th style="width: 70px">이름</th>'
+                       +' <th style="width: 70px">담당부서</th>'
+                       +' <th style="width: 60px">역할</th></tr>';
+                      
+                    for (var i = 0; i < result.empList.length; i++) {
+                    	
+                    	text += '<tr id="emp"><td><input type="checkbox" name="chkbox" class="flat-red" value="'+result.empList[i].emp_code+'"></td>';
+                        text += '<td>'+ result.empList[i].emp_code+'</td>';
+                        text += '<td>'+result.empList[i].emp_name+'</td>';
+                        text += '<td>'+result.empList[i].part_name+'</td>';
+                        text += ' <td>'+result.empList[i].emp_role+'</td></tr>';
+                     
+                    }
+                    
+                    $('#empTable').append(text);
+                    
+               }
+       });
    		
-//    	});
+   	});
     
     
 });
@@ -193,6 +213,8 @@ $(function(){
                   </tr>
                   </thead>
                   <tbody>
+                  
+                  
                   <c:forEach items="${chatroomList}" var="chatroomInfo">
 	                  <tr>
                             <td style="width: 100px;"><input type="hidden" value="${chatroomInfo.video_chat_room_code}">${chatroomInfo.rnum}</td>
@@ -200,12 +222,20 @@ $(function(){
                             <td  style="width: 350px;">${chatroomInfo.video_chat_room_title}</td>
                             <td style="width: 350px;">${chatroomInfo.project_name}</td>
                             <td style="width: 150px;">${chatroomInfo.emp_cnt}<label> 명</label></td>
-                            <c:if test="${chatroomInfo.video_chat_status=='y'}">
-                                <td  style="width: 140px;"><span class="label label-warning ">종료</span></td>
+                            
+                            <c:if test="${chatroomInfo.video_chat_level_code=='level2'}">
+	                           <td style="width: 140px;"><span class="label label-info ">
+	                               <input type="hidden" name="video_chat_level_code" value="${chatroomInfo.video_chat_level_code}">${chatroomInfo.video_chat_level_name}
+	                               </span>
+	                           </td>
                             </c:if>
-                            <c:if test="${chatroomInfo.video_chat_status=='n'}">
-                                <td  style="width: 140px;"><span class="label label-info">진행중</span></td>
-                            </c:if>                            
+                            <c:if test="${chatroomInfo.video_chat_level_code=='level1'||chatroomInfo.video_chat_level_code=='level3'||
+                               chatroomInfo.video_chat_level_code=='level4' }">
+	                           <td style="width: 140px;"><span class="label label-warning ">
+		                            <input type="hidden" name="video_chat_level_code" value="${chatroomInfo.video_chat_level_code}">${chatroomInfo.video_chat_level_name}
+	                               </span>
+	                           </td>
+                            </c:if>
                             
                             <td style="width: 120px;">${chatroomInfo.emp_name}</td>
 	                  </tr>
@@ -223,9 +253,6 @@ $(function(){
             </div>
             <!-- /.box-footer -->
           </div>
-          <!-- /.box -->
-        </div>
-         </section>     
         <form action="${pageContext.request.contextPath}/user/video/chatList.do" method="post" class="form-inline pull-right">
         <select class="form-control" name="search_keycode" >
 <!--            <option>검색조건</option> -->
@@ -237,6 +264,9 @@ $(function(){
         <input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
         <button type="submit" class="btn btn-primary form-control">검색</button>
         </form>
+          <!-- /.box -->
+        </div>
+         </section>     
         
   
  <!-- 모달 -->       
@@ -278,28 +308,31 @@ $(function(){
           <h3 class="modal-title" id="myModalLabel">직원초대</h3>
         </div>
         <div class="modal-body">
-            <table class="table table-striped">
-                <tr>
-                  <th  style="width:10px"></th>
-                  <th style="width: 70px">사원번호</th>
-                  <th style="width: 70px">이름</th>
-                  <th style="width: 70px">담당부서</th>
-                  <th style="width: 60px">역할</th>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="chkbox" class="flat-red" value=""></td>
-	               <td>25125</td>
-	               <td>최동화</td>
-	               <td>개발1팀</td>
-	               <td>DA</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="chkbox" class="flat-red" value=""></td>
-	               <td>25125</td>
-	               <td>이동화</td>
-	               <td>개발2팀</td>
-	               <td>DA</td>
-                </tr>
+            <table class="table table-striped" id="empTable">
+<!--                 <tr> -->
+<!--                   <th  style="width:10px"></th> -->
+<!--                   <th style="width: 70px">사원번호</th> -->
+<!--                   <th style="width: 70px">이름</th> -->
+<!--                   <th style="width: 70px">담당부서</th> -->
+<!--                   <th style="width: 60px">역할</th> -->
+<!--                 </tr> -->
+                
+                
+                
+<!--                 <tr> -->
+<!--                   <td><input type="checkbox" name="chkbox" class="flat-red" value=""></td> -->
+<!-- 	               <td>25125</td> -->
+<!-- 	               <td>최동화</td> -->
+<!-- 	               <td>개발1팀</td> -->
+<!-- 	               <td>DA</td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                   <td><input type="checkbox" name="chkbox" class="flat-red" value=""></td> -->
+<!-- 	               <td>25125</td> -->
+<!-- 	               <td>이동화</td> -->
+<!-- 	               <td>개발2팀</td> -->
+<!-- 	               <td>DA</td> -->
+<!--                 </tr> -->
              </table>
           
         </div>
@@ -312,47 +345,6 @@ $(function(){
     </div>
 
 
-<!--   <div class="modal-dialog"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h4 class="modal-title step-1" data-step="1">Step 1</h4> -->
-<!--         <h4 class="modal-title step-2" data-step="2">Step 2</h4> -->
-<!--         <h4 class="modal-title step-3" data-step="3">Final Step</h4> -->
-<!--         <div class="m-progress"> -->
-<!--           <div class="m-progress-bar-wrapper"> -->
-<!--             <div class="m-progress-bar"> -->
-<!--             </div> -->
-<!--           </div> -->
-<!--           <div class="m-progress-stats"> -->
-<!--             <span class="m-progress-current"> -->
-<!--             </span> -->
-<!--             / -->
-<!--             <span class="m-progress-total"> -->
-<!--             </span> -->
-<!--           </div> -->
-<!--           <div class="m-progress-complete"> -->
-<!--             Completed -->
-<!--           </div> -->
-<!--         </div> -->
-<!--       </div> -->
-<!--       <div class="modal-body step-1" data-step="1"> -->
-<!--         This is step 1. -->
-<!--       </div> -->
-<!--       <div class="modal-body step-2" data-step="2"> -->
-<!--         This is the second step. -->
-<!--       </div> -->
-<!--       <div class="modal-body step-3" data-step="3"> -->
-<!--         This is the final step. -->
-<!--       </div> -->
-<!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-<!--         <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#demo-modal', 2)">Continue</button> -->
-<!--         <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="sendEvent('#demo-modal', 1)">Back</button> -->
-<!--         <button type="button" class="btn btn-primary step step-2" data-step="2" onclick="sendEvent('#demo-modal', 3)">Continue</button> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!--   </form> -->
     
   </div>
   </div>

@@ -48,17 +48,22 @@
     <select id="getVideoChatList" parameterClass="map" resultClass="chatTempVO">
          SELECT T.* 
          FROM  (SELECT ROWNUM RNUM, Z.*
-                   FROM ( select    a.video_chat_room_code, a.video_chat_room_date, b.project_name, c.emp_name , 
-                                        count(d.emp_code) as emp_cnt, a.video_chat_room_title, a.video_chat_status
-                                    from video_chat_room a, project b,  emp c , video_chat_join d
-                                    where a.project_code = b.project_code 
-                                    and a.emp_code = c.emp_code
-                                    and a.video_chat_room_code = d.video_chat_room_code
-                                    and d.emp_code = #emp_code#
-                         <include refid="searchCondition"/> 
-                                    group by  b.project_name,a.video_chat_room_date, c.emp_name, a.video_chat_room_code, 
-                                        a.video_chat_room_title, a.video_chat_status
-                         ORDER BY video_chat_room_date) Z ) T
+                   FROM (   select emp_name, d.video_chat_room_code, d.video_chat_room_date, d.video_chat_room_title, project_name, d.emp_cnt,
+                                 video_chat_level_name, video_chat_level.video_chat_level_code as video_chat_level_code
+							    from emp , project, video_chat_level ,(select * 
+							                from video_chat_room a
+							                , (select count(*) as emp_cnt , vcr_code
+							                    from video_chat_join a,
+							                        (select video_chat_room_code as vcr_code from video_chat_join
+							                            where emp_code = #emp_code#) b
+							                    where a.video_chat_room_code = b.vcr_code
+							                    group by vcr_code) c
+							                where a.video_chat_room_code = c.vcr_code) d
+							  where emp.emp_code = d.emp_code
+							    and d.project_code = project.project_code
+							    and video_chat_level.video_chat_level_code = d.video_chat_level_code
+							    <include refid="searchCondition"/>
+							    order by d.video_chat_room_date) Z ) T
          <![CDATA[               
           where t.rnum <= #startCount#
          and  t.rnum >= #endCount#
@@ -103,9 +108,11 @@
     
     <select id="getEmpList" parameterClass="map" resultClass="empVO">
     	select a.emp_code, a.emp_name, a.emp_role, c.part_name
-		from emp a, project b, part c
-		where a.part_code = c.part_code
-		and b.project_code=#project_code#
+        from emp a, project b, part c, join d
+        where a.part_code = c.part_code
+        and d.PROJECT_CODE = b.PROJECT_CODE
+        and a.EMP_CODE = d.EMP_CODE
+        and b.project_code= #project_code#
     </select>
     
 </sqlMap>
