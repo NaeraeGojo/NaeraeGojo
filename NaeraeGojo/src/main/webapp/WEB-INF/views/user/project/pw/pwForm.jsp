@@ -356,7 +356,10 @@ $(function(){
             <label for="sel_rfp" class="col-sm-2 control-label">담당자</label>
             <div class="col-sm-3">
 			    <select name="pw_damdang" class="form-control select2" style="border-radius: 1em;">
-			    	<option value="" selected>인력 R해오기</option>
+			    	<option value="" selected disabled>담당자 선택</option>
+			    	<c:forEach items="${el }" var="ev">
+			      		<option value="${ev.emp_code }">${ev.emp_name }</option>
+			      	</c:forEach>
 			    </select>
 		    </div>
         </div>

@@ -411,9 +411,9 @@ $(function(){
 	              	<input id="btn_cancle" value="취소" type="button" style="width:80px;" 
 	              	 class="btn btn-default btn-flat pull-right hideUp">
 	              	 <c:if test="${LOGIN_EMPINFO.emp_code == rv.emp_code }">
-	              		<input id="btn_del" value="삭제" type="button" class="btn btn-danger btn-flat pull-right">
 	              		<input id="btn_upForm" value="수정" type="button" style="width:80px;"  
-	              	class="btn btn-warning btn-flat pull-right hideForm">
+	              			class="btn btn-warning btn-flat pull-right hideForm">
+	              		<input id="btn_del" value="삭제" type="button" class="btn btn-danger btn-flat pull-right">
               		</c:if>
 	              	
 	              	<input id="btn_back" value="목록" type="button"style="width:80px;"  class="btn btn-info btn-flat pull-right">

@@ -101,6 +101,9 @@ public class RqppsController {
 									, @RequestParam("files") MultipartFile[] files) throws Exception{
 		service.insertRqpps(rqv, files);
 		
+		
+		// 여기에 pm 인서트가 들어가면 될것같아여
+		
 		return "redirect:/user/rfp/rfpList.do";
 	}
 	
