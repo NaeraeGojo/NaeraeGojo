@@ -24,24 +24,22 @@ $(function(){
 		<div class="col-md-6">
 			<div class="box box-solid">
 				<div class="box-header with-border">
-					<a class="aa" name="${projectList.project_code }"
-						id="${projectList.project_code }"> <spanclass ="labellabel-success">완료임박</span>
-						<h2>${projectList.project_name}</h2></a>
+					<a class="aa" name="${projectList.project_code }" id="${projectList.project_code }"> 
+						<spanclass ="labellabel-success">완료임박</span>
+						<h2>${projectList.project_name}</h2>
+					</a>
 				</div>
 				<div class="box-body">
 					<h4>
-						프로젝트 기간 : &nbsp;<i style="font-size: 20px;">${projectList.project_start}-
-							${projectList.project_end}</i>
+						프로젝트 기간 : &nbsp;<i style="font-size: 20px;">${projectList.project_start}-${projectList.project_end}</i>
 					</h4>
 					<h2>
-						<sup style="font-size: 15px">진척률 &nbsp; </sup>${projectList.pw_percent}%</h2>
+						<sup style="font-size: 15px">진척률 &nbsp; </sup>${projectList.pw_percent}%
+					</h2>
 					<div class="progress">
 						<div
-							class="progress-bar progress-bar-primary progress-bar-striped"
-							role="progressbar" aria-valuenow="${projectList.pw_percent}"
-							aria-valuemin="0" aria-valuemax="100"
-							style="width: ${projectList.pw_percent}%">
-							<!-- <span class="sr-only">90% Complete (success)</span> -->
+							class="progress-bar progress-bar-primary progress-bar-striped"  aria-valuenow="${projectList.pw_percent}"
+							aria-valuemin="0" aria-valuemax="100" style="width: ${projectList.pw_percent}%" role="progressbar">
 						</div>
 					</div>
 				</div>

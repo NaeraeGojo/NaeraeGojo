@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,16 @@ public class IProjectDaoImpl implements IProjectDao{
 	@Override
 	public List<ProjectVO> projectList(Map<String, String> params) throws SQLException {
 		return client.queryForList("project.projectList", params);
+	}
+
+	@Override
+	public List<JoinVO> joinList(Map<String, String> params) throws SQLException {
+		return client.queryForList("project.joinList", params);
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("project.totalCount", params);
 	}
 
 

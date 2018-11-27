@@ -47,9 +47,9 @@ public class IPblancboardServiceImpl implements IPblancboardService {
 		String pblanc_board_code = pblancboardDao.insertPblancboardInfo(pblancboardInfo);
 		List<AllFileVO> afvo = new ArrayList<AllFileVO>();
 		AllFileVO afvo1 = allFileMapper.mapping(files[0],pblanc_board_code,"2");
-		AllFileVO afvo2 = allFileMapper.mapping(files[1],pblanc_board_code,"2");
+//		AllFileVO afvo2 = allFileMapper.mapping(files[1],pblanc_board_code,"2");
 		afvo.add(afvo1);
-		afvo.add(afvo2);
+//		afvo.add(afvo2);
 		for(AllFileVO afv : afvo){
 			allFiledao.insertAllFile(afv);
 		}
