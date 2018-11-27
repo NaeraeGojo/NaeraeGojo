@@ -22,16 +22,14 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 	}
 
 	@Override
-	public void updateProjectWork(ProjectWorkVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void updateProjectWork(ProjectWorkVO pwv) throws SQLException {
+		client.update("pw.updatePw",pwv);
 	}
 
 	@Override
 	public void deleteProjectWork(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("pw.deletePw",params);
 	}
 
 	@Override

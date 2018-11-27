@@ -10,6 +10,8 @@ import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.projectwork.service.IProjectWorkService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.SetContent;
+import kr.or.ddit.videochatroom.service.IVideoChatService;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.SuggestVO;
 
@@ -26,8 +28,21 @@ public class ProjectWorkController {
 	@Autowired
 	private IProjectWorkService service;
 	
+	@Autowired
+	private IVideoChatService vservice;
+	
 	@RequestMapping("pwForm")
-	public void ProjectWorkForm(){}
+	public Model ProjectWorkForm(Map<String, String> params 
+								, HttpSession session
+								, Model model) throws Exception{
+		String project_code = (String) session.getAttribute("project_code");
+		params.put("project_code", project_code);
+		
+		List<EmpVO> el = vservice.getEmpList(params);
+		model.addAttribute("el",el);
+		
+		return model;
+	}
 	
 	@RequestMapping("pwList")
 	public Model ProjectWorkList(Model model, Map<String, String> params 
@@ -101,16 +116,19 @@ public class ProjectWorkController {
 		return "redirect:/user/project/pw/pwList.do";
 	}
 	
-	
-	public String deleteProjectWork(String bo_no) throws Exception{
-		
-		return "";
+	@RequestMapping("pwDelete")
+	public String deleteProjectWork(String pw_code
+									, Map<String, String> params) throws Exception{
+		params.put("pw_code", pw_code);
+		service.deleteProjectWork(params);
+		return "redirect:/user/project/pw/pwList.do";
 	}
 	
-	
-	public String updateProjectWork(ProjectWorkVO pwv ,HttpServletRequest request) throws Exception{
+	@RequestMapping("pwUpdate")
+	public String updateProjectWork(ProjectWorkVO pwv) throws Exception{
+		service.updateProjectWork(pwv);
 		
-		return "";
+		return "redirect:/user/project/pw/pwList.do";
 	}
 }
 

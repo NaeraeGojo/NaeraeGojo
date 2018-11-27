@@ -116,6 +116,9 @@ public class RqppsController {
 		params.put("position_name", position_name);
 		joinService.insertJoinInfo(params);
 		
+		
+		// 여기에 pm 인서트가 들어가면 될것같아여
+		
 		return "redirect:/user/rfp/rfpList.do";
 	}
 	
