@@ -217,7 +217,7 @@ $(function(){
 	});
 	
 	$('#feedback').click(function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList.do');
+		$(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList1.do');
 	});
 	
 	

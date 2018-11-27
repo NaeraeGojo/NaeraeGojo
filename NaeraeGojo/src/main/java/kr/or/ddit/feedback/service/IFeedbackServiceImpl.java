@@ -91,6 +91,29 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 		feedbackDao.deleteReceive(params);
 	}
 
+	@Override
+	public List<FeedbackVO> sendfbList(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.sendfbList(params);
+	}
+
+	@Override
+	public int totalCount2(Map<String, String> params) throws SQLException {
+		return feedbackDao.totalCount2(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteSend(Map<String, String> params) throws SQLException {
+		feedbackDao.deleteSend(params);
+	}
+
+	@Override
+	public FeedbackVO sendfeedbackInfo(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.sendfeedbackInfo(params);
+	}
+
 
 
 }
