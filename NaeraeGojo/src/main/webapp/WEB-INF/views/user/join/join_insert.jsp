@@ -110,7 +110,7 @@ label {
 				  <c:if test="${list.emp_level eq '특급'}">
                   		<select  id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
 							<option  value="">권한 선택</option>
-		                    <option    value="PM/${list.emp_level }">PM</option>
+		                    <option  value="PM/${list.emp_level }">PM</option>
 		                    <option  value="PL/${list.emp_level }">PL</option>
 			            </select>
                   </c:if>
