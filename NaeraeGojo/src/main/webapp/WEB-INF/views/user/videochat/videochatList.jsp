@@ -14,13 +14,13 @@
    overflow: hidden;
  } 
 
- .modal-dialog {
+ .dia {
    float: left;
    width: 50%;
    margin: 5px auto;
  } 
 
- .modal-content {
+ .Mcon {
      width: 720px; 
      height : 350px; 
      margin-top: 200px; 
@@ -29,7 +29,7 @@
      margin-bottom: 200px; 
  } 
 
- .modal-body{ 
+ .mb{ 
   
      height: 60%; 
     margin: auto; 
@@ -60,6 +60,13 @@ $(function(){
 //         checkboxClass: 'icheckbox_flat-blue'
 //       });
     
+    boalert = function(mes){
+        BootstrapDialog.show({
+            title: '알림',
+            message: mes
+            
+        });
+    };  
     
 	//상세내용
     $('#listTable tr:gt(0)').click(function(){
@@ -100,7 +107,7 @@ $(function(){
                     	 projectListt += '<div class="box box-primary" >';
                     	 projectListt += '<div class="box-header with-border" style="height:95px;">';
                     	 
-                    	 projectListt += '<a id="empList" class="btn-next"><input type="hidden" name="project_code" value="'+projectList.projectList[i].project_code+'"><h3>'+projectList.projectList[i].project_name+'</h3>';
+                    	 projectListt += '<a onclick="ptclick('+projectList.projectList[i].project_code +');" class="btn-next"><input type="hidden" name="project_code" value="'+projectList.projectList[i].project_code+'"><h3>'+projectList.projectList[i].project_name+'</h3>';
                     	 projectListt += '</a>';
                     	 projectListt += ' </div>';
                     	 
@@ -130,50 +137,73 @@ $(function(){
    	        'margin-left': '+=100%'
    	    }, 500);
    	});
-   	
-   	$(document).on('click', '#empList', function(){
-   		
-   		var project_code = $('a input[name=project_code]').val();
-   		alert(project_code);
-   		$.ajax({
+    
+    $(document).on('click', '#insert1', function() {
+    	var tmpArray =[];
+    	$("input[name=chkbox]:checked").each(function() {
+            var emp_code = $(this).val();
+            tmpArray.push(emp_code);
+        });
+    	
+    	if(tmpArray.length>3){
+    		boalert("3명 이하로 선택해주세요");
+    		return false;
+    	};
+    	$.ajax({
             
             type : "POST"
                 , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
                 , dataType : "json"
-                , data : {project_code : project_code}
+                , data : {tmpArray : tmpArray}
                 , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
                 , error : function(request, status, error) {
                        alert("error : " + request.status );
                 }
                 , success : function(result) {
-                	$('#empTable tr').empty();
-                	var text = "";
-                	text += '<tr><th style="width:10px"></th>'
-                	    +'<th style="width: 70px">사원번호</th>'
-                       + '<th style="width: 70px">이름</th>'
-                       +' <th style="width: 70px">담당부서</th>'
-                       +' <th style="width: 60px">역할</th></tr>';
-                      
-                    for (var i = 0; i < result.empList.length; i++) {
-                    	
-                    	text += '<tr id="emp"><td><input type="checkbox" name="chkbox" class="flat-red" value="'+result.empList[i].emp_code+'"></td>';
-                        text += '<td>'+ result.empList[i].emp_code+'</td>';
-                        text += '<td>'+result.empList[i].emp_name+'</td>';
-                        text += '<td>'+result.empList[i].part_name+'</td>';
-                        text += ' <td>'+result.empList[i].emp_role+'</td></tr>';
-                     
-                    }
-                    
-                    $('#empTable').append(text);
-                    
-               }
+                	
+                }
        });
-   		
-   	});
-    
+    	
+    	
+    });
+   	
     
 });
 
+function ptclick(project_code) {
+	$.ajax({
+        
+        type : "POST"
+            , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
+            , dataType : "json"
+            , data : {project_code : project_code}
+            , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+            , error : function(request, status, error) {
+                   alert("error : " + request.status );
+            }
+            , success : function(result) {
+                var text = "";
+                text += ' <table class="table table-striped" id="empTable">';
+                text += '<tr><th style="width:10px"></th>'
+                    +'<th style="width: 70px">사원번호</th>'
+                   + '<th style="width: 70px">이름</th>'
+                   +' <th style="width: 70px">담당부서</th>'
+                   +' <th style="width: 60px">역할</th></tr>';
+                  
+                for (var i = 0; i < result.empList.length; i++) {
+                    
+                    text += '<tr id="emp"><td><input type="checkbox" name="chkbox" class="flat-red" value="'+result.empList[i].emp_code+'"></td>';
+                    text += '<td>'+ result.empList[i].emp_code+'</td>';
+                    text += '<td>'+result.empList[i].emp_name+'</td>';
+                    text += '<td>'+result.empList[i].part_name+'</td>';
+                    text += ' <td>'+result.empList[i].emp_role+'</td></tr>';
+                 
+                }
+                text += '</table>';
+                $('#tb').empty().append(text);
+           }
+   });
+}
 
 </script>
 
@@ -236,7 +266,6 @@ $(function(){
 	                               </span>
 	                           </td>
                             </c:if>
-                            
                             <td style="width: 120px;">${chatroomInfo.emp_name}</td>
 	                  </tr>
                   </c:forEach>
@@ -273,8 +302,8 @@ $(function(){
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div id="modal-container">
   
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" >
+    <div class="modal-dialog dia" role="document">
+      <div class="modal-content Mcon" >
       
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -283,7 +312,7 @@ $(function(){
           <h3 class="modal-title" id="myModalLabel">관련 프로젝트</h3>
         </div>
         
-        <div class="modal-body" style="margin-bottom:auto;" id="projectdiv">
+        <div class="modal-body mb" style="margin-bottom:auto;" id="projectdiv">
 <!--             <div class="col-md-6"> -->
 <!--               <div class="box box-solid box-primary"> -->
 <!--               <div class="box box-primary" > -->
@@ -298,8 +327,8 @@ $(function(){
     </div>
     </div>
     
-    <div class="modal-dialog" role="document" >
-      <div class="modal-content">
+    <div class="modal-dialog dia" role="document">
+      <div class="modal-content Mcon">
       
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -307,7 +336,8 @@ $(function(){
           </button>
           <h3 class="modal-title" id="myModalLabel">직원초대</h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-body mb">
+           <div id= "tb">
             <table class="table table-striped" id="empTable">
 <!--                 <tr> -->
 <!--                   <th  style="width:10px"></th> -->
@@ -334,11 +364,11 @@ $(function(){
 <!-- 	               <td>DA</td> -->
 <!--                 </tr> -->
              </table>
-          
+            </div>
         </div>
         <div class="modal-footer" style="padding-bottom : 5px !important;  padding-top : 5px !important;">
           <button type="back" class="btn btn-default btn-back">뒤로가기</button>
-          <input type="button" value="등록" class="btn btn-primary ">
+          <input type="button" id="insert1" value="등록" class="btn btn-primary ">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
