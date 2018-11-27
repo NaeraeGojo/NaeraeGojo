@@ -80,16 +80,6 @@ public class ProjectController {
 		return andView;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public Model ProjectList(Model model, Map<String, String> params 
 								, HttpServletRequest request
 								, HttpSession session
