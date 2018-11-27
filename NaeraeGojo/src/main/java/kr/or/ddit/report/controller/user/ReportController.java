@@ -74,7 +74,7 @@ public class ReportController {
 		return "user/report/report_sendDeletePL"; 
 		
 	}
-	//PL 받은보고서함 뷰/삭제/피드백
+	//PL 받은보고서함 뷰/삭제/피드백 고민만오지게햇네
 	@RequestMapping("report_recViewPL")
 	public String report_recViewPL(){
 		return "user/report/report_recViewPL"; 
