@@ -12,20 +12,21 @@ import org.springframework.stereotype.Component;
  * @author Administrator
  *
  */
-public class RolePagingUtil {
+public class RolePagingUtilJoin {
 	private int currentPage;        //현재 페이지 번호
 	private int totalCount;         //전체 게시글의 갯수
 	private int totalPage;          //전체 페이지의 갯수
-	private int blockCount = 4;    //한 페이지당 출력될 게시글의 갯수
+	private int blockCount = 5;    //한 페이지당 출력될 게시글의 갯수
 	private int blockPage = 5;		//페이지 별 출력될 페이지네이션 메뉴 갯수
 	private int startPage;			//출력되는 페이지네이션 메뉴의 시작 페이지 번호
 	private int endPage;			//출력되는 페이지네이션 메뉴의 마지막 페이지 번호
 	private int startCount;			//해당 페이지에 출력되는 게시글의 시작번호
 	private int endCount;			//해당 페이지에 출력되는 게시글의 마지막번호
+	private String project_code;
 	private StringBuffer pagingHtmls; //작성된 페이지네이션 컨텐츠 저장소
 	private HttpServletRequest request;
 	
-	public RolePagingUtil(int currentPage, int totalCount,
+	public RolePagingUtilJoin(int currentPage, int totalCount,
 			HttpServletRequest request) {
 		this.currentPage = currentPage;
 		this.totalCount = totalCount;
@@ -36,12 +37,24 @@ public class RolePagingUtil {
 		makePagingHtmls();
 	}
 	
-	public RolePagingUtil(int currentPage, int totalCount,
+	public RolePagingUtilJoin(int currentPage, int totalCount,
 			HttpServletRequest request, int blockCount) {
 		this.currentPage = currentPage;
 		this.totalCount = totalCount;
 		this.request = request;
 		this.blockCount = blockCount;
+		
+		pagingHtmls = new StringBuffer();
+		
+		makePagingHtmls();
+	}
+	
+	public RolePagingUtilJoin(int currentPage, int totalCount,
+			HttpServletRequest request, String project_code) {
+		this.currentPage = currentPage;
+		this.totalCount = totalCount;
+		this.request = request;
+		this.project_code = project_code;
 		
 		pagingHtmls = new StringBuffer();
 		
@@ -90,8 +103,8 @@ public class RolePagingUtil {
 //		}
 		
 		//이전 |1|2|3|4|5| 다음
-		this.pagingHtmls.append("<div class='text-center'>");
-		this.pagingHtmls.append("<ul class='pagination mtm mbm'>");
+		this.pagingHtmls.append("<div class='box-tools pull-right'>");
+		this.pagingHtmls.append("<ul class='pagination pagination-sm inline'>");
 		
 		String requestURI = request.getRequestURI();
 		
@@ -99,7 +112,7 @@ public class RolePagingUtil {
 		if((this.currentPage - 1) == 0){
 			this.pagingHtmls.append("<li class='disabled'><a href='#'>&laquo;</a></li>");
 		}else{
-			this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + (this.currentPage - 1) + "'>&laquo;</a></li>");
+			this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + (this.currentPage - 1) + "&project_code=" + (this.project_code) +"'>&laquo;</a></li>");
 		}
 		
 		//|1|2|3|4|5|
@@ -107,13 +120,13 @@ public class RolePagingUtil {
 			if(this.currentPage == i){
 				this.pagingHtmls.append("<li class='active'><a href='#'>" + i + "</a></li>");
 			}else{
-				this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + i + "'>" + i + "</a></li>");
+				this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + i + "&project_code=" + (this.project_code) +"'>" + i + "</a></li>");
 			}
 		}
 		
 		//다음
 		if(this.currentPage < this.totalPage){
-			this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + (this.currentPage + 1) + "'>&raquo;</a></li>");
+			this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + (this.currentPage + 1) + "&project_code=" + (this.project_code) +"'>&raquo;</a></li>");
 		}else{
 			this.pagingHtmls.append("<li class='disabled'><a href='#'>&raquo;</a></li>");
 		}
@@ -131,5 +144,9 @@ public class RolePagingUtil {
 
 	public String getPagingHtmls() {
 		return pagingHtmls.toString();
+	}
+
+	public String getProject_code() {
+		return project_code;
 	}
 }
