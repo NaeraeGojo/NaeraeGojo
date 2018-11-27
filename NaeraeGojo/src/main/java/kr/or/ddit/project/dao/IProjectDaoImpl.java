@@ -38,6 +38,14 @@ public class IProjectDaoImpl implements IProjectDao{
 		return (int) client.queryForObject("project.totalCount", params);
 	}
 
+	@Override
+	public void updateProjectInfo(ProjectVO projectInfo) throws SQLException {
+		client.update("project.updateProject", projectInfo);
+	}
 
+	@Override
+	public void deleteProjectInfo(Map<String, String> params) throws SQLException {
+		client.update("project.deleteProject", params);
+	}
 	
 }

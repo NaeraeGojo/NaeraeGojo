@@ -25,6 +25,13 @@
 <script type="text/javascript">
 $(function(){
 
+	boalert = function(mes){
+		BootstrapDialog.show({
+	 	    title: '알림',
+	 	    message: mes
+		});
+	}
+	
 	$('.upForm').hide();
 	
 	$('.btn_refile').click(function(){

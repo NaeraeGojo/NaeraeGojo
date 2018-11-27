@@ -49,6 +49,18 @@ public class IProjectServiceImpl implements IProjectService{
 		return totalCount;
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateProjectInfo(ProjectVO projectInfo) throws SQLException {
+		dao.updateProjectInfo(projectInfo);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
+	@Override
+	public void deleteProjectInfo(Map<String, String> params) throws SQLException {
+		dao.deleteProjectInfo(params);
+	}
+
 	
 
 }

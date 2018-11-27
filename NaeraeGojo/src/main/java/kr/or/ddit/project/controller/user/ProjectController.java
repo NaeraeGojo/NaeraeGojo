@@ -1,5 +1,6 @@
 package kr.or.ddit.project.controller.user;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -10,14 +11,14 @@ import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.RolePagingUtilJoin;
 import kr.or.ddit.vo.JoinVO;
+import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.ProjectVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -80,37 +81,41 @@ public class ProjectController {
 		return andView;
 	}
 	
-	public Model ProjectList(Model model, Map<String, String> params 
-								, HttpServletRequest request
-								, HttpSession session
-								, String currentPage) throws Exception{
+	@RequestMapping("pro/deleteProject/{project_code}")
+	public String deleteProject(@PathVariable("project_code") String project_code,
+			Map<String, String> params) throws Exception{
 		
-		return model;
+		params.put("project_code", project_code);
+		
+		service.deleteProjectInfo(params);
+		
+		return "redirect:/user/project/project_manage.do";
 	}
 	
+	@RequestMapping("pro/updateProject")
+	public ModelAndView updateProject(@RequestBody String queryString, String project_code,
+			ProjectVO projectInfo, HttpSession session, Map<String, String> params,
+			HttpServletRequest request, ModelAndView andView) throws Exception{
 	
-	public Model ProjectView(String bo_no,Model model) throws Exception{
+		params.put("project_code", project_code);
 		
-		return model;
+		service.updateProjectInfo(projectInfo);
+		andView.setViewName("redirect:/user/project/pro/project_manage_see.do");
+		return andView;
 	}
 	
-	
-	public String insertProject(ProjectVO pv
-									, @RequestParam("files") MultipartFile[] files) throws Exception{
+	@RequestMapping("pro/projectInfo")
+	public ModelAndView getMp(Map<String, String> params, ModelAndView andView,
+		    String project_code, ProjectVO projectInfo) throws SQLException{
 		
-		return "";
-	}
-	
-	
-	public String deleteProject(String bo_no) throws Exception{
+		params.put("project_code", project_code);
 		
-		return "";
-	}
-	
-	
-	public String updateProject(ProjectVO pv ,HttpServletRequest request) throws Exception{
+		projectInfo = service.projectInfo(params);
 		
-		return "";
+		andView.addObject("projectInfo", projectInfo);
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
 	}
 }
 
