@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <style>
 .modal-content{
 	width : 800px;
@@ -30,6 +31,20 @@ label {
   .box-title{
   	font-size : 40px !important;
   }
+table{
+ 	padding-left: 40px !important;
+ }
+th{
+ 	padding-left: 40px !important;
+ }
+td{ 
+  	padding-left: 40px !important;
+} 
+select{
+	width: 150px !important;
+
+
+}
 </style>
 <!--     Main content -->
     <section class="content">
@@ -37,162 +52,75 @@ label {
       <div class="row">
 	<div class="col-md-12">
 <!--           Horizontal Form -->
-          <div class="box box-info">
+          <div class="box box-info" >
             <div class="box-header with-border" >
               <h3 class="box-title">인력투입 관리</h3>
             </div>
 <!--             /.box-header -->
 <!--             form start -->
             <form class="form-horizontal">
-              <div class="box-body">
+              <div class="box-body" >
+                
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">관련 제안요청서</label>
+                  <label for="inputPassword2" class="col-sm-2 control-label" >제목</label>
 
                   <div class="col-sm-9">
-                   <!-- select -->
-                  <select class="form-control">
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                  </select>
+                    <input type="text" class="form-control" name="rqpps_name"  >
                   </div>
                 </div>
                 
-                <div class="form-group">
-                  <label for="inputPassword2" class="col-sm-2 control-label">제목</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputPassword2" placeholder="제목을 입력해주세요">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" >인력계획</label>
-                  <div class="col-sm-9">
-                	<button type="button" class="test1 btn btn-sm btn-info btn-flat pull-right" data-toggle="modal" data-target="#exampleModal">인력배치</button>
-                  </div>
-                </div>
+               <div class="form-group" style="overflow:scroll; width:1600px; height:640px;" >
+                <table class="table no-margin"  id="mView"  >
+                  <thead >
+                  <tr>
+                    <th scope="col" width="25%">NO.</th>
+                    <th scope="col" width="25%">레벨</th>
+                    <th scope="col" width="25%">이름</th>
+                    <th scope="col" width="25%">직책</th>
+                  </tr>
+                  </thead>
+                  <tbody >
+                  	<c:forEach items="${joList }" var="list">
+	                  <tr>
+	                  	<input type="hidden" value="${ list.join_code}"/>
+	                  	<td>${ list.rnum}</td>
+	                    <td>${list.emp_level}</td>
+	                    <td>${list.emp_name}</td>
+	                    <td><select  id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
+							<option  value="">권한 선택</option>
+		                    <option  value="">PM</option>
+		                    <option  value="">PL</option>
+			            </select></td>
+	                 </tr>
+	                </c:forEach>
+	                  
+                 </tbody>
+               </table>
+              </div>
                 
-                <div class="form-group">
-                  <label for="inputPassword1" class="col-sm-2 control-label">내용</label>
-
-                  <div class="col-sm-9">
-                    <textarea  rows="10" type="text" class="form-control" id="inputPassword1" disabled=""></textarea>
-                  </div>
-                </div>
                 
-                <div class="form-group">
-                  <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력1</font></font></label>
-                  <div class="col-sm-10 control-label">
-	                  <input type="file" id="exampleInputFile">
-                  </div>
-                </div>
                 
-                <div class="form-group">
-                  <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력2</font></font></label>
-                  <div class="col-sm-10 control-label">
-                  <input type="file" id="exampleInputFile">
-                  </div>
-                </div>
+                
                 
               </div>
               <div class="box-footer clearfix">
-              <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
+              <input value="목록" type="button" id="returnList" class="btn btn-sm btn-warning btn-flat pull-right">
               <input value="수정" type="button" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
-              <input value="삭제" type="button" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
 <!--               <button type="button" class="btn btn-sm btn-info btn-flat pull-right" data-toggle="modal" data-target="#exampleModal">피드백</button> -->
-          </div>
+              </div>
             </form>
           </div>
           </div>
           </div>
           </section>
           
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="container">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h3 class="modal-title" id="exampleModalLabel">보고서 피드백</h3>
-      </div>
-      <div class="modal-body">
-<!--         	모달창입니다~ -->
-      <div class="row">
-	<div class="col-md-12">
-<!--           Horizontal Form -->
-          <div class="box box-info">
-            <form class="form-horizontal">
-              <div class="box-body">
-              
-                <div class="form-group">
-                  <label for="inputPassword2" class="col-sm-3 control-label">받는사람</label>
-                  	<div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputPassword2" >
-                  </div>
-                </div>
-                  
-                <div class="form-group">
-                  <label for="inputPassword2" class="col-sm-3 control-label">보고서</label>
-              		<div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputPassword2" >
-                  </div>
-                </div>
-                
-                <div class="form-group">
-                  <label for="inputPassword2" class="col-sm-3 control-label">제목</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputPassword2" placeholder="제목을 입력해주세요">
-                  </div>
-                </div>
-                
-                <div class="form-group">
-                  <label for="inputPassword2" class="col-sm-3 control-label">제목</label>
-
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputPassword2" placeholder="제목을 입력해주세요">
-                  </div>
-                </div>
-                
-                <div class="form-group">
-                  <label for="inputPassword1" class="col-sm-3 control-label">내용</label>
-
-                  <div class="col-sm-6">
-                    <textarea  rows="10" type="text" class="form-control" id="inputPassword1" ></textarea>
-                  </div>
-                </div>
-                
-                <div class="form-group">
-                  <label for="exampleInputFile" class="col-sm-3 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력1</font></font></label>
-                  <div class="col-sm-6 control-label">
-	                  <input type="file" id="exampleInputFile">
-                  </div>
-                </div>
-                
-              </div>
-            </form>
-            
-          </div>
-          </div>
-          </div>
-      </div>
-      <div class="modal-footer">
-              <input value="등록" type="button" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
-              <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
-<!-- 	       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-<!-- 	       <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
-    </div>
-  </div>
-  </div>
-</div>
 <script type="text/javascript">
 $(function(){
-
-}
+	$('input[name=rqpps_name]').val('${joList[0].rqpps_name}');
+	$('#returnList').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
+	});
+});
 
 
 </script>

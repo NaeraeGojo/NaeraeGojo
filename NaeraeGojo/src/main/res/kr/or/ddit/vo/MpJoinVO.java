@@ -12,8 +12,22 @@ public class MpJoinVO {
 	private String mp_spec;
 	private String rqpps_name;
 	private String rqpps_code;
+	private String emp_name;
+	private String emp_code;
 	
 	
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public String getEmp_code() {
+		return emp_code;
+	}
+	public void setEmp_code(String emp_code) {
+		this.emp_code = emp_code;
+	}
 	public String getRqpps_code() {
 		return rqpps_code;
 	}

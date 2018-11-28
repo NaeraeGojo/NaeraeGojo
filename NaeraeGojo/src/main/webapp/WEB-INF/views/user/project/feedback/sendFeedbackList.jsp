@@ -270,7 +270,7 @@ $(function(){
 						</div>
 					</div>
 					<div class="box-footer clearfix" id="footerBtn">
-						<input value="삭제" type="button" id="deleteBtn" style="width: 80px; margin: 2px;"class="btn btn-danger btn-flat pull-right"> 
+<!-- 						<input value="삭제" type="button" id="deleteBtn" style="width: 80px; margin: 2px;"class="btn btn-danger btn-flat pull-right">  -->
 <!-- 						<input value="읽음" type="button" id="ConfirmBtn" style="width: 80px; margin: 2px;"class="btn btn-warning btn-flat pull-right"> -->
 					</div>
 				</form>

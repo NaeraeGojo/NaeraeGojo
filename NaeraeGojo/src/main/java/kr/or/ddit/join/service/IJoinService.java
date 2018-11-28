@@ -21,4 +21,5 @@ public interface IJoinService {
 	public MpJoinVO mpList(Map<String, String> params) throws SQLException;
 	public List<EmpVO> empList1(Map<String, String> params) throws SQLException;
 	public List<JoinVO> joinFinalList() throws SQLException;
+	public List<JoinVO> clickList(Map<String, String> params) throws SQLException;
 }

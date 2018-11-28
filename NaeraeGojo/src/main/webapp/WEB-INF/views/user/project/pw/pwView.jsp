@@ -301,9 +301,48 @@ $(function(){
 	$('.pw_up_form input[name=pw_percent_view]').val('${pwv.PW_PERCENT}');
 	
 	
-	('#btn_feedback').click(function(){
+	// 피드백 받는 사람 
+	$('#btn_feedback').click(function(){
 		$('#feedbackmodal').modal('show');
+		$('input[name=receive_emp]').val('${pwv.DAMDANG_NAME}');
 	});
+	
+	$('#insertFeedback').click(function(){
+		var myArray = [];
+		var damdang = '${pwv.PW_DAMDANG}';
+		var pw_code = '${pwv.PW_CODE}';
+		var content = $('textarea[name=feedback_content]').val();
+		
+		myArray.push(damdang);
+		myArray.push(pw_code);
+		myArray.push(content);
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/feedback/insertFeedback.do'
+			, data : {myArray : myArray}
+			, dataType : 'json'
+			, type : 'POST'
+			, contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+			, async : false
+			, error : function(request, status, error){
+				alert("error : " + request.status)
+			}
+			, success : function(result){
+				boalert(result.message);
+				
+				setTimeout(function(){
+					 $(location).attr('href', "${pageContext.request.contextPath}/user/project/pw/pwList.do");
+                },2000);
+			}
+			
+			
+		});
+		
+	});
+	
+	
+	
+	
 });
 
 
@@ -502,7 +541,7 @@ $(function(){
 	          	  class="btn btn-info btn-flat pull-right btn_bottom">
 	          	  
 	          	<input value="피드백 보내기" type="button" id="btn_feedback" 
-	          	 class="btn btn-warning btn-flat pull-right view_form btn_bottom">
+	          	 class="btn btn-warning btn-flat pull-right btn_bottom" name="feedback">
          </div>
             
         </form>
@@ -513,46 +552,46 @@ $(function(){
 </div>
 
 <!-- 피드백 알림 -->
-    <div class="modal fade" id="feedbackmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="container">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-<!--           <div class="modal-header"> -->
-<!--             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--               <span aria-hidden="true">&times;</span> -->
-<!--             </button> -->
-<!--             <h4 class="modal-title" id="exampleModalLabel">업무 피드백 보내기</h4> -->
-<!--           </div> -->
+<div class="modal fade" id="feedbackmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="container" style="margin-top: 100px;">
+		<div class="modal-dialog" role="document">
+			<form role="form" class="form-horizontal">
+				<div class="modal-content">
 					<div class="box box-2team">
 						<div class="box-header with-border">
+						   
 							<b class="box-title">받은 피드백 상세내용</b><br /> <br />
 						</div>
 						<div class="box-body">
 
 							<div class="form-group">
-								<label for="name" class="col-sm-2 control-label">받는사람</label>
+								<label for="name" class="col-sm-2 control-label" style="width: 130px; font-size:large;">받는사람</label>
 								<div class="col-sm-8">
-									<input id="name" type="text" name="project_name"
-										class="form-control" style="border-radius: 1em;">
+									<input id="receive_emp" type="text" name="receive_emp"
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="contents" class="col-sm-2 control-label">피드백내용</label>
-								<textarea id="contents" name="feedback_content"
-									class="col-sm-10" rows="10"
-									style="width: 68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+								<label for="contents" class="col-sm-2 control-label" style="width: 130px; font-size:large;">피드백내용  </label>
+								<textarea id="contents" name="feedback_content" class="col-sm-10" rows="10"
+									style="width: 62%; border: 1px solid #d2d2d2; border-radius: 1em; margin-left:15px; ">
+							    </textarea>
 							</div>
 
 							<!-- /.box -->
 						</div>
+						<div class="modal-footer">
+							<input type="button" value="보내기" class="btn btn-primary btn-sm" id="insertFeedback">
+							 <input type="button" value="close" data-dismiss="modal" class="btn  btn-default btn-sm" >
+						</div>
 					</div>
-          <div class="modal-footer">
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>     
-    
-        
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
 </html>
