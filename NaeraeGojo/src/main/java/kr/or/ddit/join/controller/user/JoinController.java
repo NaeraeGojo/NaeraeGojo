@@ -212,25 +212,45 @@ public class JoinController {
 	}
 	
 	@RequestMapping("join_view")
-	public String join_view(){
-		return "user/join/join_view";
+	public Model joinView(String rqpps_code,Model model
+			, Map<String, String> params) throws Exception{
+		
+		params.put("rqpps_code", rqpps_code);
+		List<JoinVO> joList = service.clickList(params);
+		model.addAttribute("joList", joList);
+		
+		return model;
 	}
+	
 	
 	@RequestMapping("join_ajax")
 	public ModelAndView join_ajax(String rqpps_code,
+			String emp_code,
+			HttpSession session,
 			Map<String, String> params,
 			ModelAndView andView) throws Exception{
 		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		params.put("rqpps_code", rqpps_code);
 		
 		MpJoinVO mpJoinInfo = service.mpList(params);
-		andView.addObject("mpJoinInfo",mpJoinInfo);
-		// application-views.xml 내 선언된 빈의 id
-		andView.setViewName("jsonConvertView");
+		String eqEmp = mpJoinInfo.getEmp_code();
+		System.out.println(emp_code);
+		System.out.println(eqEmp);
+		if(emp_code.equals(eqEmp)){
+			andView.addObject("mpJoinInfo",mpJoinInfo);
+			// application-views.xml 내 선언된 빈의 id
+			andView.setViewName("jsonConvertView");
+		}else{
+			System.out.println("등록할수없습니다. 제안요청서 작성자가 작성해주시길바랍니다.");
+			String ddd = "no";
+			andView.addObject("ddd",ddd);
+			andView.setViewName("jsonConvertView");
+		}
+		return andView;
 		
 		// InternalResourceViewResolvers
 		//  		/WEB-INF/views/jsonConvertView.jsp
-		return andView;
 	}
 	
 	@RequestMapping("join_specialList")
@@ -259,8 +279,8 @@ public class JoinController {
 			Map<String, String> params,
 			ModelAndView andView) throws Exception{
 		
-		System.out.println(list);//EMP코드
-		System.out.println(select);//제안요청서코드
+			System.out.println(list);//EMP코드
+			System.out.println(select);//제안요청서코드
 			String[] sp = list.split("/");
 			for (int i = 0; i < sp.length; i++) {
 				params.put("emp_code", sp[i]);
@@ -268,7 +288,7 @@ public class JoinController {
 				service.insertJoinInfo(params);
 				params.clear();
 			}
-		andView.setViewName("jsonConvertView");
+			andView.setViewName("jsonConvertView");
 		
 		return andView;
 	}

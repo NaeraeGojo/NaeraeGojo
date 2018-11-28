@@ -46,6 +46,7 @@ $(function(){
 			</div>
 		</div>
 	</c:forEach>
+	${pagingUtil}
 	<!--         <div class="col-md-6"> -->
 	<!--           <div class="box box-solid"> -->
 	<!--             <div class="box-header with-border"> -->

@@ -129,6 +129,7 @@ label {
                     <th scope="col" width="10%">
                     <input value="수정" type="button" style="width : 150px; height : 50px;" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
                     <input type="hidden" value="" id="bb">
+                    <input type="hidden" id="return">
 <!--                     <input type="hidden" value="" id="bc"> -->
                     </th>
                   </tr>
@@ -342,10 +343,9 @@ $(function () {
 						},
 				success : function(data){
 					console.log(data);
-					alert(name);
-					if(name == "특급"){
-						$('#vaseSpec').attr("disabled", true);
-					}
+// 					if(name == "특급"){
+// 						$('#vaseSpec').attr("disabled", true);
+// 					}
 					if(name == "고급"){
 						$('#vaseHigh').attr("disabled", true);
 					}
@@ -355,7 +355,7 @@ $(function () {
 					if(name == "초급"){
 						$('#vaseBegin').attr("disabled", true);
 					}
-					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' && $('#vaseSpec').attr('disabled') == 'disabled'){
+					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' ){
 						$('#lastCheck').attr("disabled", false);
 					}
 					
@@ -443,12 +443,17 @@ $(document).on('click', '.level', function(){
 				url : '${pageContext.request.contextPath}/user/join/join_ajax.do?rqpps_code='+ value,
 				dataType: 'json',
 				success : function(data){
+					if(data.ddd == "no"){
+						alert("등록할수없습니다. 제안요청서 작성자가 작성해주시길바랍니다.");
+						$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
+					}else{
 					console.log(data);
 					info = data.mpJoinInfo;
 					$('#begin').text(info.mp_begin);
 					$('#inter').text(info.mp_inter);
 					$('#high').text(info.mp_high);
-					$('#spec').text(info.mp_spec);
+					$('#spec').text(parseInt(info.mp_spec)-1);
+					}
 				},
 				error : function(res){
 					alert(res.status);

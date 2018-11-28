@@ -61,6 +61,18 @@ public class IProjectServiceImpl implements IProjectService{
 		dao.deleteProjectInfo(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	@Override
+	public int totalCountPL(Map<String, String> params) throws SQLException {
+		int totalCount = 0;
+		try {
+			totalCount = dao.totalCountPL(params);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+
 	
 
 }
