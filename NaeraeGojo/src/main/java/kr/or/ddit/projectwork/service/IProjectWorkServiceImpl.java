@@ -26,17 +26,15 @@ public class IProjectWorkServiceImpl implements IProjectWorkService{
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
-	public void updateProjectWork(ProjectWorkVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void updateProjectWork(ProjectWorkVO pwv) throws SQLException {
+		dao.updateProjectWork(pwv);
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void deleteProjectWork(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.deleteProjectWork(params);
 	}
 
 

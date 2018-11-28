@@ -73,4 +73,10 @@ public class IJoinDaoImpl implements IJoinDao{
 		return client.queryForList("join.joinFinalList");
 	}
 
+	@Override
+	public List<JoinVO> clickList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("join.clickList",params);
+	}
+
 }
