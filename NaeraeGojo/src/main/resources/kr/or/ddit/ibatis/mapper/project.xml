@@ -5,7 +5,7 @@
 <sqlMap namespace="project">
 	<typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
 	<typeAlias alias="joinVO" type="kr.or.ddit.vo.JoinVO"/>
-	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
+	<typeAlias alias="suggestVO" type="kr.or.ddit.vo.SuggestVO"/>
 	
 	<resultMap id="projectMap" class="projectVO">
 		<result property="project_code" column="project_code"/>
@@ -106,11 +106,6 @@
 	
 	
 	
-	
-	
-	
-	
-	
 	<select id="joinList" resultClass="JoinVO" parameterClass="map">
 		SELECT B.*
 		FROM  (SELECT ROWNUM RNUM, A.*
@@ -121,6 +116,28 @@
  		 AND  B.RNUM >= #endCount# 
  		]]> 
 		ORDER BY B.RNUM DESC
+	</select>
+	
+	<select id="suggestList" resultClass="suggestVO" parameterClass="map">
+		SELECT 
+		    SUGGEST_CODE
+		    ,SUGGEST_TITLE
+		FROM SUGGEST
+	</select>
+	
+	<select id="suggestInfo" parameterClass="map" resultClass="suggestVO">
+		SELECT 
+		     A.SUGGEST_CODE
+			,A.SUGGEST_TITLE
+			,A.SUGGEST_CONTENT
+			,A.SUGGEST_RESULT
+			,TO_CHAR(A.SUGGEST_START_DATE, 'YYYY-MM-DD') AS SUGGEST_START_DATE
+			,TO_CHAR(A.SUGGEST_END_DATE, 'YYYY-MM-DD') AS SUGGEST_END_DATE
+			,LTRIM(TO_CHAR(SUGGEST_COST,'9,999,999,999,999')) AS SUGGEST_COST
+		    ,B.RQPPS_NOTICE_AGENCY
+		FROM SUGGEST A, RQPPS B
+		WHERE A.RQPPS_CODE = B.RQPPS_CODE
+		AND A.SUGGEST_CODE = #suggest_code#
 	</select>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">

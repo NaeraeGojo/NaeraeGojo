@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.ddit.project.dao.IProjectDao;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.SuggestVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class IProjectServiceImpl implements IProjectService{
 	public List<JoinVO> joinList(Map<String, String> params) throws SQLException {
 		return dao.joinList(params);
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	@Override
+	public List<SuggestVO> suggestList(Map<String, String> params) throws SQLException {
+		return dao.suggestList(params);
+	}
 
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	@Override
@@ -47,6 +54,12 @@ public class IProjectServiceImpl implements IProjectService{
 			e.printStackTrace();
 		}
 		return totalCount;
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void insertProjectInfo(ProjectVO projectInfo) throws SQLException {
+		dao.insertProjectInfo(projectInfo);
 	}
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
@@ -72,7 +85,11 @@ public class IProjectServiceImpl implements IProjectService{
 		}
 		return totalCount;
 	}
-
 	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
+	@Override
+	public SuggestVO suggestInfo(Map<String, String> params) throws SQLException {
+	return dao.suggestInfo(params);
+	}
 
 }

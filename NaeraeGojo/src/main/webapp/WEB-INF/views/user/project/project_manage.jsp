@@ -1,6 +1,18 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
+<style>
+.procont {
+	margin-left: 160px;
+	margin-right: 160px;
+	width: 80%;
+	display: inline-block;
+	text-align: initial;
+}
+
+
+</style>
+
 <script type="text/javascript">
 $(function(){
 	$('#insertProject').click(function(){
@@ -19,7 +31,17 @@ $(function(){
 </script>
 <br/>
 <br/>
+	
 <div class="row">
+	
+	<div class="procont">
+		<div class="col-md-1" style="float: right;">
+			<input id="insertProject" value="+ 프로젝트 등록" type="button"class="btn btn-block bg-yellow btn-lg "
+			style="float: right; background-color: #c8c8c8; border: 1px outset; width: 200px; margin-bottom: 14px;">
+		</div>
+	</div>
+	
+	<div class="procont">
 	<c:forEach items="${projectList}" var="projectList">
 		<div class="col-md-6">
 			<div class="box box-solid">
@@ -47,6 +69,19 @@ $(function(){
 		</div>
 	</c:forEach>
 	${pagingUtil}
+	
+	<form action="${pageContext.request.contextPath }/12/main.jsp" method="post" class="form-inline pull-right">
+		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
+		<select class="form-control" name="search_keycode">
+			<option value="TOTAL">전체</option>
+			<option value="TITLE">프로젝트 명</option>
+			<option value="CONTENT">내용</option>
+			<option value="WRITER">진척률</option>
+		</select>
+		<button type="submit" class="btn btn-primary form-control">검색</button>
+	</form>
+	
+	</div>
 	<!--         <div class="col-md-6"> -->
 	<!--           <div class="box box-solid"> -->
 	<!--             <div class="box-header with-border"> -->
@@ -99,16 +134,4 @@ $(function(){
 	<!--               </div> -->
 	<!--              </div> -->
 	<!--         </div> -->
-
 </div>
-<form action="${pageContext.request.contextPath }/12/main.jsp" method="post" class="form-inline pull-right">
-	<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
-	<select class="form-control" name="search_keycode">
-		<option value="TOTAL">전체</option>
-		<option value="TITLE">프로젝트 명</option>
-		<option value="CONTENT">내용</option>
-		<option value="WRITER">진척률</option>
-	</select>
-	<button type="submit" class="btn btn-primary form-control">검색</button>
-	<button type="button" id="insertProject" class="btn btn-info form-control">프로젝트 등록</button>
-</form>

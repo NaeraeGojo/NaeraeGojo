@@ -143,7 +143,6 @@ $(function(){
 			</div>
 		</section>
 		
-		
 		<section class="col-lg-5 connectedSortable">
 			<div class="box box-2team">
 				<div class="box-header">
@@ -208,8 +207,6 @@ $(function(){
 				</div>
 			</div>
 		</div>
-	
-	
 	
 	</div>
 </section>

@@ -11,9 +11,14 @@ import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.RolePagingUtil1Page4;
 import kr.or.ddit.utils.RolePagingUtilJoin;
+import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.IssueResultVO;
+import kr.or.ddit.vo.IssueVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkVO;
+import kr.or.ddit.vo.SuggestVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +33,6 @@ public class ProjectController {
 	
 	@Autowired
 	private IProjectService service;
-	
-	@RequestMapping("projectForm")
-	public void ProjectForm(){}
 	
 	@RequestMapping("mainForm")
 	public void mainForm(){}
@@ -97,6 +99,23 @@ public class ProjectController {
 		return andView;
 	}
 	
+	@RequestMapping("projectForm")
+	public ModelAndView ProjectForm(HttpServletRequest request, 
+			Map<String, String> params, HttpSession session, ModelAndView andView) throws Exception{
+		
+		List<SuggestVO> suggestList = service.suggestList(params);
+		andView.addObject("suggestList", suggestList);
+		andView.setViewName("user/project/projectForm");
+		return andView;
+	}
+	
+	@RequestMapping("insertProject")
+	public String insertIssue(ProjectVO projectInfo, HttpSession session, 
+			HttpServletRequest request, Map<String, String> params) throws Exception{
+		
+		
+		return "redirect:/user/project/project_manage.do";
+	}
 	@RequestMapping("pro/deleteProject/{project_code}")
 	public String deleteProject(@PathVariable("project_code") String project_code,
 			Map<String, String> params) throws Exception{
@@ -122,9 +141,8 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("pro/projectInfo")
-	public ModelAndView getMp(Map<String, String> params, ModelAndView andView,
+	public ModelAndView projectInfo(Map<String, String> params, ModelAndView andView,
 		    String project_code, ProjectVO projectInfo, HttpSession session) throws SQLException{
-		
 		
 		params.put("project_code", project_code);
 		
@@ -133,6 +151,19 @@ public class ProjectController {
 		andView.addObject("projectInfo", projectInfo);
 		andView.setViewName("jsonConvertView");
 		
+		return andView;
+	}
+	
+	@RequestMapping("suggestInfo")
+	public ModelAndView suggestInfo(Map<String, String> params, ModelAndView andView,
+		    String suggest_code, SuggestVO suggestInfo, HttpSession session) throws SQLException{
+		
+		params.put("suggest_code", suggest_code);
+		
+		suggestInfo = service.suggestInfo(params);
+		
+		andView.addObject("suggestInfo", suggestInfo);
+		andView.setViewName("jsonConvertView");
 		return andView;
 	}
 }

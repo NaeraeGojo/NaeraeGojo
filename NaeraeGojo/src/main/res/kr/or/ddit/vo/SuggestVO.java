@@ -26,5 +26,5 @@ public class SuggestVO {
 	//temp
 	private String rqpps_nickname;
 	
-
+	private String rqpps_notice_agency;
 }
