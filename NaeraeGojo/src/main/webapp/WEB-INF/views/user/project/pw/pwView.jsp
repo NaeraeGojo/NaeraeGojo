@@ -301,6 +301,9 @@ $(function(){
 	$('.pw_up_form input[name=pw_percent_view]').val('${pwv.PW_PERCENT}');
 	
 	
+	$('#btn_feedback').click(function(){
+		$('#feedbackmodal').modal('show');
+	});
 });
 
 
@@ -493,7 +496,10 @@ $(function(){
 	              	 class="btn btn-default btn-flat pull-right up_form btn_bottom">
 	          	<input id="btn_back" value="목록" type="button"
 	          	  class="btn btn-info btn-flat pull-right btn_bottom">
-            </div>
+	          	  
+	          	<input value="피드백 보내기" type="button" id="btn_feedback" 
+	          	 class="btn btn-warning btn-flat pull-right view_form btn_bottom" name="feedback" readonly="readonly">
+         </div>
             
         </form>
 	</div>
@@ -502,6 +508,47 @@ $(function(){
 </div>
 </div>
 
+<!-- 피드백 알림 -->
+    <div class="modal fade" id="feedbackmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="container">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+<!--           <div class="modal-header"> -->
+<!--             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--               <span aria-hidden="true">&times;</span> -->
+<!--             </button> -->
+<!--             <h4 class="modal-title" id="exampleModalLabel">업무 피드백 보내기</h4> -->
+<!--           </div> -->
+					<div class="box box-2team">
+						<div class="box-header with-border">
+							<b class="box-title">받은 피드백 상세내용</b><br /> <br />
+						</div>
+						<div class="box-body">
 
+							<div class="form-group">
+								<label for="name" class="col-sm-2 control-label">받는사람</label>
+								<div class="col-sm-8">
+									<input id="name" type="text" name="project_name"
+										class="form-control" style="border-radius: 1em;">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="contents" class="col-sm-2 control-label">피드백내용</label>
+								<textarea id="contents" name="feedback_content"
+									class="col-sm-10" rows="10"
+									style="width: 68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+							</div>
+
+							<!-- /.box -->
+						</div>
+					</div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>     
+    
         
 </html>
