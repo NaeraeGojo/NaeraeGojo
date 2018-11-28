@@ -29,11 +29,11 @@
 				</div>
 				<div class="nav-tabs-custom" id="divdiv">
 					<ul class="nav nav-tabs">
-						<li class="active"><a
+						<li><a
 							href="${pageContext.request.contextPath}/user/report/report_listDev.do">보낸
 								보고서함</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/user/report/report_feedListDev.do">보고서
+						<li class="active"><a
+							href="${pageContext.request.contextPath}/user/reportFeed/report_feedListDev.do">보고서
 								피드백</a></li>
 					</ul>
 					<div class="tab-content">
@@ -101,10 +101,9 @@
 							${pagingUtil}
 						</div>
 
-						<form action="${pageContext.request.contextPath}/user/report/report_listDev.do"
-							method="post" class="form-inline pull-right">
-							<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" /> 
-							<select class="form-control" name="search_keycode">
+						<form action="${pageContext.request.contextPath}/user/reportFeed/report_feedListDev.do" method="post" class="form-inline pull-right">
+							<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
+								<select class="form-control" name="search_keycode">
 								<!-- 			<option>검색조건</option> -->
 								<option value="TOTAL">전체</option>
 								<option value="TITLE">제목</option>
@@ -126,14 +125,22 @@
 <script type="text/javascript">
 	$(function() {
 		$('#btn2')
-				.click(function() {
-							$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendInsertDev.do');
+				.click(
+						function() {
+							$(location)
+									.attr('href',
+											'${pageContext.request.contextPath}/user/report/report_sendInsertDev.do');
 						})
 
 		$('#sendDelete tr:gt(0)')
-				.click(function() {
-					$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
+				.click(
+						function() {
+							//         var bo_no = $(this).find('td:eq(0)').text();
+							$(location)
+									.attr('href',
+											'${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
 						});
+
 	})
 </script>
 

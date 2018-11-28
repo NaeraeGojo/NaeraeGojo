@@ -24,15 +24,15 @@
 
       data.addRows([
         ['Research', 'Find sources',
-         new Date(2015, 0, 1), new Date(2015, 0, 5), null,  100,  null],
+         new Date(2018, 0, 1), new Date(2018, 0, 5), null,  100,  null],
         ['Write', 'Write paper',
-         null, new Date(2015, 0, 9), daysToMilliseconds(3), 25, 'Research,Outline'],
+         null, new Date(2018, 0, 9), daysToMilliseconds(3), 25, 'Research,Outline'],
         ['Cite', 'Create bibliography',
-         null, new Date(2015, 0, 7), daysToMilliseconds(1), 20, 'Research'],
+         null, new Date(2018, 0, 7), daysToMilliseconds(1), 20, 'Research'],
         ['Complete', 'Hand in paper',
-         null, new Date(2015, 0, 10), daysToMilliseconds(1), 0, 'Cite,Write'],
+         null, new Date(2018, 0, 10), daysToMilliseconds(1), 0, 'Cite,Write'],
         ['Outline', 'Outline paper',
-         null, new Date(2015, 0, 6), daysToMilliseconds(1), 100, 'Research']
+         null, new Date(2018, 0, 6), daysToMilliseconds(1), 100, 'Research']
       ]);
 
       var options = {

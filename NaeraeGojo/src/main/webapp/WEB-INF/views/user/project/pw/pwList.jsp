@@ -4,7 +4,9 @@
 
 <html>
 <style>
-
+.table_pw tr{
+	cursor: pointer;
+}
 .perful{
 	width: 100% 
 }

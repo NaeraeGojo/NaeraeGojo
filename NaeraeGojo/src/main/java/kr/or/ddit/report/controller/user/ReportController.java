@@ -81,7 +81,13 @@ public class ReportController {
 	}
 	//개발자  보낸보고서함 리스트
 	@RequestMapping("report_listDev")
-	public void report_listDev(){
+	public String report_listDev(){
+		return "user/report/report_listDev"; 
+	}
+	//개발자  피드백 리스트
+	@RequestMapping("report_feedListDev")
+	public String report_feedListDev(){
+		return "user/report/report_feedListDev"; 
 	}
 	//개발자  보낸보고서함 등록/임시저장
 	@RequestMapping("report_sendInsertDev")

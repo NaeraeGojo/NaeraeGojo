@@ -47,18 +47,16 @@ video {
 				
 				    <!--화상회의화면 div  -->
 				    <div class="dd" id="firstDiv" style="width: 60%; float: left; margin-right: 20px; height: 680px !important;">
-				       <video src=""></video>
-				       <video src="" ></video>
-				       <video src="" ></video>
-				       <video src=""></video>
-				       <video src="" ></video>
-				       <video src="" ></video>
-				       <video src=""></video>
-				       <video src="" ></video>
-				       <video src="" ></video>
-				    
-				    </div>  <!-- 화상회의화면 div  끝 -->
-				    
+						  <video id="localVideo" autoplay mute></video>   <!--  로컬 -->
+						  <video id="remoteVideo1" autoplay></video>            <!--  원격카메ㅏ -->
+						  <video id="remoteVideo2" autoplay></video> 
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src=""></video> -->
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src="" ></video> -->
+				    </div> 
 				    <!--관련업무  div -->
 				    <div class="dd" id="secondDiv" style="width: 38%; float: right;  height: 680px !important;">
 				        <div class="box-header with-border">
@@ -69,7 +67,7 @@ video {
 				        </div>
 				    
 				    </div> <!-- 관련업무 div  끝 -->
-				</div>    
+				   
 				<br />
 				<br />
 			</div>

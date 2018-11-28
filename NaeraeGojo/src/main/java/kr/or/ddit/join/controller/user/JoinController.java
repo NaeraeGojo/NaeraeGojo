@@ -1,6 +1,5 @@
 package kr.or.ddit.join.controller.user;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -39,258 +38,240 @@ public class JoinController {
 	private IEmpService empServ;
 	@Resource
 	private CryptoGenerator cryptoGen;
-	
+
 	// 로그아웃 Controller
 	@RequestMapping("logout")
-	public String logout(HttpSession session){
+	public String logout(HttpSession session) {
 		session.removeAttribute("LOGIN_EMPINFO");
-	
+
 		return "redirect:/user/join/mainForm.do";
 	}
-	
-	//로그인 폼 Controller
+
+	// 로그인 폼 Controller
 	@RequestMapping("loginForm")
-	public Model loginForm(HttpSession session, 
-			Model model){
-		Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
+	public Model loginForm(HttpSession session, Model model) {
+		Map<String, String> publicKeyMap = cryptoGen
+				.getGeneratePairKey(session);
 		model.addAttribute("publicKeyMap", publicKeyMap);
-		
+
 		return model;
 	}
-	
+
 	// 로그인 확인 Controller
-	@RequestMapping(value="loginCheck", method=RequestMethod.POST)
+	@RequestMapping(value = "loginCheck", method = RequestMethod.POST)
 	public String loginCheck(String emp_code, String emp_pass,
-			Map<String, String> params,
-			EmpVO paramVO,
-			HttpSession session,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Model model,
-			ModelMap modelMap,
-			ModelAndView andView
-			) throws Exception{
-			
+			Map<String, String> params, EmpVO paramVO, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model, ModelMap modelMap, ModelAndView andView)
+			throws Exception {
+
 		String decryptEMPCODE = cryptoGen.decryptRSA(session, emp_code);
 		String decryptEMPPASS = cryptoGen.decryptRSA(session, emp_pass);
-		
+
 		params.put("emp_code", decryptEMPCODE);
 		params.put("emp_pass", decryptEMPPASS);
-		
+
 		EmpVO empInfo = empServ.empInfo(params);
-		
-		if(empInfo == null){
+
+		if (empInfo == null) {
 			String message = "";
-			try{
+			try {
 				message = URLEncoder.encode(message, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			return "redirect:/user/join/loginForm.do?message"+message;
-		}else{
+			return "redirect:/user/join/loginForm.do?message" + message;
+		} else {
 			session.setAttribute("LOGIN_EMPINFO", empInfo);
-			if(empInfo.getEmp_role().equals("DEP")){ //개발자 권한 로그인
+			if (empInfo.getEmp_role().equals("DEP")) { // 개발자 권한 로그인
 				return "forward:/user/join/mainForm.do";
-			}else if(empInfo.getEmp_role().equals("MANAGER")){	//관리자 권한 로그인
+			} else if (empInfo.getEmp_role().equals("MANAGER")) { // 관리자 권한 로그인
 				return "forward:/user/emp/empList.do";
-			}else if(empInfo.getEmp_role().equals("PL")){	//PL 권한 로그인
+			} else if (empInfo.getEmp_role().equals("PL")) { // PL 권한 로그인
 				return "forward:/user/report/report_listPL.do";
-			}else{
+			} else {
 				return "forward:/user/emp/empForm.do";
 			}
 		}
 	}
-	
+
 	// 직원등록 인증 Controller
-	@RequestMapping(value="check", method=RequestMethod.POST)
-	public String loginCheck(String emp_code,
-			Map<String, String> params,
-			EmpVO paramVO) throws Exception{
+	@RequestMapping(value = "check", method = RequestMethod.POST)
+	public String loginCheck(String emp_code, Map<String, String> params,
+			EmpVO paramVO) throws Exception {
 		params.put("emp_code", emp_code);
-		
+
 		empServ.empInfoW(params);
 
 		return "user/join/loginForm";
 	}
-	
+
 	// 메인화면 Controller [개발자 로그인]
 	@RequestMapping("mainForm")
-	public String mainForm(HttpSession session,
-			Map<String, String> params,
-			Model model) throws Exception{
+	public String mainForm(HttpSession session, Map<String, String> params,
+			Model model) throws Exception {
 		EmpVO empInfo = empServ.empInfo(params);
-		if(session.getAttribute("LOGIN_EMPINFO")== null){
+		if (session.getAttribute("LOGIN_EMPINFO") == null) {
 			return "redirect:/user/join/loginForm.do";
-		}else{
-			Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
+		} else {
+			Map<String, String> publicKeyMap = cryptoGen
+					.getGeneratePairKey(session);
 			session.setAttribute("publicKeyMap", publicKeyMap);
 			return "user/join/mainForm";
 		}
 	}
-	
-	
-	public ModelAndView joinList(HttpServletRequest request, HttpSession session) throws Exception{
-	
+
+	public ModelAndView joinList(HttpServletRequest request, HttpSession session)
+			throws Exception {
+
 		return null;
 	}
-	
-	
-	public ModelAndView updateJoin(ModelAndView andView) throws Exception{
-		
+
+	public ModelAndView updateJoin(ModelAndView andView) throws Exception {
+
 		return null;
 	}
-	
-	
-	public String insertJoin() throws Exception{
-		
+
+	public String insertJoin() throws Exception {
+
 		return null;
 	}
-	
-	
-	public String deleteJoin() throws Exception{
-		
+
+	public String deleteJoin() throws Exception {
+
 		return null;
 	}
-	
+
 	@RequestMapping("join_list")
 	public ModelAndView join_list(HttpServletRequest request,
-			ModelAndView andView,
-			HttpSession session,
-			String search_keyword,
-			String search_keycode,
-			String currentPage
-			,String emp_code) throws Exception{
-		if(currentPage==null){
+			ModelAndView andView, HttpSession session, String search_keyword,
+			String search_keycode, String currentPage, String emp_code)
+			throws Exception {
+		if (currentPage == null) {
 			currentPage = "1";
 		}
 		List<JoinVO> joinLast = service.joinFinalList();
-		andView.addObject("joinLast",joinLast);
+		andView.addObject("joinLast", joinLast);
 		andView.setViewName("user/join/join_list");
-//		Map<String, String> params = new HashMap<String, String>();
-//		
-//		params.put("search_keyword", search_keyword);
-//		params.put("search_keycode", search_keycode);
-//		
-//		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
-//		System.out.println("아디아디아디아디"+emp_code);
-//		params.put("emp_code", emp_code);
-//		
-//		if(params != null){
-//			String message = (String) params.get("message");
-//			System.out.println("RedirectAttribute post 전송 파람 : " + message);
-//		}
-//		
-//		
-//		int totalCount = service.totalCount(params);
-//		RolePagingUtil paginUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
-//		params.put("startCount",  String.valueOf(paginUtil.getStartCount()));
-//		params.put("endCount", String.valueOf(paginUtil.getEndCount()));
-//		List<NotEmpVO> noticeAllList = service.noticeAllList(params);
-//		andView.addObject("noticeAllList",noticeAllList);
-//		andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
-//		andView.setViewName("user/noticeAll/notice_allList");
+		// Map<String, String> params = new HashMap<String, String>();
+		//
+		// params.put("search_keyword", search_keyword);
+		// params.put("search_keycode", search_keycode);
+		//
+		// emp_code = ((EmpVO)
+		// session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		// System.out.println("아디아디아디아디"+emp_code);
+		// params.put("emp_code", emp_code);
+		//
+		// if(params != null){
+		// String message = (String) params.get("message");
+		// System.out.println("RedirectAttribute post 전송 파람 : " + message);
+		// }
+		//
+		//
+		// int totalCount = service.totalCount(params);
+		// RolePagingUtil paginUtil = new
+		// RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
+		// params.put("startCount", String.valueOf(paginUtil.getStartCount()));
+		// params.put("endCount", String.valueOf(paginUtil.getEndCount()));
+		// List<NotEmpVO> noticeAllList = service.noticeAllList(params);
+		// andView.addObject("noticeAllList",noticeAllList);
+		// andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
+		// andView.setViewName("user/noticeAll/notice_allList");
 		return andView;
 	}
-	
+
 	@RequestMapping("join_insert")
-	public ModelAndView join_insert(ModelAndView andView) throws Exception{
+	public ModelAndView join_insert(ModelAndView andView) throws Exception {
 		List<RqppsVO> rqName = service.rqppsNm();
-//		List<EmpVO> empList = service.empList();
-		andView.addObject("rqName",rqName);
-//		andView.addObject("empList",empList);
+		// List<EmpVO> empList = service.empList();
+		andView.addObject("rqName", rqName);
+		// andView.addObject("empList",empList);
 		andView.setViewName("user/join/join_insert");
 		return andView;
 	}
-	
-	
+
 	@RequestMapping("join_insertFinal")
-	public ModelAndView join_insertFinal(ModelAndView andView) throws Exception{
+	public ModelAndView join_insertFinal(ModelAndView andView) throws Exception {
 		List<RqppsVO> rqName = service.rqppsNm();
-		andView.addObject("rqName",rqName);
+		andView.addObject("rqName", rqName);
 		andView.setViewName("user/join/join_insertFinal");
 		return andView;
 	}
-	
+
 	@RequestMapping("join_view")
-	public Model joinView(String rqpps_code,Model model
-			, Map<String, String> params) throws Exception{
-		
+	public Model joinView(String rqpps_code, Model model,
+			Map<String, String> params) throws Exception {
+
 		params.put("rqpps_code", rqpps_code);
 		List<JoinVO> joList = service.clickList(params);
 		model.addAttribute("joList", joList);
-		
+
 		return model;
 	}
-	
-	
+
 	@RequestMapping("join_ajax")
-	public ModelAndView join_ajax(String rqpps_code,
-			String emp_code,
-			HttpSession session,
-			Map<String, String> params,
-			ModelAndView andView) throws Exception{
-		
-		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+	public ModelAndView join_ajax(String rqpps_code, String emp_code,
+			HttpSession session, Map<String, String> params,
+			ModelAndView andView) throws Exception {
+
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO"))
+				.getEmp_code();
 		params.put("rqpps_code", rqpps_code);
-		
+
 		MpJoinVO mpJoinInfo = service.mpList(params);
 		String eqEmp = mpJoinInfo.getEmp_code();
 		System.out.println(emp_code);
 		System.out.println(eqEmp);
-		if(emp_code.equals(eqEmp)){
-			andView.addObject("mpJoinInfo",mpJoinInfo);
+		if (emp_code.equals(eqEmp)) {
+			andView.addObject("mpJoinInfo", mpJoinInfo);
 			// application-views.xml 내 선언된 빈의 id
 			andView.setViewName("jsonConvertView");
-		}else{
+		} else {
 			System.out.println("등록할수없습니다. 제안요청서 작성자가 작성해주시길바랍니다.");
 			String ddd = "no";
-			andView.addObject("ddd",ddd);
+			andView.addObject("ddd", ddd);
 			andView.setViewName("jsonConvertView");
 		}
 		return andView;
-		
+
 		// InternalResourceViewResolvers
-		//  		/WEB-INF/views/jsonConvertView.jsp
+		// /WEB-INF/views/jsonConvertView.jsp
 	}
-	
+
 	@RequestMapping("join_specialList")
-	public  ModelAndView join_specialList(String emp_level,
-			Map<String, String> params,
-			ModelAndView andView) throws Exception{
-		
+	public ModelAndView join_specialList(String emp_level,
+			Map<String, String> params, ModelAndView andView) throws Exception {
+
 		params.put("emp_level", emp_level);
-		
+
 		List<EmpVO> empLeveltest = service.empList1(params);
-		
-		andView.addObject("empLeveltest",empLeveltest);
+
+		andView.addObject("empLeveltest", empLeveltest);
 		// application-views.xml 내 선언된 빈의 id
 		andView.setViewName("jsonConvertView");
-		
+
 		// InternalResourceViewResolvers
-		//  		/WEB-INF/views/jsonConvertView.jsp
+		// /WEB-INF/views/jsonConvertView.jsp
 		return andView;
 	}
-	
+
 	@RequestMapping("join_levelInsert")
-	public  ModelAndView join_levelInsert(String list,
-			String select,
-			String listHigh,
-			String selectHigh,
-			Map<String, String> params,
-			ModelAndView andView) throws Exception{
-		
-			System.out.println(list);//EMP코드
-			System.out.println(select);//제안요청서코드
-			String[] sp = list.split("/");
-			for (int i = 0; i < sp.length; i++) {
-				params.put("emp_code", sp[i]);
-				params.put("rqpps_code", select);
-				service.insertJoinInfo(params);
-				params.clear();
-			}
-			andView.setViewName("jsonConvertView");
-		
+	public ModelAndView join_levelInsert(String list, String select,
+			String listHigh, String selectHigh, Map<String, String> params,
+			ModelAndView andView) throws Exception {
+
+		System.out.println(list);// EMP코드
+		System.out.println(select);// 제안요청서코드
+		String[] sp = list.split("/");
+		for (int i = 0; i < sp.length; i++) {
+			params.put("emp_code", sp[i]);
+			params.put("rqpps_code", select);
+			service.insertJoinInfo(params);
+			params.clear();
+		}
+		andView.setViewName("jsonConvertView");
+
 		return andView;
 	}
 }
-
