@@ -33,8 +33,7 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 
 	@Override
 	public void insertFeedbackInfo(FeedbackVO feedbackInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.insert("feedback.insertFeedback", feedbackInfo);
 	}
 
 	@Override

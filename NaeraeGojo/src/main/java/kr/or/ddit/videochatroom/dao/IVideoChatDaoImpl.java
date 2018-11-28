@@ -20,8 +20,8 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertVideoChat(Map<String, String> params) throws SQLException {
-		
+	public String insertVideoChat(Map<String, String> params) throws SQLException {
+		return (String) client.insert("videoRoom.insertVideoChat", params);
 	}
 
 	@Override
@@ -61,6 +61,11 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 	public List<EmpVO> getEmpList(Map<String, String> params)
 			throws SQLException {
 		return client.queryForList("videoRoom.getEmpList", params);
+	}
+
+	@Override
+	public void insertJoin(Map<String, String> params) throws SQLException {
+		client.insert("videoRoom.insertJoin", params);
 	}
 
 }

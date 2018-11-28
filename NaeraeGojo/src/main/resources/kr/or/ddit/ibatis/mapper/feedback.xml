@@ -132,7 +132,7 @@
         where a.send_emp = b.emp_code
         and d.project_code = #project_code#
         and a.pw_code = c.pw_code
-        and a.send_emp = #emp_code#
+        and a.receive_emp = #emp_code#
         and a.receive_delete ='n'
         and c.project_code = d.project_code
         and a.feedback_code=#feedback_code#
@@ -209,6 +209,27 @@
         and c.project_code = d.project_code
         and a.feedback_code=#feedback_code#
     </select>
+    
+    
+    <insert id="insertFeedback" parameterClass="feedbackVO">
+        <selectKey keyProperty="feedback_code" resultClass="string">
+            select feedback_seq.nextval from dual
+        </selectKey>
+        insert into feedback(FEEDBACK_CODE
+							, FEEDBACK_CONTENT
+							, FEEDBACK_ST
+							, SEND_EMP
+							, RECEIVE_EMP
+							, PW_CODE
+							)
+					values ( #feedback_code#
+                            , #feedback_content#
+                            , sysdate
+                            , #send_emp#
+                            , #receive_emp#
+                            , #pw_code#
+                            )	
+    </insert>
     
 </sqlMap>
 
