@@ -124,17 +124,15 @@
 <!-- 	</section> -->
 
 <script type="text/javascript">
-	$(function() {
-		$('#btn2')
-				.click(function() {
-							$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendInsertDev.do');
-						})
-
-		$('#sendDelete tr:gt(0)')
-				.click(function() {
-					$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
-						});
+$(function() {
+	$('#btn2').click(function() {
+		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendInsertDev.do');
 	})
+
+	$('#sendDelete tr:gt(0)').click(function() {
+		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
+	});
+})
 </script>
 
 

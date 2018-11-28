@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <style>
 .fieldName {
 	text-align: center;
@@ -93,43 +94,32 @@ label {
 							<label class="col-sm-2 control-label" style="padding-top: 10px;">보고서
 								분류</label>
 							<div class="col-sm-7">
-								<label style="margin-top: 7px; margin-left: 15px;"> <input
-									type="radio" name="gender" class="flat-red" checked>
-									주간
-								</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label> <input
-									type="radio" name="gender" class="flat-red"> 월간
-								</label>
+								<label style="margin-top: 7px; margin-left: 15px;"><input type="radio" name="w" class="flat-red" checked> 주간 </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								<label> <input type="radio" name="m" class="flat-red"> 월간 </label>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-2 control-label">관련
-								프로젝트</label>
+							<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label>
 
 							<div class="col-sm-9">
 								<!-- select -->
-								<select class="form-control">
-									<option>option 1</option>
-									<option>option 2</option>
-									<option>option 3</option>
-									<option>option 4</option>
-									<option>option 5</option>
-								</select>
+								<select class="form-control" onchange="change(this.value);">
+			                    <option>선택해주세요</option>
+				                   <c:forEach items="${proName }" var="proName1">
+				                    	<option value="${proName1.project_code}">${proName1.project_name}</option>
+				                   </c:forEach>
+			                   </select>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-2 control-label">관련
-								프로젝트 업무</label>
+							<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트 업무</label>
 
 							<div class="col-sm-9">
 								<!-- select -->
-								<select class="form-control">
-									<option>option 1</option>
-									<option>option 2</option>
-									<option>option 3</option>
-									<option>option 4</option>
-									<option>option 5</option>
+								<select class="form-control" id="pwList1" >
+									
 								</select>
 							</div>
 						</div>
@@ -230,6 +220,81 @@ label {
 					checkboxClass : 'icheckbox_flat-red',
 					radioClass : 'iradio_flat-red'
 				})
+				
+				
 
 	})
+	
+	function change(value){
+			alert(value);
+			$.ajax({
+				url : '${pageContext.request.contextPath}/user/report/report_pw_people.do?project_code='+ value,
+				dataType: 'json',
+				success : function(data){
+					console.log(data);
+					info = data.pwName;
+					var code ='';
+					$('#pwList1').empty();
+					code = '<option>'+"선택해주세요"+'</option>';
+					for (var i = 0; i < info.length; i++) {
+						code += '<option value="'+info[i].pw_code+'">'+info[i].pw_function+'</option>';
+					}
+					$('#pwList1').append(code);
+				},
+				error : function(res){
+					alert(res.status);
+				}
+			});
+			
+			$.ajax({
+				url : '${pageContext.request.contextPath}/user/report/report_pw_people12.do?project_code='+ value,
+				dataType: 'json',
+				success : function(data){
+					console.log(data);
+					info = data.proPeople;
+					var code ='';
+					$('#bodytable').empty();
+					for (var i = 0; i < info.length; i++) {
+						code += '<tr>';
+						code += '<input type="hidden" value="'+ info[i].emp_code+'">';
+						code += '<td>'+info[i].emp_department+'</td>';
+						code += '<td>'+info[i].emp_level+'</td>';
+						code += '<td>'+info[i].emp_name+'</td>';
+						code += '<td>'+info[i].position_name+'</td>';
+						code += '</tr>';
+					}
+					$('#bodytable').append(code);
+				},
+				error : function(res){
+					alert(res.status);
+				}
+			});
+	};	
+	
+// 	function people(value){
+// 			alert(value);
+// 			$.ajax({
+// 				url : '${pageContext.request.contextPath}/user/report/report_pw_people12.do?project_code='+ value,
+// 				dataType: 'json',
+// 				success : function(data){
+// 					console.log(data);
+// 					info = data.proPeople;
+// 					var code ='';
+// 					$('#bodytable').empty();
+// 					for (var i = 0; i < info.length; i++) {
+// 						code += '<tr>';
+// 						code += '<input type="hidden" value="'+ info[i].emp_code+'">';
+// 						code += '<td>'+info[i].emp_department+'</td>';
+// 						code += '<td>'+info[i].emp_level+'</td>';
+// 						code += '<td>'+info[i].emp_name+'</td>';
+// 						code += '<td>'+info[i].position_name+'</td>';
+// 						code += '</tr>';
+// 					}
+// 					$('#bodytable').append(code);
+// 				},
+// 				error : function(res){
+// 					alert(res.status);
+// 				}
+// 			});
+// 	};	
 </script>

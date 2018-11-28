@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="report">
+	<typeAlias alias="joinVO" type="kr.or.ddit.vo.JoinVO"/>
+	<typeAlias alias="joNameVO" type="kr.or.ddit.vo.JoNameVO"/>
+	<typeAlias alias="rqppsVO" type="kr.or.ddit.vo.RqppsVO"/>
+	<typeAlias alias="mpJoinVO" type="kr.or.ddit.vo.MpJoinVO"/>
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
+	<typeAlias alias="reportVO" type="kr.or.ddit.vo.ReportVO"/>
+	<typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
+	<typeAlias alias="pwVO" type="kr.or.ddit.vo.ProjectWorkVO"/>
+	
+	<!-- column이 select와 같이 사용되면 select의 파라메터로 전달된다 -->
+	<!-- fileitem.fileItems의 결과가 리스트로 만들어지고 items에 저장된다. -->
+	
+	<sql id="selectAll">
+		select * from report
+		where report_delete = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
+					rqpps_name like '%' || #search_keyword# ||'%'
+					or rqpps_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="TITLE" >
+					rqpps_name like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="WRITER" >
+					rqpps_nickname like '%' || #search_keyword# ||'%'
+				</isEqual>				
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<insert id="insertReport" parameterClass="map">
+		<selectKey keyProperty="report_code" resultClass="string">
+			select report_seq.nextval from dual
+		</selectKey>
+		INSERT INTO REPORT (
+							REPORT_CODE,
+							REPORT_TITLE,
+							REPORT_DAY,
+							REPORT_CONTENT,
+							REPORT_RC,
+							REPORT_DATE,
+							REPORT_DELETE,
+							EMP_CODE,
+							PW_CODE,
+							REPORT_PL_STATUS,
+							REPORT_PM_STATUS,
+							EMP_CODE_PL,
+							EMP_CODE_PM
+							) 
+                    VALUES(
+		                    #report_code#,
+		                    #report_title#,
+		                    SYSDATE,
+		                    #report_content#,
+		                    #report_rc#,
+		                    #report_date#,
+							#report_delete#,
+							#emp_code#,
+							#pw_code#,
+							#report_pl_status#,
+							#report_pm_status#,
+							#emp_code_pl#,
+							#emp_code_pm#
+							)
+		
+	</insert>
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		select count(report_code)
+		  from report
+		<include refid="searchCondition"/>
+	</select>
+	
+	<select id="joinList" parameterClass="map" resultClass="joinVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (<include refid="selectAll"/>
+						<include refid="searchCondition"/>
+						order by join_code asc
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startCount#
+		and b.rnum >= #endCount#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
+	
+	<select id="projectNm" parameterClass="map" resultClass="projectVO">
+		 SELECT B.PROJECT_NAME, B.PROJECT_CODE
+	     FROM JOIN A, PROJECT B, EMP C
+	     WHERE A.PROJECT_CODE = B.PROJECT_CODE
+	     AND   A.EMP_CODE = C.EMP_CODE
+	     AND   A.EMP_CODE = #emp_code#
+	</select>
+	
+	<select id="projectPeople" parameterClass="map" resultClass="reportVO">
+		 SELECT C.EMP_CODE,C.EMP_NAME,A.POSITION_NAME,C.EMP_DEPARTMENT,C.EMP_LEVEL
+	     FROM JOIN A, PROJECT B, EMP C
+	     WHERE A.PROJECT_CODE = B.PROJECT_CODE
+	     AND   A.EMP_CODE = C.EMP_CODE
+	     AND   B.PROJECT_CODE = #project_code#
+	     AND   A.POSITION_NAME IN ('PM','PL')
+	</select>
+	
+	<select id="pwName" parameterClass="map" resultClass="pwVO">
+		   SELECT B.PW_CODE,B.PW_FUNCTION,A.PROJECT_CODE
+		   FROM PROJECT A, PW B
+		   WHERE A.PROJECT_CODE = B.PROJECT_CODE
+		   AND   B.PROJECT_CODE = #project_code#
+	</select>
+	
+	
+	<select id="clickList" parameterClass="map" resultClass ="joinVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (select b.emp_name,c.rqpps_name,b.emp_level,a.join_code 
+					 from join a, emp b, rqpps c 
+					 where a.emp_code = b.emp_code  
+					 and a.rqpps_code = c.rqpps_code 
+					 and a.rqpps_code = #rqpps_code#
+						order by b.emp_level
+						) a ) b
+		order by b.rnum asc
+	</select>
+	
+	
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
