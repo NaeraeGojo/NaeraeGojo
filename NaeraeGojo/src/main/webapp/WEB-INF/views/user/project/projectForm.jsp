@@ -107,13 +107,6 @@ $(function(){
 							<textarea class="col-sm-8" rows="10" placeholder="프로젝트 내용" style="border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
 						</div>
 
-						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">첨부
-								파일</label>
-							<div class="col-sm-8">
-								<input type="file" class="filefile" style="background-color: transparent; border: 0;">
-							</div>
-						</div>
 				</div>
 
 				<div class="box-footer clearfix">

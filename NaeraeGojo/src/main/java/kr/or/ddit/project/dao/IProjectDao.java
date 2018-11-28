@@ -16,5 +16,6 @@ public interface IProjectDao {
 	public void updateProjectInfo(ProjectVO projectInfo) throws SQLException;
 	public void deleteProjectInfo(Map<String,String> params) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
+	public int totalCountPL(Map<String, String> params) throws SQLException;
 
 }

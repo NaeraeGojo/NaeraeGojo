@@ -138,8 +138,12 @@ public class VideoChatController {
 	public ModelAndView modalempList(ModelAndView andView, HttpSession session, Map<String, String> params
 									, String project_code) throws SQLException{
 		
+		
 		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
-		params.put("emp_code", emp_code);		
+		params.put("emp_code", emp_code);	
+		
+		session.setAttribute("TMP_PROJECT", project_code);
+		
 		params.put("project_code", project_code);
 		
 		List<EmpVO> empList = service.getEmpList(params);
@@ -147,6 +151,40 @@ public class VideoChatController {
 		andView.addObject("empList", empList);
 		andView.setViewName("jsonConvertView");
 		return andView;
+	}
+	
+	@RequestMapping("insertempList")
+	public ModelAndView insertempList(ModelAndView andView, HttpServletRequest request, HttpSession session, Map<String, String> params
+			, String project_code) throws SQLException{
+		
+		project_code = (String) session.getAttribute("TMP_PROJECT");
+		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		
+		System.out.println("asdfsd    " + project_code);
+		
+		String[] empArray = request.getParameterValues("tmpArray[]");
+		
+		params.put("project_code", project_code);
+		params.put("emp_code", emp_code);
+		
+		String video_chat_room_code =service.insertVideoChat(params);
+		
+		for (int i = 0; i < empArray.length; i++) {
+			params.clear();
+			String join_emp = empArray[i];
+			params.put("emp_code", join_emp);
+			params.put("video_chat_room_code", video_chat_room_code);
+			service.insertJoin(params);
+		}
+		
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	
+	@RequestMapping("room")
+	public String Ganttchart3(){
+		return "user/videochat/videochatRoom";
 	}
 	
 	

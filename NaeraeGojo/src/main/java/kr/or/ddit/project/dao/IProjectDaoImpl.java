@@ -47,5 +47,10 @@ public class IProjectDaoImpl implements IProjectDao{
 	public void deleteProjectInfo(Map<String, String> params) throws SQLException {
 		client.update("project.deleteProject", params);
 	}
+
+	@Override
+	public int totalCountPL(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("project.totalCountPL", params);
+	}
 	
 }
