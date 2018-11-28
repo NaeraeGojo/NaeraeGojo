@@ -47,15 +47,15 @@ video {
 				
 				    <!--화상회의화면 div  -->
 				    <div class="dd" id="firstDiv" style="width: 60%; float: left; margin-right: 20px; height: 680px !important;">
-				       <video src=""></video>
-				       <video src="" ></video>
-				       <video src="" ></video>
-				       <video src=""></video>
-				       <video src="" ></video>
-				       <video src="" ></video>
-				       <video src=""></video>
-				       <video src="" ></video>
-				       <video src="" ></video>
+				       <video id="localVideo" autoplay muted></video>
+				       <video id="localVideo" autoplay></video>
+				       <video id="localVideo" autoplay></video>
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src=""></video> -->
+<!-- 				       <video src="" ></video> -->
+<!-- 				       <video src="" ></video> -->
 				    
 				    </div>  <!-- 화상회의화면 div  끝 -->
 				    
