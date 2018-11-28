@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.utils.RolePagingUtil;
+import kr.or.ddit.utils.RolePagingUtil1Page4;
 import kr.or.ddit.utils.RolePagingUtilJoin;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpVO;
@@ -39,13 +40,28 @@ public class ProjectController {
 	
 	@RequestMapping("project_manage")
 	public ModelAndView project_manage(HttpServletRequest request, HttpSession session, 
+			String search_keyword, String search_keycode, String currentPage, 
 			Map<String, String> params, ModelAndView andView, String project_code) throws Exception{
 		
 		project_code = (String) session.getAttribute("project_code");
 		session.setAttribute("project_code", project_code);
 	
-		List<ProjectVO> projectList = service.projectList(params);
+		if(currentPage==null){
+			currentPage = "1";
+		}
 		
+		params.put("search_keyword", search_keyword);
+		params.put("search_keycode", search_keycode);
+		
+		int totalCount = service.totalCountPL(params);
+		
+		RolePagingUtil1Page4 pagingUtil = new RolePagingUtil1Page4(Integer.parseInt(currentPage),totalCount,request);
+		
+		params.put("startCount",  String.valueOf(pagingUtil.getStartCount()));
+		params.put("endCount", String.valueOf(pagingUtil.getEndCount()));
+		
+		List<ProjectVO> projectList = service.projectList(params);
+		andView.addObject("pagingUtil",pagingUtil.getPagingHtmls());
 		andView.addObject("projectList", projectList);
 		return andView;
 	}
@@ -93,20 +109,22 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("pro/updateProject")
-	public ModelAndView updateProject(@RequestBody String queryString, String project_code,
+	public ModelAndView updateProject(String project_code, ModelAndView andView,
 			ProjectVO projectInfo, HttpSession session, Map<String, String> params,
-			HttpServletRequest request, ModelAndView andView) throws Exception{
+			HttpServletRequest request) throws Exception{
 	
 		params.put("project_code", project_code);
 		
 		service.updateProjectInfo(projectInfo);
-		andView.setViewName("redirect:/user/project/pro/project_manage_see.do");
+		andView.addObject("projectInfo",projectInfo);
+		andView.setViewName("jsonConvertView");
 		return andView;
 	}
 	
 	@RequestMapping("pro/projectInfo")
 	public ModelAndView getMp(Map<String, String> params, ModelAndView andView,
-		    String project_code, ProjectVO projectInfo) throws SQLException{
+		    String project_code, ProjectVO projectInfo, HttpSession session) throws SQLException{
+		
 		
 		params.put("project_code", project_code);
 		
