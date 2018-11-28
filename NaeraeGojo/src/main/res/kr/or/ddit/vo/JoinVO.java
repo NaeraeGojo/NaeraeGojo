@@ -19,7 +19,4 @@ public class JoinVO {
 	private String emp_level;
 	private String rnum;
 	
-	private String rnum;
-	
-	
 }
