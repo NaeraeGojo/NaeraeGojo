@@ -34,9 +34,12 @@
 		SELECT 
 		    A.EMP_CODE
 		    ,B.EMP_NAME
-		FROM JOIN A, EMP B
-		WHERE A.EMP_CODE = B.EMP_CODE 
-		AND A.RQPPS_CODE = #project_code#
+		FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
+        WHERE A.EMP_CODE = B.EMP_CODE
+        AND A.RQPPS_CODE = C.RQPPS_CODE
+        AND C.RQPPS_CODE = D.RQPPS_CODE
+        AND D.SUGGEST_CODE = E.SUGGEST_CODE
+        AND E.PROJECT_CODE = #project_code#
 	</sql>
 	
 	<sql id="searchCondition">
@@ -123,9 +126,12 @@
 	<select id="totalCount" parameterClass="map" resultClass="int">
 		SELECT 
 		    COUNT(A.EMP_CODE)
-		FROM JOIN A, EMP B
-		WHERE A.EMP_CODE = B.EMP_CODE 
-		AND A.RQPPS_CODE = #project_code#
+		FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
+        WHERE A.EMP_CODE = B.EMP_CODE
+        AND A.RQPPS_CODE = C.RQPPS_CODE
+        AND C.RQPPS_CODE = D.RQPPS_CODE
+        AND D.SUGGEST_CODE = E.SUGGEST_CODE
+        AND E.PROJECT_CODE = #project_code#
 	</select>
 	
 	
