@@ -115,6 +115,43 @@
         and b.project_code= #project_code#
     </select>
     
+    <!-- 화상채팅 방 개설 -->
+    <insert id="insertVideoChat" parameterClass="map">
+        <selectKey keyProperty="video_chat_room_code" resultClass="string">
+            select video_chat_room_seq.nextval from dual
+        </selectKey>
+        insert into video_chat_room(video_chat_room_code
+							, video_chat_room_date
+							, emp_code
+							, project_code
+							, video_chat_level_code
+                            )
+                    values ( #video_chat_room_code#
+                            , sysdate
+                            , #emp_code#
+                            , #project_code#
+                            , 'level1'
+                            )   
+    </insert>
+    
+    
+    <!-- 화상회의 참여 테이블 insert  -->
+    <insert id="insertJoin" parameterClass="map">
+        <selectKey keyProperty="video_chat_join_code" resultClass="string">
+            select video_chat_join_seq.nextval from dual
+        </selectKey>   
+        insert into video_chat_join (video_chat_join_code
+								   , emp_code
+								   , video_chat_room_code
+                                     )
+                              values (#video_chat_join_code#
+                                   , #emp_code#
+                                   , #video_chat_room_code#
+                                   
+                                   )
+    </insert>
+    
+    
 </sqlMap>
 
 

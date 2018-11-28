@@ -139,30 +139,37 @@ $(function(){
    	});
     
     $(document).on('click', '#insert1', function() {
+    	
     	var tmpArray =[];
     	$("input[name=chkbox]:checked").each(function() {
             var emp_code = $(this).val();
             tmpArray.push(emp_code);
         });
     	
-    	if(tmpArray.length>3){
-    		boalert("3명 이하로 선택해주세요");
-    		return false;
-    	};
-    	$.ajax({
-            
-            type : "POST"
-                , url : "${pageContext.request.contextPath}/user/video/modalempList.do"
-                , dataType : "json"
-                , data : {tmpArray : tmpArray}
-                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-                , error : function(request, status, error) {
-                       alert("error : " + request.status );
-                }
-                , success : function(result) {
-                	
-                }
-       });
+//     	if(tmpArray.length>3){
+//     		boalert("4명 이하로 선택해주세요");
+//     		return false;
+//     	};
+    	
+//     	if(tmpArray.length>4){
+    		
+	    	$.ajax({
+	            
+	            type : "POST"
+	             , url : "${pageContext.request.contextPath}/user/video/insertempList.do"
+	             , dataType : "json"
+	             , data : {tmpArray : tmpArray}
+	             , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+	             , error : function(request, status, error) {
+	                    alert("error : " + request.status );
+	             }
+	             , success : function(result) {
+	             	alert('화상채팅방이 개설되었습니다.');
+	             	
+	             	
+	             }
+	       });
+//     	}
     	
     	
     });

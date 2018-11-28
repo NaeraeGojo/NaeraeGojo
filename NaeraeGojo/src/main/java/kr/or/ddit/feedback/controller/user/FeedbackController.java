@@ -1,5 +1,6 @@
 package kr.or.ddit.feedback.controller.user;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -94,14 +95,19 @@ public class FeedbackController {
 			   						, HttpSession session
 			   						, String project_code) throws Exception{
 		
+		
+		// 로그인 아이디
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		
 		project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
 		params.put("feedback_code", feedback_code);
 		
-		FeedbackVO receiveInfo = service.feedbackInfo2(params);
+		FeedbackVO receiveInfo1 = service.feedbackInfo2(params);
 		
-		andView.addObject("receiveInfo", receiveInfo);
+		andView.addObject("receiveInfo1", receiveInfo1);
 		andView.setViewName("jsonConvertView"); 
 		return andView;
 		
@@ -225,6 +231,36 @@ public class FeedbackController {
 		andView.setViewName("jsonConvertView"); 
 		return andView;
 		
+	}
+	
+	@RequestMapping("insertFeedback")
+	public ModelAndView insertFeedback(ModelAndView andView, Map<String, String> params, HttpServletRequest request
+			   						, HttpSession session
+			   						, FeedbackVO fkv) throws SQLException{
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		
+		
+		String[] aStr = request.getParameterValues("myArray[]");
+		
+		String receive_emp = aStr[0];
+		String pw_code = aStr[1];
+		String feedback_content = aStr[2];
+		
+//		params.put("receive_emp", receive_emp);
+//		params.put("pw_code", pw_code);
+//		params.put("feedback_content", feedback_content);
+		
+		fkv.setFeedback_content(feedback_content);
+		fkv.setPw_code(pw_code);
+		fkv.setReceive_emp(receive_emp);
+		fkv.setSend_emp(emp_code);
+		
+		service.insertFeedbackInfo(fkv);
+		String message = "피드백을 보냈습니다.";
+		andView.addObject("message", message );
+		andView.setViewName("jsonConvertView");
+		return andView;
 	}
 }
 

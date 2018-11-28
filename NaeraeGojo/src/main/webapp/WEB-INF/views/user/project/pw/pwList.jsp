@@ -272,7 +272,7 @@ $(function(){
 	      class="btn btn-lg btn_pw_upper" style="background-color: #dd4b39;"
 	      data-toggle="modal" data-target="#modal-default">
 	      <input id="pwForm" value="+ 업무 등록" type="button" class="btn btn-lg btn_pw_upper">
-	      <input id="feedback" value="피드백 관리" type="button" class="btn btn-lg btn_pw_upper">
+	      <input id="feedback" value="피드백 관리" type="button" class="btn btn-lg btn_pw_upper" style="background-color: #f39c12;">
 	    </div>
     </div>
     

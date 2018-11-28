@@ -31,10 +31,10 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 		return null;
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	@Override
 	public void insertFeedbackInfo(FeedbackVO feedbackInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		feedbackDao.insertFeedbackInfo(feedbackInfo);
 	}
 
 	@Override

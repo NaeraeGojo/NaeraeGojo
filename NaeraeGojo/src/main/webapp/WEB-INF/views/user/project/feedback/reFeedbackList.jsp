@@ -16,9 +16,10 @@ $(function(){
 	
 	$('#feedbackList1 tr:gt(0)').click(function(){
 		
-		$('#hiddenDiv').show();
+		$('#hiddenDiv2').show();
 		
 	    var feedback_code = $(this).find('td:eq(0) input').val();
+	    
 	    
 		 $.ajax({
 		    
@@ -31,14 +32,14 @@ $(function(){
 		               alert("error : " + request.status );
 		        }
 		        , success : function(result) {
-		            $('input[name=project_name]').val(result.receiveInfo.project_name);
-		            $('input[name=send_emp]').val(result.receiveInfo.emp_name);
-		            $('input[name=feedback_st]').val(result.receiveInfo.feedback_st);
-		            $('input[name=pw_function]').val(result.receiveInfo.pw_function);
-		            $('textarea[name=feedback_content]').val(result.receiveInfo.feedback_content);
+		            $('input[name=project_name]').val(result.receiveInfo1.project_name);
+		            $('input[name=send_emp]').val(result.receiveInfo1.emp_name);
+		            $('input[name=feedback_st]').val(result.receiveInfo1.feedback_st);
+		            $('input[name=pw_function]').val(result.receiveInfo1.pw_function);
+		            $('textarea[name=feedback_content]').val(result.receiveInfo1.feedback_content);
 		            
 		            var btn = "";
-		            if(result.receiveInfo.feedback_alarm == 'n'){
+		            if(result.receiveInfo1.feedback_alarm == 'n'){
 		            	
 		            	btn += '<button value="'+ feedback_code + '" type="button" id="deleteBtn" '
 		            	        +'style="width: 80px; margin: 2px;" class="btn btn-danger btn-flat pull-right" disabled="disabled">삭제</button>';
@@ -47,11 +48,11 @@ $(function(){
 		            	$('#footerBtn').empty().append(btn);
 		            }
 		            
-		            if(result.receiveInfo.feedback_alarm == 'y'){
+		            if(result.receiveInfo1.feedback_alarm == 'y'){
 		            	
 		            	btn += '<button value="'+ feedback_code +'" type="button" id="deleteBtn" '
 		            	    +' style="width: 80px; margin: 2px;"class="btn btn-danger btn-flat pull-right">삭제</button>';
-		            	btn += '<label>'+result.receiveInfo.feedback_rt +'</label>에 확인';
+		            	btn += '<label>'+result.receiveInfo1.feedback_rt +'</label>에 확인';
 		            	$('#footerBtn').empty().append(btn);
 		            }
 		       }
@@ -62,6 +63,7 @@ $(function(){
 	$(document).on('click', '#ConfirmBtn', function() {	
 		
 		var feedback_code2 = $(this).attr('value');
+		
 		
 	    $.ajax({
             
@@ -211,12 +213,10 @@ $(function(){
 
 				</div>
 			</div>
-		</div>
 
 
 		<!-- 두번째 div -->
-		<div class="nav-tabs-custom" id="hiddenDiv"
-			style="width: 50%; float: left; display: none; height: 680px !important;">
+		<div class="nav-tabs-custom" id="hiddenDiv2" style="width: 50%; float: left; display: none; height: 680px !important;">
 			<ul class="nav nav-tabs">
 				<li><a> </a></li>
 				<li><a> </a></li>
@@ -275,14 +275,13 @@ $(function(){
 						</div>
 					</div>
 					<div class="box-footer clearfix" id="footerBtn">
-						<input value="삭제" type="button" id="deleteBtn" style="width: 80px; margin: 2px;"class="btn btn-danger btn-flat pull-right"> 
-						<input value="읽음" type="button" id="ConfirmBtn" style="width: 80px; margin: 2px;"class="btn btn-warning btn-flat pull-right">
+<!-- 						<input value="삭제" type="button" id="deleteBtn" style="width: 80px; margin: 2px;"class="btn btn-danger btn-flat pull-right">  -->
+<!-- 						<input value="읽음" type="button" id="ConfirmBtn" style="width: 80px; margin: 2px;"class="btn btn-warning btn-flat pull-right"> -->
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-    </div>
 </div>
 
 
