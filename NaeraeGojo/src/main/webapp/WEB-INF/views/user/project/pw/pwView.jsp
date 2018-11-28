@@ -436,7 +436,11 @@ $(function(){
             	<input type="text" name="pw_damdang_view"
             	 class="form-control view_form" readonly="readonly" >
 			    <select name="pw_damdang" class="form-control select2 up_form" style="border-radius: 1em;">
-			    	<option value="" selected>인력 R해오기</option>
+			    	<option value="" selected disabled>담당자 선택</option>
+			    	<option value=""></option>
+			    	<c:forEach items="${el }" var="ev">
+			      		<option value="${ev.emp_code }">${ev.emp_name }</option>
+			      	</c:forEach>
 			    </select>
 		    </div>
         </div>

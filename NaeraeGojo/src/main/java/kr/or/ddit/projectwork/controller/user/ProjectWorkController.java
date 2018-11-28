@@ -102,9 +102,15 @@ public class ProjectWorkController {
 		reg_date = reg_date.substring(0,10);
 		pwv.put("PW_REG_DATE", reg_date);
 		
-		
-
 		model.addAttribute("pwv",pwv);
+		
+		String project_code = pwv.get("PROJECT_CODE");
+		
+		params.put("project_code", project_code);
+		
+		List<EmpVO> el = vservice.getEmpList(params);
+		model.addAttribute("el",el);
+		
 		return model;
 	}
 	
