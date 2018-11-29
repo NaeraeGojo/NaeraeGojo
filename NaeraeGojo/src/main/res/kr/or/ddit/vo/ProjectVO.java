@@ -20,4 +20,15 @@ public class ProjectVO {
 	private String rqpps_notice_agency;
 	private String emp_code;
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private String rqpps_code;
 }
