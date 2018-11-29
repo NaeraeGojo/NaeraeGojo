@@ -1,5 +1,6 @@
 package kr.or.ddit.recsroom.controller.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.recsroom.service.IRecsRoomService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.SetContent;
+import kr.or.ddit.vo.ProjectAllFileVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.RecsRoomVO;
 
@@ -62,6 +64,7 @@ public class RecsRoomController {
 		
 		model.addAttribute("pv",pv);
 		
+		
 		return model;
 	}
 	
@@ -72,6 +75,23 @@ public class RecsRoomController {
 		RecsRoomVO rrv = service.getRecsRoom(params);
 		
 		model.addAttribute("rrv",rrv);
+		
+		List<ProjectAllFileVO> pfl = rrv.getItems();
+		
+		List<ProjectAllFileVO> ifl = new ArrayList<ProjectAllFileVO>();
+		List<ProjectAllFileVO> nfl = new ArrayList<ProjectAllFileVO>();
+		
+		if(pfl != null){
+			for(ProjectAllFileVO pfv : pfl){
+				if(pfv.getProject_all_file_contype().contains("image")){
+					ifl.add(pfv);
+				}else{
+					nfl.add(pfv);
+				}
+			}
+			model.addAttribute("ifl",ifl);
+			model.addAttribute("nfl",nfl);
+		}
 		
 		return model;
 	}
