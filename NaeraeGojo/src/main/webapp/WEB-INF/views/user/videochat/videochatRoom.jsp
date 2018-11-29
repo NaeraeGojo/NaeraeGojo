@@ -70,19 +70,20 @@ video {
 				   
 				<br />
 				<br />
-			</div>
-			
-			
-			
-			
-			<div class="box-footer clearfix">
-				<div class="col-sm-10">
-					<button  style="width: 80px;" class="btn btn-info btn-lg btn-flat pull-right">종료</button>
 				</div>
+			
+			
+			
+			
+				<div class="box-footer clearfix">
+					<div class="col-sm-10">
+						<button  style="width: 80px;" class="btn btn-info btn-lg btn-flat pull-right">종료</button>
+					</div>
+				</div>
+			
+			
+			
 			</div>
-			
-			
-			
 		</div>
 	</div>
 </section>
