@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -37,7 +35,19 @@ public class VideoChatJoinController {
 	public ModelAndView insertVideoChatRoom(VideoChatJoinVO vcv, ModelAndView andView, String video_chat_join_code
 										, HttpSession session, Map<String, String> params) throws Exception{
 		
+		params.put("video_chat_join_code", video_chat_join_code);
 		
+		// 챗 조인 나머지 인설트 (==업데이트)
+		service.insertVideoChatJoin(params);
+		
+		// 화상회의 방 pk 값 가져오기
+		String video_chat_room_code = service.getVideoRoomCode(video_chat_join_code);
+		
+		// 화상회의 url 가져오기
+		String urlInfo = service.getUrlInfo(video_chat_room_code);
+		
+		andView.addObject("urlInfo", urlInfo);
+		andView.setViewName("jsonConvertView");
 		return andView;
 	}
 	
