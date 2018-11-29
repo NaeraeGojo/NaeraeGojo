@@ -19,9 +19,9 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 	private IFeedbackDao feedbackDao;
 	
 	@Override
-	public FeedbackVO feedbackInfo(Map<String, String> params)
+	public FeedbackVO feedbackInfoRe(Map<String, String> params)
 			throws SQLException {
-		return feedbackDao.feedbackInfo(params);
+		return feedbackDao.feedbackInfoRe(params);
 	}
 
 	@Override
@@ -112,6 +112,12 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 	public FeedbackVO sendfeedbackInfo(Map<String, String> params)
 			throws SQLException {
 		return feedbackDao.sendfeedbackInfo(params);
+	}
+
+	@Override
+	public FeedbackVO feedbackInfoSend(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.feedbackInfoSend(params);
 	}
 
 

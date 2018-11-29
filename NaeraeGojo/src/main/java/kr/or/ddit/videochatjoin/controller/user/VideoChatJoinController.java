@@ -14,14 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/user/videoChatJoin/")
 public class VideoChatJoinController {
 	@Autowired
 	private IVideoChatJoinService service;
 
-	
-	public void VideoChatRoomForm(){}
 	
 	
 	public Model VideoChatRoomList(Model model, Map<String, String> params 
@@ -33,28 +33,14 @@ public class VideoChatJoinController {
 	}
 	
 	
-	public Model VideoChatRoomView(String bo_no,Model model) throws Exception{
+	@RequestMapping("videoChatJoin")
+	public ModelAndView insertVideoChatRoom(VideoChatJoinVO vcv, ModelAndView andView, String video_chat_join_code
+										, HttpSession session, Map<String, String> params) throws Exception{
 		
-		return model;
+		
+		return andView;
 	}
 	
 	
-	public String insertVideoChatRoom(VideoChatJoinVO vcv
-									, @RequestParam("files") MultipartFile[] files) throws Exception{
-		
-		return "";
-	}
-	
-	
-	public String deleteVideoChatRoom(String bo_no) throws Exception{
-		
-		return "";
-	}
-	
-	
-	public String updateVideoChatRoom(VideoChatJoinVO vcv ,HttpServletRequest request) throws Exception{
-		
-		return "";
-	}
 }
 

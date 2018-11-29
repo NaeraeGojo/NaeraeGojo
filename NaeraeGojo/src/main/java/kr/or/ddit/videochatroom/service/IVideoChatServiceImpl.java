@@ -79,4 +79,15 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 		dao.insertJoin(params);
 	}
 
+	@Override
+	public ProjectVO getProjectNM(String video_chat_room_code) throws SQLException {
+		return dao.getProjectNM(video_chat_room_code);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateUrl(Map<String, String> params) throws SQLException {
+		dao.updateUrl(params);
+	}
+
 }
