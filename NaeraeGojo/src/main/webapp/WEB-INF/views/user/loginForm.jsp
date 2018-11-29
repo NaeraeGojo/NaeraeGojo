@@ -89,6 +89,8 @@ $(function(){
 		$(document.body).append($frm);
 		$frm.submit();
 	});
+	
+	// 이메일 인증 이후 링크로 직원등록 완료창 
 	if (eval('${!empty param.emp_code}')) {
 // 		$('#modal-primary').modal();
 			var emp_code = '${param.emp_code}';

@@ -1,6 +1,5 @@
 package kr.or.ddit.emp.controller.user;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +11,11 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.history.service.IHistoryService;
 import kr.or.ddit.part.service.IPartService;
-import kr.or.ddit.position.service.IPositionService;
 import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.HistoryVO;
 import kr.or.ddit.vo.PartVO;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,10 +27,10 @@ public class EmpController {
 	private IEmpService service;
 	
 	@Resource
-	private IHistoryService hiService;
-
-	@Resource
 	private IPartService partService;
+	
+	@Resource
+	private IHistoryService historyServ;
 	
 	
 	@RequestMapping("empList2")
@@ -51,12 +49,13 @@ public class EmpController {
 	public ModelAndView empUpdate(String emp_code,
 			ModelAndView andView,
 			Map<String, String> params)throws Exception{
-		
 		params.put("emp_code", emp_code);
-
 		EmpVO empInfo = service.empInfo(params);
-		List<PartVO> partList = partService.partList();		
 		
+		List<PartVO> partList = partService.partList();		
+		List<HistoryVO> historyList = historyServ.historyList(params);
+		
+		andView.addObject("historyList", historyList);
 		andView.addObject("partList", partList);
 		andView.addObject("empInfo", empInfo);	
 		andView.setViewName("user/emp/empUpdate");
@@ -82,7 +81,9 @@ public class EmpController {
 		params.put("emp_code", emp_code);
 
 		EmpVO empInfo = service.empInfo(params);
+		List<HistoryVO> historyList = historyServ.historyList(params);
 		
+		andView.addObject("historyList", historyList);
 		andView.addObject("empInfo", empInfo);	
 		andView.setViewName("user/emp/empView");
 		
@@ -100,13 +101,11 @@ public class EmpController {
 	@RequestMapping("empList")
 	public ModelAndView empList(HttpServletRequest request,
 								HttpSession session) throws Exception{
-		
 		Map<String, String> params = new HashMap<String, String>(); 
 		List<EmpVO> empList = service.empList(params);
 		
 		ModelAndView andView = new ModelAndView();
 		
-//		andView.addObject("pagingUtil", pagingUtil.getPagingHtmls());
 		andView.addObject("empList", empList);
 		andView.setViewName("user/emp/empList");
 		
@@ -122,7 +121,6 @@ public class EmpController {
 	 */
 	@RequestMapping("empForm")
 	public ModelAndView empForm(ModelAndView andView) throws Exception{
-		
 		List<PartVO> partList = partService.partList();		
 		
 		andView.addObject("partList", partList);
@@ -158,14 +156,30 @@ public class EmpController {
 		andView.addObject("emailId", emailId);
 		andView.addObject("emp_code", emp_code);
 		andView.setViewName("redirect:/user/emp/empList.do");
-//		redirectAttribute.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 		return andView;
 	}
+	
+	/**
+	 * 직원정보 수정
+	 * @author 이소라
+	 * @param empInfo
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("updateEmp")
 	public String updateEmp(EmpVO empInfo)throws Exception{
 		service.updateEmpInfo(empInfo);
 		return "redirect:/user/emp/empList.do";
 	}
+	
+	/**
+	 * 직원정보 탈퇴
+	 * @author 이소라
+	 * @param emp_code
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("deleteEmp")
 	public String deleteEmp(String emp_code,
 			Map<String, String> params) throws Exception{

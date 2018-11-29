@@ -12,7 +12,11 @@
           <img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>
+          	<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
+          		${LOGIN_EMPINFO.emp_nick}
+          	</c:if>
+          </p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>

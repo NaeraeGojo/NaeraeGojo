@@ -2,14 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
-<script>
-$(function() {
-	$('input[name=list]').click(function(){
-		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
-		//(이전 페이지 이동으로 수정할 예정)
-	});
+<script type="text/javascript">
 	
-	$('form').submit(function(){
+$(function(){
+	$('#form').submit(function(){
 		if (!$('input[name=emp_pass]').val().validationPASS()) {
 			alert("비밀번호를 바르게 입력해주세요.");
 			return false;
@@ -40,6 +36,13 @@ $(function() {
 		return true;
 	});	
 
+	$('input[value=이력관리]').click(function(){
+		var emp_code= $('input[name=emp_code]').val();
+		var url =  "${pageContext.request.contextPath}/history/historyList.do?emp_code="+emp_code;
+		var options = "width = 800, height = 400, scrollbars = yes";
+
+		window.open(url, "이력관리", options );
+	});
 	
 	$('input[name=part_code]').val('${empInfo.part_code}');
 	$('input[name=part_name]').val('${empInfo.part_name}');
@@ -51,34 +54,130 @@ $(function() {
 	$('input[name=emp_email1]').val('${empInfo.emp_email.split('@')[0]}');
 	$('input[name=emp_email2]').val('${empInfo.emp_email.split('@')[1]}');
 	
-	// 주소찾기	
-// 	$('#zipCodeBtn').click(function() {
-// 		// 팝업 : 모달 - 해당 팝업이 포커스 점유
-// 		//      모달리스 - 팝업의 포커스 다른 윈도우와 천이
-// 		var url = "${pageContext.request.contextPath}/user/member/zipcodeSearch.do";
-// 		var options = "width = 375, height = 400, scrollbars = no";
+	//이력등록
+	$('#insert').click(function(){
+		if(eval('${!empty param.emp_code}')){
+			var emp_code = '${param.emp_code}';
+			var history_notice_agency = $('input[name=history_notice_agency]').val();
+			var history_demand_agency = $('input[name=history_demand_agency]').val();
+			var history_project_start = $('input[name=history_project_start]').val();
+			var history_project_end = $('input[name=history_project_end]').val();
+			var history_project_name = $('input[name=history_project_name]').val();
+			var history_business = $('select[name=history_business]').val();
+			var history_delete = $('input[name=history_delete]').val();
+			
+			var allData = { "emp_code" : emp_code , "history_notice_agency" : history_notice_agency , "history_demand_agency" : history_demand_agency,
+					"history_project_start" : history_project_start, "history_project_end" : history_project_end, 
+					"history_project_name" : history_project_name, "history_business" : history_business, "history_delete" : history_delete};
+			if(history_project_name == ""||history_project_start == ""||history_project_end==""||history_notice_agency == "" || history_demand_agency== "" ||history_business==""){
+					alert("누락된 정보가 있습니다. 다시 입력해주세요.");
+					return false;
+			 }else{
+			$.ajax({
+				type : 'POST',
+				 url : '${pageContext.request.contextPath}/history/insertHistory.do',
+				 data : allData,
+				 dataType : 'json',
+				 success : function(json) {
+					alert("이력이 등록되었습니다.");
+				}
+				 ,
+				 error : function(json) {
+					alert("이력등록이 완료되었습니다.");
+				}
+			});
+			}
+		}
+	});
+	
+	$('input[name=list]').click(function(){
+		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
+		//(이전 페이지 이동으로 수정할 예정)
+	});
+	$('#delete').click(function(){
+		var history_code = $('input[name=history_code]').val();
 		
-// 		window.open(url, "우편번호검색", options);
-// 	});
-	
-	// 프로필 사진 업로드				
-// 	$('#picUpload').click(function() {
-// 		var url = "${pageContext.request.contextPath}/user/member/idPicFileUpload.do";
-// 		var options = "width = 375, height = 400, scrollbars = no";
-	
-// 		window.open(url, "증명사진업로드", options);
-// 	});
-});
+		alert("해당 이력을 삭제합니다.");
+		$.ajax({
+			type : 'POST',
+			 url : '${pageContext.request.contextPath}/history/deleteHistory.do',
+			 data : { history_code : history_code },
+			 dataType : 'json',
+			 success : function(json) {
+			}
+			 ,
+			 error : function(json) {
+			}
+		});
+	});
+	//이력 View (수정/삭제 창)
+	$('#projectTable tr:gt(0)').click(function(){
+		var history_code = $(this).find('td:eq(0) input').val();
+		
+		$.ajax({
+			type : 'POST',
+			 url : '${pageContext.request.contextPath}/history/historyView.do',
+			 data : { history_code : history_code },
+			 dataType : 'json',
+			 success : function(json) {
+				$('#orderModal').modal();
+				$('input[name=history_code]').val(json.historyInfo.history_code);
+				$('input[name=history_project_name]').val(json.historyInfo.history_project_name);
+				$('input[name=history_notice_agency]').val(json.historyInfo.history_notice_agency);
+				$('input[name=history_demand_agency]').val(json.historyInfo.history_demand_agency);
+				$('input[name=history_project_start]').val(json.historyInfo.history_project_start.split(' ')[0]);
+				$('input[name=history_project_end]').val(json.historyInfo.history_project_end.split(' ')[0]);
+				$('select[name=history_business]').val(json.historyInfo.history_business);
+				$('input[name=history_delete]').val(json.historyInfo.history_delete);
+			}
+			 ,
+			 error : function(json) {
+				 
+			}
+		});
+		
+		
+	});
+		
+	$('#update').click(function(){
+		var history_code = $('input[name=history_code]').val();
+		var history_project_name = $('input[name=history_project_name]').val();
+		var history_notice_agency = $('input[name=history_notice_agency]').val();
+		var history_demand_agency = $('input[name=history_demand_agency]').val();
+		var history_project_start = $('input[name=history_project_start]').val();
+		var history_project_end = $('input[name=history_project_end]').val();
+		var history_business = $('select[name=history_business]').val();
+		
+		allData = { "history_notice_agency" : history_notice_agency , "history_demand_agency" : history_demand_agency,
+				"history_project_start" : history_project_start, "history_project_end" : history_project_end, 
+				"history_project_name" : history_project_name, "history_business" : history_business};
+		if(history_project_name == ""||history_project_start == ""||history_project_end==""||history_notice_agency == "" || history_demand_agency== "" ||history_business==""){
+				alert("누락된 정보가 있습니다. 다시 수정해주세요.");
+				return false;
+		 }else{
+		$.ajax({
+			type : 'POST',
+			 url : '${pageContext.request.contextPath}/history/updateHistory.do',
+			 data : allData,
+			 dataType : 'json',
+			 success : function(json) {
+				 
+				alert("이력이 수정되었습니다.");
+			}
+			 ,
+			 error : function(json) {
+				alert("이력수정이 완료되었습니다.");
+			}
+		});
+		}
+	});
 
-$(function () {
+	
+// 		$('#project_name').val('${historyList[0].history_project_name}');
+	
     //Initialize Select2 Elements
     $('.select2').select2()
 
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
     //Red color scheme for iCheck
     $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
       checkboxClass: 'icheckbox_minimal-red',
@@ -88,8 +187,8 @@ $(function () {
     $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
       checkboxClass: 'icheckbox_flat-red',
       radioClass   : 'iradio_flat-red'
-    })
-})
+    });
+});
 </script>
 <style>
 	.fieldName {text-align: center; background-color: #f4f4f4;}
@@ -128,7 +227,7 @@ $(function () {
        			<b class="box-title"><h2>직원정보 수정</h2></b>	
            		<div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
            			<br/>
-						<form method="POST" class=form-horizontal" action="${pageContext.request.contextPath}/user/emp/updateEmp.do">
+						<form id="form" method="POST" class=form-horizontal" action="${pageContext.request.contextPath}/user/emp/updateEmp.do">
 						<div class="form-group">
                				<div class="row">
                					<div class="col-md-4" style="margin: 10px;">
@@ -137,7 +236,7 @@ $(function () {
 										<tr>
 											<td class="pic" style="vertical-align: bottom; width: 150px; height: 300px; text-align: center;">
 												<div id = "idPicViewDiv" >
-													<img src = "/image/${facePictureFileName}" width="235" height="315">
+<%-- 													<img src = "/image/${facePictureFileName}" width="235" height="315"> --%>
 												</div>
 <%-- 												<img src="${pageContext.request.contextPath }/image/btn_pic.gif" alt="사진올리기" class="btn" id = "picUpload" title="인적사항에 올릴 증명을 검색합니다." style="cursor: pointer;"/><br/> --%>
 <!-- 												<div style="width: 100%" align="center"> -->
@@ -152,7 +251,7 @@ $(function () {
 			                			<label class="col-sm-3 control-label">사원번호</label>
 			                  			<div class="col-sm-6">
 			                  				<input type="hidden" name="emp_code" value="${empInfo.emp_code}" />
-			                  				<label name="emp_code2">${empInfo.emp_code}</label>
+			                  				<label name="emp_code">${empInfo.emp_code}</label>
 	               						</div>                
                						</div>
 			                		<div class="row">
@@ -263,7 +362,7 @@ $(function () {
 					                	<label class="col-sm-3 control-label" style="margin-top: 3px;">이메일</label>
 					                		<input type="hidden" name="emp_email" />
 										<div class="col-sm-3">
-					                  		<input type="text" name="emp_email1" class="form-control" style="border-radius: 1em;" value="">
+					                  		<input type="text" name="emp_email1" class="form-control" style="border-radius: 1em;">
 										</div>
 				                  		<div class="col-sm-1">
 					                  		<b style="font-size: 20px; margin-right: -50px;">@</b>
@@ -280,15 +379,6 @@ $(function () {
 		                  					<input type="hidden" name="emp_major" value="${empInfo.emp_major}" />
                							</div>                
                						</div>
-			                		<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 이력</label>
-				                  		<div class="col-sm-6">
-			                  				<input type="text" class="form-control" placeholder="프로젝트 이력을 입력해주세요" style="border-radius: 1em;">
-		               					</div>                
-		               					<div class="col-sm-2" style="margin-left: -15px !important;">
-		               						<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력" style="border-radius: 1em;">
-		               					</div>
-                					</div>
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
@@ -324,20 +414,35 @@ $(function () {
 		               					</div>
                 					</div>
 			              			<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
-				                  		<div class="col-sm-5">
-				                  			<select class="form-control" style="border-radius: 1em;">
-				                  			</select>
-		               					</div>                
-			              			</div>
-			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
 											<label name="emp_encpn">${empInfo.emp_encpn}</label>
 											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn}" />
 			              				</div>
 			              			</div>
-			              			<input type="hidden" name="emp_delete" value="n" />
+<!-- 			              			<input type="hidden" name="emp_delete" value="n" /> -->
+			              			<div class="row">
+				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
+				                  		<div class="col-sm-5">
+				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;">
+		               					</div>                
+			              				<div class="col-sm-3" style="margin-left: -15px !important;">
+											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;">
+										</div>
+			              			</div>
+			              			<div class="row">
+				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">프로젝트 이력</label>
+				                  		<div class="col-sm-4">
+				                  			<select class="form-control" name="projectCode" style="border-radius: 1em;">
+				                  				<c:forEach items="${historyList }" var="list">
+						                  			<option value="${list.history_code}">${list.history_project_name }</option>
+				                  				</c:forEach>
+				                  			</select>
+		               					</div>                
+			              				<div class="col-sm-3" style="margin-left: -15px !important;">
+											<input type="button" class="form-control bg-yellow color-palette" value="이력관리" style="border-radius: 1em;">
+										</div>
+			              			</div>
 	                			</div>
                				</div>
                			</div>
@@ -349,9 +454,167 @@ $(function () {
 						</form>
 					</div>
 					</div>
-					
-				
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="modal-primary1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		<div class="container">
+		<div class="modal-dialog" >
+  			<div class="modal-content">
+  				<div class="modal-header">
+      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<span aria-hidden="true">&times;</span></button>
+      				<h4 class="modal-title">프로젝트 이력등록</h4>
+    			</div>
+   				<form id="historyInsert" method="POST">
+    			<div class="modal-body">
+    				<div class="box box-warning">
+    				<br/>
+    				<br/>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">프로젝트 명</label>
+                			<div class="col-sm-7">
+                				<input type="text" name="history_project_name" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em;">
+           					</div>                
+           				</div>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">공고기관</label>
+                			<div class="col-sm-7">
+                				<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
+           					</div>                
+           				</div>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">수요기관</label>
+                			<div class="col-sm-7">
+                				<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
+           					</div>                
+           				</div>
+    					<div class="row">
+							<div class="form-group">
+						          <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
+						          <div class="col-md-10" style="margin-left: 100px;">
+						          <table class="date_table">
+						          	<tr>
+						           		<td>
+						           			<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
+						           		</td>
+						              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
+						              	<td>
+						              		<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
+						              	</td>
+						           	</tr>
+						           </table>
+						           </div> 
+						     </div>
+						</div>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">맡은업무</label>
+                			<div class="col-sm-4">
+                				<select class="form-control" name="history_business" style="border-radius: 1em;">
+                					<option value="PM">PM</option>
+                					<option value="PL">PL</option>
+                					<option value="TA">TA</option>
+                					<option value="DA">DA</option>
+                					<option value="AA">AA</option>
+                					<option value="UA">UA</option>
+                				</select>
+           					</div> 
+           					<input type="hidden" name="history_delete" class="form-control upForm" style="border-radius: 1em;" value="n">               
+           				</div>
+           				<br/>
+           				<br/>
+           					<button id="insert" style="border-radius: 1em; width: 100px;" class="form-control btn-danger btn-flat pull-right">등록</button>
+   					</div>
+				</div>
+   				</form>
+				<div class="modal-footer">
+						<button style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		</div>
+	<!-- /.modal-content -->
+	</div>
+<!-- /.modal-dialog -->
+	<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		<div class="container">
+		<div class="modal-dialog" >
+  			<div class="modal-content">
+  				<div class="modal-header">
+      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<span aria-hidden="true">&times;</span></button>
+      				<h4 class="modal-title">프로젝트 이력수정/삭제</h4>
+    			</div>
+   				<form id="historyInsert" method="POST">
+    			<div class="modal-body">
+    				<div class="box box-warning">
+    				<br/>
+    				<br/>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">프로젝트 명</label>
+                			<div class="col-sm-7">
+                				<input type="hidden" name="history_code" >
+                				<input type="text" name="history_project_name" class="form-control" style="border-radius: 1em;">
+           					</div>                
+           				</div>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">공고기관</label>
+                			<div class="col-sm-7">
+                				<input type="text" name="history_notice_agency" class="form-control" style="border-radius: 1em;">
+           					</div>                
+           				</div>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">수요기관</label>
+                			<div class="col-sm-7">
+                				<input type="text" name="history_demand_agency" class="form-control" style="border-radius: 1em;">
+           					</div>                
+           				</div>
+    					<div class="row">
+							<div class="form-group">
+						          <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
+						          <div class="col-md-10" style="margin-left: 100px;">
+						          <table class="date_table">
+						          	<tr>
+						           		<td>
+						           			<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
+						           		</td>
+						              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
+						              	<td>
+						              		<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
+						              	</td>
+						           	</tr>
+						           </table>
+						           </div> 
+						     </div>
+						</div>
+    					<div class="row">
+               				<label class="col-sm-3 control-label">맡은업무</label>
+                			<div class="col-sm-4">
+                				<select class="form-control" name="history_business" style="border-radius: 1em;">
+                					<option value="PM">PM</option>
+                					<option value="PL">PL</option>
+                					<option value="TA">TA</option>
+                					<option value="DA">DA</option>
+                					<option value="AA">AA</option>
+                					<option value="UA">UA</option>
+                				</select>
+           					</div> 
+           					<input type="hidden" name="history_delete" class="form-control upForm" style="border-radius: 1em;" value="n">               
+           				</div>
+           				<br/>
+           				<br/>
+           					<button id="delete" style="border-radius: 1em; width: 70px;" class="form-control btn-danger btn-flat pull-right">삭제</button>
+           					<button id="update" style="border-radius: 1em; width: 70px;" class="form-control btn-danger btn-flat pull-right">수정</button>
+   					</div>
+				</div>
+   				</form>
+				<div class="modal-footer">
+						<button style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		</div>
+	<!-- /.modal-content -->
+	</div>
+<!-- /.modal-dialog -->
