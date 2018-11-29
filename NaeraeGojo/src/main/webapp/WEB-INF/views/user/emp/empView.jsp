@@ -19,8 +19,6 @@ $(function() {
 	});
 	
 	
-	
-	
 	// 주소찾기	
 // 	$('#zipCodeBtn').click(function() {
 		// 팝업 : 모달 - 해당 팝업이 포커스 점유
@@ -229,15 +227,24 @@ $(function () {
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
 				                  		<div class="col-sm-5">
-				                  			<select class="form-control" style="border-radius: 1em;">
-				                  			</select>
+				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;">
 		               					</div>                
+			              				<div class="col-sm-3" style="margin-left: -15px !important;">
+											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;">
+										</div>
 			              			</div>
 			              			<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
+				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">프로젝트 이력</label>
 				                  		<div class="col-sm-5">
-											<label name="emp_encpn">${empInfo.emp_encpn}</label>
-			              				</div>
+				                  			<select class="form-control" style="border-radius: 1em;">
+				                  				<c:forEach items="${historyList }" var="list">
+						                  			<option>${list.history_project_name }</option>
+				                  				</c:forEach>
+				                  			</select>
+		               					</div>                
+			              				<div class="col-sm-3" style="margin-left: -15px !important;">
+											<input type="button" data-toggle="modal"  data-target="#modal-primary" class="form-control bg-yellow color-palette" value="프로젝트 이력" style="border-radius: 1em;">
+										</div>
 			              			</div>
 			              			<input type="hidden" name="emp_delete" value="n" />
 	                			</div>
@@ -257,3 +264,52 @@ $(function () {
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="modal-primary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+		<div class="container">
+		<div class="modal-dialog" style="width: 800px;">
+  			<div class="modal-content">
+  				<div class="modal-header">
+      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<span aria-hidden="true">&times;</span></button>
+      				<h4 class="modal-title">프로젝트 이력관리</h4>
+    			</div>
+    			<div class="modal-body">
+    				<div class="box box-warning">
+    					<div class="table-responsive">	<!-- 테이블 기본 설정 (기본설정)-->
+			                <table class="table no-margin" >
+			                  <thead>	
+			                  <br/>				
+			                  <tr>
+			                    <th scope="col" width="10%">No.</th>
+			                    <th scope="col" width="20%">프로젝트명</th>
+			                    <th scope="col" width="15%">공고기관</th>
+			                    <th scope="col" width="15%">수요기관</th>
+			                    <th scope="col" width="25%">프로젝트기간</th>
+			                    <th scope="col" width="15%">맡은업무</th>
+			                  </tr>
+			                  </thead>
+			                  <tbody>
+			                  	<c:forEach items="${historyList}" var="list">
+			                  <tr>
+			                  	<td><input type="hidden" value="${list.history_code}">${list.rnum }</td>
+			                    <td>${list.history_project_name }</td>
+			                    <td>${list.history_notice_agency }</td>
+			                    <td>${list.history_demand_agency }</td>
+			                    <td>${list.history_project_start }</td>
+			                    <td>${list.history_business }</td>
+			                  </tr>
+			                  	</c:forEach>
+			                  </tbody>
+			                </table>
+			        	</div>
+   					</div>
+				</div>
+				<div class="modal-footer">
+						<button type="button" style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		</div>
+	<!-- /.modal-content -->
+	</div>
+<!-- /.modal-dialog -->

@@ -19,10 +19,10 @@ public class IReportServiceImpl implements IReportService{
 	@Autowired
 	private IReportDao dao;
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	@Override
-	public void insertReport(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void insertReport(ReportVO rvo) throws SQLException {
+		dao.insertReport(rvo);
 	}
 
 	@Override

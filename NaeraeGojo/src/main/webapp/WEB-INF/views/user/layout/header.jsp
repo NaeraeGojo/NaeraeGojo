@@ -218,15 +218,28 @@
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-								<span class="hidden-xs">Alexander Pierce</span>
+								<span class="hidden-xs">
+									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
+          								${LOGIN_EMPINFO.emp_nick}
+          							</c:if>
+								</span>
 							</a>
 							<ul class="dropdown-menu">
 	<!-- User image -->
               					<li class="user-header">
                 					<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
-									<p>Alexander Pierce - Web Developer 
-										<small>Member since Nov. 2012</small>
+									<p>
+									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
+          								${LOGIN_EMPINFO.emp_nick}
+          							</c:if>
+										<small>
+											<c:if test="${!empty LOGIN_EMPINFO.emp_encpn}">
+          										입사: ${LOGIN_EMPINFO.emp_encpn.split(' ')[0]}
+          										<br/>
+          										권한: ${LOGIN_EMPINFO.emp_role}
+          									</c:if>
+										</small>
 									</p>
              					</li>
 	<!-- Menu Footer-->

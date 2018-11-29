@@ -79,8 +79,9 @@ label {
 				</div>
 				<!--             /.box-header -->
 				<!--             form start -->
-				<form class="form-horizontal">
-					<div class="box-body">
+			<div class="box-body">
+				<form role="form" id="reportForm" class="form-horizontal" 
+         			method="post" action="${pageContext.request.contextPath }/user/report/report_FinalInsert.do">
 
 						<!--                 <div class="form-group"> -->
 						<!--                   <label for="inputEmail3" class="col-sm-2 control-label" >보고서 분류</label> -->
@@ -91,11 +92,12 @@ label {
 						<!--                   </div> -->
 						<!--                 </div> -->
 						<div class="row">
-							<label class="col-sm-2 control-label" style="padding-top: 10px;">보고서
-								분류</label>
+							<label class="col-sm-2 control-label" style="padding-top: 10px;">보고서 분류</label>
 							<div class="col-sm-7">
-								<label style="margin-top: 7px; margin-left: 15px;"><input type="radio" name="w" class="flat-red" checked> 주간 </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-								<label> <input type="radio" name="m" class="flat-red"> 월간 </label>
+								<label style="margin-top: 7px; margin-left: 15px;">
+								<input type="radio" name="raReport" value="w" class="flat-red" checked> 주간 </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								<label><input type="radio" name="raReport" value="m" class="flat-red"> 월간 </label>
+								<input type="hidden" name="report_date" value="">
 							</div>
 						</div>
 
@@ -104,7 +106,7 @@ label {
 
 							<div class="col-sm-9">
 								<!-- select -->
-								<select class="form-control" onchange="change(this.value);">
+								<select class="form-control" onchange="change(this.value);" >
 			                    <option>선택해주세요</option>
 				                   <c:forEach items="${proName }" var="proName1">
 				                    	<option value="${proName1.project_code}">${proName1.project_name}</option>
@@ -118,7 +120,7 @@ label {
 
 							<div class="col-sm-9">
 								<!-- select -->
-								<select class="form-control" id="pwList1" >
+								<select class="form-control" id="pwList1" name="pw_code" >
 									
 								</select>
 							</div>
@@ -137,19 +139,8 @@ label {
 											<th scope="col" width="25%">권한</th>
 										</tr>
 									</thead>
-									<tbody id="bodytable">
-										<tr>
-											<td>개발1팀</td>
-											<td>특급</td>
-											<td>박희태</td>
-											<td>PM</td>
-										</tr>
-										<tr>
-											<td>개발1팀</td>
-											<td>고급</td>
-											<td>최동화</td>
-											<td>PL</td>
-										</tr>
+									<tbody id="bodytable" >
+										<!-- 아작스 부분 -->
 									</tbody>
 								</table>
 							</div>
@@ -159,7 +150,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">제목</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="inputPassword2"
+								<input type="text" class="form-control" id="title" name="report_title"
 									placeholder="제목을 입력해주세요">
 							</div>
 						</div>
@@ -169,28 +160,25 @@ label {
 
 							<div class="col-sm-9">
 								<textarea rows="10" type="text" class="form-control"
-									id="inputPassword1"></textarea>
+									id="contents" name="report_content"></textarea>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="exampleInputFile" class="col-sm-2 control-label"><font
-								style="vertical-align: inherit;"><font
-									style="vertical-align: inherit;">파일 첨부</font></font></label>
-							<div class="col-sm-10 control-label">
-								<input type="file" id="exampleInputFile">
-							</div>
-						</div>
+<!-- 						<div class="form-group"> -->
+<!-- 							<label for="exampleInputFile" class="col-sm-2 control-label"><font -->
+<!-- 								style="vertical-align: inherit;"><font -->
+<!-- 									style="vertical-align: inherit;">파일 첨부</font></font></label> -->
+<!-- 							<div class="col-sm-10 control-label"> -->
+<!-- 								<input type="file" id="file01" name="file"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 
 
 					</div>
 					<div class="box-footer clearfix">
-						<input value="목록" type="reset"
-							class="btn btn-sm btn-warning btn-flat pull-right"> <input
-							value="임시저장" type="button"
-							class="btn btn-sm btn-info btn-flat pull-right"> <input
-							value="등록" type="button"
-							class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
+						<input value="임시저장" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+						<input value="등록" type="submit" href="${pageContext.request.contextPath}/user/report/report_listDev.do" class="btn btn-sm btn-danger btn-flat pull-right">
 					</div>
 				</form>
 			</div>
@@ -221,7 +209,38 @@ label {
 					radioClass : 'iradio_flat-red'
 				})
 				
-				
+		$('#reportForm').submit(function(){
+			var report_title = $('input[name=report_title]').val();
+			var report_content = $('#contents').val();
+// 			var file1 = $('#file01').val();
+// 			var pw_code = $("#pwList1 option:selected").val();
+			var report_date = $("input:radio[name=raReport]:checked").val();
+			$('input[name=report_date]').val(report_date);
+			
+			var len = $('#bodytable tr').length;
+	    	var insertNm=""; 
+	    	
+	    	for(var i=0; i< len; i++){ 
+	    	   var str = $('#bodytable tr:eq('+i+')').find('input[name=test]').val();//<f로 준이유
+               insertNm += str+"/";
+            }
+	    	
+			
+// 			if(report_content == '' || report_title == '' || report_content ){ 
+// 				boalert("빈 항목이 존재합니다.");
+// 				return false;
+// 			}
+			
+// 			if(pw_code == null || pw_code == ''){
+// 				boalert("인력비었다");
+// 				return false;
+// 			}
+// 			if(file1 == ''){
+// 				boalert("제안요청서 첨부파일을 등록해 주세요.")
+// 				return false;
+// 			}
+			return true;
+		});
 
 	})
 	
@@ -256,7 +275,7 @@ label {
 					$('#bodytable').empty();
 					for (var i = 0; i < info.length; i++) {
 						code += '<tr>';
-						code += '<input type="hidden" value="'+ info[i].emp_code+'">';
+						code += '<input type="hidden" name="emp_code" value="'+ info[i].emp_code+'">';
 						code += '<td>'+info[i].emp_department+'</td>';
 						code += '<td>'+info[i].emp_level+'</td>';
 						code += '<td>'+info[i].emp_name+'</td>';

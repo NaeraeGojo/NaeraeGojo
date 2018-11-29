@@ -5,19 +5,6 @@
 
 <script type="text/javascript">
 
-function add_div(){
-    var div = document.createElement('div');
-
-    div.innerHTML = document.getElementById('room_type').innerHTML;
-    document.getElementById('field').appendChild(div);
-}
-
-function remove_div(obj){
-
-document.getElementById('field').removeChild(obj.parentNode);
-
-}
-
 $(function() {
 	$('#form_emp').submit(function() {
 		if (!$('input[name=emp_name]').val().validationNM()) {
@@ -52,37 +39,17 @@ $(function() {
 			alert("입사일을 입력해주세요.");
 			return false;
 		}
-// 		if ($('input[name=emp_code]').val() == null || $('input[name=emp_code]').val()== '') {
-// 			alert("emp_code가 존재하지 않습니다.");
-// 			return false;
-// 		}
 		$('select[name=part_code]').val();
 		$('input[name=emp_major]').val();
 		
-		
 		return true;
 	});	
-	
-// 	$('#email_com').click(function(){
-// 	});
 	
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
 		//(이전 페이지 이동으로 수정할 예정)
 	});
 	
-	
-	
-	
-	// 주소찾기	
-	$('#zipCodeBtn').click(function() {
-		// 팝업 : 모달 - 해당 팝업이 포커스 점유
-		//      모달리스 - 팝업의 포커스 다른 윈도우와 천이
-		var url = "${pageContext.request.contextPath}/user/member/zipcodeSearch.do";
-		var options = "width = 375, height = 400, scrollbars = no";
-		
-		window.open(url, "우편번호검색", options);
-	});
 	
 	// 프로필 사진 업로드				
 	$('#picUpload').click(function() {
@@ -94,33 +61,29 @@ $(function() {
 });
 			
 function idCheck() {
-	if (!$('#memberId').val().validationID()) {
-		alert("아이디를 바르게 입력해주세요.");
-		return;
-	}
 	
 	$.ajax({
 	    type : "post",
 	    
-	    url : "${pageContext.request.contextPath}/user/member/memberIDCheck.do",
-	    dataType : "json",
-	    data : { mem_id : $('#memberId').val() },
+// 	    url : "${pageContext.request.contextPath}/user/member/memberIDCheck.do",
+// 	    dataType : "json",
+// 	    data : { mem_id : $('#memberId').val() },
 	    
-	    success : function(result) {
+// 	    success : function(result) {
 		
-	    	// result.flag = "true" or "false"
-			// boolean type false : undefined, null
-			// "1" + 1 = '11'
-			// eval("1" + 1) = 2
+// 	    	// result.flag = "true" or "false"
+// 			// boolean type false : undefined, null
+// 			// "1" + 1 = '11'
+// 			// eval("1" + 1) = 2
 			
-			if (eval(result.flag)) {
-				alert("사용할 수 있는 아이디 입니다.");
+// 			if (eval(result.flag)) {
+// 				alert("사용할 수 있는 아이디 입니다.");
 			
-			} else {
-				alert("사용할 수 없는 아이디 입니다.");
+// 			} else {
+// 				alert("사용할 수 없는 아이디 입니다.");
 			
-			}
-		},
+// 			}
+// 		},
 	    error : function(request, status, error) {
 			alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
 		}
@@ -200,15 +163,7 @@ $(function () {
 									</table>
                					</div>
                					<div class="col-md-7">
-<!-- 			                		<div class="row"> -->
-<!-- 			                			<label class="col-sm-3 control-label">사원번호</label> -->
-<!-- 			                  			<div class="col-sm-6"> -->
-<!-- 	               						</div>                 -->
-<!-- 	               						<div class="col-sm-2" style="margin-left: -15px !important;"> -->
 			                  				<input type="hidden" name="emailId" class="form-control">
-<!-- 	               							<input type="button" class="form-control bg-light-blue color-palette" value="사원번호조회" style="border-radius: 1em;"> -->
-<!-- 	               						</div> -->
-<!--                						</div> -->
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">이름</label>
 		                  				<div class="col-sm-6">
@@ -348,99 +303,119 @@ $(function () {
 				                  			<input type="text" name="emp_level" value="초급"></option>
 		               					</div>
                 					</div>
-			              			<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
-				                  		<div class="col-sm-5">
-				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;">
-		               					</div>                
-		               					<div class="col-sm-2" style="margin-left: -15px !important;">
-		               						<input type="button" class="form-control bg-light-blue color-palette" value="자격증 등록" style="border-radius: 1em;">
-		               					</div>
-			              			</div>
-			              			<div class="row">
+                					<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
-				                  			<input type="date" name="emp_encpn" class="form-control" placeholder="입사일을 입력해주세요" style="border-radius: 1em;">
+											<input type="date" name="emp_encpn" class="form-control" value="" style="border-radius: 1em;"/>
 			              				</div>
 			              			</div>
-			              			<input type="hidden" name="emp_delete" value="n" />
-			                		<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 이력</label>
-				                  		<div class="col-sm-6">
-			                  				<input type="text" class="form-control" placeholder="프로젝트 이력을 입력해주세요" style="border-radius: 1em;">
-		               					</div>                
-		               					<div class="col-sm-2" style="margin-left: -15px !important;">
-		               						<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력" style="border-radius: 1em;">
-		               					</div>
-                					</div>
-	                			</div>
+			              				<input type="hidden" name="emp_delete" value="w" />
+								</div>
                				</div>
                			</div>
-						</form>
                 		<div class="box-footer clearfix">
 			              <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
 			              <input name="list" value="목록" type="button" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
-			              <input value="등록" type="submit" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
+			              <input value="등록" type="submit" class="btn btn-sm btn-danger btn-flat pull-right">
 			          	</div>
 					</div>
 					</div>
-<div class="col-sm-2" style="margin-left: -15px !important;">			
-<input type="button" value="추가" class="form-control bg-light-blue color-palette" style="border-radius: 1em;" onclick="add_div()"><br/>
-</div>
-<br/>
-<br/>
-<br/>
-<div id="room_type">
 
-<div class="row">
-	<label class="col-sm-2 control-label" style="margin-top: 3px;">프로젝트 명</label>
- 	<div class="col-sm-6">
-		<input type="text" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em;">
-	</div>                
-	<div class="col-sm-3" style="margin-left: -15px !important;">
-		<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력등록" style="border-radius: 1em;">
-	</div>
-	<label class="col-sm-2 control-label" style="margin-top: 3px;">공고기관</label>
- 	<div class="col-sm-4">
-		<input type="text" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
-	</div>   
-	<label class="col-sm-2 control-label" style="margin-top: 3px !important; margin-left: 30px !important;">수요기관</label>
- 	<div class="col-sm-4">
-		<input type="text" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
-	</div>   
-	<div class="form-group">
-           <label for="edate" class="col-sm-2 control-label">프로젝트 기간</label>
-           <div class="col-md-8">
-           <table class="date_table">
-           	<tr>
-           		<td>
-           		<input type="date" name="suggest_start_date" class="form-control upForm" style="border-radius: 1em;">
-           		</td>
-              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
-              	<td>
-              	<input type="date" name="suggest_end_date" class="form-control upForm" style="border-radius: 1em;">
-              	</td>
-           	</tr>
-           </table>
-           </div> 
-     </div>
-     <label class="col-sm-3 control-label">맡은업무</label>
- 	 <div class="col-sm-3" style="">
-		<select class="form-control" style="border-radius: 1em;">
-			<option>PM</option>
-			<option>PL</option>
-			<option>TA</option>
-			<option>DA</option>
-			<option>AA</option>
-			<option>UA</option>
-		</select>
-	 </div> 
-</div>
-<input type="button" value="삭제" onclick="remove_div(this)">
-</div>
-
-<div id="field"></div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+    <div class="modal fade" id="modal-primary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="container">
+		<div class="modal-dialog">
+  			<div class="modal-content">
+  				<div class="modal-header">
+      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<span aria-hidden="true">&times;</span></button>
+      				<h4 class="modal-title">프로젝트 이력 등록</h4>
+    			</div>
+    			<div class="modal-body">
+    			<div class="box box-warning">
+    			<form id="form_history">
+   				<br/>
+		            <div class="col-sm-4">			
+						<input type="button" value="프로젝트 이력추가" class="form-control bg-light-blue color-palette" style="border-radius: 1em;" onclick="add_div()"><br/>
+					</div>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<div id="room_type" >
+						<div class="row">
+							<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 명</label>
+					 		<div class="col-sm-5">
+								<input type="text" name="history_project_name" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em;">
+							</div>                
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">공고기관</label>
+						 	<div class="col-sm-5">
+								<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
+							</div>   
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">수요기관</label>
+						 	<div class="col-sm-5">
+								<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
+							</div>
+						</div>   
+						<div class="row">
+							<div class="form-group">
+						          <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
+						          <div class="col-md-10" style="margin-left: 100px;">
+						          <table class="date_table">
+						          	<tr>
+						           		<td>
+						           			<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
+						           		</td>
+						              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
+						              	<td>
+						              		<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
+						              	</td>
+						           	</tr>
+						           </table>
+						           </div> 
+						     </div>
+						</div>
+						<div class="row">
+				     		<label class="col-sm-3 control-label">맡은업무</label>
+				 	 		<div class="col-sm-3">
+							<select class="form-control" name="history_business" style="border-radius: 1em;">
+									<option>PM</option>
+									<option>PL</option>
+									<option>TA</option>
+									<option>DA</option>
+									<option>AA</option>
+									<option>UA</option>
+								</select>
+							</div> 
+						</div>
+						<br/>
+							<button onclick="remove_div(this)" class="form-control bg-red color-palette" style="border-radius: 1em; width: 100px;">삭제</button>
+						<br/>
+						<br/>
+						<br/>
+						</div>
+					<div class="row">	
+					<div id="field" class="col-sm-12"></div>
+					<br/>
+					</div>
+					</from>
+   				</div>
+			<div class="modal-footer">
+					<button type="button" style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
+					<button type="submit" style="border-radius: 1em; width: 150px;" class="form-control bg-gray color-palette pull-right"><a href="javascript:idCheck();">전체등록</a></button>
+			</div>
+			</div>
+			</div>
+		</div>
+		</div>
+	<!-- /.modal-content -->
+	</div>
+<!-- /.modal-dialog -->

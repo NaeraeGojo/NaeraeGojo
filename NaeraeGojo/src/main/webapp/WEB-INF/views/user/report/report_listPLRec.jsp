@@ -25,16 +25,16 @@
 			<div class="box box-info">
 				<div class="box-header with-border">
 					</br>
-					<h3 class="box-title">개발자 보고서 관리</h3>
+					<h3 class="box-title">PL 보고서 관리</h3>
 				</div>
 				<div class="nav-tabs-custom" id="divdiv">
 					<ul class="nav nav-tabs">
-						<li><a
-							href="${pageContext.request.contextPath}/user/report/report_listDev.do">보낸
+						<li ><a
+							href="${pageContext.request.contextPath}/user/report/report_listPL.do">보낸
 								보고서함</a></li>
-						<li class="active"><a
-							href="${pageContext.request.contextPath}/user/reportFeed/report_feedListDev.do">보고서
-								피드백</a></li>
+						<li class="active" ><a
+							href="${pageContext.request.contextPath}/user/report/report_listPLRec.do">받은
+								보고서함</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab_1">
@@ -101,9 +101,10 @@
 							${pagingUtil}
 						</div>
 
-						<form action="${pageContext.request.contextPath}/user/reportFeed/report_feedListDev.do" method="post" class="form-inline pull-right">
-							<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
-								<select class="form-control" name="search_keycode">
+						<form action="${pageContext.request.contextPath}/user/report/report_listDev.do"
+							method="post" class="form-inline pull-right">
+							<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" /> 
+							<select class="form-control" name="search_keycode">
 								<!-- 			<option>검색조건</option> -->
 								<option value="TOTAL">전체</option>
 								<option value="TITLE">제목</option>
@@ -123,25 +124,15 @@
 <!-- 	</section> -->
 
 <script type="text/javascript">
-	$(function() {
-		$('#btn2')
-				.click(
-						function() {
-							$(location)
-									.attr('href',
-											'${pageContext.request.contextPath}/user/report/report_sendInsertDev.do');
-						})
-
-		$('#sendDelete tr:gt(0)')
-				.click(
-						function() {
-							//         var bo_no = $(this).find('td:eq(0)').text();
-							$(location)
-									.attr('href',
-											'${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
-						});
-
+$(function() {
+	$('#btn2').click(function() {
+		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendFormDev.do');
 	})
+
+	$('#sendDelete tr:gt(0)').click(function() {
+		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeletePL.do');
+	});
+})
 </script>
 
 
