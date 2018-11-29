@@ -117,10 +117,6 @@ $(function(){
     });
     
     
-    $('#joinBtn').click(function() {
-		
-    	
-	});
     
    
 });
@@ -148,14 +144,15 @@ function joinBtn(video_chat_join_code) {
 	
     $.ajax({
         type :"POST"
-        , url : "${pageContext.request.contextPath}/user/feedback/feedbackCheck.do"
+        , url : "${pageContext.request.contextPath}/user/videoChatJoin/videoChatJoin.do"
         , data : {video_chat_join_code : video_chat_join_code}
         , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
         , error : function(request, status, error) {
                  alert("error : " + request.status );
           }
-        , success : function(dd){
-            $(location).attr('href', '${pageContext.request.contextPath}/user/bell/bellList.do');
+        , success : function(result){
+        	alert('완성');
+//             $(location).attr('href', '${pageContext.request.contextPath}/user/bell/bellList.do');
         }
     });	
     

@@ -88,10 +88,6 @@ public class BellController {
 		return andView;
 	}
 	
-
-	
-	
-	
 	
 	public ModelAndView updateComputation(ModelAndView andView) throws Exception{
 		

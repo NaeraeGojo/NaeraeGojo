@@ -192,15 +192,33 @@ $(function() {
 						<div class="form-group">
 							<label for="file01" class="col-sm-2 control-label">파일 첨부</label>
 							<div class="col-sm-10">
-								<div id="div_files" style="display: inline-block;">
-									<input type="file" class="filestyle" name="files" data-buttonName="btn-primary">
+								<div class="up_form">
+									<div id="div_files" style="display: inline-block;" class="">
+										<input type="file" class="filestyle" name="files" data-buttonName="btn-primary">
+									</div>
+									
+									<div style="width: 10%; display: inline-block;">
+										<input id="btn_plus_file" type="button"
+											class="bg-teal btn form-control btn-sm" value="추가"
+											style="border-radius: 1em;">
+									</div>
 								</div>
 								
-								<div style="width: 10%; display: inline-block;">
-									<input id="btn_plus_file" type="button"
-										class="bg-teal btn form-control btn-sm" value="추가"
-										style="border-radius: 1em;">
+								<div class="view_form">
+									<div style="display: inline-block;" class="">
+										<c:if test="${!empty nfl }">
+										<c:forEach items="${nfl }" var="item">
+											<a id="${item.project_all_file_code }" class="a_files" 
+											href="${pageContext.request.contextPath }/user/profile/profileDownload.do?project_all_file_code=${item.project_all_file_code}">
+												${item.project_all_file_name }</a>
+											<input type="button" class="btn_refile upForm"  data-toggle="modal" data-target="#fileUpForm"
+			 	 							name="${item.project_all_file_code }" value="수정">
+										</c:forEach>
+										</c:if>
+									</div>
+									
 								</div>
+
 							</div>
 							
 						</div>
