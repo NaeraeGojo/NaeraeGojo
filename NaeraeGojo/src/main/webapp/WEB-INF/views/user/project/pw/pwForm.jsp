@@ -347,7 +347,7 @@ $(function(){
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
               <div class="col-sm-3">
               	<input type="hidden" name="pw_writer" value="${LOGIN_EMPINFO.emp_code }">
-                <input type="text" name="pw_writer_show" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
+                <input type="text" name="pw_writer_show" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_name}"
                  readonly="readonly" >
               </div>
             </div>
@@ -356,7 +356,11 @@ $(function(){
             <label for="sel_rfp" class="col-sm-2 control-label">담당자</label>
             <div class="col-sm-3">
 			    <select name="pw_damdang" class="form-control select2" style="border-radius: 1em;">
-			    	<option value="" selected>인력 R해오기</option>
+			    	<option value="" selected disabled>담당자 선택</option>
+			    	<option value=""></option>
+			    	<c:forEach items="${el }" var="ev">
+			      		<option value="${ev.emp_code }">${ev.emp_name }</option>
+			      	</c:forEach>
 			    </select>
 		    </div>
         </div>

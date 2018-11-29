@@ -77,4 +77,10 @@ public class IJoinServiceImpl implements IJoinService{
 		return joinDao.joinFinalList();
 	}
 
+	@Override
+	public List<JoinVO> clickList(Map<String, String> params)
+			throws SQLException {
+		return joinDao.clickList(params);
+	}
+
 }

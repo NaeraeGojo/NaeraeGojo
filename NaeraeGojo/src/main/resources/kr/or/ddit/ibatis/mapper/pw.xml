@@ -105,16 +105,35 @@
 <!-- 	</update> -->
 
 	<select id="getPw" parameterClass="map" resultClass="java.util.HashMap">
-		<include refid="selectAll"/>
-		and pw_code = #pw_code#
+		select  pw.*, pwc.pwc_name, emp.emp_name damdang_name
+		        ,(select emp_name
+		            from emp, pw
+		            where emp_code = pw_writer
+		            and pw_code = #pw_code#) writer_name
+		    from pw , pwc , emp
+		    where pw_delete = 'n'
+		    and pwc.pwc_code = pw.pwc_code
+		    and emp.emp_code(+) = pw.pw_damdang
+		    and pw_code = #pw_code# 
 	</select>
 	
-<!-- 	<update id="updatepw" parameterClass="pwVO"> -->
-<!-- 		update pw -->
-<!-- 			set pw_name = #pw_name# -->
-<!-- 			where pw_code = #pw_code# -->
-<!-- 	</update> -->
-
+	<update id="updatePw" parameterClass="pwVO">
+		update pw
+			set pw_function = #pw_function#
+				, pw_content = #pw_content#
+				, pw_percent = #pw_percent#
+				, pw_est = #pw_est#
+				, pw_eet = #pw_eet#
+				, pw_damdang = #pw_damdang#
+				, pwc_code = #pwc_code#
+			where pw_code = #pw_code#
+	</update>
+	
+	<update id="deletePw" parameterClass="map">
+		update pw
+			set pw_delete = 'y'
+			where pw_code = #pw_code#
+	</update>
 </sqlMap>
 
 

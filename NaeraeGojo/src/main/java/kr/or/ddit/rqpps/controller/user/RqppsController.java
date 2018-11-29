@@ -7,10 +7,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.join.service.IJoinService;
 import kr.or.ddit.mp.service.IMpService;
 import kr.or.ddit.rqpps.service.IRqppsService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.SetContent;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.FreeBoardVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.RqppsVO;
@@ -31,6 +33,9 @@ public class RqppsController {
 	
 	@Autowired
 	private IMpService mpservice;
+
+	@Autowired
+	private IJoinService joinService;
 
 	@RequestMapping("rfpForm")
 	public void RqppsForm(){}
@@ -98,8 +103,21 @@ public class RqppsController {
 	
 	@RequestMapping("rfpInsert")
 	public String insertRqpps(RqppsVO rqv
-									, @RequestParam("files") MultipartFile[] files) throws Exception{
+							,String emp_code
+							,HttpSession session
+							,Map<String, String> params
+							, @RequestParam("files") MultipartFile[] files) throws Exception{
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		service.insertRqpps(rqv, files);
+		String rqpps_code = rqv.getRqpps_code();
+		String position_name = "PM";
+		params.put("emp_code", emp_code);
+		params.put("rqpps_code", rqpps_code);
+		params.put("position_name", position_name);
+		joinService.insertJoinInfo(params);
+		
+		
+		// 여기에 pm 인서트가 들어가면 될것같아여
 		
 		return "redirect:/user/rfp/rfpList.do";
 	}

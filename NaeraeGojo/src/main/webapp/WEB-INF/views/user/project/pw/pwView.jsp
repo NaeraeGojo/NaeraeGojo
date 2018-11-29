@@ -69,17 +69,49 @@
  .btn-flat{
  	margin-left: 5px;
  }
+ 
+ .view_form[type=text], .view_form[type=date]{
+ 	border-radius: initial;
+ 	border: none;
+    border-bottom: 2px solid gray;
+ }
+ 
+ .btn_bottom{
+ 	width:80px;
+ }
 </style>
 <script type="text/javascript">
 $(function(){
-	
+	var loading = '<div class="overlay">'
+			+'<i class="fa fa-refresh fa-spin"></i>'
+		+'</div>';
+		
 	boalert = function(mes){
 		BootstrapDialog.show({
 	 	    title: '알림',
 	 	    message: mes
 		});
 	};
+	
+	$('.view_form').attr('readonly',true);
+	$('.up_form').hide();
 
+	$("#btn_upForm").click(function(){
+		$('.view_form').hide();
+		$('.up_form').show();
+	});
+	
+	$('#btn_cancle').click(function(){
+		$('.up_form').hide();
+		$('.view_form').show();
+	});
+	
+	$('#btn_del').click(function(){
+		var pw_code = '${pwv.PW_CODE}';
+		var query = '?pw_code='+pw_code;
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwDelete.do'+query);
+	});
+	
 	$('#btn_back').click(function(){
 		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwList.do');
 	});
@@ -97,6 +129,8 @@ $(function(){
 
 	rePwc = function(mes){
 		$('.table_pwc tbody').empty();
+		
+		$('.box_pwc .overlay').remove();
 		
 		$.ajax({
 			url :'${pageContext.request.contextPath}/user/project/pwc/pwcList.do'
@@ -141,15 +175,22 @@ $(function(){
 	
 	$('input[name=pwc_search]').on('input',function(e){
 		var mes = $('input[name=pwc_search]').val();
+		
 		setTimeout(function() {
 			var mes2 = $('input[name=pwc_search]').val();
 			
 			if(mes == mes2){
+				if(!$('.box_pwc').hasClass('overlay')){
+					$('.box_pwc').append(loading);
+				}
 				if(mes2 == ''){
+					$('.box_pwc .overlay').remove();
 					$('.table_pwc tbody').empty();
 					return false;
 				}
-				rePwc(mes2);
+				setTimeout(function(){
+					rePwc(mes2);
+				},500);
 			}
 		}, 800);
 	});
@@ -238,19 +279,76 @@ $(function(){
 	
 	
 	
-	$('.pw_up_form input[name=show_pwc_name]').val('${pwv.EMP_NAME}');
-	$('.pw_up_form input[name=pwc_code]').val('${pwv.PWC_CODE}');
 	$('.pw_up_form input[name=show_pwc_name]').val('${pwv.PWC_NAME}');
+	$('.pw_up_form input[name=pw_code]').val('${pwv.PW_CODE}');
 	$('.pw_up_form input[name=pwc_code]').val('${pwv.PWC_CODE}');
 	$('.pw_up_form input[name=pw_function]').val('${pwv.PW_FUNCTION}');
 	$('.pw_up_form textarea[name=pw_content]').val('${pwv.PW_CONTENT}');
+	$('.pw_up_form input[name=pw_writer]').val('${pwv.PW_WRITER}');
+	$('.pw_up_form select[name=pw_damdang]').val('${pwv.PW_DAMDANG}');
+	$('.pw_up_form input[name=pw_est]').val('${pwv.PW_EST}');
+	$('.pw_up_form input[name=pw_eet]').val('${pwv.PW_EET}');
+	$('.pw_up_form select[name=pw_percent]').val('${pwv.PW_PERCENT}');
+	
+	
+	$('.pw_up_form input[name=show_pwc_name_view]').val('${pwv.PWC_NAME}');
+	$('.pw_up_form input[name=pw_function_view]').val('${pwv.PW_FUNCTION}');
+	$('.pw_up_form textarea[name=pw_content_view]').val('${pwv.PW_CONTENT}');
+	$('.pw_up_form input[name=pw_writer_view]').val('${pwv.WRITER_NAME}');
+	$('.pw_up_form input[name=pw_damdang_view]').val('${pwv.DAMDANG_NAME}');
+	$('.pw_up_form input[name=pw_est_view]').val('${pwv.PW_EST}');
+	$('.pw_up_form input[name=pw_eet_view]').val('${pwv.PW_EET}');
+	$('.pw_up_form input[name=pw_percent_view]').val('${pwv.PW_PERCENT}');
+	
+	
+	// 피드백 받는 사람 
+	$('#btn_feedback').click(function(){
+		$('#feedbackmodal').modal('show');
+		$('input[name=receive_emp]').val('${pwv.DAMDANG_NAME}');
+	});
+	
+	$('#insertFeedback').click(function(){
+		var myArray = [];
+		var damdang = '${pwv.PW_DAMDANG}';
+		var pw_code = '${pwv.PW_CODE}';
+		var content = $('textarea[name=feedback_content]').val();
+		
+		myArray.push(damdang);
+		myArray.push(pw_code);
+		myArray.push(content);
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/feedback/insertFeedback.do'
+			, data : {myArray : myArray}
+			, dataType : 'json'
+			, type : 'POST'
+			, contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+			, async : false
+			, error : function(request, status, error){
+				alert("error : " + request.status)
+			}
+			, success : function(result){
+				boalert(result.message);
+				
+				setTimeout(function(){
+					 $(location).attr('href', "${pageContext.request.contextPath}/user/project/pw/pwList.do");
+                },2000);
+			}
+			
+			
+		});
+		
+	});
+	
+	
+	
 	
 });
 
 
 </script>
     
-<div class="row pw_up_form">
+<div class="row pw_up_form" style="">
     <div class="pwcont">
       <div class="col-md-12">	
           <div class="box box-2team">		
@@ -262,33 +360,34 @@ $(function(){
             
             <!-- /.box-header -->
             <div class="box-body">			
-            <form role="form" id="pwForm" class="form-horizontal" enctype="multipart/form-data" 
-        		 method="post" action="${pageContext.request.contextPath }/user/project/pw/pwInsert.do">
+            <form role="form" id="pwForm" class="form-horizontal" 
+        		 method="post" action="${pageContext.request.contextPath }/user/project/pw/pwUpdate.do">
          	<input type="hidden" name="project_code" value="${project_code}"/>
+         	<input type="hidden" name="pw_code"/>
             
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >분류</label>
 	          <div class="col-sm-3">
-	            <input readonly="readonly" type="text" name="show_pwc_name" value="${pwv.PWC_NAME }" class="form-control" style="border-radius: 1em;">
-	            <input type="hidden" name="pwc_code" value="${pwv.PWC_CODE }">
+	            <input readonly="readonly" type="text" name="show_pwc_name_view"
+	             class="form-control view_form">
+	            <input readonly="readonly" type="text" name="show_pwc_name"
+	             class="form-control up_form" style="border-radius: 1em;">
+	            <input type="hidden" name="pwc_code">
 	          </div>
 	          <div class="col-sm-1">
-	          <input id="btn_show_pwc" type="button" class="bg-teal btn form-control btn-sm" 
+	          <input id="btn_show_pwc" type="button" class="bg-teal btn form-control btn-sm up_form" 
 	            value="선택" style="border-radius: 1em;">
 	          <input id="btn_hide_pwc" type="button" class="bg-teal btn form-control btn-sm div_pwc_search" 
 	            value="접기" style="border-radius: 1em; display: none;">
 	           </div>
             </div>
             
-            
-            
-            
             <div class="form-group div_pwc_search" style="display: none;">
               <label style="visibility: hidden;" for="name" class="col-sm-2 control-label" >분류 선택</label>
               
               <div class="col-sm-4 cont_pwc">
               
-              <div class="box box-success">		
+              <div class="box box-success box_pwc">		
 		            <div class="box-header with-border">	
 		              <b class="box-title">조회 :</b>	
 		            	<input id="name" type="text" name="pwc_search" class="form-control"
@@ -331,6 +430,7 @@ $(function(){
 		                </div>
 		              
 		            </div>
+		            
 		          </div>
 		          
               	</div>
@@ -341,14 +441,20 @@ $(function(){
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label" >업무 명</label>
               <div class="col-sm-6">
-                <input id="name" type="text" name="pw_function" value="${pwv.PW_FUNCTION }" class="form-control" style="border-radius: 1em;" placeholder="업무 명">
+                <input id="name" type="text" name="pw_function_view"
+                 class="form-control view_form">
+                <input id="name" type="text" name="pw_function"
+                class="form-control up_form" style="border-radius: 1em;" placeholder="업무 명">
               </div>
             </div>
             
             <div class="form-group">
 		      <label for="contents" class="col-sm-2 control-label">업무 내용</label>
 		      <div  class="col-sm-8">
-		      <textarea name="pw_content" value="${pwv.PW_CONTENT }" class="form-control" rows="10" placeholder="업무 내용" 
+		      <textarea name="pw_content_view" class="form-control view_form" rows="10"
+		      style=" border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+		      
+		      <textarea name="pw_content" class="form-control up_form" rows="10" placeholder="업무 내용" 
 		      style=" border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
 		       </div>
 		    </div>
@@ -356,8 +462,9 @@ $(function(){
             <div class="form-group">
               <label for="writer" class="col-sm-2 control-label" >작성자</label>
               <div class="col-sm-3">
-              	<input type="hidden" name="pw_writer" value="${pwv.EMP_WRITER }">
-                <input type="text" name="pw_writer_show" value="${pwv.EMP_NAME }" class="form-control" style="border-radius: 1em;" value="${LOGIN_EMPINFO.emp_nick}"
+              	<input type="hidden" name="pw_writer">
+                <input type="text" name="pw_writer_view" class="form-control" style="border: none;
+    					border-bottom: 2px solid gray;"
                  readonly="readonly" >
               </div>
             </div>
@@ -365,12 +472,17 @@ $(function(){
          <div class="form-group">
             <label for="sel_rfp" class="col-sm-2 control-label">담당자</label>
             <div class="col-sm-3">
-			    <select name="pw_damdang" class="form-control select2" style="border-radius: 1em;">
-			    	<option value="" selected>인력 R해오기</option>
+            	<input type="text" name="pw_damdang_view"
+            	 class="form-control view_form" readonly="readonly" >
+			    <select name="pw_damdang" class="form-control select2 up_form" style="border-radius: 1em;">
+			    	<option value="" selected disabled>담당자 선택</option>
+			    	<option value=""></option>
+			    	<c:forEach items="${el }" var="ev">
+			      		<option value="${ev.emp_code }">${ev.emp_name }</option>
+			      	</c:forEach>
 			    </select>
 		    </div>
         </div>
-
 			
           <div class="form-group">
             <label for="edate" class="col-sm-2 control-label">예상 소요기간</label>
@@ -378,11 +490,14 @@ $(function(){
             <table class="date_table">
             	<tr>
             		<td>
-            		<input type="date" name="pw_est" class="form-control" style="border-radius: 1em;">
+            		<input type="date" name="pw_est_view" class="form-control view_form">
+            		<input type="date" name="pw_est" class="form-control up_form" style="border-radius: 1em;"
+            		>
             		</td>
 	              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
 	              	<td>
-	              	<input type="date" name="pw_eet" class="form-control" style="border-radius: 1em;">
+	              	<input type="date" name="pw_eet_view" class="form-control view_form">
+	              	<input type="date" name="pw_eet" class="form-control up_form" style="border-radius: 1em;">
 	              	</td>
             	</tr>
             </table>
@@ -393,27 +508,41 @@ $(function(){
           <div class="form-group">
             <label for="pmoney" class="col-sm-2 control-label">진척도</label>
             <div class="col-sm-2">
-            	<select id="pw_percent" name="pw_percent" class="form-control select2" style="border-radius: 1em;">
-			    	<option value="0" selected>0%</option>
-			    	<option value="10">10%</option>
-			    	<option value="20">20%</option>
-			    	<option value="30">30%</option>
-			    	<option value="40">40%</option>
-			    	<option value="50">50%</option>
-			    	<option value="60">60%</option>
-			    	<option value="70">70%</option>
-			    	<option value="80">80%</option>
-			    	<option value="90">90%</option>
-			    	<option value="100">100%</option>
+            	<input type="text" class="form-control view_form" name="pw_percent_view" 
+            	style="display:inline-block; width: 40%; text-align: center;">
+            	<select id="pw_percent" name="pw_percent" class="form-control select2 up_form"
+            	 style="display:inline-block; width:60%; border-radius: 1em;">
+			    	<option value="0" selected>0</option>
+			    	<option value="10">10</option>
+			    	<option value="20">20</option>
+			    	<option value="30">30</option>
+			    	<option value="40">40</option>
+			    	<option value="50">50</option>
+			    	<option value="60">60</option>
+			    	<option value="70">70</option>
+			    	<option value="80">80</option>
+			    	<option value="90">90</option>
+			    	<option value="100">100</option>
 			    </select>
+			    %
             </div> 
           </div>
                 
               
 		<div class="box-footer clearfix">
-	          	<input value="등록" type="submit" href="${pageContext.request.contextPath}/user/meeting/meetingList.do" style="width:80px;"  class="btn btn-warning btn-flat pull-right">
-	          	<input id="btn_back" value="목록" type="button"style="width:80px;"  class="btn btn-info btn-flat pull-right">
-            </div>
+	          	<input value="수정" type="button" id="btn_upForm" 
+	          	 class="btn btn-warning btn-flat pull-right view_form btn_bottom">
+	          	<input value="등록" type="submit"
+	          	  class="btn btn-warning btn-flat pull-right up_form btn_bottom">
+	          	 <input id="btn_del" value="삭제" type="button" class="btn btn-danger btn-flat pull-right btn_bottom">
+	          	 <input id="btn_cancle" value="취소" type="button" 
+	              	 class="btn btn-default btn-flat pull-right up_form btn_bottom">
+	          	<input id="btn_back" value="목록" type="button"
+	          	  class="btn btn-info btn-flat pull-right btn_bottom">
+	          	  
+	          	<input value="피드백 보내기" type="button" id="btn_feedback" 
+	          	 class="btn btn-warning btn-flat pull-right btn_bottom" name="feedback">
+         </div>
             
         </form>
 	</div>
@@ -422,6 +551,47 @@ $(function(){
 </div>
 </div>
 
+<!-- 피드백 알림 -->
+<div class="modal fade" id="feedbackmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="container" style="margin-top: 100px;">
+		<div class="modal-dialog" role="document">
+			<form role="form" class="form-horizontal">
+				<div class="modal-content">
+					<div class="box box-2team">
+						<div class="box-header with-border">
+						   
+							<b class="box-title">받은 피드백 상세내용</b><br /> <br />
+						</div>
+						<div class="box-body">
 
-        
+							<div class="form-group">
+								<label for="name" class="col-sm-2 control-label" style="width: 130px; font-size:large;">받는사람</label>
+								<div class="col-sm-8">
+									<input id="receive_emp" type="text" name="receive_emp"
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="contents" class="col-sm-2 control-label" style="width: 130px; font-size:large;">피드백내용  </label>
+								<textarea id="contents" name="feedback_content" class="col-sm-10" rows="10"
+									style="width: 62%; border: 1px solid #d2d2d2; border-radius: 1em; margin-left:15px; ">
+							    </textarea>
+							</div>
+
+							<!-- /.box -->
+						</div>
+						<div class="modal-footer">
+							<input type="button" value="보내기" class="btn btn-primary btn-sm" id="insertFeedback">
+							 <input type="button" value="close" data-dismiss="modal" class="btn  btn-default btn-sm" >
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+
 </html>

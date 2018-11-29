@@ -25,6 +25,13 @@
 <script type="text/javascript">
 $(function(){
 
+	boalert = function(mes){
+		BootstrapDialog.show({
+	 	    title: '알림',
+	 	    message: mes
+		});
+	}
+	
 	$('.upForm').hide();
 	
 	$('.btn_refile').click(function(){
@@ -175,7 +182,7 @@ $(function(){
 					<div class="box-footer clearfix">
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
 						<input value="수정" id="btn_upForm" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
-						<button type="submit" class="btn btn-sm btn-danger btn-flat pull-right">삭제</button>
+						<button type="submit" id="deleteBtn" class="btn btn-sm btn-danger btn-flat pull-right">삭제</button>
 						<input id="btn_update" value="등록" type="submit" class="btn btn-sm btn-warning btn-flat pull-right"
 						type="submit" href="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" style="display:none;">
 					</div>

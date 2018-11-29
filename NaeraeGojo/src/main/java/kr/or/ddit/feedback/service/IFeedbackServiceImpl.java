@@ -31,10 +31,10 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 		return null;
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	@Override
 	public void insertFeedbackInfo(FeedbackVO feedbackInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		feedbackDao.insertFeedbackInfo(feedbackInfo);
 	}
 
 	@Override
@@ -89,6 +89,29 @@ public class IFeedbackServiceImpl implements IFeedbackService{
 	@Override
 	public void deleteReceive(Map<String, String> params) throws SQLException {
 		feedbackDao.deleteReceive(params);
+	}
+
+	@Override
+	public List<FeedbackVO> sendfbList(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.sendfbList(params);
+	}
+
+	@Override
+	public int totalCount2(Map<String, String> params) throws SQLException {
+		return feedbackDao.totalCount2(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteSend(Map<String, String> params) throws SQLException {
+		feedbackDao.deleteSend(params);
+	}
+
+	@Override
+	public FeedbackVO sendfeedbackInfo(Map<String, String> params)
+			throws SQLException {
+		return feedbackDao.sendfeedbackInfo(params);
 	}
 
 

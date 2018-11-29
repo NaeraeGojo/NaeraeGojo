@@ -111,11 +111,5 @@ public class PblancboardController {
 		return "redirect:/user/pblancboard/pblancboardList.do";
 	}
 	
-	public String insertPblancboard() throws Exception{
-		
-		return null;
-	}
-	
-	
 }
 

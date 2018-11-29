@@ -5,24 +5,103 @@ public class ReportVO {
 	// 보고서 관리
 	
 	private String report_code;
-	private String report_sign_line;
+	private String report_title;
 	private String report_day;
 	private String report_content;
 	private String report_rc;
 	private String report_date;
 	private String report_delete;
-
+	private String emp_code;
+	private String pw_code;
+	private String report_pl_status;
+	private String report_pm_status;
+	private String emp_code_pl;
+	private String emp_code_pm;
+	private String rnum;
+	private String position_name;
+	private String emp_name;
+	private String emp_department;
+	private String emp_level;
+	
+	
+	
+	public String getEmp_level() {
+		return emp_level;
+	}
+	public void setEmp_level(String emp_level) {
+		this.emp_level = emp_level;
+	}
+	public String getEmp_department() {
+		return emp_department;
+	}
+	public void setEmp_department(String emp_department) {
+		this.emp_department = emp_department;
+	}
+	public String getRnum() {
+		return rnum;
+	}
+	public void setRnum(String rnum) {
+		this.rnum = rnum;
+	}
+	public String getPosition_name() {
+		return position_name;
+	}
+	public void setPosition_name(String position_name) {
+		this.position_name = position_name;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public String getReport_title() {
+		return report_title;
+	}
+	public void setReport_title(String report_title) {
+		this.report_title = report_title;
+	}
+	public String getEmp_code() {
+		return emp_code;
+	}
+	public void setEmp_code(String emp_code) {
+		this.emp_code = emp_code;
+	}
+	public String getPw_code() {
+		return pw_code;
+	}
+	public void setPw_code(String pw_code) {
+		this.pw_code = pw_code;
+	}
+	public String getReport_pl_status() {
+		return report_pl_status;
+	}
+	public void setReport_pl_status(String report_pl_status) {
+		this.report_pl_status = report_pl_status;
+	}
+	public String getReport_pm_status() {
+		return report_pm_status;
+	}
+	public void setReport_pm_status(String report_pm_status) {
+		this.report_pm_status = report_pm_status;
+	}
+	public String getEmp_code_pl() {
+		return emp_code_pl;
+	}
+	public void setEmp_code_pl(String emp_code_pl) {
+		this.emp_code_pl = emp_code_pl;
+	}
+	public String getEmp_code_pm() {
+		return emp_code_pm;
+	}
+	public void setEmp_code_pm(String emp_code_pm) {
+		this.emp_code_pm = emp_code_pm;
+	}
 	public String getReport_code() {
 		return report_code;
 	}
 	public void setReport_code(String report_code) {
 		this.report_code = report_code;
-	}
-	public String getReport_sign_line() {
-		return report_sign_line;
-	}
-	public void setReport_sign_line(String report_sign_line) {
-		this.report_sign_line = report_sign_line;
 	}
 	public String getReport_day() {
 		return report_day;

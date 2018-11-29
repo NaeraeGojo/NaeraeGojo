@@ -33,8 +33,7 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 
 	@Override
 	public void insertFeedbackInfo(FeedbackVO feedbackInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.insert("feedback.insertFeedback", feedbackInfo);
 	}
 
 	@Override
@@ -86,6 +85,28 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 	@Override
 	public void deleteReceive(Map<String, String> params) throws SQLException {
 		client.update("feedback.deleteReceive", params);
+	}
+
+	@Override
+	public List<FeedbackVO> sendfbList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("feedback.sendfbList", params);
+	}
+
+	@Override
+	public int totalCount2(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("feedback.totalCount2", params);
+	}
+
+	@Override
+	public void deleteSend(Map<String, String> params) throws SQLException {
+		client.update("feedback.deleteSend", params);
+	}
+
+	@Override
+	public FeedbackVO sendfeedbackInfo(Map<String, String> params)
+			throws SQLException {
+		return (FeedbackVO) client.queryForObject("feedback.sendfeedbackInfo",params);
 	}
 
 

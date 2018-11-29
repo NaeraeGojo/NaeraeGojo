@@ -1,11 +1,16 @@
 package kr.or.ddit.report.controller.user;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.report.service.IReportService;
+import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.ReportVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user/report/")
@@ -74,20 +80,76 @@ public class ReportController {
 		return "user/report/report_sendDeletePL"; 
 		
 	}
-	//PL 받은보고서함 뷰/삭제/피드백
+	//PL 받은보고서함 뷰/삭제/피드백 고민만오지게햇네
 	@RequestMapping("report_recViewPL")
 	public String report_recViewPL(){
 		return "user/report/report_recViewPL"; 
 	}
 	//개발자  보낸보고서함 리스트
 	@RequestMapping("report_listDev")
-	public void report_listDev(){
+	public String report_listDev(){
+		return "user/report/report_listDev"; 
 	}
+	
+	
+	
+	//개발자  피드백 리스트
+	@RequestMapping("report_feedListDev")
+	public String report_feedListDev(){
+		return "user/report/report_feedListDev"; 
+	}
+	
+	
 	//개발자  보낸보고서함 등록/임시저장
 	@RequestMapping("report_sendInsertDev")
-	public String report_sendInsertDev(){
-		return "user/report/report_sendInsertDev"; 
+	public ModelAndView report_sendInsertDev(
+			ModelAndView andView,
+			String emp_code,
+			HttpSession session,
+			Map<String, String> params) throws SQLException{
+		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		List<ProjectVO> proName = service.projectNm(params);
+		andView.addObject("proName",proName);
+		andView.setViewName("user/report/report_sendInsertDev");
+		return andView; 
 	}
+	//프로젝트코드를 받아서 관련업무를 뽑아옴
+	@RequestMapping("report_pw_people")
+	public ModelAndView report_pw_people(
+			ModelAndView andView,
+			String project_code,
+			Map<String, String> params) throws SQLException{
+		
+		params.put("project_code", project_code);
+		List<ProjectWorkVO> pwName = service.pwName(params);
+//		List<ReportVO> proPeople = service.projectPeople(params);
+		andView.addObject("pwName",pwName);
+//		andView.addObject("proPeople",proPeople);
+		andView.setViewName("jsonConvertView");
+		
+		return andView; 
+	}
+	
+	//프로젝트코드를 받아서 관련사람들을 뽑아옴
+	@RequestMapping("report_pw_people12")
+	public ModelAndView report_pw_people12(
+			ModelAndView andView,
+			String project_code,
+			Map<String, String> params) throws SQLException{
+		
+		params.put("project_code", project_code);
+		List<ReportVO> proPeople = service.projectPeople(params);
+		andView.addObject("proPeople",proPeople);
+		andView.setViewName("jsonConvertView");
+		
+		return andView; 
+	}
+	
+	
+	
+	
 	//개발자  보낸보고서함 뷰/삭제
 	@RequestMapping("report_sendDeleteDev")
 	public String report_sendDeleteDev(){

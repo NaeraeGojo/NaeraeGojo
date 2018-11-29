@@ -20,9 +20,10 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 	@Autowired
 	private IVideoChatDao dao;
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public void insertVideoChat(Map<String, String> params) throws SQLException {
-		
+	public String insertVideoChat(Map<String, String> params) throws SQLException {
+		return dao.insertVideoChat(params);
 	}
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
@@ -70,6 +71,12 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 	public List<EmpVO> getEmpList(Map<String, String> params)
 			throws SQLException {
 		return dao.getEmpList(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void insertJoin(Map<String, String> params) throws SQLException {
+		dao.insertJoin(params);
 	}
 
 }

@@ -9,7 +9,7 @@ import kr.or.ddit.vo.ProjectWorkVO;
 public interface IProjectWorkDao {
 	public void insertProjectWork(ProjectWorkVO pwv) throws SQLException;
 	
-	public void updateProjectWork(ProjectWorkVO pv) throws SQLException;
+	public void updateProjectWork(ProjectWorkVO pwv) throws SQLException;
 	
 	public void deleteProjectWork(Map<String, String> params) throws SQLException;
 	
