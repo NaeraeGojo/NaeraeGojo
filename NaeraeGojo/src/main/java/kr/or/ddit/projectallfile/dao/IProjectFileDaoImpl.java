@@ -17,10 +17,9 @@ public class IProjectFileDaoImpl implements IProjectFileDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertProjectFile(Map<String, String> params)
+	public void insertProjectFile(ProjectAllFileVO pfv)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.insert("profile.insertProjectFile",pfv);
 	}
 
 	@Override

@@ -223,15 +223,6 @@ $(function(){
 	});
 	
 	
-	$('#pwForm').click(function(){
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwForm.do');
-	});
-
-// 	$('table tr:gt(0)').click(function(){
-// 		var pblanc_board_code = $(this).find('td:eq(0) input').val();
-// 		var rnum = $(this).find('td:eq(0)').text();
-// 		$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardView.do?pblanc_board_code='+pblanc_board_code+'&rnum='+rnum);
-// 	})
 
 	$('#btn_insert_pwc').click(function(){
 		var pwc_name = $('#pwcForm input[name=pwc_name]').val();
@@ -328,10 +319,8 @@ $(function(){
           
         </div>
         
-	   </div>
-	   
-	   <form action="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" method="post" class="form-inline pull-right"
-	   style="margin-right: 200px;">
+        <form action="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" method="post" class="form-inline pull-right"
+	   style="margin-right: 15px;">
 			<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 			<select class="form-control" name="search_keycode" >
 				<option value="total">전체</option>
@@ -341,6 +330,10 @@ $(function(){
 			</select>
 		    <button type="submit" class="btn btn-primary form-control">검색</button>
 		</form>
+        
+	   </div>
+	   
+	   
 		
 		
 	</div>

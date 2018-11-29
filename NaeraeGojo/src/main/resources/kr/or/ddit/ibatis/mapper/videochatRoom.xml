@@ -103,6 +103,7 @@
 		where b.emp_code = #emp_code#
 		and b.emp_code = c.emp_code
 		and b.project_code = a.project_code
+		and a.project_delete = 'n'
 		group by a.project_code, a.project_name, a.project_start, a.project_end
     </select>
     

@@ -354,7 +354,7 @@ $(function(){
           <div class="box box-2team">		
           
             <div class="box-header with-border">	
-              <b class="box-title">새 업무등록</b>
+              <b class="box-title">업무 조회</b>
               <br><br>	
             </div>
             
