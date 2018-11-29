@@ -9,7 +9,7 @@ import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.ReportVO;
 
 public interface IReportService {
-	public void insertReport(Map<String, String> params) throws SQLException;
+	public void insertReport(ReportVO rvo) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;
 	public List<ReportVO> getReportList(Map<String, String> params) throws SQLException;

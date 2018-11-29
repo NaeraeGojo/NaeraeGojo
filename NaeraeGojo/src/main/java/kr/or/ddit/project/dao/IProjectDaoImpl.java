@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapException;
 
 @Repository
 public class IProjectDaoImpl implements IProjectDao{
@@ -47,6 +48,7 @@ public class IProjectDaoImpl implements IProjectDao{
 	@Override
 	public void insertProjectInfo(ProjectVO projectInfo) throws SQLException {
 		client.insert("project.insertProject", projectInfo);
+		client.update("project.updateJoinProjectCode", projectInfo);
 	}
 	
 	@Override

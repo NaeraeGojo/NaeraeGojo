@@ -93,15 +93,15 @@ public class ReportController {
 	
 	
 	
-	//개발자  피드백 리스트
-	@RequestMapping("report_feedListDev")
-	public String report_feedListDev(){
-		return "user/report/report_feedListDev"; 
+	//PL 받은보고서함 리스트
+	@RequestMapping("report_listPLRec")
+	public String report_listPLRec(){
+		return "user/report/report_listPLRec"; 
 	}
 	
 	
 	//개발자  보낸보고서함 등록/임시저장
-	@RequestMapping("report_sendInsertDev")
+	@RequestMapping("report_sendFormDev")
 	public ModelAndView report_sendInsertDev(
 			ModelAndView andView,
 			String emp_code,
@@ -112,8 +112,27 @@ public class ReportController {
 		params.put("emp_code", emp_code);
 		List<ProjectVO> proName = service.projectNm(params);
 		andView.addObject("proName",proName);
-		andView.setViewName("user/report/report_sendInsertDev");
+		andView.setViewName("user/report/report_sendFormDev");
 		return andView; 
+	}
+	
+	//개발자 INSERT
+	@RequestMapping("report_FinalInsert")
+	public String report_FinalInsert(
+			ReportVO rvo,
+			HttpSession session,
+			Map<String, String> params) throws SQLException{
+		
+		String[] fullEmpCode = rvo.getEmp_code().split(",");
+		rvo.setEmp_code_pm(fullEmpCode[0]);
+		rvo.setEmp_code_pl(fullEmpCode[1]);
+		
+		String emp_code = null;
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		rvo.setEmp_code(emp_code);
+		service.insertReport(rvo);
+		
+		return "redirect:/user/report/report_listDev.do";
 	}
 	//프로젝트코드를 받아서 관련업무를 뽑아옴
 	@RequestMapping("report_pw_people")
@@ -132,7 +151,7 @@ public class ReportController {
 		return andView; 
 	}
 	
-	//프로젝트코드를 받아서 관련사람들을 뽑아옴
+	//프로젝트코드를 받아서 관련사람들을 뽑아옴 ( PM,PL emp_code 필요 )
 	@RequestMapping("report_pw_people12")
 	public ModelAndView report_pw_people12(
 			ModelAndView andView,

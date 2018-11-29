@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.ibatis.sqlmap.client.SqlMapException;
+
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.SuggestVO;

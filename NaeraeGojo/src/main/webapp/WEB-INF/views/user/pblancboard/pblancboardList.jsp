@@ -20,12 +20,7 @@ $(function(){
 		var rnum = $(this).find('td:eq(0)').text();
 		$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardView.do?pblanc_board_code='+pblanc_board_code+'&rnum='+rnum);
 	})
-
-
-
-
 });
-
 
 </script>
 
