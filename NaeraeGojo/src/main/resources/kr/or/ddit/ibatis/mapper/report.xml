@@ -37,7 +37,7 @@
 		</dynamic>
 	</sql>
 
-	<insert id="insertReport" parameterClass="map">
+	<insert id="insertReport" parameterClass="reportVO">
 		<selectKey keyProperty="report_code" resultClass="string">
 			select report_seq.nextval from dual
 		</selectKey>
@@ -59,15 +59,15 @@
                     VALUES(
 		                    #report_code#,
 		                    #report_title#,
-		                    SYSDATE,
+		                    sysdate,
 		                    #report_content#,
-		                    #report_rc#,
+		                    default,
 		                    #report_date#,
-							#report_delete#,
+							default,
 							#emp_code#,
 							#pw_code#,
-							#report_pl_status#,
-							#report_pm_status#,
+							default,
+							default,
 							#emp_code_pl#,
 							#emp_code_pm#
 							)

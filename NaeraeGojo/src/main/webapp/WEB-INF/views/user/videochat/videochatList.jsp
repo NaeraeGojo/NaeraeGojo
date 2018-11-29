@@ -146,12 +146,12 @@ $(function(){
             tmpArray.push(emp_code);
         });
     	
-//     	if(tmpArray.length>3){
-//     		boalert("4명 이하로 선택해주세요");
-//     		return false;
-//     	};
+    	if(tmpArray.length>=2){
+    		boalert("1명으 로 선택해주세요");
+    		return false;
+    	};
     	
-//     	if(tmpArray.length>4){
+    	if(tmpArray.length<2){
     		
 	    	$.ajax({
 	            
@@ -164,12 +164,17 @@ $(function(){
 	                    alert("error : " + request.status );
 	             }
 	             , success : function(result) {
-	             	alert('화상채팅방이 개설되었습니다.');
+	             	boalert('화상채팅방이 개설되었습니다.');
+	             	
+	             	setTimeout(function(){
+	             		
+                        $(location).attr('href', '${pageContext.request.contextPath}/user/video/room/'+result.video_chat_room_code +'.do');
+                    },1500);
 	             	
 	             	
 	             }
 	       });
-//     	}
+    	}
     	
     	
     });

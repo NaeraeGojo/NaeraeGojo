@@ -5,6 +5,7 @@
 <sqlMap namespace="bellList">
 	<typeAlias alias="issueVO" type="kr.or.ddit.vo.IssueVO"/>
 	<typeAlias alias="feedbackVO" type="kr.or.ddit.vo.FeedbackVO"/>
+	<typeAlias alias="videoChatVO" type="kr.or.ddit.vo.VideoChatRoomVO"/>
 
     
     <select id="getIssueList" resultClass="issueVO" parameterClass="map">
@@ -76,7 +77,7 @@
 		where a.send_emp = b.emp_code
 		and a.pw_code = c.pw_code
 		and a.send_emp = #emp_code#
-		and a.feedback_st &gt; to_char(sysdate - 14, 'yyyymmdd')
+		and a.feedback_st &gt; to_char(sysdate -14, 'yyyymmdd')
 		and a.send_delete ='n'
 		
     </select>
@@ -100,6 +101,32 @@
          order by z.rnum desc 
     </select>
     
+    <select id="getvideoChatCnt" parameterClass="map" resultClass="string">
+        select  count(a.video_chat_room_code)
+		from video_chat_room a, video_chat_join b, emp c, project d
+		where a.video_chat_room_code = b.video_chat_room_code
+		and a.emp_code = c.emp_code
+		and a.project_code = d.project_code
+		and b.emp_code = #emp_code#
+		and b.video_chat_join_sign ='n'
+		and to_char(a.video_chat_room_date, 'yyyymmdd hh24:mi:ss') > to_char(sysdate-2/24, 'yyyymmdd hh24:mi:ss')
+    </select>
+    
+    <select id="getVideoChatList" parameterClass="map" resultClass="videoChatVO">
+        select z.*
+          from (select rownum rnum, y.*
+                from( select  a.video_chat_room_code, d.project_name, c.emp_name, a.video_chat_room_date, a.video_chat_room_url, b.video_chat_join_code
+						from video_chat_room a, video_chat_join b, emp c, project d
+						where a.video_chat_room_code = b.video_chat_room_code
+						and a.emp_code = c.emp_code
+						and a.project_code = d.project_code
+						and b.emp_code = #emp_code#
+						and b.video_chat_join_sign ='n'
+						and to_char(a.video_chat_room_date, 'yyyymmdd hh24:mi:ss') > to_char(sysdate-2/24, 'yyyymmdd hh24:mi:ss')
+						group by d.project_name, c.emp_name, a.video_chat_room_date, a.video_chat_room_code, a.video_chat_room_url, b.video_chat_join_code
+                    ) y ) z
+         order by z.rnum desc 
+    </select>
     
     
     

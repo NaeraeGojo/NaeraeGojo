@@ -19,36 +19,30 @@ public class IHistoryDaoImpl implements IHistoryDao{
 	private SqlMapClient client;
 	
 	@Override
-	public HistoryVO historyInfo(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public HistoryVO historyInfo(Map<String, String> params) throws SQLException {
+		return (HistoryVO) client.queryForObject("emp.historyInfo", params);
 	}
 
 	@Override
 	public List<HistoryVO> historyList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("emp.historyList", params);
 	}
 
 	@Override
-	public void insertHistoryInfo(HistoryVO historyInfo) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public String insertHistoryInfo(HistoryVO historyInfo) throws SQLException {
+		return (String) client.insert("emp.insertHistory", historyInfo);
 	}
 
 	@Override
 	public void deleteHistoryInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("emp.deleteHistory", params);
 	}
 
 	@Override
 	public void updateHistoryInfo(HistoryVO historyInfo) throws SQLException {
-		// TODO Auto-generated method stub
+		client.update("emp.updateHistory", historyInfo);
 		
 	}
-
 }

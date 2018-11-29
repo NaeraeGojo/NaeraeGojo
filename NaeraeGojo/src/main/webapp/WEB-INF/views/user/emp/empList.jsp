@@ -101,6 +101,7 @@ $(function () {
 // 	});
 	
 	// ========= 직원등록 후 List에 왔을 경우 ======================================
+	// 이메일 인증
 	if (eval('${!empty param.emailId}')) {
 		$('#modal-primary').modal();
 	}
@@ -117,11 +118,6 @@ $(function () {
 			    data : { email_nick : email_nick,
 			    	code : code },
 			    success : function(result) {
-//						$('#code').val(result.code);
-			    	// result.flag = "true" or "false"
-					// boolean type false : undefined, null
-					// "1" + 1 = '11'
-					// eval("1" + 1) = 2
 						alert("인증메일 발송을 성공하였습니다.");
 				},
 			    error : function(request, status, error) {

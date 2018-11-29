@@ -55,6 +55,9 @@ public class VideoChatController {
 		params.put("search_keycode", search_keycode);
 		params.put("search_keyword", search_keyword);
 		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		System.out.println("아디아디아디아디"+emp_code);
+		params.put("emp_code", emp_code);
 		int totalCount = service.totalCount(params);
 		
 		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage), totalCount, request);
@@ -62,9 +65,6 @@ public class VideoChatController {
 		params.put("startCount", String.valueOf(paging.getStartCount()));
 		params.put("endCount", String.valueOf(paging.getEndCount()));
 		
-		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
-		System.out.println("아디아디아디아디"+emp_code);
-		params.put("emp_code", emp_code);
 		
 		List<ChatListTempVO> chatroomList = service.getVideoChatList(params);
 		
@@ -178,15 +178,43 @@ public class VideoChatController {
 			service.insertJoin(params);
 		}
 		
+		params.clear();
+		
+		params.put("emp_code", emp_code);
+		params.put("video_chat_room_code", video_chat_room_code);
+		service.insertJoin(params);
+		
+		andView.addObject("video_chat_room_code", video_chat_room_code);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
 	
-	@RequestMapping("room")
-	public String Ganttchart3(){
-		return "user/videochat/videochatRoom";
+	@RequestMapping("room/{video_chat_room_code}")
+	public ModelAndView videochatRoom(ModelAndView andView, HttpServletRequest request, Map<String, String> params,
+								@PathVariable String video_chat_room_code) throws Exception{
+		
+		ProjectVO projectInfo = service.getProjectNM(video_chat_room_code);
+		
+		andView.addObject("video_chat_room_code",video_chat_room_code);
+		andView.addObject("projectInfo", projectInfo);
+		andView.setViewName("user/videochat/videochatRoom");
+		return andView;
 	}
 	
+	@RequestMapping("urlInsert")
+	public ModelAndView urlInsert(String video_chat_room_code, String video_chat_room_url,
+								ModelAndView andView, HttpServletRequest request, Map<String, String> params
+								) throws Exception {
+		
+		params.put("video_chat_room_code", video_chat_room_code);
+		params.put("video_chat_room_url", video_chat_room_url);
+		
+		service.updateUrl(params);
+		
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	 
 	
 }
 

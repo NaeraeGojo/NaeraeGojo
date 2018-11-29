@@ -45,6 +45,7 @@ $(function(){
             success : function(json){
             	$('input[name=suggest_code]').val(json.suggestInfo.suggest_code);
             	
+            	$('input[name=rqpps_code]').val(json.suggestInfo.rqpps_code);
             	$('input[name=rqpps_notice_agency]').val(json.suggestInfo.rqpps_notice_agency);
             	$('input[name=suggest_start_date]').val(json.suggestInfo.suggest_start_date);
             	$('input[name=suggest_end_date]').val(json.suggestInfo.suggest_end_date);
@@ -68,7 +69,7 @@ $(function(){
 				<div class="box-body">
 					<form role="form" action="${pageContext.request.contextPath }/user/project/insertProject.do"
 					class="form-horizontal" id="projectForm">
-						<input type="hidden" name="suggest_code" value=""> 
+						<input type="hidden" name="rqpps_code" value="">
 						<div class="form-group">
 							<label for="suggest_code" class="col-sm-2 control-label">제안서</label>
 							<div class="col-sm-8">
@@ -93,7 +94,7 @@ $(function(){
 							<label class="col-sm-2 control-label" for="emp_code">담당자</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="담당자"
-								id="emp_code" name="emp_code" readonly="readonly">
+								id="emp_code" name="emp_code" value="${LOGIN_EMPINFO.emp_name }" readonly="readonly">
 							</div>
 						</div>
 

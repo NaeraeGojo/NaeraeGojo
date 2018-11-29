@@ -29,5 +29,9 @@ public interface IVideoChatService {
 	public List<EmpVO> getEmpList(Map<String, String> params) throws SQLException;
 
 	public void insertJoin(Map<String, String> params) throws SQLException;
+
+	public ProjectVO getProjectNM(String video_chat_room_code) throws SQLException;
+
+	public void updateUrl(Map<String, String> params) throws SQLException;
 	
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="scheduler">
+	<typeAlias alias="schedulerVO" type="kr.or.ddit.vo.SchedulerVO"/>
+	
+	<resultMap id="schedulerMap" class="schedulerVO">
+<!-- 		<result property="scheduler_code"    column="scheduler_code"/> -->
+<!-- 		<result property="scheduler_time"    column="scheduler_time"/> -->
+<!-- 		<result property="scheduler_title"   column="scheduler_title"/> -->
+<!-- 		<result property="scheduler_explain" column="scheduler_explain"/> -->
+<!-- 		<result property="scheduler_writer"  column="scheduler_writer"/> -->
+<!-- 		<result property="scheduler_keyword" column="scheduler_keyword"/> -->
+	</resultMap>
+	
+	<sql id="selectAll">
+		SELECT 
+		    SCHEDULER_CODE
+		    ,TO_CHAR(SCHEDULER_TIME,'HH24:MI:SS') AS SCHEDULER_TIME
+		    ,SCHEDULER_TITLE
+		    ,SCHEDULER_EXPLAIN
+		    ,EMP_NAME AS SCHEDULER_WRITER
+		    ,SCHEDULER_KEYWORD
+		    ,ADMIN_CODE
+		FROM SCHEDULER A, EMP B
+		WHERE A.SCHEDULER_WRITER = B.EMP_CODE
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic>
+	 		<isNotEmpty property="search_keyword" prepend="and">
+	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
+	 				   PBLANC_BOARD_TITLE LIKE '%' || #search_keyword# || '%'
+	 				OR PBLANC_BOARD_COM   LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="TITLE" >  
+	 					PBLANC_BOARD_TITLE LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="PBLANC" >  
+	 					PBLANC_BOARD_COM LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 		</isNotEmpty>
+	 	</dynamic>
+	</sql>
+	
+	<select id="schedulerList" resultClass="schedulerVO" parameterClass="map">
+		SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.*
+				FROM ( <include refid="selectAll"/> 
+						<include refid="searchCondition"/> 
+						ORDER BY scheduler_code) A ) B
+ 		<![CDATA[				
+		WHERE B.RNUM <= #startCount#
+		 AND  B.RNUM >= #endCount#
+		]]>
+		ORDER BY B.RNUM DESC
+	</select>	
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		SELECT COUNT(SCHEDULER_CODE)
+		  FROM SCHEDULER
+		<include refid="searchCondition"/> 
+	</select>
+	
+	
+</sqlMap>
+
+

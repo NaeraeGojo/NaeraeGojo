@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 .fieldName {
 	text-align: center;
@@ -75,6 +76,7 @@ label {
 			<div class="box box-info">
 				<div class="box-header with-border">
 					<h3 class="box-title">보고서</h3>
+					
 				</div>
 				<!--             /.box-header -->
 				<!--             form start -->
@@ -200,6 +202,7 @@ label {
 					<div class="box-footer clearfix">
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
 							<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
+					<input value="피드백 보기" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
 					</div>
 				</form>
 			</div>

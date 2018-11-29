@@ -1,5 +1,7 @@
 package kr.or.ddit.vo;
 
+import java.util.List;
+
 public class ReportVO {
 
 	// 보고서 관리
@@ -22,9 +24,16 @@ public class ReportVO {
 	private String emp_name;
 	private String emp_department;
 	private String emp_level;
+	private List<ReportFileVO> items;
 	
 	
 	
+	public List<ReportFileVO> getItems() {
+		return items;
+	}
+	public void setItems(List<ReportFileVO> items) {
+		this.items = items;
+	}
 	public String getEmp_level() {
 		return emp_level;
 	}

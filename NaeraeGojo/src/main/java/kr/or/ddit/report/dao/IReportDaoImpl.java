@@ -19,9 +19,8 @@ public class IReportDaoImpl implements IReportDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertReport(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public String insertReport(ReportVO rvo) throws SQLException {
+		return (String) client.insert("report.insertReport",rvo);
 	}
 
 	@Override

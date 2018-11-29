@@ -25,11 +25,26 @@ public class FeedbackController {
 	
 	
 	@RequestMapping("receivefeedback")
-	public ModelAndView receivefeedback(ModelAndView andView, String feedback_code, Map<String, String> params) throws Exception{
+	public ModelAndView receivefeedback(ModelAndView andView, String feedback_code, HttpSession session, Map<String, String> params) throws Exception{
 		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
 		params.put("feedback_code", feedback_code);
 		
-		FeedbackVO receiveInfo = service.feedbackInfo(params);
+		FeedbackVO receiveInfo = service.feedbackInfoRe(params);
+		
+		andView.addObject("receiveInfo", receiveInfo);
+		andView.setViewName("jsonConvertView"); 
+		return andView;
+	}
+	@RequestMapping("sendfeedback")
+	public ModelAndView sendfeedback(ModelAndView andView, String feedback_code, HttpSession session, Map<String, String> params) throws Exception{
+		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		params.put("feedback_code", feedback_code);
+		
+		FeedbackVO receiveInfo = service.feedbackInfoSend(params);
 		
 		andView.addObject("receiveInfo", receiveInfo);
 		andView.setViewName("jsonConvertView"); 

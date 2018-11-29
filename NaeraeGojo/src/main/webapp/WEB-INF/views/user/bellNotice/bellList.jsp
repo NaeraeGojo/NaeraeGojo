@@ -46,7 +46,6 @@ $(function(){
     
     $('#modal1 tr:gt(0)').click(function(){
 	   	var feedback_code = $(this).find('td:eq(0) input').val();
-        
     	
         $.ajax({
             type :"POST"
@@ -86,7 +85,7 @@ $(function(){
     	
         $.ajax({
             type :"POST"
-            , url : "${pageContext.request.contextPath}/user/feedback/receivefeedback.do"
+            , url : "${pageContext.request.contextPath}/user/feedback/sendfeedback.do"
             , data : {feedback_code : feedback_code}
             , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             , error : function(request, status, error) {
@@ -117,9 +116,16 @@ $(function(){
         
     });
     
+    
+    $('#joinBtn').click(function() {
+		
+    	
+	});
+    
    
 });
 
+// 피드백 읽음 상태 전환
 function btnclick(feedback_code) {
 	
     $.ajax({
@@ -134,6 +140,26 @@ function btnclick(feedback_code) {
         	$(location).attr('href', '${pageContext.request.contextPath}/user/bell/bellList.do');
         }
     });
+}
+
+
+// 프로젝트 참여
+function joinBtn(video_chat_join_code) {
+	
+    $.ajax({
+        type :"POST"
+        , url : "${pageContext.request.contextPath}/user/feedback/feedbackCheck.do"
+        , data : {video_chat_join_code : video_chat_join_code}
+        , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+        , error : function(request, status, error) {
+                 alert("error : " + request.status );
+          }
+        , success : function(dd){
+            $(location).attr('href', '${pageContext.request.contextPath}/user/bell/bellList.do');
+        }
+    });	
+    
+    
 }
 </script>    
     
@@ -355,8 +381,8 @@ table th,td{
                     <th>No.</th>
                     <th>프로젝트명</th>
                     <th>관련 업무</th>
-                    <th>보낸 사람</th>
-                    <th>받은 날짜</th>
+                    <th>받은 사람</th>
+                    <th>보낸 날짜</th>
                     <th>상태</th>
                   </tr>
                   </thead>
@@ -412,7 +438,7 @@ table th,td{
           <div class="box box-2team">
             <div class="box-header with-border">
               <h3 class="box-title">화상회의 초대
-              <span class="label label-warning pull-right">2</span></h3>
+              <span class="label label-warning pull-right">${videoChatCnt }</span></h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -425,31 +451,24 @@ table th,td{
                   <thead>
                   <tr>
                     <th>No.</th>
-                    <th>채팅방 이름</th>
+                    <th>관련 프로젝트명</th>
                     <th>초대자</th>
                     <th>초대날짜</th>
                     <th>참여여부</th>
                   </tr>
                   </thead>
                   <tbody>
+                  <c:forEach items="${videoChatList }" var="videoChatInfo">
                   <tr>
-                  	<td>1</td>
-                    <td>OR9842</td>
-                    <td>Call of Duty IV</td>
-                    <td>2018-11-14</td>
+                    <td><input type="hidden" name="video_chat_room_code" value="${videoChatInfo.video_chat_room_code}">${videoChatInfo.rnum }</td>
+                    <td>${videoChatInfo.project_name}</td>
+                    <td>${videoChatInfo.emp_name }</td>
+                    <td>${videoChatInfo.video_chat_room_date }</td>
                     <td>
-                     <input type="button" class="btn btn-primary " value="참여">
+                     <input type="button" id="joinBtn" class="btn btn-primary" onclick="joinBtn(${videoChatInfo.video_chat_join_code})" value="참여">
                     </td>
                   </tr>
-                  <tr>
-                  	<td>2</td>
-                    <td>OR1848</td>
-                    <td>Samsung Smart TV</td>
-                    <td>2018-11-14</td>
-                    <td>
-                     <input type="button" class="btn btn-primary " value="참여">
-                    </td>
-                  </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>

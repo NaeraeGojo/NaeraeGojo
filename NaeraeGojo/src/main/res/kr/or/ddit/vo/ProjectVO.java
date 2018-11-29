@@ -20,4 +20,11 @@ public class ProjectVO {
 	private String rqpps_notice_agency;
 	private String emp_code;
 	
+	// 최동화 추가 -- 화상채팅에 필요함
+	private String position_name;
+	private String emp_name;
+	
+	private String rqpps_code;
+	
+	
 }

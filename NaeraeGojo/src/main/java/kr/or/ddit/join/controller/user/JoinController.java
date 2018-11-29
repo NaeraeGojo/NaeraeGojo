@@ -215,8 +215,7 @@ public class JoinController {
 			HttpSession session, Map<String, String> params,
 			ModelAndView andView) throws Exception {
 
-		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO"))
-				.getEmp_code();
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		params.put("rqpps_code", rqpps_code);
 
 		MpJoinVO mpJoinInfo = service.mpList(params);

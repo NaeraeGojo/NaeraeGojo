@@ -35,6 +35,7 @@
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/recs.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/profile.xml" />
 
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/scheduler.xml" />
 
 
 
