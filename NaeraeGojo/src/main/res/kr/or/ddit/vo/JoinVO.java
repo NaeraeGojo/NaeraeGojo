@@ -18,7 +18,7 @@ public class JoinVO {
 	private String rqpps_name;
 	private String emp_level;
 	private String rnum;
-	
+	private String project_code;
 	
 	
 }

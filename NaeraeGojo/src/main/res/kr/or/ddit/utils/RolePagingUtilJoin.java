@@ -16,7 +16,7 @@ public class RolePagingUtilJoin {
 	private int currentPage;        //현재 페이지 번호
 	private int totalCount;         //전체 게시글의 갯수
 	private int totalPage;          //전체 페이지의 갯수
-	private int blockCount = 10;    //한 페이지당 출력될 게시글의 갯수
+	private int blockCount = 13;    //한 페이지당 출력될 게시글의 갯수
 	private int blockPage = 5;		//페이지 별 출력될 페이지네이션 메뉴 갯수
 	private int startPage;			//출력되는 페이지네이션 메뉴의 시작 페이지 번호
 	private int endPage;			//출력되는 페이지네이션 메뉴의 마지막 페이지 번호

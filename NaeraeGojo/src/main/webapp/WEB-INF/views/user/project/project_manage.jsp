@@ -9,6 +9,10 @@
 	display: inline-block;
 	text-align: initial;
 }
+.proname{
+	color: #3a94c1;
+	text-decoration: none;
+}
 
 
 </style>
@@ -31,107 +35,74 @@ $(function(){
 </script>
 <br/>
 <br/>
-	
+
 <div class="row">
-	
+
 	<div class="procont">
 		<div class="col-md-1" style="float: right;">
-			<input id="insertProject" value="+ 프로젝트 등록" type="button"class="btn btn-block bg-yellow btn-lg "
+			<input id="insertProject" value="+ 프로젝트 등록" type="button" class="btn btn-block bg-yellow btn-lg "
 			style="float: right; background-color: #c8c8c8; border: 1px outset; width: 200px; margin-bottom: 14px;">
 		</div>
 	</div>
-	
-	<div class="procont">
-	<c:forEach items="${projectList}" var="projectList">
-		<div class="col-md-6">
-			<div class="box box-solid">
-				<div class="box-header with-border">
-					<a class="aa" name="${projectList.project_code }" id="${projectList.project_code }"> 
-						<spanclass ="labellabel-success">완료임박</span>
-						<h2>${projectList.project_name}</h2>
-					</a>
-				</div>
-				<div class="box-body">
-					<h4>
-						프로젝트 기간 : &nbsp;<i style="font-size: 20px;">${projectList.project_start}-${projectList.project_end}</i>
-					</h4>
-					<h2>
-						<sup style="font-size: 15px">진척률 &nbsp; </sup>${projectList.pw_percent}%
-					</h2>
-					<div class="progress">
-						<div
-							class="progress-bar progress-bar-primary progress-bar-striped"  aria-valuenow="${projectList.pw_percent}"
-							aria-valuemin="0" aria-valuemax="100" style="width: ${projectList.pw_percent}%" role="progressbar">
+
+	<section>
+		<div class="procont">
+			<c:forEach items="${projectList}" var="projectList">
+				<div class="col-md-6">
+					<div class="box box-solid">
+						<div class="box-header with-border">
+							<a class="aa" name="${projectList.project_code }" id="${projectList.project_code }"> 
+								<c:if test="${projectList.pw_percent eq 100}">
+									<span class="label label-success">완료</span>
+								</c:if> 
+								<c:if test="${projectList.pw_percent >= 80 && projectList.pw_percent <= 99}">
+									<span class="label label-info">완료임박</span>
+								</c:if>
+								<c:if test="${projectList.pw_percent >= 0 && projectList.pw_percent <= 79}">
+									<span class="label label-warning">진행중</span>
+								</c:if>
+
+								<h2 title="${projectList.project_name }">
+									<c:if test="${ projectList.project_name.length() <= 12}">
+				              		${projectList.project_name }
+				              	</c:if>
+									<c:if test="${ projectList.project_name.length() > 12}">
+				              		${fn:substring(projectList.project_name,0,11) }...
+				              	</c:if>
+								</h2>
+							</a>
+						</div>
+						<div class="box-body proname">
+							<h4>
+								프로젝트 기간 : &nbsp;<i style="font-size: 20px;">${projectList.project_start}-${projectList.project_end}</i>
+							</h4>
+							<h2>
+								<sup style="font-size: 15px">진척률 &nbsp; </sup>${projectList.pw_percent}%
+							</h2>
+							<div class="progress">
+								<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar"
+								aria-valuenow="${projectList.pw_percent}" aria-valuemin="0" aria-valuemax="100" 
+								style="width: ${projectList.pw_percent}%"></div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</c:forEach>
+			</c:forEach>
+	</section>
 	${pagingUtil}
 	
-	<form action="${pageContext.request.contextPath }/12/main.jsp" method="post" class="form-inline pull-right">
-		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
-		<select class="form-control" name="search_keycode">
-			<option value="TOTAL">전체</option>
-			<option value="TITLE">프로젝트 명</option>
-			<option value="CONTENT">내용</option>
-			<option value="WRITER">진척률</option>
-		</select>
-		<button type="submit" class="btn btn-primary form-control">검색</button>
-	</form>
-	
+	<div class="procont">
+		<form action="${pageContext.request.contextPath }/12/main.jsp"
+			method="post" class="form-inline pull-right">
+			<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" />
+			 <select class="form-control" name="search_keycode">
+				<option value="TOTAL">전체</option>
+				<option value="TITLE">프로젝트 명</option>
+				<option value="CONTENT">내용</option>
+				<option value="WRITER">진척률</option>
+			</select>
+			<button type="submit" class="btn btn-primary form-control">검색</button>
+		</form>
 	</div>
-	<!--         <div class="col-md-6"> -->
-	<!--           <div class="box box-solid"> -->
-	<!--             <div class="box-header with-border"> -->
-	<!--               <p><span class="label label-info">진행중</span><h2>학사관리 프로그램</h2></p> -->
-	<!--             </div> -->
-	<!--             /.box-header -->
-	<!--             <div class="box-body"> -->
-	<!--              	<h4>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"> 2018.11.04 - 2019.08.12</i></h4> -->
-	<!--             	<h2><sup style="font-size: 15px">진척률 &nbsp; </sup> 20%</h2> -->
-	<!--               <div class="progress"> -->
-	<!--                 <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"  style="width: 20%"> -->
-	<!--                    <span class="sr-only">90% Complete (success)</span> -->
-	<!--                 </div> -->
-	<!--               </div> -->
-	<!--               </div> -->
-	<!--              </div> -->
-	<!--          </div> -->
 
-	<!--         <div class="col-md-6"> -->
-	<!--           <div class="box box-solid"> -->
-	<!--             <div class="box-header with-border"> -->
-	<!--               <p><span class="label label-success">완료임박</span><h2>모바일웹 앱 패키징</h2></p> -->
-	<!--             </div> -->
-	<!--             /.box-header -->
-	<!--             <div class="box-body"> -->
-	<!--              	<h4>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"> 2018.05.04 - 2018.11.29</i></h4> -->
-	<!--             	<h2><sup style="font-size: 15px">진척률&nbsp;</sup> 82%</h2> -->
-	<!--               <div class="progress"> -->
-	<!--                 <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"  style="width: 82%"> -->
-	<!--                    <span class="sr-only">90% Complete (success)</span> -->
-	<!--                 </div> -->
-	<!--               </div> -->
-	<!--               </div> -->
-	<!--              </div> -->
-	<!--          </div> -->
-	<!--         <div class="col-md-6"> -->
-	<!--           <div class="box box-solid"> -->
-	<!--             <div class="box-header with-border"> -->
-	<!--               <p><span class="label label-warning">보류중</span><h2>응용프로그램 개발</h2></p> -->
-	<!--             </div> -->
-	<!--             /.box-header -->
-	<!--             <div class="box-body"> -->
-	<!--              	<h4>프로젝트 기간 : &nbsp;<i style="font-size: 20px;"> 2017.11.14 - 2018.12.09</i></h4> -->
-	<!--             	<h2><sup style="font-size: 15px">진척률 &nbsp;</sup> 40%</h2> -->
-	<!--               <div class="progress"> -->
-	<!--                 <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"  style="width: 40%"> -->
-	<!--                    <span class="sr-only">90% Complete (success)</span> -->
-	<!--                 </div> -->
-	<!--               </div> -->
-	<!--               </div> -->
-	<!--              </div> -->
-	<!--         </div> -->
 </div>

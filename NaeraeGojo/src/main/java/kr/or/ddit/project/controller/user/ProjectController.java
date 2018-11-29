@@ -9,21 +9,15 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.utils.RolePagingUtil;
-import kr.or.ddit.utils.RolePagingUtil1Page4;
 import kr.or.ddit.utils.RolePagingUtilJoin;
 import kr.or.ddit.vo.EmpVO;
-import kr.or.ddit.vo.IssueResultVO;
-import kr.or.ddit.vo.IssueVO;
 import kr.or.ddit.vo.JoinVO;
-import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.ProjectVO;
-import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.SuggestVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,11 +37,14 @@ public class ProjectController {
 	@RequestMapping("project_manage")
 	public ModelAndView project_manage(HttpServletRequest request, HttpSession session, 
 			String search_keyword, String search_keycode, String currentPage, 
-			Map<String, String> params, ModelAndView andView, String project_code) throws Exception{
+			Map<String, String> params, ModelAndView andView, String project_code, String emp_code) throws Exception{
 		
 		project_code = (String) session.getAttribute("project_code");
 		session.setAttribute("project_code", project_code);
-	
+		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		params.put("emp_code", emp_code);
+
 		if(currentPage==null){
 			currentPage = "1";
 		}
@@ -57,7 +54,7 @@ public class ProjectController {
 		
 		int totalCount = service.totalCountPL(params);
 		
-		RolePagingUtil1Page4 pagingUtil = new RolePagingUtil1Page4(Integer.parseInt(currentPage),totalCount,request);
+		RolePagingUtil pagingUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request, 4);
 		
 		params.put("startCount",  String.valueOf(pagingUtil.getStartCount()));
 		params.put("endCount", String.valueOf(pagingUtil.getEndCount()));
@@ -110,12 +107,17 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("insertProject")
-	public String insertIssue(ProjectVO projectInfo, HttpSession session, 
+	public String insertIssue(ProjectVO projectInfo, String emp_code, HttpSession session, 
 			HttpServletRequest request, Map<String, String> params) throws Exception{
 		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		params.put("emp_code", emp_code);
+		
+		service.insertProjectInfo(projectInfo);
 		
 		return "redirect:/user/project/project_manage.do";
 	}
+	
 	@RequestMapping("pro/deleteProject/{project_code}")
 	public String deleteProject(@PathVariable("project_code") String project_code,
 			Map<String, String> params) throws Exception{
@@ -150,7 +152,6 @@ public class ProjectController {
 		
 		andView.addObject("projectInfo", projectInfo);
 		andView.setViewName("jsonConvertView");
-		
 		return andView;
 	}
 	

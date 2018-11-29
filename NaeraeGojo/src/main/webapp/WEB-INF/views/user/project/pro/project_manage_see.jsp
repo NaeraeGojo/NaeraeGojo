@@ -155,7 +155,7 @@ $(function(){
 						<c:forEach items="${joinList}" var="joinList">
 						<li>
 							<span class="handle"> <i class="fa fa-user"></i></span>
-							<input type="checkbox" value=""><span class="text">${joinList.emp_name }</span> 
+							<span class="text">${joinList.emp_name }</span> 
 							<div class="tools"><i class="fa fa-remove"></i></div>
 						</li>
 						</c:forEach>
@@ -163,7 +163,7 @@ $(function(){
 				</div>
 				<div class="box-footer clearfix no-border">
 					<button type="button" class="btn btn-default pull-right">
-						<i class="fa fa-plus"></i> 인원 초대
+						<i class="fa fa-plus"></i> 인원 추가
 					</button>
 				</div>
 			</div>
