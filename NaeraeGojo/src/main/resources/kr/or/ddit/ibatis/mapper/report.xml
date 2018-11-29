@@ -24,14 +24,14 @@
 		<dynamic prepend="and">
 			<isNotEmpty property="search_keyword">
 				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
-					rqpps_name like '%' || #search_keyword# ||'%'
-					or rqpps_nickname like '%' || #search_keyword# ||'%'
+					report_title like '%' || #search_keyword# ||'%'
+					or emp_name like '%' || #search_keyword# ||'%'
 				</isEqual>				
 				<isEqual property="search_keycode" compareValue="TITLE" >
-					rqpps_name like '%' || #search_keyword# ||'%'
+					report_title like '%' || #search_keyword# ||'%'
 				</isEqual>				
 				<isEqual property="search_keycode" compareValue="WRITER" >
-					rqpps_nickname like '%' || #search_keyword# ||'%'
+					emp_name like '%' || #search_keyword# ||'%'
 				</isEqual>				
 			</isNotEmpty>
 		</dynamic>
@@ -80,12 +80,17 @@
 		<include refid="searchCondition"/>
 	</select>
 	
-	<select id="joinList" parameterClass="map" resultClass="joinVO">
+	<select id="reportList" parameterClass="map" resultClass="reportVO">
 		select b.*
 		from (select rownum rnum, a.*
-				from (<include refid="selectAll"/>
+				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+						FROM REPORT A, EMP B
+						WHERE A.EMP_CODE = B.EMP_CODE
+						AND  A.EMP_CODE = #emp_code#
+						AND  A.REPORT_PL_STATUS = 'i'
+						AND  A.REPORT_PM_STATUS = 'i'
 						<include refid="searchCondition"/>
-						order by join_code asc
+						order by report_code asc
 						) a ) b
 		<![CDATA[						
 		where b.rnum <= #startCount#
@@ -93,6 +98,37 @@
 		]]>		
 		order by b.rnum desc
 	</select>
+	
+	<select id="reportView" parameterClass="map" resultClass="reportVO">
+		SELECT A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION, EMP_CODE_PL,EMP_CODE_PM,
+				A.REPORT_TITLE,A.REPORT_CONTENT,D.PROJECT_NAME,A.REPORT_PL_STATUS,
+				A.REPORT_PM_STATUS,D.PROJECT_CODE
+		FROM REPORT A, EMP B, PW C, PROJECT D
+		WHERE A.EMP_CODE = B.EMP_CODE
+		AND   A.PW_CODE = C.PW_CODE
+		AND   C.PROJECT_CODE = D.PROJECT_CODE
+		AND A.REPORT_CODE = #report_code#
+	</select>
+	
+	<select id="reportStatus" parameterClass="map" resultClass="reportVO">
+		SELECT C.EMP_CODE,C.EMP_NAME,A.POSITION_NAME,C.EMP_DEPARTMENT,C.EMP_LEVEL,
+		D.REPORT_PL_STATUS,D.REPORT_PM_STATUS,C.EMP_DEPARTMENT
+	     FROM JOIN A, PROJECT B, EMP C,REPORT D
+	     WHERE A.PROJECT_CODE = B.PROJECT_CODE
+	     AND   A.EMP_CODE = C.EMP_CODE
+         AND   C.EMP_CODE = D.EMP_CODE
+	     AND   B.PROJECT_CODE = #project_code#
+	     AND   A.POSITION_NAME IN ('PM','PL')
+	</select>
+	
+<!-- 	<select id="reportList" parameterClass="map" resultClass="reportVO"> -->
+<!-- 		SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS -->
+<!-- 		FROM REPORT A, EMP B -->
+<!-- 		WHERE A.EMP_CODE = B.EMP_CODE -->
+<!-- 		AND  A.EMP_CODE = #emp_code# -->
+<!-- 		AND  A.REPORT_PL_STATUS = 'i' -->
+<!-- 		AND  A.REPORT_PM_STATUS = 'i' -->
+<!-- 	</select> -->
 	
 	
 	<select id="projectNm" parameterClass="map" resultClass="projectVO">

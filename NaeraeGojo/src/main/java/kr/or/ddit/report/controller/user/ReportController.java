@@ -1,6 +1,7 @@
 package kr.or.ddit.report.controller.user;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.report.service.IReportService;
+import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.NotEmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.ReportVO;
@@ -16,6 +19,7 @@ import kr.or.ddit.vo.ReportVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,9 +91,45 @@ public class ReportController {
 	}
 	//개발자  보낸보고서함 리스트
 	@RequestMapping("report_listDev")
-	public String report_listDev(){
-		return "user/report/report_listDev"; 
+	public ModelAndView report_listDev(HttpServletRequest request,
+									ModelAndView andView,
+									HttpSession session,
+									String search_keyword,
+									String search_keycode,
+									String currentPage
+									,String emp_code) throws Exception{
+		if(currentPage==null){
+			currentPage = "1";
+		}
+		Map<String, String> params = new HashMap<String, String>();
+		
+		params.put("search_keyword", search_keyword);
+		params.put("search_keycode", search_keycode);
+		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		System.out.println("아디아디아디아디"+emp_code);
+		params.put("emp_code", emp_code);
+		
+		if(params != null){
+			String message = (String) params.get("message");
+			System.out.println("RedirectAttribute post 전송 파람 : " + message);
+		}
+		
+		
+		int totalCount = service.totalCount(params);
+		RolePagingUtil paginUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
+		params.put("startCount",  String.valueOf(paginUtil.getStartCount()));
+		params.put("endCount", String.valueOf(paginUtil.getEndCount()));
+		
+		List<ReportVO> reportList = service.reportList(params);
+		
+		andView.addObject("reportList",reportList);
+		andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
+		andView.setViewName("user/report/report_listDev");
+		return andView;
 	}
+	
+	
 	
 	
 	
@@ -170,10 +210,28 @@ public class ReportController {
 	
 	
 	//개발자  보낸보고서함 뷰/삭제
-	@RequestMapping("report_sendDeleteDev")
-	public String report_sendDeleteDev(){
-		return "user/report/report_sendDeleteDev"; 
+	@RequestMapping("report_sendDeleteDev/{report_code}")
+	public ModelAndView report_sendDeleteDev(
+			HttpServletRequest request,
+			ModelAndView andView,
+			ReportVO vo,
+			@PathVariable String report_code, Map<String, String> params ,Map<String, String> params1
+			)throws Exception{
+		params.put("report_code", report_code);
+		vo = service.reportView(params);
+		String project_code = vo.getProject_code();
+		params1.put("project_code", project_code);
+		List<ReportVO> stList = service.reportStatus(params1);
+//		vo = service.noticeAllInfo(params);
+//		service.updateHit(params);
+		andView.addObject("vo",vo);
+		andView.addObject("stList",stList);
+		andView.setViewName("user/report/report_sendDeleteDev");
+		
+		return andView;
 	}
+	
+	
 	//PM  받은보고서함 리스트
 	@RequestMapping("report_listPM")
 	public void report_listPM(){

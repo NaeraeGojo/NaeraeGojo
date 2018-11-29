@@ -42,11 +42,6 @@ public class IReportDaoImpl implements IReportDao{
 		return null;
 	}
 
-	@Override
-	public ReportVO getReport(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<ProjectVO> projectNm(Map<String, String> params)
@@ -69,6 +64,23 @@ public class IReportDaoImpl implements IReportDao{
 	public List<ProjectWorkVO> pwName(Map<String, String> params)
 			throws SQLException {
 		return client.queryForList("report.pwName", params);
+	}
+
+	@Override
+	public List<ReportVO> reportList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("report.reportList",params);
+	}
+
+	@Override
+	public ReportVO reportView(Map<String, String> params) throws SQLException {
+		return (ReportVO) client.queryForObject("report.reportView",params);
+	}
+
+	@Override
+	public List<ReportVO> reportStatus(Map<String, String> params1)
+			throws SQLException {
+		return client.queryForList("report.reportStatus", params1);
 	}
 
 }

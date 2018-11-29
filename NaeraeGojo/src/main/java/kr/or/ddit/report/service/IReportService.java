@@ -22,4 +22,10 @@ public interface IReportService {
 	public List<ReportVO> projectPeople(Map<String, String> params) throws SQLException;
 	//관련프로젝트의 업무
 	public List<ProjectWorkVO> pwName(Map<String, String> params) throws SQLException;
+	//개발자 리스트
+	public List<ReportVO> reportList(Map<String, String> params) throws SQLException;
+	//클릭했을시 개발자 뷰
+	public ReportVO reportView(Map<String, String> params) throws SQLException;
+	//결재 뷰
+	public List<ReportVO> reportStatus(Map<String, String> params1) throws SQLException;
 }

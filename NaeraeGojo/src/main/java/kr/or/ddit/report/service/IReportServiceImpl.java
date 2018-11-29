@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.report.dao.IReportDao;
+import kr.or.ddit.vo.NotEmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.ReportVO;
@@ -73,6 +74,29 @@ public class IReportServiceImpl implements IReportService{
 	public List<ProjectWorkVO> pwName(Map<String, String> params)
 			throws SQLException {
 		return dao.pwName(params);
+	}
+
+	@Override
+	public List<ReportVO> reportList(Map<String, String> params)
+			throws SQLException {
+		List<ReportVO> list = null;
+		list = dao.reportList(params);
+		return list;
+	}
+
+	@Override
+	public ReportVO reportView(Map<String, String> params) throws SQLException {
+		ReportVO vo = null;
+		vo = dao.reportView(params);
+		return vo;
+	}
+
+	@Override
+	public List<ReportVO> reportStatus(Map<String, String> params1)
+			throws SQLException {
+		List<ReportVO> list = null;
+		list = dao.reportStatus(params1);
+		return list;
 	}
 
 }
