@@ -17,35 +17,33 @@ public class ISchedulerDaoImpl implements ISchedulerDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertScheduler(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public SchedulerVO schedulerInfo(Map<String, String> params) throws SQLException {
+		return (SchedulerVO) client.queryForObject("scheduler.schedulerInfo", params);
 	}
 
 	@Override
-	public void updateScheduler(SchedulerVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public List<SchedulerVO> schedulerList(Map<String, String> params) throws SQLException {
+		return client.queryForList("scheduler.schedulerList", params);
+	}
+
+	@Override
+	public void insertScheduler(SchedulerVO schedulerInfo) throws SQLException {
+		client.insert("scheduler.insertScheduler", schedulerInfo);
+	}
+
+	@Override
+	public void updateScheduler(SchedulerVO schedulerInfo) throws SQLException {
+		client.update("scheduler.updateScheduler", schedulerInfo);
 	}
 
 	@Override
 	public void deleteScheduler(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("scheduler.deleteScheduler", params);
 	}
 
 	@Override
-	public List<SchedulerVO> getSchedulerList(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public SchedulerVO getScheduler(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("scheduler.totalCount", params);
 	}
 
 }
