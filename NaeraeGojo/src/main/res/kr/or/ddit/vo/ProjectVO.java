@@ -24,5 +24,7 @@ public class ProjectVO {
 	private String position_name;
 	private String emp_name;
 	
+	private String rqpps_code;
+	
 	
 }
