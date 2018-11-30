@@ -92,8 +92,7 @@ $(function(){
 	${pagingUtil}
 	
 	<div class="procont">
-		<form action="${pageContext.request.contextPath }/12/main.jsp"
-			method="post" class="form-inline pull-right">
+		<form action="${pageContext.request.contextPath }/12/main.jsp" method="post" class="form-inline pull-right">
 			<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" />
 			 <select class="form-control" name="search_keycode">
 				<option value="TOTAL">전체</option>

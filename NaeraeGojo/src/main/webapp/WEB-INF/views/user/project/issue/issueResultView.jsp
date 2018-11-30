@@ -103,17 +103,24 @@ $(function(){
 								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='1' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '1'}">checked="checked"</c:if> /> 즉시
-								</label> 
+								</label>
+								 
 								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='2' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '2'}">checked="checked"</c:if> /> 긴급
-								</label> <label for="issue_level" class="col-sm-2 control-label">
+								</label> 
+								
+								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='3' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '3'}">checked="checked"</c:if> /> 높음
-								</label> <label for="issue_level" class="col-sm-2 control-label">
+								</label> 
+								
+								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='4' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '4'}">checked="checked"</c:if> /> 보통
-								</label> <label for="issue_level" class="col-sm-2 control-label">
+								</label> 
+								
+								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='5' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '5'}">checked="checked"</c:if> /> 낮음
 								</label>

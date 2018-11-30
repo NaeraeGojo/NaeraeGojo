@@ -160,7 +160,6 @@ $(function(){
 		$('input[name=rqpps_qualification]').removeAttr('readonly');
 		$('input[name=rqpps_budget]').removeAttr('readonly');
 		$('#contents').removeAttr('readonly');
-// 		$('.a_files').hide();
 		$('input[name=files]').attr('style','display:inline-block');
 		
 		
