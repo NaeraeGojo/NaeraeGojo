@@ -78,4 +78,15 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 		client.update("videoRoom.updateUrl", params);
 	}
 
+	@Override
+	public void ChatRoomEnd(Map<String, String> params) throws SQLException {
+		client.update("videoRoom.ChatRoomEnd", params);
+	}
+
+	@Override
+	public List<ChatListTempVO> getChatStep3(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("videoRoom.getChatStep3", params);
+	}
+
 }

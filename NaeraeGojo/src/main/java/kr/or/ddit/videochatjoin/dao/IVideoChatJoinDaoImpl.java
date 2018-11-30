@@ -60,4 +60,9 @@ public class IVideoChatJoinDaoImpl implements IVideoChatJoinDao{
 		return (String) client.queryForObject("videoJoin.getUrlInfo", video_chat_room_code);
 	}
 
+	@Override
+	public void ChatJoinEnd(Map<String, String> params) throws SQLException {
+		client.update("videoJoin.ChatJoinEnd", params);
+	}
+
 }
