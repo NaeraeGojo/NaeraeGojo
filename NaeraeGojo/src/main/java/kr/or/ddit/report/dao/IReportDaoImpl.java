@@ -50,8 +50,8 @@ public class IReportDaoImpl implements IReportDao{
 	}
 
 	@Override
-	public int totalCount(Map<String, String> params) throws SQLException {
-		return (int) client.queryForObject("report.totalCount",params);
+	public int totalCountDEV(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("report.totalCountDEV",params);
 	}
 
 	@Override
@@ -81,6 +81,34 @@ public class IReportDaoImpl implements IReportDao{
 	public List<ReportVO> reportStatus(Map<String, String> params1)
 			throws SQLException {
 		return client.queryForList("report.reportStatus", params1);
+	}
+
+	@Override
+	public ReportVO projectPeoplePM(Map<String, String> params)
+			throws SQLException {
+		return (ReportVO) client.queryForObject("report.projectPeoplePM",params);
+	}
+
+	@Override
+	public String insertReportPL(ReportVO rvo) throws SQLException {
+		return (String) client.insert("report.insertReportPL",rvo);
+	}
+
+	@Override
+	public List<ReportVO> reportListPL(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("report.reportListPL",params);
+	}
+
+	@Override
+	public int totalCountPL(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("report.totalCountPL",params);
+	}
+
+	@Override
+	public List<ReportVO> reportStatusPL(Map<String, String> params1)
+			throws SQLException {
+		return client.queryForList("report.reportStatusPL", params1);
 	}
 
 }

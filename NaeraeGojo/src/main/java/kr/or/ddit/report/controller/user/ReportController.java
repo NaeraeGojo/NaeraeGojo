@@ -68,23 +68,103 @@ public class ReportController {
 		return "";
 	}
 	
-	//PL 보낸/받은 보고서함 리스트
+	//PL 보낸 보고서함 리스트
 	@RequestMapping("report_listPL")
-	public void report_listPL(){};
+	public ModelAndView report_listPL(HttpServletRequest request,
+			ModelAndView andView,
+			HttpSession session,
+			String search_keyword,
+			String search_keycode,
+			String currentPage
+			,String emp_code) throws Exception{
+		if(currentPage==null){
+			currentPage = "1";
+		}
+		Map<String, String> params = new HashMap<String, String>();
+		
+		params.put("search_keyword", search_keyword);
+		params.put("search_keycode", search_keycode);
+		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		System.out.println("아디아디아디아디"+emp_code);
+		params.put("emp_code", emp_code);
+		
+		if(params != null){
+		String message = (String) params.get("message");
+		System.out.println("RedirectAttribute post 전송 파람 : " + message);
+		}
+		
+		
+		int totalCount = service.totalCountPL(params);
+		RolePagingUtil paginUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
+		params.put("startCount",  String.valueOf(paginUtil.getStartCount()));
+		params.put("endCount", String.valueOf(paginUtil.getEndCount()));
+		
+		List<ReportVO> reportListPL = service.reportListPL(params);
+		
+		andView.addObject("reportListPL",reportListPL);
+		andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
+		andView.setViewName("user/report/report_listPL");
+		return andView;
+		}
 	
 	//PL 보낸보고서함 등록/임시저장
-	@RequestMapping("report_sendInsertPL")
-	public String report_sendInsertPL(){
-		System.out.println("asdfasdf");
-		return "user/report/report_sendInsertPL"; 
-	}
-	//PL 보낸보고서함 삭제/뷰
-	@RequestMapping("report_sendDeletePL")
-	public String report_sendDeletePL(){
-		return "user/report/report_sendDeletePL"; 
+	@RequestMapping("report_sendFormPL")
+	public ModelAndView report_sendFormPL(
+			ModelAndView andView,
+			String emp_code,
+			HttpSession session,
+			Map<String, String> params) throws SQLException{
 		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		List<ProjectVO> proName = service.projectNm(params);
+		andView.addObject("proName",proName);
+		andView.setViewName("user/report/report_sendFormPL");
+		return andView; 
 	}
-	//PL 받은보고서함 뷰/삭제/피드백 고민만오지게햇네
+	
+	//PL INSERT
+		@RequestMapping("report_FinalInsertPL")
+		public String report_FinalInsertPL(
+				ReportVO rvo,
+				HttpSession session,
+				Map<String, String> params) throws SQLException{
+			
+			String fullEmpCode = rvo.getEmp_code();
+			rvo.setEmp_code_pm(fullEmpCode);
+			
+			String emp_code = null;
+			emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+			rvo.setEmp_code(emp_code);
+			service.insertReportPL(rvo);
+			
+			return "redirect:/user/report/report_listPL.do";
+		}
+	
+	
+	//PL 보낸보고서함 뷰
+	@RequestMapping("report_sendDeletePL/{report_code}")
+	public ModelAndView report_sendDeletePL(
+			HttpServletRequest request,
+			ModelAndView andView,
+			ReportVO vo,
+			@PathVariable String report_code, Map<String, String> params ,Map<String, String> params1
+			)throws Exception{
+		params.put("report_code", report_code);
+		vo = service.reportView(params);
+		String project_code = vo.getProject_code();
+		params1.put("project_code", project_code);
+		List<ReportVO> stList = service.reportStatusPL(params1);
+//		vo = service.noticeAllInfo(params);
+//		service.updateHit(params);
+		andView.addObject("vo",vo);
+		andView.addObject("stList",stList);
+		andView.setViewName("user/report/report_sendDeletePL");
+		
+		return andView;
+	}
+	//PL 받은보고서함 뷰/삭제/피드백
 	@RequestMapping("report_recViewPL")
 	public String report_recViewPL(){
 		return "user/report/report_recViewPL"; 
@@ -116,7 +196,7 @@ public class ReportController {
 		}
 		
 		
-		int totalCount = service.totalCount(params);
+		int totalCount = service.totalCountDEV(params);
 		RolePagingUtil paginUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
 		params.put("startCount",  String.valueOf(paginUtil.getStartCount()));
 		params.put("endCount", String.valueOf(paginUtil.getEndCount()));
@@ -201,6 +281,21 @@ public class ReportController {
 		params.put("project_code", project_code);
 		List<ReportVO> proPeople = service.projectPeople(params);
 		andView.addObject("proPeople",proPeople);
+		andView.setViewName("jsonConvertView");
+		
+		return andView; 
+	}
+	
+	//프로젝트코드를 받아서 관련사람들을 뽑아옴 ( PM emp_code 필요 ) PL전용
+	@RequestMapping("report_pw_peoplePL")
+	public ModelAndView report_pw_peoplePL(
+			ModelAndView andView,
+			String project_code,
+			Map<String, String> params) throws SQLException{
+		
+		params.put("project_code", project_code);
+		ReportVO proPeoplePM = service.projectPeoplePM(params);
+		andView.addObject("proPeoplePM",proPeoplePM);
 		andView.setViewName("jsonConvertView");
 		
 		return andView; 

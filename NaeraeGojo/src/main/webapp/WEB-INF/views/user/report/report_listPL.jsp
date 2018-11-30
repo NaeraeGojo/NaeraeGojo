@@ -44,64 +44,35 @@
 										<thead>
 											<tr>
 												<th scope="col" width="10%">No.</th>
-												<th scope="col" width="10%">확인 여부</th>
+												<th scope="col" width="10%">결재 여부</th>
 												<th scope="col" width="30%">제목</th>
 												<th scope="col" width="20%">작성자</th>
 												<th scope="col" width="20%">작성날짜</th>
 												<th scope="col" width="10%">조회수</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="codeId">
+										<c:forEach items="${reportListPL }" var="list">
 											<tr>
-												<td>1</td>
-												<td><span class="label label-success">승인 완료</span></td>
-												<td>일일회의 보고서입니다.</td>
-												<td>박희태</td>
-												<td>2018-11-11</td>
+												<td><input type=hidden value="${list.report_code }">${list.rnum }</td>
+												<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'i' }">
+												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
+												</c:if>
+												<td>${list.report_title }</td>
+												<td>${list.emp_name }</td>
+												<td>${list.report_day }</td>
 												<td>3</td>
 											</tr>
-											<tr>
-												<td>2</td>
-												<td><span class="label label-success">승인 완료</span></td>
-												<td>주간회의 보고서입니다.</td>
-												<td>박희태</td>
-												<td>2018-11-11</td>
-												<td>3</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
-												<td>이슈관리 보고서입니다.</td>
-												<td>최동화</td>
-												<td>2018-10-19</td>
-												<td>4</td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인
-														중&nbsp;&nbsp;</span></td>
-												<td>IT보안 보고서입니다.&nbsp;<span class="label label-warning">임시저장</span></td>
-												<td>전 현</td>
-												<td>2018-10-17</td>
-												<td>5</td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td><span class="label label-success">승인 완료</span></td>
-												<td>통계청 IT구축 보고서입니다.</td>
-												<td>최동화</td>
-												<td>2018-10-11</td>
-												<td>4</td>
-											</tr>
+										</c:forEach>
 										</tbody>
 									</table>
 								</div>
 								<!-- /.table-responsive -->
 							</div>
-							${pagingUtil}
+							${pagingHtmls}
 						</div>
 
-						<form action="${pageContext.request.contextPath}/user/report/report_listDev.do"
+						<form action="${pageContext.request.contextPath}/user/report/report_listPL.do"
 							method="post" class="form-inline pull-right">
 							<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" /> 
 							<select class="form-control" name="search_keycode">
@@ -126,12 +97,14 @@
 <script type="text/javascript">
 $(function() {
 	$('#btn2').click(function() {
-		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendFormDev.do');
+		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendFormPL.do');
 	})
 
-	$('#sendDelete tr:gt(0)').click(function() {
-		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
-	});
+	$('table tr:gt(0)').click(function(){
+//     	var rnum = $(this).find('td:eq(0)').text();
+    	var report_code = $(this).find('td:eq(0) input').val();
+		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeletePL/'+report_code+'.do');
+    });
 })
 </script>
 

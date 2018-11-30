@@ -1,6 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <style>
 #secondDiv {
@@ -80,6 +80,75 @@ $(function(){
 	});
 	
 	
+	// 개설자 이외 참가자들 화상회의 방 나가기 
+	$('#endBtn').click(function(){
+		
+		var video_chat_room_code = $('input[name=room_code]').val();
+		
+		BootstrapDialog.show({
+            message: '화상회의를 종료하시겠습니까?',
+            buttons: [{
+                label: '나가기',
+                cssClass: 'btn-primary',
+                action: function(){
+                	
+                    $.ajax({
+                        type : "POST"
+                        , url : "${pageContext.request.contextPath}/user/videoChatJoin/getOutRoom.do"
+                        , dataType : "json"
+                        , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+                        , data : {video_chat_room_code : video_chat_room_code}
+                        , error : function(request, status, error) {
+                            alert("error : " + request.status);
+                        }
+                        , success : function(result) {
+                            $(location).attr('href', '${pageContext.request.contextPath}/user/bell/bellList.do');
+                        }
+                    });                	
+                }
+            }, {
+                label: '닫기',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+            }]
+        });
+		
+	});
+	
+	$('#pmEndBtn2').click(function(){
+		
+        var video_chat_room_code = $('input[name=room_code]').val();
+        
+        BootstrapDialog.show({
+            message: '화상회의를 종료하시겠습니까?',
+            buttons: [{
+                label: '나가기',
+                cssClass: 'btn-primary',
+                action: function(){
+                    
+                    $.ajax({
+                        type : "POST"
+                        , url : "${pageContext.request.contextPath}/user/videoChatJoin/endChatRoom.do"
+                        , dataType : "json"
+                        , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+                        , data : {video_chat_room_code : video_chat_room_code}
+                        , error : function(request, status, error) {
+                            alert("error : " + request.status);
+                        }
+                        , success : function(result) {
+                            $(location).attr('href', '${pageContext.request.contextPath}/user/video/videoChatStep3/'+video_chat_room_code +'.do');
+                        }
+                    });                 
+                }
+            }, {
+                label: '닫기',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+            }]
+        });		
+	});
 	
 });
 
@@ -95,8 +164,11 @@ $(function(){
 				<div class="box-header with-border">
 					<b class="box-title"><label><h3>${projectInfo.project_name }_</h3></label> 화상회의 </b> / ${projectInfo.position_name } : ${projectInfo.emp_name } <br/>
 					프로젝트 기간 :  ${projectInfo.project_start} ~ ${projectInfo.project_end}
-					<button id="startBtn" class="btn btn-warning btn-lg btn-flat pull-right" >회의시작</button>
-					<input id="urlText" name="video_chat_room_url" type="text" class="pull-right"  placeholder="상단의 url 주소를 복사하여 입력해주세요.">
+					
+					<c:if test="${projectInfo.emp_code == LOGIN_EMPINFO.emp_code }">
+					   <button id="startBtn" class="btn btn-warning btn-lg btn-flat pull-right" >회의시작</button>
+						<input id="urlText" name="video_chat_room_url" type="text" class="pull-right"  placeholder="상단의 url 주소를 복사하여 입력해주세요.">
+					</c:if>
 					<input type="hidden" value="${video_chat_room_code }" name="room_code"> 
 				</div>
 				
@@ -127,7 +199,12 @@ $(function(){
 			
 					<div class="box-footer clearfix" style="margin-top: 700px;">
 						<div class="col-sm-12">
-							<button  style="width: 80px;" class="btn btn-danger btn-lg btn-flat pull-right">종료</button>
+						  <c:if test="${projectInfo.emp_code != LOGIN_EMPINFO.emp_code }">
+							<button  style="width: 80px;" id="endBtn" class="btn btn-danger btn-lg btn-flat pull-right">나가기</button>
+					       </c:if>		 
+						  <c:if test="${projectInfo.emp_code == LOGIN_EMPINFO.emp_code }">
+							<button  style="width: 80px;" id="pmEndBtn2" class="btn btn-danger btn-lg btn-flat pull-right">종료</button>
+						  </c:if>
 						</div>
 					</div>
 			

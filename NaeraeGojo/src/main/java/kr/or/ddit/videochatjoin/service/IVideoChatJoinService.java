@@ -21,4 +21,6 @@ public interface IVideoChatJoinService {
 
 	public String getUrlInfo(String video_chat_room_code)throws SQLException;
 
+	public void ChatJoinEnd(Map<String, String> params) throws SQLException;
+
 }

@@ -74,9 +74,60 @@
 		
 	</insert>
 	
-	<select id="totalCount" parameterClass="map" resultClass="int">
-		select count(report_code)
-		  from report
+	<insert id="insertReportPL" parameterClass="reportVO">
+		<selectKey keyProperty="report_code" resultClass="string">
+			select report_seq.nextval from dual
+		</selectKey>
+		INSERT INTO REPORT (
+							REPORT_CODE,
+							REPORT_TITLE,
+							REPORT_DAY,
+							REPORT_CONTENT,
+							REPORT_RC,
+							REPORT_DATE,
+							REPORT_DELETE,
+							EMP_CODE,
+							PW_CODE,
+							REPORT_PL_STATUS,
+							REPORT_PM_STATUS,
+							EMP_CODE_PL,
+							EMP_CODE_PM
+							) 
+                    VALUES(
+		                    #report_code#,
+		                    #report_title#,
+		                    sysdate,
+		                    #report_content#,
+		                    default,
+		                    #report_date#,
+							default,
+							#emp_code#,
+							#pw_code#,
+							'k',
+							default,
+							#emp_code_pl#,
+							#emp_code_pm#
+							)
+		
+	</insert>
+	
+	<select id="totalCountDEV" parameterClass="map" resultClass="int">
+		  SELECT COUNT(A.REPORT_CODE)
+			FROM REPORT A, EMP B
+			WHERE A.EMP_CODE = B.EMP_CODE
+			AND  A.EMP_CODE = #emp_code#
+			AND  A.REPORT_PL_STATUS = 'i'
+			AND  A.REPORT_PM_STATUS = 'i'
+		<include refid="searchCondition"/>
+	</select>
+	
+	<select id="totalCountPL" parameterClass="map" resultClass="int">
+		  SELECT COUNT(A.REPORT_CODE)
+			FROM REPORT A, EMP B
+			WHERE A.EMP_CODE = B.EMP_CODE
+			AND  A.EMP_CODE = #emp_code#
+			AND  A.REPORT_PL_STATUS = 'k'
+			AND  A.REPORT_PM_STATUS = 'i'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -91,6 +142,25 @@
 						AND  A.REPORT_PM_STATUS = 'i'
 						<include refid="searchCondition"/>
 						order by report_code asc
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startCount#
+		and b.rnum >= #endCount#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
+	<select id="reportListPL" parameterClass="map" resultClass="reportVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+						FROM REPORT A, EMP B
+						WHERE A.EMP_CODE = B.EMP_CODE
+						AND  A.EMP_CODE = #emp_code#
+						AND  A.REPORT_PL_STATUS = 'k'
+						AND  A.REPORT_PM_STATUS = 'i'
+						<include refid="searchCondition"/>
+						order by report_code
 						) a ) b
 		<![CDATA[						
 		where b.rnum <= #startCount#
@@ -121,6 +191,17 @@
 	     AND   A.POSITION_NAME IN ('PM','PL')
 	</select>
 	
+	<select id="reportStatusPL" parameterClass="map" resultClass="reportVO">
+		SELECT C.EMP_CODE,C.EMP_NAME,A.POSITION_NAME,C.EMP_DEPARTMENT,C.EMP_LEVEL,
+		D.REPORT_PL_STATUS,D.REPORT_PM_STATUS,C.EMP_DEPARTMENT
+	     FROM JOIN A, PROJECT B, EMP C,REPORT D
+	     WHERE A.PROJECT_CODE = B.PROJECT_CODE
+	     AND   A.EMP_CODE = C.EMP_CODE
+         AND   C.EMP_CODE = D.EMP_CODE
+	     AND   B.PROJECT_CODE = #project_code#
+	     AND   A.POSITION_NAME = 'PM'
+	</select>
+	
 <!-- 	<select id="reportList" parameterClass="map" resultClass="reportVO"> -->
 <!-- 		SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS -->
 <!-- 		FROM REPORT A, EMP B -->
@@ -146,6 +227,15 @@
 	     AND   A.EMP_CODE = C.EMP_CODE
 	     AND   B.PROJECT_CODE = #project_code#
 	     AND   A.POSITION_NAME IN ('PM','PL')
+	</select>
+	
+	<select id="projectPeoplePM" parameterClass="map" resultClass="reportVO">
+		 SELECT C.EMP_CODE,C.EMP_NAME,A.POSITION_NAME,C.EMP_DEPARTMENT,C.EMP_LEVEL
+	     FROM JOIN A, PROJECT B, EMP C
+	     WHERE A.PROJECT_CODE = B.PROJECT_CODE
+	     AND   A.EMP_CODE = C.EMP_CODE
+	     AND   B.PROJECT_CODE = #project_code#
+	     AND   A.POSITION_NAME = 'PM'
 	</select>
 	
 	<select id="pwName" parameterClass="map" resultClass="pwVO">

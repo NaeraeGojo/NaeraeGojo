@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="videoFile">
+	<typeAlias alias="videoFileVO" type="kr.or.ddit.vo.VideoFileVO"/>
+	
+	<insert id="insertChatFile">
+        <selectKey keyProperty="video_file_code" resultClass="string">
+            select video_file_seq.nextval from dual
+        </selectKey>
+        
+        insert into video_file (video_file_code
+								, video_file_name
+								, video_file_save_name
+								, video_file_volume
+								, video_chat_room_code)	  
+								
+						  values (#video_file_code#
+                                , #video_file_name#
+                                , #video_file_save_name#
+                                , #video_file_volume#
+                                , #video_chat_room_code#) 
+	</insert>
+	
+<!--     <statement id="meetFileItems" resultClass="meetFileVO"> -->
+<!--         select *  -->
+<!--         from meeting_file -->
+<!--         where meeting_code = #meeting_code# -->
+<!--     </statement>	 -->
+    
+<!--     <select id="getMeetingFile" parameterClass="map" resultClass="meetFileVO"> -->
+<!--     	select *  -->
+<!--     	from meeting_file -->
+<!--     	where meeting_file_code = #meeting_file_code# -->
+<!--     </select> -->
+	
+    
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -74,24 +74,18 @@ public class RecsRoomController {
 		params.put("recsroom_code", recsroom_code);
 		RecsRoomVO rrv = service.getRecsRoom(params);
 		
+		int recsroom_hit = Integer.parseInt(rrv.getRecsroom_hit());
+		
+		recsroom_hit ++;
+		
+		rrv.setRecsroom_hit(String.valueOf(recsroom_hit));
+		
+		MultipartFile[] files = {};
+		
+		service.updateRecsRoom(rrv, files);
+		
 		model.addAttribute("rrv",rrv);
 		
-		List<ProjectAllFileVO> pfl = rrv.getItems();
-		
-		List<ProjectAllFileVO> ifl = new ArrayList<ProjectAllFileVO>();
-		List<ProjectAllFileVO> nfl = new ArrayList<ProjectAllFileVO>();
-		
-		if(pfl != null){
-			for(ProjectAllFileVO pfv : pfl){
-				if(pfv.getProject_all_file_contype().contains("image")){
-					ifl.add(pfv);
-				}else{
-					nfl.add(pfv);
-				}
-			}
-			model.addAttribute("ifl",ifl);
-			model.addAttribute("nfl",nfl);
-		}
 		
 		return model;
 	}
@@ -105,16 +99,24 @@ public class RecsRoomController {
 		return "redirect:/user/project/recs/recsList.do";
 	}
 	
-	
-	public String deleteRecsRoom(String bo_no) throws Exception{
+	@RequestMapping("recsDelete")
+	public String deleteRecsRoom(String recsroom_code
+								, Map<String, String> params) throws Exception{
+		params.put("recsroom_code", recsroom_code);
 		
-		return "";
+		service.deleteRecsRoom(params);
+		
+		return "redirect:/user/project/recs/recsList.do";
 	}
 	
-	
-	public String updateRecsRoom(RecsRoomVO rrv ,HttpServletRequest request) throws Exception{
+	@RequestMapping("recsUpdate")
+	public String updateRecsRoom(RecsRoomVO rrv 
+								, @RequestParam("files") MultipartFile[] files
+								, HttpServletRequest request) throws Exception{
 		
-		return "";
+		service.updateRecsRoom(rrv,files);
+		
+		return "redirect:/user/project/recs/recsList.do";
 	}
 }
 

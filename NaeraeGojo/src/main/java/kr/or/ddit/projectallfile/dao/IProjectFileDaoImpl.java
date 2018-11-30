@@ -23,30 +23,26 @@ public class IProjectFileDaoImpl implements IProjectFileDao{
 	}
 
 	@Override
-	public void updateProjectFile(ProjectAllFileVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void updateProjectFile(ProjectAllFileVO pfv) throws SQLException {
+		client.update("profile.updateProjectFile",pfv);
 	}
 
 	@Override
 	public void deleteProjectFile(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("profile.deleteProjectFile",params);
 	}
 
 	@Override
 	public List<ProjectAllFileVO> getProjectFileList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("profile.fileList",params);
 	}
 
 	@Override
 	public ProjectAllFileVO getProjectFile(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (ProjectAllFileVO) client.queryForObject("profile.getProjectFile",params);
 	}
 	
 	

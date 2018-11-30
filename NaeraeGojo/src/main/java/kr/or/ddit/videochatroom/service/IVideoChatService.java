@@ -33,5 +33,9 @@ public interface IVideoChatService {
 	public ProjectVO getProjectNM(String video_chat_room_code) throws SQLException;
 
 	public void updateUrl(Map<String, String> params) throws SQLException;
+
+	public void ChatRoomEnd(Map<String, String> params) throws SQLException;
+
+	public List<ChatListTempVO> getChatStep3(Map<String, String> params)throws SQLException;
 	
 }

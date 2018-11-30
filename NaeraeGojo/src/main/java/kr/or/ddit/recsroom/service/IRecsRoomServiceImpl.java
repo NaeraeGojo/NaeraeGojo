@@ -40,16 +40,21 @@ public class IRecsRoomServiceImpl implements IRecsRoomService{
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
-	public void updateRecsRoom(RecsRoomVO rv) throws SQLException {
-		// TODO Auto-generated method stub
+	public void updateRecsRoom(RecsRoomVO rrv, MultipartFile[] files) throws SQLException {
+		dao.updateRecsRoom(rrv);
+		
+		List<ProjectAllFileVO> pfl = fileMapper.mapping(files, rrv.getRecsroom_code(), "1", rrv.getProject_code());
+		
+		for(ProjectAllFileVO pfv: pfl){
+			pfdao.insertProjectFile(pfv);
+		}
 		
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	public void deleteRecsRoom(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.deleteRecsRoom(params);
 	}
 
 	@Override
