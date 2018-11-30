@@ -151,8 +151,11 @@ function joinBtn(video_chat_join_code) {
                  alert("error : " + request.status );
           }
         , success : function(result){
-        	alert('완성');
-//             $(location).attr('href', '${pageContext.request.contextPath}/user/bell/bellList.do');
+            
+            boalert("화상회의 방으로 이동합니다.");
+            setTimeout(function(){
+                $(location).attr('href','${pageContext.request.contextPath}'+result.urlInfo);
+            },1500);
         }
     });	
     

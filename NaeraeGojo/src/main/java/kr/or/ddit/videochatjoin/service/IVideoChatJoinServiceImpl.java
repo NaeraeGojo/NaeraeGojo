@@ -66,5 +66,11 @@ public class IVideoChatJoinServiceImpl implements IVideoChatJoinService{
 		return dao.getUrlInfo(video_chat_room_code);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void ChatJoinEnd(Map<String, String> params) throws SQLException {
+		dao.ChatJoinEnd(params);
+	}
+
 
 }

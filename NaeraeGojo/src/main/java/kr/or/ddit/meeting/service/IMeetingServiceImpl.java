@@ -71,6 +71,7 @@ public class IMeetingServiceImpl implements IMeetingService{
 	@Override
 	public void updateMeetingInfo(MeetingVO mv)
 			throws SQLException {
+		
 		dao.updateMeetingInfo(mv);
 		
 //		if (files != null) {

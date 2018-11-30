@@ -165,7 +165,7 @@
     
     <select id="getProjectNM" parameterClass="string" resultClass="projectVO">
         select b.project_name, to_char(b.project_start, 'YYYY-MM-DD') as project_start, to_char(b.project_end, 'YYYY-MM-DD') as project_end
-                , d.emp_name, c.position_name
+                , d.emp_name, c.position_name,  a.emp_code
 		from video_chat_room a, project b, join c, emp d
 		where a.project_code = b.project_code
 		and c.project_code = a.project_code 
@@ -182,7 +182,23 @@
         where video_chat_room_code = #video_chat_room_code#
     </update>
     
+    <update id="ChatRoomEnd" parameterClass="map">
+        update video_chat_room
+        set video_chat_level_code = 'level3'
+        where video_chat_room_code = #video_chat_room_code#
+    </update>
     
+    <select id="getChatStep3" parameterClass="map" resultClass="chatTempVO">
+		select  a.video_chat_room_title, b.project_name, c.emp_name, 
+		            a.video_chat_room_content, a.video_chat_room_code, a.video_chat_room_date
+		from  video_chat_room a, project b,  emp c , video_chat_join d
+		where a.project_code = b.project_code 
+		and a.video_chat_room_code = d.video_chat_room_code 
+		and d.emp_code = c.emp_code
+		and d.video_chat_room_code = #video_chat_room_code#
+		group by a.video_chat_room_title, b.project_name, c.emp_name, a.video_chat_room_content, 
+		        d.video_chat_join_intime, d.video_chat_join_outtime, a.video_chat_room_code ,a.video_chat_room_date        
+    </select>
     
 </sqlMap>
 

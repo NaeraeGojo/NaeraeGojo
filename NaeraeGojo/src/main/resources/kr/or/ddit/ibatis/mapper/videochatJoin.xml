@@ -24,6 +24,13 @@
     	where video_chat_room_code = #video_chat_room_code#
     </select>
     
+    <update id="ChatJoinEnd" parameterClass="map">
+        update video_chat_join
+        set video_chat_join_outtime = sysdate
+        where video_chat_room_code = #video_chat_room_code#
+        and emp_code = #emp_code#
+    </update>
+    
     
 </sqlMap>
 

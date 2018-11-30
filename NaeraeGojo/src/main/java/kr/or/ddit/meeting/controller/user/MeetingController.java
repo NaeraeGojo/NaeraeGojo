@@ -141,24 +141,23 @@ public class MeetingController {
    
 	@RequestMapping("insertMeeting")
 	public String insertMeeting(MeetingVO mv, MeetPwVO mpv
-									, @RequestParam("files") MultipartFile files, Map<String, String> params
+									, MultipartFile files, Map<String, String> params
 									, HttpSession session) throws Exception{
 		
 		String[] result = mpv.getPw_code().split(",");
 		
 		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();	
 		mv.setEmp_code(emp_code);
-		
-		String meeting_code = service.insertMeetingInfo(mv, files);
-		
-		
-		
-		for (int i = 0; i < result.length; i++) {
-			params.put("meeting_code", meeting_code);
+		if(files != null){
 			
-			params.put("pw_code", result[i]);
-			service.insertmeetPw(params);
-			params.clear();
+			String meeting_code = service.insertMeetingInfo(mv, files);
+			for (int i = 0; i < result.length; i++) {
+				params.put("meeting_code", meeting_code);
+				
+				params.put("pw_code", result[i]);
+				service.insertmeetPw(params);
+				params.clear();
+			}
 		}
 		
 		return "redirect:/user/meetingFile/meetingFileList.do";
