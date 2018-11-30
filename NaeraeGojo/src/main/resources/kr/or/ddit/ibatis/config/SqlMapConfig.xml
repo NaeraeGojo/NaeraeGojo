@@ -37,6 +37,7 @@
 
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/scheduler.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/videochatJoin.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/videoChatFile.xml" />
 
 
 

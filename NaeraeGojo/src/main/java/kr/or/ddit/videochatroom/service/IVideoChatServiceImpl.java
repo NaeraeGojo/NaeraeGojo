@@ -90,4 +90,16 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 		dao.updateUrl(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void ChatRoomEnd(Map<String, String> params) throws SQLException {
+		dao.ChatRoomEnd(params);
+	}
+
+	@Override
+	public List<ChatListTempVO> getChatStep3(Map<String, String> params)
+			throws SQLException {
+		return dao.getChatStep3(params);
+	}
+
 }

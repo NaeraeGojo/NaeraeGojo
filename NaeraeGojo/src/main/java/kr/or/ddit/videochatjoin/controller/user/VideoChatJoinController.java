@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.videochatjoin.service.IVideoChatJoinService;
+import kr.or.ddit.videochatroom.service.IVideoChatService;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.VideoChatJoinVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +22,8 @@ public class VideoChatJoinController {
 	@Autowired
 	private IVideoChatJoinService service;
 
-	
-	
-	public Model VideoChatRoomList(Model model, Map<String, String> params 
-								, HttpServletRequest request
-								, HttpSession session
-								, String currentPage) throws Exception{
-		
-		return model;
-	}
-	
+	@Autowired
+	private IVideoChatService chatService;
 	
 	@RequestMapping("videoChatJoin")
 	public ModelAndView insertVideoChatRoom(VideoChatJoinVO vcv, ModelAndView andView, String video_chat_join_code
@@ -44,10 +38,47 @@ public class VideoChatJoinController {
 		String video_chat_room_code = service.getVideoRoomCode(video_chat_join_code);
 		
 		// 화상회의 url 가져오기
-		String urlInfo = service.getUrlInfo(video_chat_room_code);
+		String tmpUrl = service.getUrlInfo(video_chat_room_code);
+		String[] urlInfo = tmpUrl.split("http://localhost");
 		
-		andView.addObject("urlInfo", urlInfo);
+		System.out.println(urlInfo[1]);
+		
+		andView.addObject("urlInfo", urlInfo[1]);
 		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	
+	@RequestMapping("getOutRoom")
+	public ModelAndView getOutRoom( ModelAndView andView, String video_chat_room_code
+								, HttpSession session, Map<String, String> params) throws Exception{
+		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);	
+		params.put("video_chat_room_code", video_chat_room_code);
+		
+		service.ChatJoinEnd(params);
+		
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	
+	@RequestMapping("endChatRoom")
+	public ModelAndView endChatRoom( ModelAndView andView, String video_chat_room_code
+			, HttpSession session, Map<String, String> params) throws Exception{
+		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);	
+		params.put("video_chat_room_code", video_chat_room_code);
+		
+		service.ChatJoinEnd(params);
+		
+		params.clear();
+		params.put("video_chat_room_code", video_chat_room_code);
+		
+		chatService.ChatRoomEnd(params);
+		
+		andView.setViewName("jsonConvertView");
+		
 		return andView;
 	}
 	
