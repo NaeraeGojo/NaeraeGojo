@@ -58,10 +58,10 @@ public class IReportServiceImpl implements IReportService{
 	}
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	@Override
-	public int totalCount(Map<String, String> params) throws SQLException {
-		int totalCount = 0;
-			totalCount=dao.totalCount(params);
-		return totalCount;
+	public int totalCountDEV(Map<String, String> params) throws SQLException {
+		int totalCountDEV = 0;
+			totalCountDEV=dao.totalCountDEV(params);
+		return totalCountDEV;
 	}
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	@Override
@@ -99,4 +99,40 @@ public class IReportServiceImpl implements IReportService{
 		return list;
 	}
 
+	@Override
+	public ReportVO projectPeoplePM(Map<String, String> params)
+			throws SQLException {
+		ReportVO list = null;
+		list = dao.projectPeoplePM(params);
+		return list;
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void insertReportPL(ReportVO rvo) throws SQLException {
+		dao.insertReportPL(rvo);
+	}
+
+	@Override
+	public List<ReportVO> reportListPL(Map<String, String> params)
+			throws SQLException {
+		List<ReportVO> list = null;
+		list = dao.reportListPL(params);
+		return list;
+	}
+
+	@Override
+	public int totalCountPL(Map<String, String> params) throws SQLException {
+		int totalCountPL = 0;
+		totalCountPL=dao.totalCountPL(params);
+	return totalCountPL;
+	}
+
+	@Override
+	public List<ReportVO> reportStatusPL(Map<String, String> params1)
+			throws SQLException {
+		List<ReportVO> list = null;
+		list = dao.reportStatusPL(params1);
+		return list;
+	}
 }
