@@ -9,7 +9,7 @@ import kr.or.ddit.vo.RecsRoomVO;
 public interface IRecsRoomDao {
 	public String insertRecsRoom(RecsRoomVO rrv) throws SQLException;
 	
-	public void updateRecsRoom(RecsRoomVO rv) throws SQLException;
+	public void updateRecsRoom(RecsRoomVO rrv) throws SQLException;
 	
 	public void deleteRecsRoom(Map<String, String> params) throws SQLException;
 	

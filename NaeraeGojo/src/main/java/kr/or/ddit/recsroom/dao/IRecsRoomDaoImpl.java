@@ -22,15 +22,13 @@ public class IRecsRoomDaoImpl implements IRecsRoomDao{
 	}
 
 	@Override
-	public void updateRecsRoom(RecsRoomVO rv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void updateRecsRoom(RecsRoomVO rrv) throws SQLException {
+		client.update("recs.updateRecsroom",rrv);
 	}
 
 	@Override
 	public void deleteRecsRoom(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("recs.deleteRecsroom",params);
 	}
 
 	@Override

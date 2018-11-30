@@ -48,6 +48,35 @@
 		and project_code = #project_code#
 	</statement>
 
+	<select id="fileList" parameterClass="map" resultClass="profileVO">
+		<include refid="selectAll"/>
+		and project_code = #project_code# 
+		and doc_code = #doc_code#
+		and doc_class = #doc_class#
+	</select>
+	
+	<update id="updateProjectFile" parameterClass="profileVO">
+		update project_all_file
+			set project_all_file_name = #project_all_file_name# 
+				,project_all_file_save_name = #project_all_file_save_name#
+				,project_all_file_volume = #project_all_file_volume#
+				,project_code = #project_code#
+				,project_all_file_contype = #project_all_file_contype#
+				,doc_code = #doc_code#
+				,doc_class = #doc_class#
+			where project_all_file_code = #project_all_file_code#
+	</update>
+	
+	<update id="deleteProjectFile" parameterClass="map">
+		update project_all_file
+			set project_all_file_delete = 'y'
+			where project_all_file_code = #project_all_file_code#
+	</update>
+
+	<select id="getProjectFile" parameterClass="map" resultClass="profileVO">
+		<include refid="selectAll"/>
+			and project_all_file_code = #project_all_file_code#
+	</select>
 
 </sqlMap>
 

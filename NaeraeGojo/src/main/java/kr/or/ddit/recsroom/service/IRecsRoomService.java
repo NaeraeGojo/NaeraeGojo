@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.ddit.vo.RecsRoomVO;
 
 public interface IRecsRoomService {
-	public void updateRecsRoom(RecsRoomVO rv) throws SQLException;
+	public void updateRecsRoom(RecsRoomVO rrv, MultipartFile[] files) throws SQLException;
 	
 	public void deleteRecsRoom(Map<String, String> params) throws SQLException;
 	

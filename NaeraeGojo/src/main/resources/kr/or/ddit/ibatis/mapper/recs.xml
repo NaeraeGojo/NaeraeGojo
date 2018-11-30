@@ -103,6 +103,26 @@
 		<include refid="selectAll"/>
 		and recsroom_code = #recsroom_code#
 	</select>
+	
+	<update id="updateRecsroom" parameterClass="recsVO">
+		update recsroom
+			set  recsroom_title = #recsroom_title#
+				,recsroom_writer = #recsroom_writer#
+				,recsroom_content = #recsroom_content#
+				,emp_nick = #emp_nick#
+				<dynamic prepend=",">
+					<isNotEmpty property="recsroom_hit">
+					recsroom_hit = #recsroom_hit#
+					</isNotEmpty>
+				</dynamic>
+			where recsroom_code = #recsroom_code#
+	</update>
+
+	<update id="deleteRecsroom" parameterClass="map">
+		update recsroom
+			set recsroom_delete = 'y'
+			where recsroom_code = #recsroom_code#
+	</update>
 
 </sqlMap>
 
