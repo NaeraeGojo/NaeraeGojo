@@ -1,11 +1,13 @@
 package kr.or.ddit.emp.controller.user;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
@@ -16,7 +18,10 @@ import kr.or.ddit.vo.HistoryVO;
 import kr.or.ddit.vo.PartVO;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -32,10 +37,28 @@ public class EmpController {
 	@Resource
 	private IHistoryService historyServ;
 	
-	
 	@RequestMapping("empList2")
 	public void empList2(){}
-
+	
+	@RequestMapping(value="idCheck", method = RequestMethod.POST)
+	public ModelAndView idCheck(String emp_name, String emp_email, String emp_code,
+			Map<String, String> params, EmpVO empNum,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model, ModelMap modelMap, ModelAndView andView) throws Exception{
+		params.put("emp_name", emp_name);
+		params.put("emp_email", emp_email);
+		
+		empNum = service.empNum(params); 
+		emp_code = empNum.getEmp_code();		
+		andView.addObject("empNum", empNum);
+		andView.addObject("emp_code", emp_code);
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
+	}
+	
+	
+	
 	/**
 	 * 직원정보 수정창 
 	 * @author 이소라	

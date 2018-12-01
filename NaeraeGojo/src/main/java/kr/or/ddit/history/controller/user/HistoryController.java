@@ -11,45 +11,77 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.history.service.IHistoryService;
-import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.userfile.service.IUserFileService;
+import kr.or.ddit.utils.AttachPictureMapper;
+//import kr.or.ddit.utils.AttachPictureMapper;
 import kr.or.ddit.vo.HistoryVO;
+import kr.or.ddit.vo.UserFileVO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/history/")
 public class HistoryController {
+	@Autowired
+	private AttachPictureMapper pictureMapper;
+	
 	@Resource
 	private IHistoryService service;
 	
 	@Resource
 	private IEmpService empService;
 	
+	@Resource
+	private IUserFileService userFileServ;
 	
+	
+	@RequestMapping("idPicFileUpload")
+	public void idPicFileUpload(){}
+	
+	@RequestMapping("idFileUpload")
+	public ModelAndView idFileUpload(ModelAndView mav
+									, String user_file_save_name
+									, @RequestParam("file") MultipartFile file) throws Exception{
+		
+		UserFileVO ufv = pictureMapper.picture_mapping(file);
+		userFileServ.insertUserFile(ufv);
+		
+		user_file_save_name = ufv.getUser_file_save_name();
+		
+//		mav.addObject("ufv", ufv);
+//		mav.addObject("file", file);
+		mav.addObject("user_file_save_name", user_file_save_name);
+		mav.setViewName("jsonConvertView");
+		
+		return mav;
+	}
 	
 	@RequestMapping("insertHistory")
 	public ModelAndView insertHistory(HistoryVO historyInfo
 			,String emp_code
-			,String history_notice_agency
-			,String history_demand_agency
-			,String history_project_start
-			,String history_project_end
-			,String history_project_name
-			,String history_business
-			,String history_delete
+//			,string history_notice_agency
+//			,string history_demand_agency
+//			,string history_project_start
+//			,string history_project_end
+//			,string history_project_name
+//			,string history_business
+//			,string history_delete
 			,Map<String, String> params
 			,ModelAndView andView) throws Exception{
 		
 		params.put("emp_code", emp_code);
-		params.put("history_notice_agency", history_notice_agency);
-		params.put("history_demand_agency", history_demand_agency);
-		params.put("history_project_start", history_project_start);
-		params.put("history_project_end", history_project_end);
-		params.put("history_project_name", history_project_name);
-		params.put("history_business", history_business);
-		params.put("history_delete", history_delete);
+//		params.put("history_notice_agency", history_notice_agency);
+//		params.put("history_demand_agency", history_demand_agency);
+//		params.put("history_project_start", history_project_start);
+//		params.put("history_project_end", history_project_end);
+//		params.put("history_project_name", history_project_name);
+//		params.put("history_business", history_business);
+//		params.put("history_delete", history_delete);
 		
 		service.insertHistoryInfo(historyInfo);
 

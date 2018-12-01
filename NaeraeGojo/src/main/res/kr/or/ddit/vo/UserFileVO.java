@@ -8,7 +8,26 @@ public class UserFileVO {
 	private String user_file_name;
 	private String user_file_volume;
 	private String user_file_delete;
+	private String user_file_save_name;
+	private String emp_code;
 
+	
+	
+	
+	
+	
+	public String getEmp_code() {
+		return emp_code;
+	}
+	public void setEmp_code(String emp_code) {
+		this.emp_code = emp_code;
+	}
+	public String getUser_file_save_name() {
+		return user_file_save_name;
+	}
+	public void setUser_file_save_name(String user_file_save_name) {
+		this.user_file_save_name = user_file_save_name;
+	}
 	public String getUser_file_code() {
 		return user_file_code;
 	}

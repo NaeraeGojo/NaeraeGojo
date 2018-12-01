@@ -6,7 +6,6 @@
 	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
 	<typeAlias alias="historyVO" type="kr.or.ddit.vo.HistoryVO"/>
 
-
 	<!-- 전체직원 조회 -->
 	<sql id="selectAll">
 		SELECT A.*
@@ -24,6 +23,15 @@
 		  AND EMP_CODE= #emp_code#
 	</sql>
 	
+	<!-- 사원번호 찾기 -->
+	<select id="empNum" parameterClass="map" resultClass="empVO">
+		SELECT *
+		  FROM EMP
+		  WHERE EMP_DELETE = 'n'
+		  AND EMP_NAME= #emp_name#
+		  AND EMP_EMAIL = #emp_email#
+	</select>
+	
 	
 	<!-- 이력목록 -->
 	<select id="historyList" resultClass="historyVO" parameterClass="map">
@@ -37,7 +45,6 @@
 <!--         ]]> -->
         ORDER BY B.RNUM DESC
     </select> 
-       
        
 	<!-- 이력 Info(객체 받아오기) -->
 	<select id="historyInfo" parameterClass="map" resultClass="historyVO">
@@ -91,7 +98,6 @@
 						,#history_project_end#)
 	</insert>
 	
-	
 	<!-- 검색 -->
 	<sql id="searchCondition">
         <dynamic prepend="AND">
@@ -119,7 +125,6 @@
 <!--         ]]> -->
         ORDER BY B.RNUM DESC
     </select>    
-	
 	
 	<!-- 휴먼상태의 회원을 임시로그인 시켜줌 -->
 	<update id="empInfoW" parameterClass="map">
@@ -190,8 +195,6 @@
 		   SET EMP_DELETE = 'y'
 		 WHERE EMP_CODE = #emp_code#
 	</update>
-
-
 
 </sqlMap>
 

@@ -20,7 +20,7 @@
             <div class="dataTables_wrapper form-inline dt-bootstrap" id="example1_wrapper">
               	<div class="row">
               		<div class="col-sm-12">
-              			<table id="example1" class="table table-bordered table-striped dataTable"
+              			<table id="example1" class="table table-bordered table-striped dataTable table-hover"
               			role="grid" aria-describedby="example1_info">
 		                	<thead>
 		               			<tr role="row">

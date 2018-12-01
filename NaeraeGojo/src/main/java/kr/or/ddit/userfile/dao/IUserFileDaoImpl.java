@@ -11,41 +11,37 @@ import org.springframework.stereotype.Repository;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
-@Repository
+@Repository("")
 public class IUserFileDaoImpl implements IUserFileDao{
+	
 	@Autowired
 	private SqlMapClient client;
 	
 	@Override
-	public void insertUserFile(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void insertUserFile(UserFileVO ufv) throws SQLException {
+		client.insert("userFile.insertUserFile", ufv);
 	}
 
 	@Override
 	public void updateUserFile(UserFileVO ufv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("userFile.updateUserFile", ufv);
 	}
 
 	@Override
 	public void deleteUserFile(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("userFile.deleteUserFile", params);
 	}
 
 	@Override
-	public List<UserFileVO> getUserFileList(Map<String, String> params)
+	public List<UserFileVO> userFileList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("userFile.userFileList", params);
 	}
 
 	@Override
-	public UserFileVO getUserFile(Map<String, String> params)
+	public UserFileVO userFileInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (UserFileVO) client.queryForObject("userFile.userFileInfo", params);
 	}
 
 }

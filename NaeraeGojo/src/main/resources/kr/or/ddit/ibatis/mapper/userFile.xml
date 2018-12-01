@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userFile">
+	<typeAlias alias="userFileVO" type="kr.or.ddit.vo.UserFileVO"/>
+
+	<!-- 프로필사진 조회 -->
+	<sql id="selectAll">
+		SELECT * FROM USER_FILE
+		WHERE USER_FILE_DELETE='n'
+	</sql>
+
+
+	<!-- 검색 -->
+	<sql id="searchCondition">
+        <dynamic prepend="AND">
+            <isNotEmpty property="search_keyword" >
+                <isEqual property="search_keycode" compareValue="ALL" open="(" close=")">
+                        EMP_CODE LIKE '%'||#search_keyword#||'%'
+                    EMP_CODE LIKE '%'||#search_keyword#||'%'
+                    OR EMP_NAME LIKE '%'||#search_keyword#||'%'
+                    OR EMP_ROLE LIKE '%'||#search_keyword#||'%'
+                </isEqual>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+	<!-- 프로필 사진 목록 -->
+	<select id="userFileList" resultClass="userFileVO" parameterClass="map">
+        SELECT B.*
+        FROM  (SELECT ROWNUM RNUM, A.*
+                FROM ( <include refid="selectAll"/> 
+                        <include refid="searchCondition"/> 
+                        ORDER BY USER_FILE_CODE) A ) B
+<!--         <![CDATA[                 -->
+<!--         WHERE B.rnum <= #startCount# -->
+<!--          AND  B.rnum >= #endCount# -->
+<!--         ]]> -->
+        ORDER BY B.RNUM DESC
+    </select>    
+	
+	
+	<!-- 프로필 사진 Info(객체 받아오기) -->
+	<select id="userFileInfo" parameterClass="map" resultClass="userFileVO">
+		<include refid="selectAll"/>
+		 AND EMP_CODE = #emp_code#
+	</select>
+	
+	<!-- 직원등록 -->
+	<insert id="insertUserFile" parameterClass="userFileVO">
+		<selectKey keyProperty="user_file_code" resultClass="string">
+         select user_file_seq.nextval from dual
+      	</selectKey>
+		INSERT INTO USER_FILE(USER_FILE_CODE
+						,USER_FILE_SAVE_NAME
+						,USER_FILE_NAME
+						,USER_FILE_VOLUME
+						,USER_FILE_DELETE
+						,EMP_CODE)		
+		  	     VALUES(#user_file_code#
+						,#user_file_save_name#
+						,#user_file_name#
+						,#user_file_volume#
+						,#user_file_delete#
+						,#emp_code#)
+	</insert>
+	
+	<update id="updateUserFile" parameterClass="userFileVO">
+		UPDATE USER_FILE
+		   SET USER_FILE_SAVE_NAME	=	#user_file_save_name#
+		   	  ,USER_FILE_NAME		=	#user_file_name# 
+		      ,USER_FILE_VOLUME		=	#user_file_volume#
+		 WHERE USER_FILE_CODE 		=	#user_file_code#
+	</update>
+
+	<update id="deleteUserFile" parameterClass="map">
+		UPDATE USER_FILE
+		   SET USER_FILE_DELETE = 'y'
+		 WHERE USER_FILE_CODE = #user_file_code#
+	</update>
+
+
+
+</sqlMap>
+
+

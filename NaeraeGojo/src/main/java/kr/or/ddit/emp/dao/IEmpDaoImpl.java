@@ -49,6 +49,12 @@ public class IEmpDaoImpl implements IEmpDao{
 		client.update("emp.updateEmpInfo", empInfo);
 	}
 
+	@Override
+	public EmpVO empNum(Map<String, String> params) throws SQLException {
+		return (EmpVO) client.queryForObject("emp.empNum", params);
+		
+	}
+
 //	@Override
 //	public int totalCount(Map<String, String> params) throws SQLException {
 //		return (int) client.queryForObject("emp.totalCount", params);

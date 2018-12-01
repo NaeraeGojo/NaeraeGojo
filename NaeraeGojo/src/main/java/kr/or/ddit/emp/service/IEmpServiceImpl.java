@@ -39,7 +39,7 @@ public class IEmpServiceImpl implements IEmpService {
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class, SQLException.class, })
 	@Override
 	public void insertEmpInfo(EmpVO empInfo) throws SQLException {
-		String emp_code = dao.insertEmpInfo(empInfo);
+		dao.insertEmpInfo(empInfo);
 	}
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
@@ -52,6 +52,12 @@ public class IEmpServiceImpl implements IEmpService {
 	public void updateEmpInfo(EmpVO empInfo) throws SQLException {
 		dao.updateEmpInfo(empInfo);
 		
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public EmpVO empNum(Map<String, String> params) throws SQLException {
+		return dao.empNum(params);
 	}
 
 
@@ -68,7 +74,6 @@ public class IEmpServiceImpl implements IEmpService {
 
 //	@Override
 //	public String findEmpId(Map<String, String> params) throws SQLException {
-//		// TODO Auto-generated method stub
 //		return null;
 //	}
 

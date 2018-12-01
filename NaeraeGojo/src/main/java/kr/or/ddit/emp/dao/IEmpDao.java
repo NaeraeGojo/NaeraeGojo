@@ -12,6 +12,7 @@ public interface IEmpDao {
 	public void empInfoW(Map<String,String> params) throws SQLException;
 	public List<EmpVO> empList(Map<String, String> params) throws SQLException;
 	public String insertEmpInfo(EmpVO empInfo) throws SQLException;
+	public EmpVO empNum(Map<String,String> params) throws SQLException;
 	public void deleteEmpInfo(Map<String,String> params) throws SQLException;
 	public void updateEmpInfo(EmpVO empInfo) throws SQLException;
 //	public int totalCount(Map<String, String> params) throws SQLException;

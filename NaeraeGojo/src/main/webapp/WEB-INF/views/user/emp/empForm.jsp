@@ -53,7 +53,7 @@ $(function() {
 	
 	// 프로필 사진 업로드				
 	$('#picUpload').click(function() {
-		var url = "${pageContext.request.contextPath}/user/member/idPicFileUpload.do";
+		var url = "${pageContext.request.contextPath}/history/idPicFileUpload.do";
 		var options = "width = 375, height = 400, scrollbars = no";
 	
 		window.open(url, "증명사진업로드", options);
@@ -145,7 +145,7 @@ $(function () {
            		<div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
            			<br/>
            			<div class=form-horizontal">
-						<form id="form_emp" method="POST" action="${pageContext.request.contextPath}/user/emp/insertEmp.do">
+						<form id="form_emp" method="POST" action="${pageContext.request.contextPath}/user/emp/insertEmp.do" enctype="multipart/form-data">
 						<div class="form-group">
                				<div class="row">
                					<div class="col-md-4" style="margin: 10px;">

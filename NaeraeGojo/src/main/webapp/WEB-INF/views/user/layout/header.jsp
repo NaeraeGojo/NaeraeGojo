@@ -235,9 +235,9 @@
           							</c:if>
 										<small>
 											<c:if test="${!empty LOGIN_EMPINFO.emp_encpn}">
-          										입사: ${LOGIN_EMPINFO.emp_encpn.split(' ')[0]}
+          										입사 : ${LOGIN_EMPINFO.emp_encpn.split(' ')[0]}
           										<br/>
-          										권한: ${LOGIN_EMPINFO.emp_role}
+          										권한 : ${LOGIN_EMPINFO.emp_role}
           									</c:if>
 										</small>
 									</p>

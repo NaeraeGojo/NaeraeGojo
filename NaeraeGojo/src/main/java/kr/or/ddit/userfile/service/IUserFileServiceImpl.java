@@ -9,42 +9,46 @@ import kr.or.ddit.vo.UserFileVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IUserFileServiceImpl implements IUserFileService{
+	
 	@Autowired
 	private IUserFileDao dao;
 
+	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, rollbackFor={RuntimeException.class, SQLException.class, })
 	@Override
-	public void insertUserFile(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void insertUserFile(UserFileVO ufv) throws SQLException {
+		dao.insertUserFile(ufv); 
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, rollbackFor={RuntimeException.class, SQLException.class, })
 	@Override
 	public void updateUserFile(UserFileVO ufv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.updateUserFile(ufv);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, rollbackFor={RuntimeException.class, SQLException.class, })
 	@Override
 	public void deleteUserFile(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.deleteUserFile(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, rollbackFor={RuntimeException.class, SQLException.class, })
 	@Override
-	public List<UserFileVO> getUserFileList(Map<String, String> params)
+	public List<UserFileVO> userFileList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.userFileList(params);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
-	public UserFileVO getUserFile(Map<String, String> params)
+	public UserFileVO userFileInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.userFileInfo(params);
 	}
 
 }

@@ -13,6 +13,7 @@ public interface IEmpService {
 	public void insertEmpInfo(EmpVO empInfo) throws SQLException;
 	public void deleteEmpInfo(Map<String,String> params) throws SQLException;
 	public void updateEmpInfo(EmpVO empInfo) throws SQLException;
+	public EmpVO empNum(Map<String,String> params) throws SQLException;
 //	public int totalCount(Map<String, String> params) throws SQLException;
 //	public String findEmpId(Map<String, String>params) throws SQLException;
 	

@@ -4,7 +4,6 @@
 <!-- 요청주소 : localhost/ng/user/join/loginForm.do -->
 <html>
   <head>
-    <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
@@ -15,7 +14,7 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="${pageContext.request.contextPath }/bower_components/Ionicons/css/ionicons.min.css">
+<%-- 		<link rel="stylesheet" href="${pageContext.request.contextPath }/bower_components/Ionicons/css/ionicons.min.css"> --%>
 		<link rel="stylesheet" href="${pageContext.request.contextPath }/css/form-elements.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/dist/css/AdminLTE.css">
@@ -24,7 +23,6 @@
 
 		<!-- Favicon and touch icons -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath }/ico/favicon.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath }/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath }/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath }/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath }/ico/apple-touch-icon-57-precomposed.png">
@@ -112,80 +110,43 @@ $(function(){
 // 							+ "\r\nmessage : " + request.reponseText);
 // 				}
 			});
+// 		return ture;
 		}
-		return ture;
-	
+		
+		$('#empNum').click(function(){
+			if(!$('input[name=empName]').val().validationNM()){
+				alert("이름을 정확히 입력해주세요")
+				return false;
+			}
+			email = $('input[name=empEmail1]').val() + '@' + $('label[name=empEmail2]').text();
+			if (!email.validationMAIL()) {
+				alert("이메일을 바르게 입력해주세요.");
+				return false;
+			}
+			$('input[name=empEmail]').val(email);
+			var name = $('input[name=empName]').val();
+			var email = $('input[name=empEmail]').val();
+			
+			$.ajax({
+				type : 'POST',
+				 url : '${pageContext.request.contextPath}/user/emp/idCheck.do',
+				 data : { emp_name : name,
+						emp_email : email},
+				 dataType : 'json',
+				 success : function(json) {
+					alert("사원 번호는 "+ "["+  json.emp_code + "] 입니다.");
+				}
+				 ,
+				 error : function(result) {
+				}
+			});
+			
+		});
+		
+		
 });
-
-
 </script>
-<style>
- 	input[type="text"].form-control1 { 
- 	height: 35px; 
- 	width : 95%; 
-     margin: 0; 
-     padding: 0 20px; 
-     vertical-align: middle; 
-     background: #fff; 
-     border: 3px solid #fff; 
-     font-family: 'Roboto', sans-serif;
-     font-size: 16px; 
-     font-weight: 300;
-     line-height: 35px;
-     color: #888;
-     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
-     -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
-     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s; 
- }
- 	input[type="text"].form-control2 {
- 	height: 35px;
- 	width: 40%; 
-     margin: 0; 
-     padding: 0 20px;
-     vertical-align: middle; 
-     background: #fff; 
-     border: 3px solid #fff;
-     font-family: 'Roboto', sans-serif;
-     font-size: 16px;
-     font-weight: 300;
-     line-height: 35px;
-     color: #888;
-     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
-     -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
-     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
- }
- 	select { 
- 	height: 35px; 
- 	width: 50%; 
-     margin: 0; 
-     padding: 0 20px; 
-     vertical-align: middle; 
-     background: #fff; 
-     border: 3px solid #fff; 
-     font-family: 'Roboto', sans-serif; 
-     font-size: 16px; 
-     font-weight: 300;
-     line-height: 35px; 
-     color: #888; 
- } 
-    .example-modal .modal {
-      position: relative;
-      top: auto;
-      bottom: auto;
-      right: auto;
-      left: auto;
-      display: block;
-      z-index: 1;
-    }
-	
-    .example-modal .modal {
-      background: transparent !important;
-    }
- </style>
-
-
 </head>
-
    <body>
         <!-- Top content -->
         <div class="top-content">
@@ -254,9 +215,9 @@ $(function(){
 	                        		비밀번호 찾기
 	                        	</a>
                         	</div>
-               		
                		<!-- 모달시작 -->
                		<div class="modal modal-primary fade" id="modal-primary">
+      					<form method="POST">
           				<div class="modal-dialog">
             				<div class="modal-content">
             					<div class="modal-header">
@@ -266,23 +227,22 @@ $(function(){
               					</div>
               					<div class="modal-body">
 								    <div class="form-group has-feedback">
-								        <input type="text" class="form-control1" placeholder="Name">
+								        <input type="text" class="form-control2" name="empName" placeholder="Name" style="margin-left: -100px !important;">
 								    </div>
               						<div class="form-group has-feedback">
-								        <input type="text" class="form-control2" placeholder="Email">
+								        <input type="hidden" name="empEmail">
+								        <input type="text" class="form-control2" name="empEmail1" placeholder="Email">
 								        @
-										<select>
-											<option selected="selected">이메일을 선택해주세요</option>
-											<option>naver.com</option>
-										</select>
+										<label name="empEmail2" class="form-control2">naver.com</label>
 								    </div>
               					</div>
               					</div>
               					<div class="modal-footer">
                 					<button type="button" class="btn-outline pull-left" data-dismiss="modal">Close</button>
-                					<button type="button" class="btn-outline">사원번호 찾기</button>
+                					<button type="button" id="empNum" class="btn-outline">사원번호 찾기</button>
               					</div>
             				</div>
+            				</form>
             				<!-- /.modal-content -->
           				</div>
           				<!-- /.modal-dialog -->
@@ -326,17 +286,8 @@ $(function(){
         			<!-- /.modal -->
                         </div>
                     </div>
-                    
                 </div>
             </div>
-            
         </div>
-
-
-        
-        <!--[if lt IE 10]>
-            <script src="js/placeholder.js"></script>
-        <![endif]-->
-
     </body>
 </html>

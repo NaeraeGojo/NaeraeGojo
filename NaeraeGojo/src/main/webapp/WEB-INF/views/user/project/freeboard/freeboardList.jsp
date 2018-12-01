@@ -21,7 +21,7 @@
             <!-- /.box-header -->
             <div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
               <div class="table-responsive">	<!-- 테이블 기본 설정 (기본설정)-->
-                <table class="table no-margin">
+                <table class="table table-hover"">
                   <thead>						
                   <tr>
                     <th scope="col" width="10%">No.</th>
