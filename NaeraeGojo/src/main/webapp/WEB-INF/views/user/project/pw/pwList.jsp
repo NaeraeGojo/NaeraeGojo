@@ -96,6 +96,10 @@ $(function(){
 		});
 	};
 	
+	$('#btn_chart').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwChart.do');
+	});
+	
 	$('.table_pw tr:gt(0)').click(function(){
 		var pw_code = $(this).attr('code');
 		
@@ -260,6 +264,11 @@ $(function(){
       <div class="row">	
       
       <div class="pwcont">
+    	<div class="col-md-4 pull-left" style="width: auto;" >
+	      <input id="btn_chart" value="업무 차트 조회" type="button" 
+	      class="btn btn-lg btn_pw_upper" style="background-color: #6884c1;"
+	      data-toggle="modal" data-target="#modal-default">
+	    </div>
     	<div class="col-md-4 pull-right" style="width: auto;" >
 	      <input id="btn_pwcForm" value="+ 분류" type="button" 
 	      class="btn btn-lg btn_pw_upper" style="background-color: #dd4b39;"

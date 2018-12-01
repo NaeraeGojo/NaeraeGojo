@@ -1,5 +1,28 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<style>
+.info-box{
+    height: 90px;
+}    
+ 
+ .div_icon{
+    display: inline-block;
+    float: left;
+ }
+ 
+ .info-box-content{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    height: 90px;
+ }
+ 
+ .a_text{
+    display: table-cell;
+    vertical-align: middle;
+ }
+</style>
 <section class="main_header">
 	<!-- Small boxes (Stat box) -->
 	 <div class="row">
@@ -7,9 +30,11 @@
 	 	<br/>
          <div class="col-md-2 col-sm-3 col-xs-6">
           <div class="info-box">
+          <div class="div_icon">
             <span class="info-box-icon bg-teal"><i class="ion ion-ios-gear-outline"></i></span>
+           </div>
             <div class="info-box-content">
-	            <a href="${pageContext.request.contextPath}/user/project/pw/pwList.do">
+	            <a class="a_text" href="${pageContext.request.contextPath}/user/project/pw/pwList.do">
 	            	<span class="info-box-number">업무</span>
 	            </a>
               
@@ -21,9 +46,11 @@
         <!-- /.col -->
          <div class="col-md-2 col-sm-3 col-xs-6">
           <div class="info-box">
+          <div class="div_icon">
             <span class="info-box-icon bg-yellow"><i class="fa fa-list"></i></span>
+           </div>
             <div class="info-box-content">
-            <a href="${pageContext.request.contextPath}/user/project/notice/notice_list.do">
+            <a class="a_text" href="${pageContext.request.contextPath}/user/project/notice/notice_list.do">
             	<span class="info-box-number">공지사항</span>
             </a>
             </div>
@@ -38,10 +65,11 @@
 
          <div class="col-md-2 col-sm-3 col-xs-6">
           <div class="info-box">
+          <div class="div_icon">
             <span class="info-box-icon bg-maroon"><i class="fa fa-file-zip-o"></i></span>
-
+           </div>
             <div class="info-box-content">
-            <a href="${pageContext.request.contextPath}/user/project/recs/recsList.do">
+            <a class="a_text" href="${pageContext.request.contextPath}/user/project/recs/recsList.do">
             	  <span class="info-box-number">자료실</span>
              </a>
             </div>
@@ -52,9 +80,11 @@
         <!-- /.col -->
          <div class="col-md-2 col-sm-3 col-xs-6">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-file-text-o"></i></span>
+	          <div class="div_icon">
+	            <span class="info-box-icon bg-red"><i class="fa fa-file-text-o"></i></span>
+	          </div>
             <div class="info-box-content">
-            <a href="${pageContext.request.contextPath}/user/project/freeboard/freeboardList.do">
+            <a class="a_text" href="${pageContext.request.contextPath}/user/project/freeboard/freeboardList.do">
             	<span class="info-box-number">자유게시판</span>
             </a>
             </div>
@@ -65,9 +95,11 @@
         <!-- /.col -->
          <div class="col-md-2 col-sm-3 col-xs-6">
           <div class="info-box">
+          	<div class="div_icon">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check-square"></i></span>
+            </div>
             <div class="info-box-content">
-              <a href="${pageContext.request.contextPath }/user/project/issue/issueList.do" >		
+              <a class="a_text" href="${pageContext.request.contextPath }/user/project/issue/issueList.do" >		
               	<span class="info-box-number">이슈</span>
               </a>
             </div>
@@ -78,9 +110,11 @@
         <!-- /.col -->
          <div class="col-md-2 col-sm-3 col-xs-6">
           <div class="info-box">
+          	<div class="div_icon">
             <span class="info-box-icon bg-green"><i class="fa fa-check-square-o"></i></span>
+            </div>
             <div class="info-box-content">
-              <a href="${pageContext.request.contextPath }/user/project/issue/riskList.do" >		
+              <a class="a_text" href="${pageContext.request.contextPath }/user/project/issue/riskList.do" >		
               	<span class="info-box-number">리스크</span>
               </a>
             </div>

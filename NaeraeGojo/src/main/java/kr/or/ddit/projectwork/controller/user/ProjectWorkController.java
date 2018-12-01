@@ -136,5 +136,13 @@ public class ProjectWorkController {
 		
 		return "redirect:/user/project/pw/pwList.do";
 	}
-}
+	
+	@RequestMapping("pwChart")
+	public Model pwChart(Model model
+						) throws Exception{
+		
+		
+		return model;
+	}
 
+}

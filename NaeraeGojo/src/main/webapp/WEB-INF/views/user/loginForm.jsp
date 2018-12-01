@@ -63,6 +63,7 @@ $(function(){
 		$(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
 	}
 	
+	
 	if(Get_Cookie('emp_code') != null){
 		$('input[name=emp_code]').val(Get_Cookie('emp_code'));
 		$('input[type=checkbox]').attr('checked', true);
