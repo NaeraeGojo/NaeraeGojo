@@ -12,6 +12,7 @@ public interface ISchedulerDao {
 	public void insertScheduler(SchedulerVO schedulerInfo) throws SQLException;
 	public void updateScheduler(SchedulerVO schedulerInfo) throws SQLException;
 	public void deleteScheduler(Map<String, String> params) throws SQLException;
+	public void changeScheduler(Map<String, String> params) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
 	
 }

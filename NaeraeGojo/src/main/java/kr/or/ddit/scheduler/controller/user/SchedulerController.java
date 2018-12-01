@@ -28,13 +28,6 @@ public class SchedulerController {
 	@Autowired
 	ISchedulerService service;
 
-	@RequestMapping("schedulerForm")
-	public void SchedulerForm(){}
-
-	@RequestMapping("schedulerView")
-	public void SchedulerView(){}
-	
-	
 	@RequestMapping("schedulerList")
 	public ModelAndView issueList(HttpServletRequest request, HttpSession session,
 			String search_keyword, String search_keycode, String currentPage,
@@ -108,5 +101,14 @@ public class SchedulerController {
 		params.put("scheduler_code", scheduler_code);
 		service.deleteScheduler(params);
 		return "redirect:/user/scheduler/schedulerList.do";
+	}
+	
+	@RequestMapping("changeScheduler")
+	public ModelAndView changeScheduler(String scheduler_code, ModelAndView andView, Map<String, String> params) throws Exception{
+		
+		params.put("scheduler_code", scheduler_code);
+		service.changeScheduler(params);
+		andView.setViewName("jsonConvertView");
+		return andView;
 	}
 }

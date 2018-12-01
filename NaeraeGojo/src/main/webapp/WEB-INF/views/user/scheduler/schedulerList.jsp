@@ -34,12 +34,18 @@ $(function(){
             },
             success : function(json){
             	$('#info input[name=scheduler_code]').val(json.schedulerInfo.scheduler_code);
-            
+            	$('#info input[name=scheduler_writer]').val(json.schedulerInfo.scheduler_writer);
+            	
             	$('#info input[name=scheduler_title]').val(json.schedulerInfo.scheduler_title);
             	$('#info input[name=scheduler_keyword]').val(json.schedulerInfo.scheduler_keyword);
             	$('#info input[name=scheduler_time]').val(json.schedulerInfo.scheduler_time);
             	$('#info textarea[name=scheduler_explain]').text(json.schedulerInfo.scheduler_explain);
-
+            	
+//             	var data = "";
+//             	data += '<button id="updateBtn" type="button" class="btn btn-warning btn_update">수정</button>'
+//             	data += '<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>'
+// 	            $('#dddd').append();
+            	            	
             }
         });
 	});
@@ -109,13 +115,27 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/scheduler/deleteScheduler.do?scheduler_code='+scheduler_code);
 	});
 	
-// 	$("#onoff").change(function(){
-//         if($("#onoff").is(":checked")){
-//             alert("체크");
-//         }else{
-//             alert("체크해제");
-//         }
-//     });
+	$('.onoff').change(function(){
+		
+		scheduler_code = $(this).parent().parent().parent().find('td:eq(0) input').val();
+		
+		$.ajax({
+            type : 'post',
+            url : '${pageContext.request.contextPath}/user/scheduler/changeScheduler.do',
+            data : {'scheduler_code' : scheduler_code},
+            dataType : 'json',
+            error: function(xhr, status, error){
+                alert(error);
+            },
+            success : function(json){
+		        if($(".onoff").is(":checked")){
+		       		alert("스케줄러가 설정 되었습니다.");
+		        }else{
+		        	alert("스케줄러가 해제 되었습니다.");
+		       	}
+	        }
+        });
+	});
 
 });
 
@@ -163,8 +183,9 @@ $(function(){
 										<td>${schedulerList.scheduler_time }</td>
 										<td> 
 											<input type="checkbox" data-toggle="toggle" data-size="mini" 
-											data-onstyle="info" data-offstyle="danger" id="onoff"
-											<c:if test = "${schedulerList.scheduler_status eq 'y'}">checked="checked"</c:if> />
+											data-onstyle="info" data-offstyle="danger" class="onoff"
+											<c:if test="${schedulerList.scheduler_status eq 'y'}">checked="checked"</c:if> 
+											/>
 										</td>
 										<td> 
 											<input value="상세정보" id="infoBtn" type="button" 
@@ -181,14 +202,13 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<form action="#" method="post" class="form-inline pull-right">
-		<input id="search_keyword" name="search_keyword" type="text"
-			placeholder="검색어 입력..." class="form-control" /> <select
-			class="form-control" name="search_keycode">
+	<form action="${pageContext.request.contextPath}/user/scheduler/schedulerList.do" method="post" class="form-inline pull-right">
+		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
+			<select class="form-control" name="search_keycode">
 			<option value="TOTAL">전체</option>
-			<option value="TITLE">제목</option>
-			<option value="CONTENT">내용</option>
-			<option value="WRITER">작성자</option>
+			<option value="TITLE">스케줄러명</option>
+			<option value="KEYWORD">키워드</option>
+			<option value="NAME">작성자</option>
 		</select>
 		<button type="submit" class="btn btn-primary form-control">검색</button>
 		<button type="button" id="" class="btn btn-warning form-control"
@@ -212,7 +232,7 @@ $(function(){
 						<td style="width: 60px;"><label class="control-label">스케줄러 명</label></td>
 						<td>
 							<input name="scheduler_title" id="scheduler_title"
-							type="text" class="form-control"
+							type="text" class="form-control" placeholder="스케줄러 명"
 							style="border-radius: 1em; width: 100%;">
 						</td>
 					</tr>
@@ -220,7 +240,7 @@ $(function(){
 						<td style="width: 60px;"><label class="control-label">스케줄러 키워드</label></td>
 						<td>
 							<input name="scheduler_keyword" id="scheduler_keyword"
-							type="text" class="form-control"
+							type="text" class="form-control" placeholder="스케줄러 키워드"
 							style="border-radius: 1em; width: 100%;">
 						</td>
 					</tr>
@@ -228,7 +248,7 @@ $(function(){
 						<td style="width: 60px;"><label class="control-label">스케줄러 시간</label></td>
 						<td>
 							<input name="scheduler_time" id="scheduler_time"
-							type="time" class="form-control"
+							type="time" class="form-control" placeholder="스케줄러 시간"
 							style="border-radius: 1em; width: 100%;">
 						</td>
 					</tr>
@@ -238,8 +258,7 @@ $(function(){
 							<textarea class="form-control" rows="3"
 								placeholder="스케줄러 설명" id="scheduler_explain"
 								name="scheduler_explain"
-								style="border: 1px solid #d2d2d2; border-radius: 1em;">
-							</textarea>
+								style="border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
 						</td>
 					</tr>
 				</form>
@@ -259,11 +278,13 @@ $(function(){
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title">내용 수정</h4>
+				<h4 class="modal-title">내용 상세보기</h4>
 			</div>
 			<div class="modal-body">
 				<form id="info" method="post">
 					<input type="hidden" name="scheduler_code">
+					<input type="hidden" name="scheduler_writer">
+					<input type="hidden" name="empLogin" value="${LOGIN_EMPINFO.emp_code}">
 					<tr>
 						<td style="width: 60px;"><label class="control-label">스케줄러 명</label></td>
 						<td>
@@ -298,13 +319,14 @@ $(function(){
 							</textarea>
 						</td>
 					</tr>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
-				<button id="updateBtn" type="button" class="btn btn-warning btn_update">수정</button>
-				<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>
-			</div>
+				</div>
+				<div class="modal-footer" id="dddd">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
+					<button id="updateBtn"type="button" class="btn btn-warning btn_update">수정</button>
+					<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>
+				</div>
+			</form>
+			
 		</div>
 	</div>
 </div>
