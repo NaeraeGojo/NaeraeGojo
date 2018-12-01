@@ -17,37 +17,32 @@ public class IProjectFileDaoImpl implements IProjectFileDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertProjectFile(Map<String, String> params)
+	public void insertProjectFile(ProjectAllFileVO pfv)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.insert("profile.insertProjectFile",pfv);
 	}
 
 	@Override
-	public void updateProjectFile(ProjectAllFileVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void updateProjectFile(ProjectAllFileVO pfv) throws SQLException {
+		client.update("profile.updateProjectFile",pfv);
 	}
 
 	@Override
 	public void deleteProjectFile(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("profile.deleteProjectFile",params);
 	}
 
 	@Override
 	public List<ProjectAllFileVO> getProjectFileList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("profile.fileList",params);
 	}
 
 	@Override
 	public ProjectAllFileVO getProjectFile(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (ProjectAllFileVO) client.queryForObject("profile.getProjectFile",params);
 	}
 	
 	

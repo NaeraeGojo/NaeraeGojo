@@ -41,7 +41,9 @@
             <span class="info-box-icon bg-maroon"><i class="fa fa-file-zip-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-number">자료실</span>
+            <a href="${pageContext.request.contextPath}/user/project/recs/recsList.do">
+            	  <span class="info-box-number">자료실</span>
+             </a>
             </div>
             <!-- /.info-box-content -->
           </div>

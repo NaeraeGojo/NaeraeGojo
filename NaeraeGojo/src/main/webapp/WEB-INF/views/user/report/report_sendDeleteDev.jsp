@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 .fieldName {
 	text-align: center;
@@ -75,6 +76,7 @@ label {
 			<div class="box box-info">
 				<div class="box-header with-border">
 					<h3 class="box-title">보고서</h3>
+					
 				</div>
 				<!--             /.box-header -->
 				<!--             form start -->
@@ -94,43 +96,35 @@ label {
 								분류</label>
 							<div class="col-sm-7">
 								<label style="margin-top: 7px; margin-left: 15px;"> <input
-									type="radio" name="gender" class="flat-red" checked>
+									type="radio" name="report_date" class="flat-red" checked>
 									주간
 								</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label> <input
-									type="radio" name="gender" class="flat-red"> 월간
+									type="radio" name="report_date" class="flat-red"> 월간
 								</label>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-2 control-label">관련
-								프로젝트</label>
+							<label for="inputPassword2" class="col-sm-2 control-label">관련 프로젝트</label>
 
 							<div class="col-sm-9">
-								<!-- select -->
-								<select class="form-control">
-									<option>option 1</option>
-									<option>option 2</option>
-									<option>option 3</option>
-									<option>option 4</option>
-									<option>option 5</option>
-								</select>
+								<input type="text" class="form-control" id="project_name" name="project_name">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-2 control-label">관련
-								프로젝트 업무</label>
+							<label for="inputPassword2" class="col-sm-2 control-label">관련 프로젝트 업무</label>
 
 							<div class="col-sm-9">
-								<!-- select -->
-								<select class="form-control">
-									<option>option 1</option>
-									<option>option 2</option>
-									<option>option 3</option>
-									<option>option 4</option>
-									<option>option 5</option>
-								</select>
+								<input type="text" class="form-control" id="pw_function" name="pw_function">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="inputPassword2" class="col-sm-2 control-label">작성자</label>
+
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="emp_name" name="emp_name">
 							</div>
 						</div>
 
@@ -149,20 +143,26 @@ label {
 										</tr>
 									</thead>
 									<tbody id="bodytable">
+									<c:forEach items="${stList }" var="list">
 										<tr>
-											<td>개발1팀</td>
-											<td>특급</td>
-											<td>박희태</td>
-											<td>PM</td>
-											<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
+											<td>${list.emp_department }</td>
+											<td>${list.emp_level }</td>
+											<td>${list.emp_name }</td>
+											<td>${list.position_name }</td>
+											<c:if test="${list.report_pl_status eq 'i' && list.report_pm_status eq 'i' }">
+												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
+											</c:if>
+											<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
+												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
+											</c:if>
+											<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'i' }">
+												<td><span class="label label-success">승인 완료</span></td>
+											</c:if>
+											<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'k' }">
+												<td><span class="label label-success">승인 완료</span></td>
+											</c:if>
 										</tr>
-										<tr>
-											<td>개발1팀</td>
-											<td>고급</td>
-											<td>최동화</td>
-											<td>PL</td>
-											<td><span class="label label-success">승인 완료</span></td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -172,8 +172,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">제목</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="inputPassword2"
-									placeholder="제목을 입력해주세요">
+								<input type="text" class="form-control" id="report_title" name="report_title">
 							</div>
 						</div>
 
@@ -181,8 +180,7 @@ label {
 							<label for="inputPassword1" class="col-sm-2 control-label">내용</label>
 
 							<div class="col-sm-9">
-								<textarea rows="10" type="text" class="form-control"
-									id="inputPassword1"></textarea>
+								<textarea rows="10" type="text" class="form-control" id="report_content" name="report_content"></textarea>
 							</div>
 						</div>
 
@@ -199,7 +197,8 @@ label {
 					</div>
 					<div class="box-footer clearfix">
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
-							<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="피드백 보기" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
 					</div>
 				</form>
 			</div>
@@ -229,6 +228,15 @@ label {
 					checkboxClass : 'icheckbox_flat-red',
 					radioClass : 'iradio_flat-red'
 				})
+				
+		$('input[name=report_date]').val('${vo.report_date}');
+	    $('input[name=project_name]').val('${vo.project_name}');
+		$('input[name=pw_function]').val('${vo.pw_function}');
+		$('input[name=emp_name]').val('${vo.emp_name}');
+		$('input[name=report_title]').val('${vo.report_title}');
+	    $('textarea[name=report_content]').val('${vo.report_content}');
+		
+		
 
 	})
 </script>

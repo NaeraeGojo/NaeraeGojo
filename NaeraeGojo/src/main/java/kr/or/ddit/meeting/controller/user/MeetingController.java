@@ -141,7 +141,7 @@ public class MeetingController {
    
 	@RequestMapping("insertMeeting")
 	public String insertMeeting(MeetingVO mv, MeetPwVO mpv
-									, @RequestParam("files") MultipartFile files, Map<String, String> params
+									, MultipartFile files, Map<String, String> params
 									, HttpSession session) throws Exception{
 		
 		String[] result = mpv.getPw_code().split(",");
@@ -149,9 +149,7 @@ public class MeetingController {
 		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();	
 		mv.setEmp_code(emp_code);
 		
-		String meeting_code = service.insertMeetingInfo(mv, files);
-		
-		
+		String meeting_code = service.insertMeetingInfo(mv);
 		
 		for (int i = 0; i < result.length; i++) {
 			params.put("meeting_code", meeting_code);
@@ -159,6 +157,10 @@ public class MeetingController {
 			params.put("pw_code", result[i]);
 			service.insertmeetPw(params);
 			params.clear();
+		}
+		
+		if(!files.isEmpty()){
+			fileService.insertMeetingFile(files, meeting_code );
 		}
 		
 		return "redirect:/user/meetingFile/meetingFileList.do";
@@ -195,12 +197,6 @@ public class MeetingController {
 			params.clear();
 		}
 		
-		for (int i = 0; i < result.length; i++) {
-			params.put("meeting_code", meeting_code);
-			params.put("pw_code", result[i]);
-			service.insertmeetPw(params);
-			params.clear();
-		}
 		return "redirect:/user/meetingFile/meetingFileList.do";
 	}
 	

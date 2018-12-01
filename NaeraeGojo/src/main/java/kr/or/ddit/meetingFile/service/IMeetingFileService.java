@@ -12,8 +12,11 @@ import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.TempMeetingVO;
 
 public interface IMeetingFileService {
+	
 
 	public MeetFileVO getMeetingFile(Map<String, String> params) throws SQLException;
 
-	public void updateMeetingFile(MultipartFile files, String meeting_code) throws SQLException; 
+	public void updateMeetingFile(MultipartFile files, String meeting_code) throws SQLException;
+
+	public void insertMeetingFile(MultipartFile files, String meeting_code) throws SQLException; 
 }

@@ -5,8 +5,15 @@
 <script>
 $(function(){
 	    $('input[name=video_chat_room_title]').val('${chatInfo[0].video_chat_room_title }');
-	    $('input[name=video_chat_join_intime]').val('${chatInfo[0].video_chat_join_intime }');
-	    $('input[name=video_chat_join_outtime]').val('${chatInfo[0].video_chat_join_outtime }');
+// 	    if('${chatInfo[0].video_chat_join_intime }' != null){
+	    	
+// 	    	$('input[name=video_chat_join_intime]').val('${chatInfo[0].video_chat_join_intime }');
+// 	    }
+// 	    if('${chatInfo[0].video_chat_join_intime }' == null){
+	    	
+// 	    	$('input[name=video_chat_join_intime]').val('참여하지 않았습니다.');
+// 	    }
+// 	    $('input[name=video_chat_join_outtime]').val('${chatInfo[0].video_chat_join_outtime }');
 	    $('textarea[name=video_chat_room_content]').val('${chatInfo[0].video_chat_room_content}');
 // 	    $('select[name=project_name]').val('${chatInfo[0].project_name}');
 	    
@@ -86,7 +93,7 @@ label {
                  <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">관련프로젝트</label>
 	                 <div class="col-sm-8">
-	                <select class="form-control select1" disabled="disabled"  id="project_name" name="project_name" style="border-radius: 0.7em;">
+	                <select class="form-control select1" readonly="readonly"   id="project_name" name="project_name" style="border-radius: 0.7em; background-color: white;">
 <!-- 	                  <option selected="selected" >선택하세요</option> -->
 	                </select>
 	                 </div>
@@ -94,28 +101,38 @@ label {
                 <br/><br/><br/>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">참여시간</label>
+                  
+                  <c:if test="${!empty chatInfo[0].video_chat_join_intime}">
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" name="video_chat_join_intime" disabled="disabled" style="border-radius: 1em;" placeholder="시작시간">
-                  </div>   <label for="inputEmail3" class="col-sm-1 control-label" >  ~</label>
+                    <input type="text" class="form-control" name="video_chat_join_intime" readonly="readonly" value="${chatInfo[0].video_chat_join_intime}" style="border-radius: 1em;background-color: white;" placeholder="시작시간">
+                  </div> <label for="inputEmail3" class="col-sm-1 control-label" >  ~ </label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" disabled="disabled" name="video_chat_join_outtime" style="border-radius: 1em;" placeholder="종료시간">
-                  </div>                  
+                    <input type="text" class="form-control" readonly="readonly" name="video_chat_join_outtime" value="${chatInfo[0].video_chat_join_outtime}" style="border-radius: 1em;background-color: white;" placeholder="종료시간">
+                  </div>   
+                  </c:if>
+                  
+                  <c:if test="${empty chatInfo[0].video_chat_join_intime}">
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" name="video_chat_join_intime" readonly="readonly" style="border-radius: 1em; background-color: white;" value="참여하지 않았습니다.">
+                  </div> 
+                  </c:if>
+                                 
                 </div>
                 <br/><br/><br/>
                  <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">참여인원</label>
                   <div class="col-sm-8"  align="center" style="width:68%; height: auto; border: 1px solid #d2d2d2; border-radius: 1em;">
                     <table >
-                    		<tr >
-                        <c:forEach varStatus="status" items="${chatInfo}" var="chatInfo_emp">
-                           <c:if test="${status.index==3}">
-                                </tr>
-                                <tr >
-                           </c:if>
-                    			<td width="50" height="50"><img src="${pageContext.request.contextPath }/images/icons/An.jpg" ></td>
-                    			<td width="200" height="50">${chatInfo_emp.emp_name}</td>
-                         </c:forEach>
-                    		</tr>
+                   	   <tr >
+                       <c:forEach varStatus="status" items="${chatInfo}" var="chatInfo_emp">
+                          <c:if test="${status.index==3}">
+                       </tr>
+                        <tr >
+                          </c:if>
+                   			<td width="50" height="50"><img src="${pageContext.request.contextPath }/images/icons/An.jpg" ></td>
+                   			<td width="200" height="50">${chatInfo_emp.emp_name}</td>
+                        </c:forEach>
+                   		</tr>
                     </table>
                   </div>
                 <br/><br/><br/><br/> <br/>
@@ -126,21 +143,18 @@ label {
                   <textarea class="col-sm-10" rows="10" name="video_chat_room_content" placeholder="회의내용" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
                 </div>
                <br/><br/>
-					 <label for="inputEmail3" class="col-sm-2 control-label">첨부파일:</label>
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-			
-			<!-- Indicators -->
-<!-- 						<ol class="carousel-indicators"> -->
-<!-- 							<li data-target="#myCarousel" data-slide-to="0" class="active"></li> -->
-<!-- 							<li data-target="#myCarousel" data-slide-to="1"></li> -->
-<!-- 						</ol> -->
-			<!-- Wrapper for slides -->
-					</div>
-			<!-- Left and right controls -->
-<!-- 						<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> -->
-<!-- 						<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
-					</div>
-            	</div>
+               
+               
+                 <div class="form-group">
+                     <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">첨부 파일</font></font></label>
+	                 <div class="col-sm-10 control-label" id="filediv">
+	                    <c:forEach items="${chatInfo[0].items}" var="videoFileInfo">
+	                      <a id="${videoFileInfo.video_file_name}" href="${pageContext.request.contextPath }/user/videoFile/videochatFileDown.do?video_file_code=${videoFileInfo.video_file_code}">${videoFileInfo.video_file_name}</a>
+	                    </c:forEach>
+	                      <input type="button" value="파일수정" id="filebtn">
+	                 </div>
+                  
+                 </div>
 				<div class="box-footer clearfix form-group">
               	<input value="목록" id="btn2" type="button"  style="width:80px;"  class="btn btn-info btn-flat pull-right">
               	<c:if test="${LOGIN_EMPINFO.emp_code==chatInfo[0].emp_code}">

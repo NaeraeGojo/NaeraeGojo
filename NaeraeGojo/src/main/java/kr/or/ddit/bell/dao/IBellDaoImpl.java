@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.vo.FeedbackVO;
 import kr.or.ddit.vo.IssueVO;
+import kr.or.ddit.vo.VideoChatRoomVO;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -56,6 +57,18 @@ public class IBellDaoImpl implements IBellDao{
 	public List<FeedbackVO> sendfeedCnt(Map<String, String> params)
 			throws SQLException {
 		return client.queryForList("bellList.sendfeedCnt", params);
+	}
+
+	@Override
+	public String getvideoChatCnt(Map<String, String> params)
+			throws SQLException {
+		return (String) client.queryForObject("bellList.getvideoChatCnt", params);
+	}
+
+	@Override
+	public List<VideoChatRoomVO> getVideoChatList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("bellList.getVideoChatList", params);
 	}
 
 	

@@ -9,17 +9,33 @@ import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.ReportVO;
 
 public interface IReportDao {
-	public void insertReport(Map<String, String> params) throws SQLException;
+	public String insertReport(ReportVO rvo) throws SQLException;
+	public String insertReportPL(ReportVO rvo) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;
 	public List<ReportVO> getReportList(Map<String, String> params) throws SQLException;
-	public ReportVO getReport(Map<String, String> params) throws SQLException;
-	public int totalCount(Map<String, String> params) throws SQLException;
 	//관련프로젝트 이름
 	public List<ProjectVO> projectNm(Map<String, String> params) throws SQLException;
 	//관련프로젝트 사람들
 	public List<ReportVO> projectPeople(Map<String, String> params) throws SQLException;
 	//관련프로젝트의 업무
 	public List<ProjectWorkVO> pwName(Map<String, String> params) throws SQLException;
+	//개발자 리스트 보낸보고서함
+	public List<ReportVO> reportList(Map<String, String> params) throws SQLException;
+	//PL 리스트 보낸보고서함
+	public List<ReportVO> reportListPL(Map<String, String> params) throws SQLException;
+	//PL 리스트 받은보고서함
+	public List<ReportVO> reportListPLRec(Map<String, String> params) throws SQLException;
+	//클릭했을시 개발자 뷰
+	public ReportVO reportView(Map<String, String> params) throws SQLException;
+	//결재 뷰 개발자
+	public List<ReportVO> reportStatus(Map<String, String> params1) throws SQLException;
+	//결재 뷰 PL
+	public List<ReportVO> reportStatusPL(Map<String, String> params1) throws SQLException;
+	//관련프로젝트 사람들 PL전용
+	public ReportVO projectPeoplePM(Map<String, String> params) throws SQLException;
 	
+	public int totalCountDEV(Map<String, String> params) throws SQLException;
+	public int totalCountPL(Map<String, String> params) throws SQLException;
+	public int totalCountPLRec(Map<String, String> params) throws SQLException;
 }

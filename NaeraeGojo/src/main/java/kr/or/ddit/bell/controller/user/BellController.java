@@ -16,10 +16,12 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import kr.or.ddit.bell.service.IBellService;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.FeedbackVO;
 import kr.or.ddit.vo.IssueVO;
+import kr.or.ddit.vo.VideoChatRoomVO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -54,12 +56,22 @@ public class BellController {
 		String sendfeedCnt = service.getsenFeedCnt(params);
 		List<FeedbackVO> sendfbList = service.sendfbList(params);
 		
+		//화상채팅 초대
+		String videoChatCnt = service.getvideoChatCnt(params);
+		List<VideoChatRoomVO> videoChatList = service.getVideoChatList(params);
+		
+		
 		andview.addObject("issueList", issueList); // 이슈 리스트
 		andview.addObject("listCnt", listCnt); // 이슈 카운트
+		
 		andview.addObject("receivefbList", receivefbList); // 받은 피드백 리스트
 		andview.addObject("receivefeedCnt", receivefeedCnt); // 받은 피드백 count
+		
 		andview.addObject("sendfeedCnt", sendfeedCnt); // 보낸 피드백 count
 		andview.addObject("sendfbList", sendfbList); // 보낸 피드백 리스트
+		
+		andview.addObject("videoChatCnt", videoChatCnt); // 화상 초대 count
+		andview.addObject("videoChatList", videoChatList); // 화상 초대 리스트
 		
 		andview.setViewName("user/bellNotice/bellList");
 		return andview;
@@ -75,10 +87,6 @@ public class BellController {
 		andView.setViewName("jsonConvertView"); 
 		return andView;
 	}
-	
-
-	
-	
 	
 	
 	public ModelAndView updateComputation(ModelAndView andView) throws Exception{

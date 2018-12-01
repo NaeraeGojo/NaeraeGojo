@@ -9,42 +9,59 @@ import kr.or.ddit.vo.SchedulerVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ISchedulerServiceImpl implements ISchedulerService{
+
 	@Autowired
 	private ISchedulerDao dao;
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
 	@Override
-	public void insertScheduler(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public SchedulerVO schedulerInfo(Map<String, String> params) throws SQLException {
+		return dao.schedulerInfo(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	@Override
-	public void updateScheduler(SchedulerVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public List<SchedulerVO> schedulerList(Map<String, String> params) throws SQLException {
+		return dao.schedulerList(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Exception.class})
+	@Override
+	public void insertScheduler(SchedulerVO schedulerInfo) throws SQLException {
+		dao.insertScheduler(schedulerInfo);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateScheduler(SchedulerVO schedulerInfo) throws SQLException {
+		dao.updateScheduler(schedulerInfo);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
 	@Override
 	public void deleteScheduler(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.deleteScheduler(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
 	@Override
-	public List<SchedulerVO> getSchedulerList(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public void changeScheduler(Map<String, String> params) throws SQLException {
+		dao.changeScheduler(params);
 	}
-
+	
 	@Override
-	public SchedulerVO getScheduler(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public int totalCount(Map<String, String> params) throws SQLException {
+		int totalCount = 0;
+		try {
+			totalCount = dao.totalCount(params);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCount;
 	}
-
 }

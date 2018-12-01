@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.ChatListTempVO;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
-import kr.or.ddit.vo.ChatListTempVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -66,6 +66,27 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 	@Override
 	public void insertJoin(Map<String, String> params) throws SQLException {
 		client.insert("videoRoom.insertJoin", params);
+	}
+
+	@Override
+	public ProjectVO getProjectNM(String video_chat_room_code) throws SQLException {
+		return (ProjectVO) client.queryForObject("videoRoom.getProjectNM", video_chat_room_code);
+	}
+
+	@Override
+	public void updateUrl(Map<String, String> params) throws SQLException {
+		client.update("videoRoom.updateUrl", params);
+	}
+
+	@Override
+	public void ChatRoomEnd(Map<String, String> params) throws SQLException {
+		client.update("videoRoom.ChatRoomEnd", params);
+	}
+
+	@Override
+	public List<ChatListTempVO> getChatStep3(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("videoRoom.getChatStep3", params);
 	}
 
 }

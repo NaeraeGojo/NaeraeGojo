@@ -19,9 +19,9 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 	private SqlMapClient client;
 	
 	@Override
-	public FeedbackVO feedbackInfo(Map<String, String> params)
+	public FeedbackVO feedbackInfoRe(Map<String, String> params)
 			throws SQLException {
-		return (FeedbackVO) client.queryForObject("feedback.feedbackInfo", params);
+		return (FeedbackVO) client.queryForObject("feedback.feedbackInfoRe", params);
 	}
 
 	@Override
@@ -107,6 +107,12 @@ public class IFeedbackDaoImpl implements IFeedbackDao {
 	public FeedbackVO sendfeedbackInfo(Map<String, String> params)
 			throws SQLException {
 		return (FeedbackVO) client.queryForObject("feedback.sendfeedbackInfo",params);
+	}
+
+	@Override
+	public FeedbackVO feedbackInfoSend(Map<String, String> params)
+			throws SQLException {
+		return  (FeedbackVO)client.queryForObject("feedback.feedbackInfoSend", params);
 	}
 
 

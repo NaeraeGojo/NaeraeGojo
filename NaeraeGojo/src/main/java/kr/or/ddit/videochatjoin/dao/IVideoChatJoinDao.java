@@ -16,5 +16,11 @@ public interface IVideoChatJoinDao {
 	public List<VideoChatJoinVO> getVideoChatJoinList(Map<String, String> params) throws SQLException;
 	
 	public VideoChatJoinVO getVideoChatJoin(Map<String, String> params) throws SQLException;
+
+	public String getVideoRoomCode(String video_chat_join_code) throws SQLException;
+
+	public String getUrlInfo(String video_chat_room_code) throws SQLException;
+
+	public void ChatJoinEnd(Map<String, String> params) throws SQLException;
 	
 }

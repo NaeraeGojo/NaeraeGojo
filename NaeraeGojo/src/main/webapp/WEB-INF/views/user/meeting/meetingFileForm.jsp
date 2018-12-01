@@ -75,7 +75,6 @@ label {
 	                 <div class="col-sm-8">
 	                <select class="form-control select2" name="project_code" style="border-radius: 0.5em;">
 	                  <option selected="selected">선택하세요</option>
-	                      
 		                  <option value="${projectInfo[0].project_code}"> ${projectInfo[0].project_name}</option>
 	                </select>
 	                 </div>

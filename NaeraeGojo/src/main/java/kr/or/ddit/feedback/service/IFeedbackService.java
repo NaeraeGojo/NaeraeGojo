@@ -7,7 +7,7 @@ import java.util.Map;
 import kr.or.ddit.vo.FeedbackVO;
 
 public interface IFeedbackService {
-	public FeedbackVO feedbackInfo(Map<String,String> params) throws SQLException;
+	public FeedbackVO feedbackInfoRe(Map<String,String> params) throws SQLException;
 	public List<FeedbackVO> feedbackList(Map<String, String> params) throws SQLException;
 	public void insertFeedbackInfo(FeedbackVO feedbackInfo) throws SQLException;
 	public void deleteFeedbackInfo(Map<String,String> params) throws SQLException;
@@ -23,4 +23,5 @@ public interface IFeedbackService {
 	public int totalCount2(Map<String, String> params) throws SQLException;
 	public void deleteSend(Map<String, String> params) throws SQLException;
 	public FeedbackVO sendfeedbackInfo(Map<String, String> params) throws SQLException;
+	public FeedbackVO feedbackInfoSend(Map<String, String> params)throws SQLException;
 }

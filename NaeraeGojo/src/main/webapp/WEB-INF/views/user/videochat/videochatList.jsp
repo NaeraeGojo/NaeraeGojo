@@ -70,8 +70,16 @@ $(function(){
     
 	//상세내용
     $('#listTable tr:gt(0)').click(function(){
+    	
         var video_chat_room_code = $(this).find('td:eq(0) input').val();
-        $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatView/'+video_chat_room_code+'.do');
+        var video_chat_level= $(this).find('td:eq(5) input').val();
+        
+        if(video_chat_level== 'level1' ||video_chat_level== 'level2'||video_chat_level== 'level3'){
+        	boalert("회의 진행중입니다. 종료 시 다시 눌러주세요.");
+        }
+        if(video_chat_level== 'level4'){
+	        $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatView/'+video_chat_room_code+'.do');
+        }
     });
     
     // 화상개설
@@ -146,12 +154,12 @@ $(function(){
             tmpArray.push(emp_code);
         });
     	
-//     	if(tmpArray.length>3){
-//     		boalert("4명 이하로 선택해주세요");
-//     		return false;
-//     	};
+    	if(tmpArray.length>=2){
+    		boalert("1명으 로 선택해주세요");
+    		return false;
+    	};
     	
-//     	if(tmpArray.length>4){
+    	if(tmpArray.length<2){
     		
 	    	$.ajax({
 	            
@@ -164,12 +172,17 @@ $(function(){
 	                    alert("error : " + request.status );
 	             }
 	             , success : function(result) {
-	             	alert('화상채팅방이 개설되었습니다.');
+	             	boalert('화상채팅방이 개설되었습니다.');
+	             	
+	             	setTimeout(function(){
+	             		
+                        $(location).attr('href', '${pageContext.request.contextPath}/user/video/room/'+result.video_chat_room_code +'.do');
+                    },1500);
 	             	
 	             	
 	             }
 	       });
-//     	}
+    	}
     	
     	
     });
@@ -244,7 +257,7 @@ function ptclick(project_code) {
                     <th>회의일자</th>
                     <th>회의 제목</th>
                     <th>관련 프로젝트</th>
-                    <th>참여인원</th>
+                    <th>초대인원</th>
                     <th>상태</th>
                     <th>개설자</th>
                   </tr>
@@ -256,7 +269,14 @@ function ptclick(project_code) {
 	                  <tr>
                             <td style="width: 100px;"><input type="hidden" value="${chatroomInfo.video_chat_room_code}">${chatroomInfo.rnum}</td>
                             <td style="width: 180px;">${chatroomInfo.video_chat_room_date}</td>
-                            <td  style="width: 350px;">${chatroomInfo.video_chat_room_title}</td>
+                            
+                            <c:if test="${empty chatroomInfo.video_chat_room_title }">
+	                            <td  style="width: 350px; color: red;">회의 진행중입니다.</td>
+                            </c:if>
+                            
+                            <c:if test="${! empty chatroomInfo.video_chat_room_title }">
+	                            <td  style="width: 350px;">${chatroomInfo.video_chat_room_title}</td>
+                            </c:if>
                             <td style="width: 350px;">${chatroomInfo.project_name}</td>
                             <td style="width: 150px;">${chatroomInfo.emp_cnt}<label> 명</label></td>
                             

@@ -17,35 +17,35 @@ public class IRecsRoomDaoImpl implements IRecsRoomDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertRecsRoom(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public String insertRecsRoom(RecsRoomVO rrv) throws SQLException {
+		return (String) client.insert("recs.insertRecsroom",rrv);
 	}
 
 	@Override
-	public void updateRecsRoom(RecsRoomVO rv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void updateRecsRoom(RecsRoomVO rrv) throws SQLException {
+		client.update("recs.updateRecsroom",rrv);
 	}
 
 	@Override
 	public void deleteRecsRoom(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("recs.deleteRecsroom",params);
 	}
 
 	@Override
 	public List<RecsRoomVO> getRecsRoomList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("recs.getRecsroomList",params);
 	}
 
 	@Override
 	public RecsRoomVO getRecsRoom(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (RecsRoomVO) client.queryForObject("recs.getRecsroom",params);
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("recs.totalCount",params);
 	}
 
 }
