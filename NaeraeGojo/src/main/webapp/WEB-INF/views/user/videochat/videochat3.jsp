@@ -10,19 +10,14 @@ $(function(){
 	    
 	    $("#project_name").append('<option selected="selected">${videochatInfo[0].project_name}</option>');
 	    
-	    $('#btn2').click(function(){
-	    	$(location).attr('href', '${pageContext.request.contextPath}/user/video/chatList.do');
-	    });
+// 	    $('#btn2').click(function(){
+// 	    	$(location).attr('href', '${pageContext.request.contextPath}/user/video/chatList.do');
+// 	    });
 	    
 	    $('form').submit(function(){
 	        
 	    });
 	    
-	    $('#btn3').click(function() {
-	    	var video_chat_room_code =  $('input[name=video_chat_room_code]').val();
-	    	alert(video_chat_room_code);
-	    	$(location).attr('href', '${pageContext.request.contextPath}/user/video/deleteVideoChat/'+video_chat_room_code+'.do');
-		});
 	
 });
 
@@ -127,9 +122,9 @@ label {
                   </div>
             	</div>
 				<div class="box-footer clearfix form-group">
-              	<input value="목록" id="btn2" type="button"  style="width:80px;"  class="btn btn-info btn-flat pull-right">
-              	<c:if test="${LOGIN_EMPINFO.emp_code==videochatInfo[0].emp_code}">
+<!--               	<input value="목록" id="btn2" type="button"  style="width:80px;"  class="btn btn-info btn-flat pull-right"> -->
 	              	<button type="submit"  style="width:80px;"  class="btn btn-danger btn-flat pull-right">회의록 등록</button>
+              	<c:if test="${LOGIN_EMPINFO.emp_code==videochatInfo[0].emp_code}">
               	</c:if>
           	    </div>
           <!-- /.box -->

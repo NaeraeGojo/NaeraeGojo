@@ -10,9 +10,12 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 import kr.or.ddit.vo.ChatListTempVO;
+import kr.or.ddit.vo.VideoFileVO;
 
 public interface IVideoFileService {
 
 	public void insertChatFile(String video_chat_room_code, MultipartFile files) throws SQLException;
+
+	public VideoFileVO getVideoFile(Map<String, String> params) throws SQLException;
 	
 }

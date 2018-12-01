@@ -1,5 +1,7 @@
 package kr.or.ddit.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -18,6 +20,7 @@ public class ChatListTempVO {
 	private String video_chat_status;
 	private String video_chat_level_code;
 	private String video_chat_level_name;
+	private List<VideoFileVO> items;
 	
 	
 	

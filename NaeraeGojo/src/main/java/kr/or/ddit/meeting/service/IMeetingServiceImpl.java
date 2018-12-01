@@ -45,17 +45,17 @@ public class IMeetingServiceImpl implements IMeetingService{
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	@Override
-	public String insertMeetingInfo(MeetingVO mv, MultipartFile files)
+	public String insertMeetingInfo(MeetingVO mv)
 			throws SQLException {
 		
 		String meeting_code = dao.insertMeetingInfo(mv);
 		
-		if (files != null) {
-			
-			MeetFileVO mfile = fileMapper.mapping(files, meeting_code);
-			
-			fileDao.insertMeetingFile(mfile);
-		}
+//		if (files != null) {
+//			
+//			MeetFileVO mfile = fileMapper.mapping(files, meeting_code);
+//			
+//			fileDao.insertMeetingFile(mfile);
+//		}
 		
 		return meeting_code;
 	}

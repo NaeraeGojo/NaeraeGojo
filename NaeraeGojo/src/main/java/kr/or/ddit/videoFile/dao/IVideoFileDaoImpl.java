@@ -26,5 +26,11 @@ public class IVideoFileDaoImpl implements IVideoFileDao{
 		client.insert("videoFile.insertChatFile", mfile);
 	}
 
+	@Override
+	public VideoFileVO getVideoFile(Map<String, String> params)
+			throws SQLException {
+		return (VideoFileVO) client.queryForObject("videoFile.getVideoFile", params);
+	}
+
 
 }

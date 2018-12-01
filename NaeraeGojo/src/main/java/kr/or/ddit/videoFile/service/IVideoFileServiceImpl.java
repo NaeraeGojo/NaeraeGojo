@@ -35,8 +35,12 @@ public class IVideoFileServiceImpl implements IVideoFileService{
 		
 		VideoFileVO mfile = fileMapper.mapping2(files, video_chat_room_code);
 		dao.insertChatFile(mfile);
-		
-		
+	}
+
+	@Override
+	public VideoFileVO getVideoFile(Map<String, String> params)
+			throws SQLException {
+		return dao.getVideoFile(params);
 	}
 
 }

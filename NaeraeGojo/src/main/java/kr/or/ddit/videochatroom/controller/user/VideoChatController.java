@@ -105,7 +105,7 @@ public class VideoChatController {
 		
 		String video_chat_room_code = vcv.getVideo_chat_room_code();
 		
-		if (files != null) {
+		if(!files.isEmpty()){
 			Fileservice.insertChatFile(video_chat_room_code, files);
 		}
 		

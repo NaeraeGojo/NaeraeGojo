@@ -15,6 +15,20 @@
         from video_chat_room
         where video_chat_room_delete = 'n'
     </sql>
+    
+    
+    <resultMap  id="videoChatMap" class="chatTempVO">
+        <result property="emp_code" column="emp_code"/>
+        <result property="video_chat_room_title" column="video_chat_room_title"/>
+        <result property="project_name" column="project_name"/>
+        <result property="emp_name" column="emp_name"/>
+        <result property="video_chat_room_content" column="video_chat_room_content"/>
+        <result property="video_chat_join_intime" column="video_chat_join_intime"/>
+        <result property="video_chat_join_outtime" column="video_chat_join_outtime"/>
+        <result property="video_chat_room_code" column="video_chat_room_code"/>
+        <result property="items" column="video_chat_room_code" select="videoFile.videoFileItems"/> 
+    </resultMap>    
+    
 
     <sql id="searchCondition">
         <dynamic>
@@ -82,7 +96,7 @@
          ORDER BY t.RNUM DESC
     </select>
     
-    <select id="getVideoInfo" parameterClass="map" resultClass="chatTempVO">
+    <select id="getVideoInfo" parameterClass="map" resultMap="videoChatMap">
 		select  a.emp_code, a.video_chat_room_title, b.project_name, c.emp_name, 
 		          a.video_chat_room_content, d.video_chat_join_intime, d.video_chat_join_outtime, a.video_chat_room_code
 		from  video_chat_room a, project b,  emp c , video_chat_join d
@@ -184,7 +198,7 @@
     
     <update id="ChatRoomEnd" parameterClass="map">
         update video_chat_room
-        set video_chat_level_code = 'level3'
+        set video_chat_level_code = 'level4'
         where video_chat_room_code = #video_chat_room_code#
     </update>
     

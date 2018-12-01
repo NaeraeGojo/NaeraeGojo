@@ -9,6 +9,7 @@ public class VideoChatVO {
 	private String video_chat_date;
 	private String video_chat_rp;
 	private String video_chat_delete;
+	
 
 	public String getVideo_chat_code() {
 		return video_chat_code;

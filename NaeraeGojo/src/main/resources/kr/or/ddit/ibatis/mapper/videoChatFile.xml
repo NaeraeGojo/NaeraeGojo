@@ -23,18 +23,17 @@
                                 , #video_chat_room_code#) 
 	</insert>
 	
-<!--     <statement id="meetFileItems" resultClass="meetFileVO"> -->
-<!--         select *  -->
-<!--         from meeting_file -->
-<!--         where meeting_code = #meeting_code# -->
-<!--     </statement>	 -->
+    <statement id="videoFileItems" resultClass="videoFileVO">
+        select *
+        from video_file
+        where video_chat_room_code = #video_chat_room_code#
+    </statement>	
     
-<!--     <select id="getMeetingFile" parameterClass="map" resultClass="meetFileVO"> -->
-<!--     	select *  -->
-<!--     	from meeting_file -->
-<!--     	where meeting_file_code = #meeting_file_code# -->
-<!--     </select> -->
-	
+    <select id="getVideoFile" parameterClass="map" resultClass="videoFileVO">
+        select *
+        from video_file
+        where video_file_code = #video_file_code#
+    </select>
     
 </sqlMap>
 
