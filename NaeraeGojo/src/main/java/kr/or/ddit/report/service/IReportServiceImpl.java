@@ -135,4 +135,19 @@ public class IReportServiceImpl implements IReportService{
 		list = dao.reportStatusPL(params1);
 		return list;
 	}
+
+	@Override
+	public List<ReportVO> reportListPLRec(Map<String, String> params)
+			throws SQLException {
+		List<ReportVO> list = null;
+		list = dao.reportListPLRec(params);
+		return list;
+	}
+
+	@Override
+	public int totalCountPLRec(Map<String, String> params) throws SQLException {
+		int totalCountPLRec = 0;
+		totalCountPLRec=dao.totalCountPLRec(params);
+		return totalCountPLRec;
+	}
 }

@@ -58,6 +58,12 @@
 												<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'i' }">
 												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
 												</c:if>
+												<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'k' }">
+												<td><span class="label label-success">승인 완료</span></td>
+												</c:if>
+												<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
+												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
+												</c:if>
 												<td>${list.report_title }</td>
 												<td>${list.emp_name }</td>
 												<td>${list.report_day }</td>

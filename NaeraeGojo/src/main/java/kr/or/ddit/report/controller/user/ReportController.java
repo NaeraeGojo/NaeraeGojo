@@ -153,8 +153,8 @@ public class ReportController {
 			)throws Exception{
 		params.put("report_code", report_code);
 		vo = service.reportView(params);
-		String project_code = vo.getProject_code();
-		params1.put("project_code", project_code);
+		
+		params1.put("report_code", report_code);
 		List<ReportVO> stList = service.reportStatusPL(params1);
 //		vo = service.noticeAllInfo(params);
 //		service.updateHit(params);
@@ -215,8 +215,42 @@ public class ReportController {
 	
 	//PL 받은보고서함 리스트
 	@RequestMapping("report_listPLRec")
-	public String report_listPLRec(){
-		return "user/report/report_listPLRec"; 
+	public ModelAndView report_listPLRec(HttpServletRequest request,
+			ModelAndView andView,
+			HttpSession session,
+			String search_keyword,
+			String search_keycode,
+			String currentPage
+			,String emp_code) throws Exception{
+		if(currentPage==null){
+		currentPage = "1";
+		}
+		Map<String, String> params = new HashMap<String, String>();
+		
+		params.put("search_keyword", search_keyword);
+		params.put("search_keycode", search_keycode);
+		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		System.out.println("아디아디아디아디"+emp_code);
+		params.put("emp_code", emp_code);
+		
+		if(params != null){
+			String message = (String) params.get("message");
+			System.out.println("RedirectAttribute post 전송 파람 : " + message);
+		}
+		
+		
+		int totalCount = service.totalCountPLRec(params);
+		RolePagingUtil paginUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
+		params.put("startCount",  String.valueOf(paginUtil.getStartCount()));
+		params.put("endCount", String.valueOf(paginUtil.getEndCount()));
+		
+		List<ReportVO> reportListPLRec = service.reportListPLRec(params);
+		
+		andView.addObject("reportListPLRec",reportListPLRec);
+		andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
+		andView.setViewName("user/report/report_listPLRec");
+		return andView;
 	}
 	
 	

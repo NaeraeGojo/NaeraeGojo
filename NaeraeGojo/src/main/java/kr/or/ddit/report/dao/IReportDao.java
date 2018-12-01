@@ -24,6 +24,8 @@ public interface IReportDao {
 	public List<ReportVO> reportList(Map<String, String> params) throws SQLException;
 	//PL 리스트 보낸보고서함
 	public List<ReportVO> reportListPL(Map<String, String> params) throws SQLException;
+	//PL 리스트 받은보고서함
+	public List<ReportVO> reportListPLRec(Map<String, String> params) throws SQLException;
 	//클릭했을시 개발자 뷰
 	public ReportVO reportView(Map<String, String> params) throws SQLException;
 	//결재 뷰 개발자
@@ -35,4 +37,5 @@ public interface IReportDao {
 	
 	public int totalCountDEV(Map<String, String> params) throws SQLException;
 	public int totalCountPL(Map<String, String> params) throws SQLException;
+	public int totalCountPLRec(Map<String, String> params) throws SQLException;
 }

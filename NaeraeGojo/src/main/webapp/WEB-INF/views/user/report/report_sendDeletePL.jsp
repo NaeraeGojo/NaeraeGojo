@@ -135,26 +135,24 @@ label {
 								<table class="table no-margin" id="mView">
 									<thead>
 										<tr>
-											<th scope="col" width="20%">소속부서</th>
-											<th scope="col" width="20%">레벨</th>
-											<th scope="col" width="20%">이름</th>
-											<th scope="col" width="20%">권한</th>
-											<th scope="col" width="20%">결재</th>
+											<th scope="col" width="25%">레벨</th>
+											<th scope="col" width="25%">이름</th>
+											<th scope="col" width="25%">권한</th>
+											<th scope="col" width="25%">결재</th>
 										</tr>
 									</thead>
 									<tbody id="bodytable">
 									<c:forEach items="${stList }" var="list">
 										<tr>
-											<td>${list.emp_department }</td>
-											<td>${list.emp_level }</td>
-											<td>${list.emp_name }</td>
-											<td>${list.position_name }</td>
+											<td>${list.pm_level }</td>
+											<td>${list.pm_name }</td>
+											<td>${list.pm_position }</td>
 											<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'i' }">
 												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
 											</c:if>
-											<c:if test="${list.report_pl_status eq 'i' && list.report_pm_status eq 'i' }">
-												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
-											</c:if>
+<%-- 											<c:if test="${list.report_pl_status eq 'i' && list.report_pm_status eq 'i' }"> --%>
+<!-- 												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td> -->
+<%-- 											</c:if> --%>
 											<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
 												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
 											</c:if>

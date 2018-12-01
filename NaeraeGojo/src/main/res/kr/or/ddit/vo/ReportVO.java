@@ -30,8 +30,53 @@ public class ReportVO {
 	
 	private List<ReportFileVO> items;
 	
+	//PL뷰
+	private String pm_position;
+	private String pm_level;
+	private String pm_name;
+	private String pl_position;
+	private String pl_level;
+	private String pl_name;
 	
 	
+	
+	
+	public String getPm_position() {
+		return pm_position;
+	}
+	public void setPm_position(String pm_position) {
+		this.pm_position = pm_position;
+	}
+	public String getPm_level() {
+		return pm_level;
+	}
+	public void setPm_level(String pm_level) {
+		this.pm_level = pm_level;
+	}
+	public String getPm_name() {
+		return pm_name;
+	}
+	public void setPm_name(String pm_name) {
+		this.pm_name = pm_name;
+	}
+	public String getPl_position() {
+		return pl_position;
+	}
+	public void setPl_position(String pl_position) {
+		this.pl_position = pl_position;
+	}
+	public String getPl_level() {
+		return pl_level;
+	}
+	public void setPl_level(String pl_level) {
+		this.pl_level = pl_level;
+	}
+	public String getPl_name() {
+		return pl_name;
+	}
+	public void setPl_name(String pl_name) {
+		this.pl_name = pl_name;
+	}
 	public String getProject_name() {
 		return project_name;
 	}

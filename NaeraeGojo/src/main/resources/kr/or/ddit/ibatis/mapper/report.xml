@@ -127,7 +127,18 @@
 			WHERE A.EMP_CODE = B.EMP_CODE
 			AND  A.EMP_CODE = #emp_code#
 			AND  A.REPORT_PL_STATUS = 'k'
-			AND  A.REPORT_PM_STATUS = 'i'
+			AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
+		<include refid="searchCondition"/>
+	</select>
+	
+	<select id="totalCountPLRec" parameterClass="map" resultClass="int">
+		  SELECT COUNT(A.REPORT_CODE)
+			FROM REPORT A, EMP B
+			WHERE A.EMP_CODE = B.EMP_CODE
+			AND  A.EMP_CODE_PL = #emp_code#
+			AND  A.EMP_CODE_PL != A.EMP_CODE 
+			AND  A.REPORT_PL_STATUS IN ('i' ,'k','x')
+			AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -150,6 +161,26 @@
 		order by b.rnum desc
 	</select>
 	
+	<select id="reportListPLRec" parameterClass="map" resultClass="reportVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+						FROM REPORT A, EMP B
+						WHERE A.EMP_CODE = B.EMP_CODE
+						AND  A.EMP_CODE_PL = #emp_code#
+						AND  A.EMP_CODE_PL != A.EMP_CODE
+						AND  A.REPORT_PL_STATUS IN ( 'i','k','x')
+						AND  A.REPORT_PM_STATUS IN ( 'i','k','x')
+						<include refid="searchCondition"/>
+						order by report_code asc
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startCount#
+		and b.rnum >= #endCount#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
 	<select id="reportListPL" parameterClass="map" resultClass="reportVO">
 		select b.*
 		from (select rownum rnum, a.*
@@ -158,7 +189,7 @@
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE = #emp_code#
 						AND  A.REPORT_PL_STATUS = 'k'
-						AND  A.REPORT_PM_STATUS = 'i'
+						AND  A.REPORT_PM_STATUS IN ('k','i','x')
 						<include refid="searchCondition"/>
 						order by report_code
 						) a ) b
@@ -170,14 +201,14 @@
 	</select>
 	
 	<select id="reportView" parameterClass="map" resultClass="reportVO">
-		SELECT A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION, EMP_CODE_PL,EMP_CODE_PM,
-				A.REPORT_TITLE,A.REPORT_CONTENT,D.PROJECT_NAME,A.REPORT_PL_STATUS,
-				A.REPORT_PM_STATUS,D.PROJECT_CODE
-		FROM REPORT A, EMP B, PW C, PROJECT D
-		WHERE A.EMP_CODE = B.EMP_CODE
-		AND   A.PW_CODE = C.PW_CODE
-		AND   C.PROJECT_CODE = D.PROJECT_CODE
-		AND A.REPORT_CODE = #report_code#
+		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
+	     FROM REPORT A, EMP B, PW C, PROJECT D,JOIN E
+	     WHERE A.EMP_CODE = B.EMP_CODE
+	     AND   A.PW_CODE = C.PW_CODE
+	     AND   C.PROJECT_CODE = D.PROJECT_CODE
+	     AND   D.PROJECT_CODE = E.PROJECT_CODE
+	     AND   A.REPORT_CODE = #report_code#
+	     GROUP BY A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
 	</select>
 	
 	<select id="reportStatus" parameterClass="map" resultClass="reportVO">
@@ -192,14 +223,31 @@
 	</select>
 	
 	<select id="reportStatusPL" parameterClass="map" resultClass="reportVO">
-		SELECT C.EMP_CODE,C.EMP_NAME,A.POSITION_NAME,C.EMP_DEPARTMENT,C.EMP_LEVEL,
-		D.REPORT_PL_STATUS,D.REPORT_PM_STATUS,C.EMP_DEPARTMENT
-	     FROM JOIN A, PROJECT B, EMP C,REPORT D
-	     WHERE A.PROJECT_CODE = B.PROJECT_CODE
-	     AND   A.EMP_CODE = C.EMP_CODE
-         AND   C.EMP_CODE = D.EMP_CODE
-	     AND   B.PROJECT_CODE = #project_code#
-	     AND   A.POSITION_NAME = 'PM'
+		select join_pm.position_name as pm_position
+            ,table_position_pl.*
+            from join join_pm , 
+                            (select  join_pl.position_name as pl_position
+        ,table_pm.*
+        from join join_pl
+                , (select emp_pm.emp_name as pm_name
+                            ,emp_pm.emp_level as pm_level
+                            , table_pl.*
+                            from emp emp_pm , (select emp_pl.emp_name as pl_name
+                                                    ,emp_pl.emp_level as pl_level
+                                                    , table_report.*
+                                                    from emp emp_pl , 
+                                                    ( select report.* , pw.project_code as project_code 
+                                                        from report ,pw
+                                                        where report_code =#report_code#
+                                                        and report.pw_code = pw.pw_code) table_report
+                                                    where emp_pl.emp_code = table_report.emp_code_pl) table_pl
+                                                                where emp_pm.emp_code = table_pl.emp_code_pm) table_pm
+                                            where join_pl.emp_code = table_pm.emp_code_pl
+                                                and table_pm.project_code = join_pl.project_code
+                            
+                            ) table_position_pl
+        where join_pm.emp_code = table_position_pl.emp_code_pm
+        and join_pm.project_code = table_position_pl.project_code
 	</select>
 	
 <!-- 	<select id="reportList" parameterClass="map" resultClass="reportVO"> -->
