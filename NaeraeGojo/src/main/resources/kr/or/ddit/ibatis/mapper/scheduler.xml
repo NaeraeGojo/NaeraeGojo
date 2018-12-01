@@ -11,6 +11,7 @@
 		<result property="scheduler_title"   column="scheduler_title"/>
 		<result property="scheduler_explain" column="scheduler_explain"/>
 		<result property="scheduler_keyword" column="scheduler_keyword"/>
+		<result property="scheduler_writer" column="scheduler_writer"/>
 	</resultMap>
 	
 	<sql id="selectAll">
@@ -32,14 +33,18 @@
 		<dynamic>
 	 		<isNotEmpty property="search_keyword" prepend="and">
 	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
-	 				   PBLANC_BOARD_TITLE LIKE '%' || #search_keyword# || '%'
-	 				OR PBLANC_BOARD_COM   LIKE '%' || #search_keyword# || '%'
+	 				   SCHEDULER_TITLE LIKE '%' || #search_keyword# || '%'
+	 				OR SCHEDULER_KEYWORD   LIKE '%' || #search_keyword# || '%'
+	 				OR EMP_NAME   LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
 	 			<isEqual property="search_keycode" compareValue="TITLE" >  
-	 					PBLANC_BOARD_TITLE LIKE '%' || #search_keyword# || '%'
+	 					SCHEDULER_TITLE LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
-	 			<isEqual property="search_keycode" compareValue="PBLANC" >  
-	 					PBLANC_BOARD_COM LIKE '%' || #search_keyword# || '%'
+	 			<isEqual property="search_keycode" compareValue="KEYWORD" >  
+	 					SCHEDULER_KEYWORD LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="NAME" >  
+	 					EMP_NAME LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
 	 		</isNotEmpty>
 	 	</dynamic>
@@ -66,6 +71,7 @@
 		    ,SCHEDULER_EXPLAIN
 		    ,SCHEDULER_KEYWORD
 		    ,SCHEDULER_STATUS
+		    ,SCHEDULER_WRITER
 		  FROM SCHEDULER
 		 WHERE SCHEDULER_CODE = #scheduler_code#
 	</select>
@@ -106,6 +112,15 @@
 		UPDATE SCHEDULER
 		   SET SCHEDULER_DELETE = 'y'
 		 WHERE SCHEDULER_CODE = #scheduler_code#
+	</update>
+	
+	<update id="changeScheduler" parameterClass="map">
+		UPDATE SCHEDULER
+	    	SET SCHEDULER_STATUS =
+			CASE SCHEDULER_STATUS WHEN 'y' THEN 'n'
+			ELSE 'y'
+			END
+		WHERE SCHEDULER_CODE = #scheduler_code#
 	</update>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">

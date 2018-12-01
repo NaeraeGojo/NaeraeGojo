@@ -48,6 +48,12 @@ public class ISchedulerServiceImpl implements ISchedulerService{
 		dao.deleteScheduler(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
+	@Override
+	public void changeScheduler(Map<String, String> params) throws SQLException {
+		dao.changeScheduler(params);
+	}
+	
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
 		int totalCount = 0;
