@@ -42,8 +42,12 @@ public class ISchedulerDaoImpl implements ISchedulerDao{
 	}
 
 	@Override
+	public void changeScheduler(Map<String, String> params) throws SQLException {
+		client.update("scheduler.changeScheduler", params);	
+	}
+	
+	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
 		return (int) client.queryForObject("scheduler.totalCount", params);
 	}
-
 }

@@ -177,7 +177,6 @@ $(function(){
 							</div>
 						</div>
 					</c:forEach>	
-						
 
 					<div class="box-footer clearfix">
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">

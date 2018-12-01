@@ -111,4 +111,15 @@ public class IReportDaoImpl implements IReportDao{
 		return client.queryForList("report.reportStatusPL", params1);
 	}
 
+	@Override
+	public List<ReportVO> reportListPLRec(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("report.reportListPLRec",params);
+	}
+
+	@Override
+	public int totalCountPLRec(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("report.totalCountPLRec",params);
+	}
+
 }
