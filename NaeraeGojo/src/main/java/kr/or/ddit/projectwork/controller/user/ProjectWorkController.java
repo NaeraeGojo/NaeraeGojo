@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user/project/pw/")
@@ -139,10 +140,48 @@ public class ProjectWorkController {
 	
 	@RequestMapping("pwChart")
 	public Model pwChart(Model model
+							,Map<String, String> params 
+							, HttpSession session
 						) throws Exception{
 		
+		String project_code = (String) session.getAttribute("project_code"); 
+		params.put("project_code", project_code);
+		
+		List<Map<String, String>> pc = service.getPwChart(params);
+		
+		
+		
+		model.addAttribute("pc" , pc);
 		
 		return model;
+	}
+	
+	@RequestMapping("getPwChart")
+	public ModelAndView getPwChart(ModelAndView mav 
+									, HttpSession session
+									, Map<String, String> params) throws Exception{
+		String project_code = (String) session.getAttribute("project_code");
+		params.put("project_code", project_code);
+		
+		List<Map<String, String>> pc = service.getPwChart(params);
+		
+		for(Map<String, String> pcv : pc){
+			String start_date = String.valueOf(pcv.get("PW_EST"));
+			start_date = start_date.substring(0,10);
+			pcv.put("PW_EST", start_date);
+			
+			String end_date = String.valueOf(pcv.get("PW_EET"));
+			end_date = end_date.substring(0,10);
+			pcv.put("PW_EET", end_date);
+		}
+		
+		
+		mav.addObject("pc",pc);
+		
+		
+		mav.setViewName("jsonConvertView");
+		
+		return mav;
 	}
 
 }

@@ -134,6 +134,15 @@
 			set pw_delete = 'y'
 			where pw_code = #pw_code#
 	</update>
+	
+	<select id="getPwChart" parameterClass="map" resultClass="java.util.HashMap">
+		select rownum rnum , a.*
+			from(
+				<include refid="selectAll"/>
+				and pw.project_code = #project_code#
+				order by to_number(pw_code) asc
+				) a
+	</select>
 </sqlMap>
 
 
