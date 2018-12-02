@@ -13,7 +13,8 @@ public class FreeBoardVO {
 	private String freeboard_content;
 	private String freeboard_date;
 	private String freeboard_delete;
-	private String test;
+	private String emp_code;
+	private String emp_name;
 	
 //	public String getFreeboard_code() {
 //		return freeboard_code;
