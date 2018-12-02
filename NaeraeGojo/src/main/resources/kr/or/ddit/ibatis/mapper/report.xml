@@ -116,8 +116,8 @@
 			FROM REPORT A, EMP B
 			WHERE A.EMP_CODE = B.EMP_CODE
 			AND  A.EMP_CODE = #emp_code#
-			AND  A.REPORT_PL_STATUS = 'i'
-			AND  A.REPORT_PM_STATUS = 'i'
+			AND  A.REPORT_PL_STATUS in ('i','k','x' )
+			AND  A.REPORT_PM_STATUS in ('i','k','x' )
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -142,6 +142,16 @@
 		<include refid="searchCondition"/>
 	</select>
 	
+	<select id="totalCountPMRec" parameterClass="map" resultClass="int">
+		  SELECT COUNT(A.REPORT_CODE)
+			FROM REPORT A, EMP B
+            WHERE A.EMP_CODE = B.EMP_CODE
+            AND  A.EMP_CODE_PM = #emp_code#
+            AND  A.REPORT_PL_STATUS IN ('k','x')
+            AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
+		<include refid="searchCondition"/>
+	</select>
+	
 	<select id="reportList" parameterClass="map" resultClass="reportVO">
 		select b.*
 		from (select rownum rnum, a.*
@@ -149,8 +159,8 @@
 						FROM REPORT A, EMP B
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE = #emp_code#
-						AND  A.REPORT_PL_STATUS = 'i'
-						AND  A.REPORT_PM_STATUS = 'i'
+						AND  A.REPORT_PL_STATUS in ('i','k','x' )
+						AND  A.REPORT_PM_STATUS in ('i','k','x' )
 						<include refid="searchCondition"/>
 						order by report_code asc
 						) a ) b
@@ -190,6 +200,25 @@
 						AND  A.EMP_CODE = #emp_code#
 						AND  A.REPORT_PL_STATUS = 'k'
 						AND  A.REPORT_PM_STATUS IN ('k','i','x')
+						<include refid="searchCondition"/>
+						order by report_code
+						) a ) b
+		<![CDATA[						
+		where b.rnum <= #startCount#
+		and b.rnum >= #endCount#
+		]]>		
+		order by b.rnum desc
+	</select>
+	
+	<select id="reportListPM" parameterClass="map" resultClass="reportVO">
+		select b.*
+		from (select rownum rnum, a.*
+				from (  SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+		                  FROM REPORT A, EMP B
+		                  WHERE A.EMP_CODE = B.EMP_CODE
+		                  AND  A.EMP_CODE_PM = #emp_code#
+		                  AND  A.REPORT_PL_STATUS IN ('k','x')
+		                  AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
 						<include refid="searchCondition"/>
 						order by report_code
 						) a ) b

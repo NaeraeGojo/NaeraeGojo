@@ -55,4 +55,10 @@ public class IProjectWorkServiceImpl implements IProjectWorkService{
 		return dao.getProjectWorkList(params);
 	}
 
+	@Override
+	public List<Map<String, String>> getPwChart(Map<String, String> params)
+			throws SQLException {
+		return dao.getPwChart(params);
+	}
+
 }

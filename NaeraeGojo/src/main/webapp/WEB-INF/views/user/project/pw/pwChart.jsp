@@ -109,124 +109,80 @@ $(function(){
 		});
 	};
 	
+	thistimes = function(data){
+		var dateArr = data.split('-');
+		var date = new Date(dateArr[0] , dateArr[1] -1, dateArr[2]);
+		
+		return date.getTime();
+	}
+	
 	"use strict";
-
-    var demoSource = [
-                      {
-        name: "Sprint 0",
-        desc: "Analysis",
-        values: [{
-            from: 1320192000000,
-            to: 1322401600000,
-            label: "Requirement Gathering",
-            customClass: "ganttRed"
-        }]
-    },{
-        desc: "Scoping",
-        values: [{
-            from: 1322611200000,
-            to: 1323302400000,
-            label: "Scoping",
-            customClass: "ganttRed"
-        }]
-    },{
-        name: "Sprint 1",
-        desc: "Development",
-        values: [{
-            from: 1323802400000,
-            to: 1325685200000,
-            label: "Development",
-            customClass: "ganttGreen"
-        }]
-    },{
-        name: " ",
-        desc: "Showcasing",
-        values: [{
-            from: 1325685200000,
-            to: 1325695200000,
-            label: "Showcasing",
-            customClass: "ganttBlue"
-        }]
-    },{
-        name: "Sprint 2",
-        desc: "Development",
-        values: [{
-            from: 1325695200000,
-            to: 1328785200000,
-            label: "Development",
-            customClass: "ganttGreen"
-        }]
-    },{
-        desc: "Showcasing",
-        values: [{
-            from: 1328785200000,
-            to: 1328905200000,
-            label: "Showcasing",
-            customClass: "ganttBlue"
-        }]
-    },{
-        name: "Release Stage",
-        desc: "Training",
-        values: [{
-            from: 1330011200000,
-            to: 1336611200000,
-            label: "Training",
-            customClass: "ganttOrange"
-        }]
-    },{
-        desc: "Deployment",
-        values: [{
-            from: 1336611200000,
-            to: 1338711200000,
-            label: "Deployment",
-            customClass: "ganttOrange"
-        }]
-    },
-    {
-        desc: "Warranty Period",
-        values: [{
-            from: new Date('12/02/2018').getTime(),
-            to: new Date('12/05/2018').getTime(),
-            label: "Warranty Period",
-            customClass: "ganttOrange"
-        }]
-    },{
-        desc: "",
-        values: [{
-            
-        }]
-    },{
-        desc: "",
-        values: [{
-            
-        }]
-    },{
-        desc: "",
-        values: [{
-            
-        }]
-    }
-    
-    ];
-    
-//     var today = moment();
-//     var andTwoHours = moment().add(2, "hours");
-
-//     var today_friendly = "/Date(" + today.valueOf() + ")/";
-//     var next_friendly = "/Date(" + andTwoHours.valueOf() + ")/";
-
-	  // shifts dates closer to Date.now()
-//     var offset = new Date().setHours(0, 0, 0, 0) -
-//         new Date(demoSource[0].values[0].from).setDate(35);
-//     for (var i = 0, len = demoSource.length, value; i < len; i++) {
-//         value = demoSource[i].values[0];
-//         value.from += offset;
-//         value.to += offset;
-//     }
-    
- 
+	var testArray = new Array();
+	var t = new Object();
+	
+// 	for(var i=0 ; i<10;i++)	{
+// 		var i = new Object();
+// 	}
+	
+	$.ajax({
+		url : '${pageContext.request.contextPath}/user/project/pw/getPwChart.do'
+		, dataType : 'json'
+		, async : false
+		, error : function(xhr, status, error){
+			boalert(error);
+		}
+		, success : function(json){
+			$.each(json.pc,function(i,v){
+				var testSource = {
+						 desc : v.PW_FUNCTION
+						, values : [{
+							from : thistimes(v.PW_EST)
+							, to : thistimes(v.PW_EET)
+							, label : v.PW_FUNCTION
+							, customClass : 'ganttBlue'
+							, dataObj: {myTitle: v.PW_FUNCTION
+								, myContent: '업무 기한 : ' + v.PW_EST + ' ~ ' + v.PW_EET 
+								+ '\n 담당자 : ' + v.EMP_NAME + '\n'
+								+ '\n 업무내용 : ' + v.PW_CONTENT
+								+ '\n 진척도 : ' + v.PW_PERCENT
+								}
+						}]
+				};
+				testArray.push(testSource);
+			})
+		}
+	});
+	
+	var dummy = {
+			 desc : ''
+			, values : [{
+				from : ''
+				, to : thistimes('2018-12-31')
+				, label : ''
+				, customClass : 'ganttOpa'
+			}]
+	};
+	
+	var dummy2 = {
+			 desc : ''
+			, values : [{
+				from : thistimes('2018-11-10')
+				, to : ''
+				, label : ''
+				, customClass : 'ganttOpa'
+			}]
+	};
+	
+	testArray.push(dummy);
+	testArray.push(dummy);
+	testArray.push(dummy);
+	testArray.push(dummy2);
+	testArray.push(dummy2);
+	
+	
+	
     $(".gantt").gantt({
-	 	source: demoSource,
+	 	source: testArray,
     	navigate: "scroll",
         scale: "days",
         maxScale: "months",
@@ -250,13 +206,17 @@ $(function(){
     
     $(".gantt").popover({
         selector: ".bar",
-        title: function _getItemText() {
-            return this.textContent;
+        title: function() {
+        	return $(this).data('dataObj').myTitle;
         },
-        content: "Here's some useful information.",
+        content: function() {
+        	return $(this).data('dataObj').myContent;
+        },	
         trigger: "hover",
-        placement: "auto right"
+        placement: "auto"
     });
+    
+    
 
 //     prettyPrint();
     
