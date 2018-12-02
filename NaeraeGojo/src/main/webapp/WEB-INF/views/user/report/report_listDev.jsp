@@ -47,8 +47,14 @@
 										<c:forEach items="${reportList }" var="list">
 											<tr>
 												<td><input type=hidden value="${list.report_code }">${list.rnum }</td>
-												<c:if test="${list.report_pl_status eq 'i' && list.report_pm_status eq 'i' }">
+												<c:if test="${list.report_pl_status eq 'i' && list.report_pm_status eq 'i' || list.report_pl_status eq 'k' && list.report_pm_status eq 'i'}">
 												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
+												</c:if>
+												<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'k' }">
+												<td><span class="label label-success">승인 완료</span></td>
+												</c:if>
+												<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
+												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
 												</c:if>
 												<td>${list.report_title }</td>
 												<td>${list.emp_name }</td>
@@ -56,15 +62,6 @@
 												<td>3</td>
 											</tr>
 										</c:forEach>
-											<tr>
-												<td>2</td>
-												<td><span class="label label-success">승인 완료</span></td>
-												<span class="label label-warning">&nbsp;&emsp; 반려&emsp; </span>
-												<td>주간회의 보고서입니다.</td>
-												<td>박희태</td>
-												<td>2018-11-11</td>
-												<td>3</td>
-											</tr>
 										</tbody>
 									</table>
 								</div>
