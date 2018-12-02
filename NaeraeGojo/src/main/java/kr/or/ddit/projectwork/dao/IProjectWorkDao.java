@@ -18,4 +18,6 @@ public interface IProjectWorkDao {
 	public Map<String, String> getProjectWork(Map<String, String> params) throws SQLException;
 
 	public int totalCount(Map<String, String> params) throws SQLException;
+
+	public List<Map<String, String>> getPwChart(Map<String, String> params) throws SQLException;
 }
