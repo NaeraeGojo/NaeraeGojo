@@ -38,6 +38,20 @@ public interface IReportService {
 	public List<ReportVO> reportStatusPL(Map<String, String> params1) throws SQLException;
 	//관련프로젝트 사람들 PL전용
 	public ReportVO projectPeoplePM(Map<String, String> params) throws SQLException;
+	//PL이 개발자 보고서온거 승인
+	public void updatePL(Map<String,String> params) throws SQLException;
+	//PM이 개발자,PL 보고서 온거 승인
+	public void updatePM(Map<String,String> params) throws SQLException;
+	//PL이 개발자 보고서온거 반려
+	public void updatePLx(Map<String,String> params) throws SQLException;
+	//PM이 개발자,PL 보고서 온거 반려
+	public void updatePMx(Map<String,String> params) throws SQLException;
+	//PL이 개발자에게 피드백
+	public String insertFeedPL(ReportVO fvo) throws SQLException;
+	//클릭했을시 개발자 피드백 뷰
+	public ReportVO feedViewDev(Map<String, String> params) throws SQLException;
+	
+	
 	public int totalCountDEV(Map<String, String> params) throws SQLException;
 	public int totalCountPL(Map<String, String> params) throws SQLException;
 	public int totalCountPLRec(Map<String, String> params) throws SQLException;

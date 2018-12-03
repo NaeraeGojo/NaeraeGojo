@@ -196,7 +196,11 @@ label {
 					<div class="box-footer clearfix">
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
 						<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
-						<input value="피드백 보기" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+						<c:forEach items="${stList }" var="list">
+							<c:if test="${list.report_pm_status eq 'x' }">
+								<input value="피드백 보기" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+							</c:if> 
+						</c:forEach>
 					</div>
 				</form>
 			</div>

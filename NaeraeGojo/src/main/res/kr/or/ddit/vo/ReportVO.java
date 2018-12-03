@@ -27,7 +27,30 @@ public class ReportVO {
 	private String project_code;
 	private String pw_function;
 	private String project_name;
+	private String report_feed_code;
+	private String report_feed_title;
+	private String report_feed_content;
 	
+	
+	
+	public String getReport_feed_code() {
+		return report_feed_code;
+	}
+	public void setReport_feed_code(String report_feed_code) {
+		this.report_feed_code = report_feed_code;
+	}
+	public String getReport_feed_title() {
+		return report_feed_title;
+	}
+	public void setReport_feed_title(String report_feed_title) {
+		this.report_feed_title = report_feed_title;
+	}
+	public String getReport_feed_content() {
+		return report_feed_content;
+	}
+	public void setReport_feed_content(String report_feed_content) {
+		this.report_feed_content = report_feed_content;
+	}
 	private List<ReportFileVO> items;
 	
 	//PL뷰

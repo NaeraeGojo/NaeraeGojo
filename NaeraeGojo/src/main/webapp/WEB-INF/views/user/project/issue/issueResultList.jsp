@@ -18,23 +18,13 @@
 <script type="text/javascript">
 $(function(){
 	
-	$('#listBtn1').click(function(){
+	$('#listBtn').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/project_manage.do')
     });
-	
-// 	$('#listBtn2').click(function(){
-// 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/project_manage.do')
-//     });
 	
 	$('#insertIssue').click(function(){
 		$(location).attr('href','${pageContext.request.contextPath}/user/project/issue/issueForm.do');
 	});
-	
-// 	$('#issue tr:gt(0)').click(function(){
-// 		var issue_code = $(this).find('td:eq(0) input').val();
-// 		var rnum = $(this).find('td:eq(0)').text();
-// 		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
-// 	})
 	
 	$('#issueResult tr:gt(0)').click(function(){
 		var issue_code = $(this).find('td:eq(0) input').val();
@@ -129,7 +119,7 @@ $(function(){
 						<button type="submit" class="btn btn-primary form-control">검색</button>
 						<button type="button" id="" class="btn btn-warning form-control">이슈 차트</button>
 <!-- 						<button type="button" id="insertIssue" class="btn btn-danger form-control">이슈 등록</button> -->
-						<button type="button" id="listBtn1" class="btn btn-info form-control">프로젝트 목록</button>
+						<button type="button" id="listBtn" class="btn btn-info form-control">프로젝트 목록</button>
 					</form>
 				</div>
 			</div>
