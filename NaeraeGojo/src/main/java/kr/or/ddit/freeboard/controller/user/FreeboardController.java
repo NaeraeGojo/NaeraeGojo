@@ -1,45 +1,58 @@
 package kr.or.ddit.freeboard.controller.user;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.annotation.Resources;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-
-
-
-
-
-
-
 import kr.or.ddit.freeboard.service.IFreeboardService;
-import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.project.service.IProjectService;
+import kr.or.ddit.utils.RolePagingUtil;
+import kr.or.ddit.utils.SetContent;
 import kr.or.ddit.vo.FreeBoardVO;
+import kr.or.ddit.vo.ProjectVO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/user/project/freeboard")
+@RequestMapping("/user/project/freeboard/")
 public class FreeboardController {
+	
 	@Resource
-	private IFreeboardService service;
+	IFreeboardService service;
+	
+	@Resource
+	IProjectService pservice;
+	
 	
 	@RequestMapping("freeboardList")
-	public ModelAndView freeboardList(String project_code, HttpServletRequest request, HttpSession session,
+	public ModelAndView freeboardList(HttpServletRequest request, HttpSession session, String currentPage,
 			Map<String, String> params, ModelAndView andView) throws SQLException{
-		project_code = (String) session.getAttribute("project_code");
+		params = SetContent.getParams(request);
+		
+		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
+		
+		SetContent.setPath(request);
+		
+		currentPage = SetContent.getPage(request);
+		int totalCount = service.totalCount(params);
+		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage), totalCount, request, 10);
+		params = SetContent.setParams(params, paging);
 		
 		List<FreeBoardVO> freeboardList = service.freeboardList(params);
 		
 		andView.addObject("freeboardList", freeboardList);
+		
+		ProjectVO pv = pservice.projectInfo(params);
+		andView.addObject("pv", pv);
+		
 		andView.setViewName("user/project/freeboard/freeboardList");
 		
 		return andView;
@@ -47,6 +60,7 @@ public class FreeboardController {
 	
 	@RequestMapping("freeboardForm")
 	public void freeboardForm(){}
+	
 	@RequestMapping("freeboardView")
 	public void freeboardView(){}
 	@RequestMapping("freeboardUpdate")

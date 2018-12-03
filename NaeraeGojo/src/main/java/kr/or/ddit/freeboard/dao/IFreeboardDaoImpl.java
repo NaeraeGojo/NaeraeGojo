@@ -21,36 +21,36 @@ public class IFreeboardDaoImpl implements IFreeboardDao{
 	@Override
 	public FreeBoardVO freeboardInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (FreeBoardVO) client.queryForObject("freeboard.freeboardInfo", params);
 	}
 
 	@Override
 	public List<FreeBoardVO> freeboardList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("freeboard.freeboardList", params);
 	}
 
 	@Override
 	public void insertFreeboardInfo(FreeBoardVO freeboardInfo)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.insert("freeboard.insertFreeboard", freeboardInfo);
 	}
 
 	@Override
 	public void deleteFreeboardInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("freeboard.deleteFreeboard", params);
 	}
 
 	@Override
 	public void updateFreeboardInfo(FreeBoardVO freeboardInfo)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("freeboard.updateFreeboard", freeboardInfo);
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("freeboard.totalCount", params);
 	}
 
 }

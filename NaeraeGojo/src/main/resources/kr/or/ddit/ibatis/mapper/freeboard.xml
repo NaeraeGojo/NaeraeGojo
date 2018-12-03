@@ -18,13 +18,27 @@
 		<result property="bo_reg_date" column="bo_reg_date"/>
 		<result property="bo_status" column="bo_status"/>
 		<result property="bo_group" column="bo_group"/>
+		<result property="project_code" column="project_code"/>
 		<result property="bo_seq" column="bo_seq"/>
 		<result property="bo_depth" column="bo_depth"/>
-		<result property="items" column="bo_no" select="fileitem.fileItems"/>
+		<result property="items" column="{bo_no=bo_no,project_code=project_code}" select="profile.freeFiles"/>
 	</resultMap>
 	
 	<sql id="selectAll">
-		SELECT *
+		SELECT TO_CHAR(BO_REG_DATE,'yyyy-mm-dd') AS BO_REG_DATE
+				,BO_NO
+				,BO_TITLE
+				,BO_WRITER
+				,BO_NICKNAME
+				,BO_PWD
+				,BO_MAIL
+				,BO_IP
+				,BO_CONTENT
+				,BO_HIT
+				,BO_STATUS
+				,BO_GROUP
+				,BO_SEQ
+				,BO_DEPTH
 		  FROM FREEBOARD
 		 WHERE BO_STATUS = 'y'
 	</sql>
@@ -56,8 +70,9 @@
 		  from (select rownum rnum, a.*
 				from(
 					<include refid = "selectAll"/>
+					 and freeboard.project_code = #project_code#
 					<include refid = "searchCondition"/>
-					order by bo_group, bo_seq desc) a ) b
+					order by bo_group, bo_seq asc) a ) b
 		 <![CDATA[
  		 where b.rnum <= #startCount#
  		   and b.rnum >= #endCount#
@@ -66,9 +81,8 @@
 	</select>
 	
 	<select id="freeboardInfo" parameterClass="map" resultMap="freeboardMap">
-		select * 
-      	from FREEBOARD
-      	where bo_no = #bo_no#
+		<include refid="selectAll"/>
+		AND BO_NO = #bo_no#
 	</select>
 
 	<update id="updateBOHIT" parameterClass="map">
@@ -162,11 +176,13 @@
 	</insert>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">
-		SELECT COUNT(BO_NO)
+		SELECT COUNT(*)
 		  FROM FREEBOARD
 		 WHERE BO_STATUS = 'y'
+		 AND PROJECT_CODE = #project_code#
 		 <include refid="searchCondition"/> 
 	</select>
+
 </sqlMap>
 
 

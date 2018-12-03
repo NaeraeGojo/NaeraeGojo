@@ -15,6 +15,7 @@ public class FreeBoardVO {
 	private String freeboard_delete;
 	private String emp_code;
 	private String emp_name;
+	private String project_code;
 	
 //	public String getFreeboard_code() {
 //		return freeboard_code;
