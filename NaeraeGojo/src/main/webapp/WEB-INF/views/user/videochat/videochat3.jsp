@@ -16,6 +16,22 @@ $(function(){
 	    
 	    $('form').submit(function(){
 	        
+	        if($('input[name=video_chat_room_title]').val()=='' || $('input[name=video_chat_room_title]').val()==null){
+	            boalert("제목을 입력해주세요");
+	            return false;
+	        }
+	        
+	        if($('textarea[name=video_chat_room_content]').val()=='' ||$('textarea[name=video_chat_room_content]').val()==null){
+	            boalert("내용을 입력해주세요");
+	            return false;
+	        }
+	        
+// 	        if($('#ttt label').val()==null||$('#ttt input').val()==''){
+// 	            boalert("관련업무를 선택해주세요");
+// 	            return false;
+// 	        }
+	        
+	        return true;
 	    });
 	    
 	

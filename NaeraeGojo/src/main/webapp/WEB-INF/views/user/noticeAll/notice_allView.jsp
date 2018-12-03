@@ -44,7 +44,6 @@ label {
                 
                 <div class="form-group">
                   <label for="inputPassword1" class="col-sm-2 control-label">제목</label>
-
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="notice_all_title" name="notice_all_title">
                   </div>
@@ -85,14 +84,6 @@ label {
                   </div>
                 </c:forEach>
                 </div>
-                
-<!--                 <div class="form-group"> -->
-<!--                   <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력2</font></font></label> -->
-<!--                   <div class="col-sm-10 control-label"> -->
-<!--                   <input type="file" id="file02" name="files"> -->
-<!--                   </div> -->
-<!--                 </div> -->
-                
               </div>
               <div class="box-footer clearfix">
               <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
@@ -107,17 +98,18 @@ label {
           
 <script type="text/javascript">
 $(function(){
+	
 	 	$('input[name=notice_all_title]').val('${vo.notice_all_title}');
 	    $('textarea[name=notice_all_content]').val('${vo.notice_all_content}');
 	    $('input[name=emp_name]').val('${vo.emp_name}');
 	    $('input[name=notice_all_pass]').val('${vo.notice_all_pass}');
 	    $('input[name=notice_all_pass]').val('${vo.notice_all_pass}');
-    
+	    
 	    $('#delete').click(function(){
 	    	var  notice_all_code = $('input[name=notice_all_code]').val();
-	    	
 	    	$(location).attr('href','${pageContext.request.contextPath}/user/noticeAll/deleteNoticeAll/'+notice_all_code+'.do');
 	    });
+	    
 	    $('form').submit(function(){
 	    	if($('input[name=notice_all_title]').val()==''){
 	    		return false;
