@@ -508,6 +508,15 @@ public class ReportController {
 		return "redirect:/user/report/report_listPLRec.do";
 	}
 	
+	@RequestMapping("feedDEV/{report_code}/{emp_code}")
+	public String feedDEV(@PathVariable String report_code,
+										String emp_code, 
+										Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		params.put("emp_code", emp_code);
+		service.feedViewDev(params);
+		return "redirect:/user/report/report_listPM.do";
+	}
 	
 	
 	

@@ -310,6 +310,12 @@ label {
 			var report_code = $('input[name=report_code]').val();
 			 
 		 })
+		 
+		  $('#checkFeed').click(function(){
+			  var emp_code = $('input[name=emp_code]').val();
+			  var report_code = $('input[name=report_code]').val();
+			  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
+		 })
 
 	})
 </script>

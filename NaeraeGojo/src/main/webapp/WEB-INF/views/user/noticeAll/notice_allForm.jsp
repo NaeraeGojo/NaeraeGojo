@@ -20,11 +20,11 @@ label {
 .test1 {
     width: 47%;
     margin: 5px; 
-  }
-  
-  .box-title{
-  	font-size : 40px !important;
-  }
+}
+
+.box-title{
+	font-size : 40px !important;
+}
 </style>
 <!--     Main content -->
     <section class="content">
@@ -75,9 +75,9 @@ label {
                 
                 <div class="form-group">
                   <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력2</font></font></label>
-                  <div class="col-sm-10 control-label">
-                  <input type="file" id="file02" name="files">
-                  </div>
+	                  <div class="col-sm-10 control-label">
+	                  	<input type="file" id="file02" name="files">
+	                  </div>
                 </div>
                 
               </div>
@@ -105,10 +105,6 @@ $(function(){
 	    		alert('입력해봐라');
 	    		return false;
 	    	}
-// 	    	if(!$('input[name=emp_code]').val()==''){
-// 	    		alert('입력해봐라');
-// 	    		return false;
-// 	    	}
 	    	return true;
 	    })
 })
