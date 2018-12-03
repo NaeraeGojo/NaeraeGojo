@@ -33,7 +33,7 @@ public class SchedulerController {
 			String search_keyword, String search_keycode, String currentPage,
 			Map<String, String> params, ModelAndView andView) throws Exception{
 
-		if(currentPage==null){
+		if(currentPage == null || currentPage == ""){
 			currentPage = "1";
 		}
 		
