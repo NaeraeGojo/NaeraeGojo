@@ -17,11 +17,27 @@ $(function() {
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/project_manage.do')
     });
 	
-	$('table tr:gt(0)').click(
-		function() {
-			var issue_result_code = $(this).find('td:eq(0) input').val();
-			var rnum = $(this).find('td:eq(0)').text();
-			$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/riskView.do?issue_result_code='+issue_result_code+'&rnum='+rnum);
+	$('table tr:gt(0)').click(function(){
+		var issue_result_code = $(this).find('td:eq(0) input').val();
+		var rnum = $(this).find('td:eq(0)').text();
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?issue_result_code='+issue_result_code+'&rnum='+rnum;
+		
+		if(currentPage != null && currentPage != ''){
+			query += '&currentPage=' + currentPage;
+		}
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/riskView.do'+query);
 	});
 });
 </script>
@@ -72,7 +88,8 @@ $(function() {
 		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 		<select class="form-control" name="search_keycode">
 			<option value="TOTAL">전체</option>
-			<option value="NAME">제목</option>
+			<option value="ISSUE">제목</option>
+			<option value="NAME">작성자</option>
 			<option value="LEVEL">등급</option>
 		</select>
 		<button type="submit" class="btn btn-primary form-control">검색</button>

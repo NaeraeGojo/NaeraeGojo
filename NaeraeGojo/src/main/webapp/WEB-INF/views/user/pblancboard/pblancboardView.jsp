@@ -210,10 +210,7 @@ $(function(){
 				</div>
 			</div>
 			</form>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
-	<!-- /.modal -->
 	
 </section>
