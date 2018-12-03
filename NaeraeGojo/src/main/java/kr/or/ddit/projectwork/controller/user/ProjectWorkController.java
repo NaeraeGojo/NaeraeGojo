@@ -156,8 +156,13 @@ public class ProjectWorkController {
 	
 	@RequestMapping("getPwChart")
 	public ModelAndView getPwChart(ModelAndView mav 
+									, String search_keycode
+									, String search_keyword
 									, HttpSession session
 									, Map<String, String> params) throws Exception{
+		params.put("search_keycode", search_keycode);
+		params.put("search_keyword", search_keyword);
+		
 		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
