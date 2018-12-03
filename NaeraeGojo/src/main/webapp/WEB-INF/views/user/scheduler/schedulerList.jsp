@@ -118,6 +118,7 @@ $(function(){
 	$('.onoff').change(function(){
 		
 		scheduler_code = $(this).parent().parent().parent().find('td:eq(0) input').val();
+		var check = $(this).is(":checked");
 		
 		$.ajax({
             type : 'post',
@@ -128,19 +129,14 @@ $(function(){
                 alert(error);
             },
             success : function(json){
-// 		        if($(".onoff").is(":checked")){
-// 		       		alert("스케줄러가 설정 되었습니다.");
-// 		        }
-// 		        else{
-// 		        	alert("스케줄러가 해제 되었습니다.");
-// 		       	}
-		        
-// 				if($(".onoff").parent().find('input[type="checkbox"]').is(':checked')){
-// 		        	alert("스케줄러가 설정 되었습니다.");
-// 			    }
-			    
+				if(check == true){
+					alert("스케줄러가 설정 되었습니다.")
+				}else{
+					alert("스케줄러가 해제 되었습니다.")
+				}
 	        }
         });
+		
 	});
 
 });
