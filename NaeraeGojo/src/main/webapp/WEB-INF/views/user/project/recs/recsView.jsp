@@ -250,7 +250,20 @@ $(function() {
 	});
 
 	$('#btn_back').click(function() {
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/recs/recsList.do');
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?currentPage=' + currentPage;
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+		
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/recs/recsList.do' + query);
 	});
 	
 

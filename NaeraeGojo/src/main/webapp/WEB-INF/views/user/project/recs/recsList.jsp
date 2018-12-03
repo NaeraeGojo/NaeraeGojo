@@ -191,20 +191,20 @@ $(function(){
               </div>
               
             </div>
-            ${pagingUtil}
+            ${page}
           </div>
           
         </div>
         
-        <form action="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" method="post" class="form-inline pull-right"
+        <form action="${pageContext.request.contextPath}/user/project/recs/recsList.do" method="post" class="form-inline pull-right"
 	   style="margin-right: 15px;">
-			<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 			<select class="form-control" name="search_keycode" >
 				<option value="total">전체</option>
-				<option value="function">업무명</option>
-				<option value="pwc">분류</option>
-				<option value="damdang">담당자</option>
+				<option value="title">제목</option>
+				<option value="nick">작성자</option>
+				<option value="content">내용</option>
 			</select>
+			<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 		    <button type="submit" class="btn btn-primary form-control">검색</button>
 		</form>
         
