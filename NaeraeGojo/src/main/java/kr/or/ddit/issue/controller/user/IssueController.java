@@ -97,10 +97,16 @@ public class IssueController {
 	
 		project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
-		
+
 		if(currentPage==null){
 			currentPage = "1";
 		}
+		
+//		search_keycode = (String) session.getAttribute("search_keycode");
+//		search_keyword = (String) session.getAttribute("search_keyword");
+		
+		session.setAttribute("search_keycode", search_keycode);
+		session.setAttribute("search_keyword", search_keyword);
 		
 		params.put("search_keyword", search_keyword);
 		params.put("search_keycode", search_keycode);

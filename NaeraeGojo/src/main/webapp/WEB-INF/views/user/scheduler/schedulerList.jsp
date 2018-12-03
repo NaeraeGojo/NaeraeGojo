@@ -128,7 +128,7 @@ $(function(){
                 alert(error);
             },
             success : function(json){
-// 		        if($(this).is(":checked")){
+// 		        if($(".onoff").is(":checked")){
 // 		       		alert("스케줄러가 설정 되었습니다.");
 // 		        }
 // 		        else{

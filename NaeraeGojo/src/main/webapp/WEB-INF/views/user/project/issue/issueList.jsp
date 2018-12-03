@@ -101,6 +101,7 @@ $(function(){
 						<select	class="form-control" name="search_keycode">
 							<option value="TOTAL">전체</option>
 							<option value="ISSUE">제목</option>
+							<option value="NAME">작성자</option>
 							<option value="LEVEL">등급</option>
 						</select>
 						<button type="submit" class="btn btn-primary form-control">검색</button>

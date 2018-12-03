@@ -100,11 +100,12 @@ $(function(){
 						${pagingUtil}
 					</div>
 
-					<form action="${pageContext.request.contextPath}/user/project/issue/issueResultList.do" method="post" class="form-inline pull-right">
-						<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
-						<select class="form-control" name="search_keycode">
+					<form action="${pageContext.request.contextPath}/user/project/issue/issueList.do" method="post" class="form-inline pull-right">
+						<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
+						<select	class="form-control" name="search_keycode">
 							<option value="TOTAL">전체</option>
-							<option value="NAME">제목</option>
+							<option value="ISSUE">제목</option>
+							<option value="NAME">작성자</option>
 							<option value="LEVEL">등급</option>
 						</select>
 						<button type="submit" class="btn btn-primary form-control">검색</button>
