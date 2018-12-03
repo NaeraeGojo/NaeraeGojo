@@ -32,16 +32,32 @@ $(function(){
 		});
 	}
 	
-	$('body').on('change','select', function (ev){
-	    if($(this).find('option:selected').val() == ""){
-	        $(this).css('color','#999');
-	        $(this).children().css('color','black');
-	    }
-	    else {
-	        $(this).css('color','black');
-	        $(this).children().css('color','black');
-	    }
+	$('#listBtn').click(function(){
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?currentPage=' + currentPage;
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueList.do'+query);
+    });
+	
+	$('#insertBtn').click(function(){
+		var status = '${issueInfo.issue_status}';
+		if(status == 'y'){
+			boalert("이미 결과가 등록된 이슈입니다.")
+			return false;
+		}
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/issue/issueResultForm/${issueInfo.issue_code}.do');
 	});
+	
 	$('#deleteBtn').click(function(){
 		var status = '${issueInfo.issue_status}';
 		if(status == 'y'){
@@ -51,17 +67,6 @@ $(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/deleteIssue/${issueInfo.issue_code}.do')
     });
 	
-	$('#listBtn').click(function(){
-	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueList.do')
-    });
-	$('#insertBtn').click(function(){
-		var status = '${issueInfo.issue_status}';
-		if(status == 'y'){
-			boalert("이미 결과가 등록된 이슈입니다.")
-			return false;
-		}
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/issue/issueResultForm/${issueInfo.issue_code}.do');
-	});
 	$('#issueViewForm').submit(function(){
 		if($('input[name=issue_name]').val()==""){
 			boalert("이슈 제목을 입력해 주세요.")
@@ -176,8 +181,10 @@ $(function(){
 
 						<div class="box-footer clearfix">
 							<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+<%-- 							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code }"> --%>
 							<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button>
+<%-- 							</c:if> --%>
 							<button type="button" id="insertBtn" class="btn btn-sm btn-primary btn-flat pull-right">이슈 처리</button>
 						</div>
 					</form>

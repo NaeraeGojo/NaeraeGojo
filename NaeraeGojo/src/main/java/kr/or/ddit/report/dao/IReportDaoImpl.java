@@ -133,4 +133,36 @@ public class IReportDaoImpl implements IReportDao{
 		return (int) client.queryForObject("report.totalCountPMRec",params);
 	}
 
+	@Override
+	public void updatePL(Map<String, String> params) throws SQLException {
+		client.update("report.checkPL",params);
+		
+	}
+
+	@Override
+	public void updatePM(Map<String, String> params) throws SQLException {
+		client.update("report.checkPM",params);
+		
+	}
+
+	@Override
+	public String insertFeedPL(ReportVO fvo) throws SQLException {
+		return (String) client.insert("report.feedPL",fvo);
+	}
+
+	@Override
+	public void updatePLx(Map<String, String> params) throws SQLException {
+		client.update("report.checkPLx",params);
+	}
+
+	@Override
+	public void updatePMx(Map<String, String> params) throws SQLException {
+		client.update("report.checkPMx",params);
+	}
+
+	@Override
+	public ReportVO feedViewDev(Map<String, String> params) throws SQLException {
+		return (ReportVO) client.queryForObject("report.feedViewDev",params);
+	}
+
 }

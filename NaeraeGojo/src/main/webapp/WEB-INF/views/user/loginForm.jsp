@@ -60,7 +60,10 @@ $(function(){
 	if(!message == ''){
 		boalert(message);
 		
-		$(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
+		setTimeout(function(){
+			$(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
+		},800)
+		
 	}
 	
 	

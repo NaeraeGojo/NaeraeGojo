@@ -64,7 +64,7 @@ public class RecsRoomController {
 		
 		model.addAttribute("pv",pv);
 		
-		
+		model.addAttribute("page", paging.getPagingHtmls());
 		return model;
 	}
 	

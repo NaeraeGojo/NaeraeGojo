@@ -101,9 +101,9 @@ $(function(){
 	$('#btn2').click(function(){
         $(location).attr('href', '${pageContext.request.contextPath}/user/project/notice/notice_form.do');
 	})
-
 	
-    $('#noticeV tr:gt(0)').click(function(){
+	
+    $('table tr:gt(0)').click(function(){
 //     	var rnum = $(this).find('td:eq(0)').text();
     	var notice_code = $(this).find('td:eq(0) input').val();
 		$(location).attr('href','${pageContext.request.contextPath}/user/project/notice/notice_view/'+notice_code+'.do');

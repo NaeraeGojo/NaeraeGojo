@@ -72,6 +72,9 @@
 </style>
 <script type="text/javascript">
 $(function(){
+	var loading = '<div class="overlay">'
+		+'<i class="fa fa-refresh fa-spin"></i>'
+	+'</div>';
 	
 	boalert = function(mes){
 		BootstrapDialog.show({
@@ -97,6 +100,8 @@ $(function(){
 
 	rePwc = function(mes){
 		$('.table_pwc tbody').empty();
+		
+		$('.box_pwc .overlay').remove();
 		
 		$.ajax({
 			url :'${pageContext.request.contextPath}/user/project/pwc/pwcList.do'
@@ -141,15 +146,22 @@ $(function(){
 	
 	$('input[name=pwc_search]').on('input',function(e){
 		var mes = $('input[name=pwc_search]').val();
+		
 		setTimeout(function() {
 			var mes2 = $('input[name=pwc_search]').val();
 			
 			if(mes == mes2){
+				if(!$('.box_pwc').hasClass('overlay')){
+					$('.box_pwc').append(loading);
+				}
 				if(mes2 == ''){
+					$('.box_pwc .overlay').remove();
 					$('.table_pwc tbody').empty();
 					return false;
 				}
-				rePwc(mes2);
+				setTimeout(function(){
+					rePwc(mes2);
+				},500);
 			}
 		}, 800);
 	});
@@ -225,16 +237,21 @@ $(function(){
 		var dateArr2 = pw_eet.split('-');
 		var end_date = new Date(dateArr2[0] , dateArr2[1] -1, dateArr2[2]);
 		
-		
-		
 		if(end_date.getTime() < start_date.getTime()){
 			boalert("업무 종료기한은 시작시간보다 빠른 날짜일 수 없습니다.")
 			return false;
 		}
 		
-		
 		return true;
 	});
+	
+	var cdate = '${param.cdate}';
+	
+	if(cdate != ''){
+		$('input[name=pw_est]').val(cdate);
+		$('input[name=pw_eet]').val(cdate);
+	}
+	
 });
 
 
@@ -270,15 +287,12 @@ $(function(){
 	           </div>
             </div>
             
-            
-            
-            
             <div class="form-group div_pwc_search" style="display: none;">
               <label style="visibility: hidden;" for="name" class="col-sm-2 control-label" >분류 선택</label>
               
               <div class="col-sm-4 cont_pwc">
               
-              <div class="box box-success">		
+              <div class="box box-success box_pwc">		
 		            <div class="box-header with-border">	
 		              <b class="box-title">조회 :</b>	
 		            	<input id="name" type="text" name="pwc_search" class="form-control"

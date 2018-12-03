@@ -144,22 +144,25 @@ public class ProjectWorkController {
 							, HttpSession session
 						) throws Exception{
 		
-		String project_code = (String) session.getAttribute("project_code"); 
+		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
-		List<Map<String, String>> pc = service.getPwChart(params);
+		List<EmpVO> el = vservice.getEmpList(params);
+		model.addAttribute("el",el);
 		
-		
-		
-		model.addAttribute("pc" , pc);
 		
 		return model;
 	}
 	
 	@RequestMapping("getPwChart")
 	public ModelAndView getPwChart(ModelAndView mav 
+									, String search_keycode
+									, String search_keyword
 									, HttpSession session
 									, Map<String, String> params) throws Exception{
+		params.put("search_keycode", search_keycode);
+		params.put("search_keyword", search_keyword);
+		
 		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
@@ -177,7 +180,6 @@ public class ProjectWorkController {
 		
 		
 		mav.addObject("pc",pc);
-		
 		
 		mav.setViewName("jsonConvertView");
 		

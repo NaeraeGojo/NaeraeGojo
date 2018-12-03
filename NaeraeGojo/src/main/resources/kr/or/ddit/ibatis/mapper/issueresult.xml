@@ -32,6 +32,8 @@
 			   ,C.EMP_NAME AS EMP_DAMDANG
 			   ,B.ISSUE_RESULT_HIT
 			   ,B.RISK_HIT
+			   ,D.ISLEV_NAME
+			   ,C.EMP_NAME
 		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D, PW E
       	WHERE A.EMP_DAMDANG = C.EMP_CODE
         and A.ISSUE_CODE = B.ISSUE_CODE
@@ -52,6 +54,8 @@
 			   ,C.EMP_NAME AS EMP_CODE_IR
 			   ,B.ISSUE_RESULT_HIT
 			   ,B.RISK_HIT
+			   ,D.ISLEV_NAME
+			   ,C.EMP_NAME
 		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
       	WHERE A.EMP_DAMDANG = C.EMP_CODE
         AND A.ISSUE_CODE = B.ISSUE_CODE
@@ -100,14 +104,18 @@
 		<dynamic>
 	 		<isNotEmpty property="search_keyword" prepend="and">
 	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
-	 				   ISSUE_NAME LIKE '%' || #search_keyword# || '%'
-	 				OR ISSUE_LEVEL LIKE '%' || #search_keyword# || '%'
+	 				   ISSUE_NAME   LIKE '%' || #search_keyword# || '%'
+	 				OR EMP_NAME   LIKE '%' || #search_keyword# || '%'
+	 				OR ISLEV_NAME   LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
-	 			<isEqual property="search_keycode" compareValue="NAME" >  
+	 			<isEqual property="search_keycode" compareValue="ISSUE" >  
 	 					ISSUE_NAME LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="NAME" >  
+	 					EMP_NAME LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
 	 			<isEqual property="search_keycode" compareValue="LEVEL" >  
-	 					ISSUE_LEVEL LIKE '%' || #search_keyword# || '%'
+	 					ISLEV_NAME LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
 	 		</isNotEmpty>
 	 	</dynamic>

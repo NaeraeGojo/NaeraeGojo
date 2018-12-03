@@ -165,4 +165,42 @@ public class IReportServiceImpl implements IReportService{
 		totalCountPMRec=dao.totalCountPMRec(params);
 		return totalCountPMRec;
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updatePL(Map<String, String> params) throws SQLException {
+		dao.updatePL(params);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updatePM(Map<String, String> params) throws SQLException {
+		dao.updatePM(params);
+		
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public String insertFeedPL(ReportVO fvo) throws SQLException {
+		return dao.insertFeedPL(fvo);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updatePLx(Map<String, String> params) throws SQLException {
+		dao.updatePLx(params);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updatePMx(Map<String, String> params) throws SQLException {
+		dao.updatePMx(params);
+	}
+
+	@Override
+	public ReportVO feedViewDev(Map<String, String> params) throws SQLException {
+		ReportVO list = null;
+		list = dao.feedViewDev(params);
+		return list;
+	}
 }
