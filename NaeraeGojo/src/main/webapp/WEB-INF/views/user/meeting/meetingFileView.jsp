@@ -79,7 +79,22 @@ $(function(){
 	  });
 	  
 	  $('form').submit(function(){
-		  
+	        if($('input[name=meeting_title]').val()=='' ||$('input[name=meeting_title]').val()==null){
+	            boalert("제목을 입력해주세요");
+	            return false;
+	        }
+	        
+	        if($('textarea[name=meeting_content]').val()=='' ||$('textarea[name=meeting_content]').val()==null){
+	            boalert("내용을 입력해주세요");
+	            return false;
+	        }
+	        
+	        if($('#pwdiv input').val()==null){
+	            boalert("관련업무를 선택해주세요");
+	            return false;
+	        }
+	        
+	        return true;
 	  });
 	  
 // 	  $('#btn3').click(function(){

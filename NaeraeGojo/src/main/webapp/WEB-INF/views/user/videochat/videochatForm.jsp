@@ -71,23 +71,6 @@ input[type=checkbox]
 </style>
 
 
-<script>
-function onoff(){
-    ele = document.getElementById("check2");
-    ele2 = document.getElementById("check1");
-            
-    if(ele.src.match("check2")){
-        ele.src = "${pageContext.request.contextPath }/images/icons/checkmark1.png";
-        ele2.src = "${pageContext.request.contextPath }/images/icons/checkmark2.png";
-        
-    }else{
-        ele.src = "${pageContext.request.contextPath }/images/icons/check2.png";
-        ele2.src = "${pageContext.request.contextPath }/images/icons/check1.png";
-    }
-    
-}
-
-</script>  
 
 
     <!-- Main content -->
