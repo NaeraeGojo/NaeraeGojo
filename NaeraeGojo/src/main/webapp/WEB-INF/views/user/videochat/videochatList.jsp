@@ -82,14 +82,6 @@ $(function(){
         }
     });
     
-    // 화상개설
-    $('#btn1').click(function(){
-    	 $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatForm.do');
-    });
-    
-//     $('#btn1').click(function(){
-//     	 $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatForm.do');
-//     });
 
     $('#modal1').click(function(){
         
@@ -147,6 +139,12 @@ $(function(){
    	});
     
     $(document).on('click', '#insert1', function() {
+    	
+    	
+    	if($("input[name=chkbox]:checked").length == 0){
+    		boalert("인원을 체크해주세요.");
+    		return false;
+    	}
     	
     	var tmpArray =[];
     	$("input[name=chkbox]:checked").each(function() {

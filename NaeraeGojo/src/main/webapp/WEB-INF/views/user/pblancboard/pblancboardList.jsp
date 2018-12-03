@@ -24,14 +24,6 @@ $(function(){
 
 </script>
 
-<section class="content-header">
-	<h1>공고 게시판</h1>
-	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i>게시판</a></li>
-		<li class="active">공고게시판 목록조회</li>
-	</ol>
-</section>
-
 <section class="content">
 	<br />
 	<br />
@@ -48,10 +40,10 @@ $(function(){
 							<thead>
 								<tr>
 									<th scope="col" width="5%" tex>No.</th>
-									<th scope="col" width="60%">제목</th>
-									<th scope="col" width="10%">공고기관</th>
-									<th scope="col" width="10%">예산</th>
-									<th scope="col" width="10%">공고날짜</th>
+									<th scope="col" width="40%">제목</th>
+									<th scope="col" width="15%">공고기관</th>
+									<th scope="col" width="15%">예산</th>
+									<th scope="col" width="15%">공고날짜</th>
 									<th scope="col" width="10%">조회수</th>
 								</tr>
 							</thead>

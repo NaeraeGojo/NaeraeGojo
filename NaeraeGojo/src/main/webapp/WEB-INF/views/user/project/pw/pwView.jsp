@@ -113,7 +113,19 @@ $(function(){
 	});
 	
 	$('#btn_back').click(function(){
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwList.do');
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?currentPage=' + currentPage;
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwList.do'+query);
 	});
 	
 	$('#btn_show_pwc').click(function(){
@@ -308,35 +320,43 @@ $(function(){
 	});
 	
 	$('#insertFeedback').click(function(){
-		var myArray = [];
-		var damdang = '${pwv.PW_DAMDANG}';
-		var pw_code = '${pwv.PW_CODE}';
-		var content = $('textarea[name=feedback_content]').val();
 		
-		myArray.push(damdang);
-		myArray.push(pw_code);
-		myArray.push(content);
-		
-		$.ajax({
-			url : '${pageContext.request.contextPath}/user/feedback/insertFeedback.do'
-			, data : {myArray : myArray}
-			, dataType : 'json'
-			, type : 'POST'
-			, contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-			, async : false
-			, error : function(request, status, error){
-				alert("error : " + request.status)
-			}
-			, success : function(result){
-				boalert(result.message);
+        if($('textarea[name=feedback_content]').val()=='' || $('textarea[name=feedback_content]').val()==null){
+            boalert("피드백 내용을 입력해주세요");
+            return false;
+        };
+        
+        if($('textarea[name=feedback_content]').val()!='' || $('textarea[name=feedback_content]').val()!=null){
+			var myArray = [];
+			var damdang = '${pwv.PW_DAMDANG}';
+			var pw_code = '${pwv.PW_CODE}';
+			var content = $('textarea[name=feedback_content]').val();
+			
+			myArray.push(damdang);
+			myArray.push(pw_code);
+			myArray.push(content);
+			
+			$.ajax({
+				url : '${pageContext.request.contextPath}/user/feedback/insertFeedback.do'
+				, data : {myArray : myArray}
+				, dataType : 'json'
+				, type : 'POST'
+				, contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+				, async : false
+				, error : function(request, status, error){
+					alert("error : " + request.status)
+				}
+				, success : function(result){
+					boalert(result.message);
+					
+					setTimeout(function(){
+						 $(location).attr('href', "${pageContext.request.contextPath}/user/project/pw/pwList.do");
+	                },2000);
+				}
 				
-				setTimeout(function(){
-					 $(location).attr('href', "${pageContext.request.contextPath}/user/project/pw/pwList.do");
-                },2000);
-			}
-			
-			
-		});
+				
+			});
+        };
 		
 	});
 	
@@ -575,8 +595,7 @@ $(function(){
 							<div class="form-group">
 								<label for="contents" class="col-sm-2 control-label" style="width: 130px; font-size:large;">피드백내용  </label>
 								<textarea id="contents" name="feedback_content" class="col-sm-10" rows="10"
-									style="width: 62%; border: 1px solid #d2d2d2; border-radius: 1em; margin-left:15px; ">
-							    </textarea>
+									style="width: 62%; border: 1px solid #d2d2d2; border-radius: 1em; margin-left:15px; "></textarea>
 							</div>
 
 							<!-- /.box -->
