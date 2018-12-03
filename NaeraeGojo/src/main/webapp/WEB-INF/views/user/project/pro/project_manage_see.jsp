@@ -132,7 +132,7 @@ $(function(){
 						<dt>프로젝트명</dt>          <dd>${projectInfo.project_name }</dd>
 						<dt>프로젝트 시작일</dt>      <dd>${projectInfo.project_start }</dd>
 				        <dt>프로젝트 예상 종료일</dt>  <dd>${projectInfo.project_end }</dd>
-						<dt>프로젝트 진척도</dt>      <dd></dd>
+						<dt>프로젝트 진척도</dt>      <dd>${projectInfo.pw_percent } %</dd>
 						<dt>프로젝트 예산</dt>        <dd>${projectInfo.suggest_cost }</dd>
 						<dt>프로젝트 수요기관</dt>     <dd>${projectInfo.rqpps_notice_agency}</dd>
 						<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">

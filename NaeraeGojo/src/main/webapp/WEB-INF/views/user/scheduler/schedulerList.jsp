@@ -128,11 +128,17 @@ $(function(){
                 alert(error);
             },
             success : function(json){
-		        if($(".onoff").is(":checked")){
-		       		alert("스케줄러가 설정 되었습니다.");
-		        }else{
-		        	alert("스케줄러가 해제 되었습니다.");
-		       	}
+// 		        if($(this).is(":checked")){
+// 		       		alert("스케줄러가 설정 되었습니다.");
+// 		        }
+// 		        else{
+// 		        	alert("스케줄러가 해제 되었습니다.");
+// 		       	}
+		        
+// 				if($(".onoff").parent().find('input[type="checkbox"]').is(':checked')){
+// 		        	alert("스케줄러가 설정 되었습니다.");
+// 			    }
+			    
 	        }
         });
 	});
@@ -140,14 +146,6 @@ $(function(){
 });
 
 </script>
-<section class="content-header">
-	<h1>스케줄러 관리</h1>
-	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i>게시판</a></li>
-		<li class="active">스케줄러 목록조회</li>
-	</ol>
-</section>
-
 <section class="content">
 	<br/><br/>
 	<div class="row">
@@ -183,9 +181,8 @@ $(function(){
 										<td>${schedulerList.scheduler_time }</td>
 										<td> 
 											<input type="checkbox" data-toggle="toggle" data-size="mini" 
-											data-onstyle="info" data-offstyle="danger" class="onoff"
-											<c:if test="${schedulerList.scheduler_status eq 'y'}">checked="checked"</c:if> 
-											/>
+											data-onstyle="info" data-offstyle="danger" class="onoff" name="onoff2" id="chkBox"
+											<c:if test="${schedulerList.scheduler_status eq 'y'}">checked="checked"</c:if> />
 										</td>
 										<td> 
 											<input value="상세정보" id="infoBtn" type="button" 
