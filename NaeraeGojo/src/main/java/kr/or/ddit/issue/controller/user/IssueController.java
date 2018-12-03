@@ -143,7 +143,7 @@ public class IssueController {
 		params.put("search_keyword", search_keyword);
 		params.put("search_keycode", search_keycode);
 		
-		int totalCount = service.totalCount(params);
+		int totalCount = service.totalCountIssueResult(params);
 		
 		RolePagingUtil pagingUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
 		

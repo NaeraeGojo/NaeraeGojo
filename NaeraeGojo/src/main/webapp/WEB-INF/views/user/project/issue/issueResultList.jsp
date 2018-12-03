@@ -21,24 +21,42 @@ $(function(){
 	$('#listBtn1').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/project_manage.do')
     });
-	$('#listBtn2').click(function(){
-	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/project_manage.do')
-    });
+	
+// 	$('#listBtn2').click(function(){
+// 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/project_manage.do')
+//     });
 	
 	$('#insertIssue').click(function(){
 		$(location).attr('href','${pageContext.request.contextPath}/user/project/issue/issueForm.do');
 	});
 	
-	$('#issue tr:gt(0)').click(function(){
-		var issue_code = $(this).find('td:eq(0) input').val();
-		var rnum = $(this).find('td:eq(0)').text();
-		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
-	})
+// 	$('#issue tr:gt(0)').click(function(){
+// 		var issue_code = $(this).find('td:eq(0) input').val();
+// 		var rnum = $(this).find('td:eq(0)').text();
+// 		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
+// 	})
 	
 	$('#issueResult tr:gt(0)').click(function(){
 		var issue_code = $(this).find('td:eq(0) input').val();
 		var rnum = $(this).find('td:eq(0)').text();
-		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueResultView.do?issue_code='+issue_code+'&rnum='+rnum);
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?issue_code='+issue_code+'&rnum='+rnum;
+		
+		if(currentPage != null && currentPage != ''){
+			query += '&currentPage=' + currentPage;
+		}
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueResultView.do'+query);
 	})
 	
 });
@@ -100,7 +118,7 @@ $(function(){
 						${pagingUtil}
 					</div>
 
-					<form action="${pageContext.request.contextPath}/user/project/issue/issueList.do" method="post" class="form-inline pull-right">
+					<form action="${pageContext.request.contextPath}/user/project/issue/issueResultList.do" method="post" class="form-inline pull-right">
 						<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
 						<select	class="form-control" name="search_keycode">
 							<option value="TOTAL">전체</option>
@@ -110,7 +128,7 @@ $(function(){
 						</select>
 						<button type="submit" class="btn btn-primary form-control">검색</button>
 						<button type="button" id="" class="btn btn-warning form-control">이슈 차트</button>
-						<button type="button" id="insertIssue" class="btn btn-danger form-control">이슈 등록</button>
+<!-- 						<button type="button" id="insertIssue" class="btn btn-danger form-control">이슈 등록</button> -->
 						<button type="button" id="listBtn1" class="btn btn-info form-control">프로젝트 목록</button>
 					</form>
 				</div>

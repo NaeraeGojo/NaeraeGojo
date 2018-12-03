@@ -51,8 +51,9 @@ $(function(){
     		+ '&search_keyword=' + encodeURI(search_keyword);
     	}
     	
-	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueList.do'+query)
+	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueResultList.do'+query)
     });
+	
 	$('#issueResultViewForm').submit(function(){
 		if($('input[name=issue_result_day]').val()==""){
 			boalert("이슈를 처리한 일자를 선택해 주세요.")
