@@ -230,7 +230,7 @@
 	</select>
 	
 	<select id="reportView" parameterClass="map" resultClass="reportVO">
-		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
+		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE,B.EMP_CODE
 	     FROM REPORT A, EMP B, PW C, PROJECT D,JOIN E
 	     WHERE A.EMP_CODE = B.EMP_CODE
 	     AND   A.PW_CODE = C.PW_CODE
@@ -238,6 +238,7 @@
 	     AND   D.PROJECT_CODE = E.PROJECT_CODE
 	     AND   A.REPORT_CODE = #report_code#
 	     GROUP BY A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
+	     ,B.EMP_CODE
 	</select>
 	
 	<select id="reportStatus" parameterClass="map" resultClass="reportVO">
@@ -335,6 +336,59 @@
 						) a ) b
 		order by b.rnum asc
 	</select>
+	
+	<update id="checkPL" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_PL_STATUS = 'k' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	<update id="checkPM" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_PM_STATUS = 'k' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<update id="checkPLx" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_PL_STATUS = 'x' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<update id="checkPMx" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_PM_STATUS = 'x' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<insert id="feedPL" parameterClass="reportVO">
+		<selectKey keyProperty="report_feed_code" resultClass="string">
+			select report_feed_seq.nextval from dual
+		</selectKey>
+		INSERT INTO REPORT_FEED 
+				(
+					REPORT_FEED_CODE,
+					REPORT_FEED_TITLE,
+					REPORT_FEED_CONTENT,
+					EMP_CODE,
+					REPORT_CODE
+								)
+		VALUES (   
+					#report_feed_code#,
+					#report_feed_title#,
+					#report_feed_content#,
+					#emp_code#,
+					#report_code#
+										)
+	
+	</insert>
+	
+	<select id="feedViewDev" parameterClass="map" resultClass="reportVO">
+		SELECT REPORT_FEED_TITLE,REPORT_FEED_CONTENT,REPORT_CODE
+		FROM REPORT_FEED
+		WHERE EMP_CODE = #emp_code# 
+		AND REPORT_CODE = #report_code#
+	</select>
+	
 	
 	
 </sqlMap>
