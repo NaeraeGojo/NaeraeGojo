@@ -31,9 +31,9 @@ public class IFreeboardDaoImpl implements IFreeboardDao{
 	}
 
 	@Override
-	public void insertFreeboardInfo(FreeBoardVO freeboardInfo)
+	public String insertFreeboardInfo(FreeBoardVO freeboardInfo)
 			throws SQLException {
-		client.insert("freeboard.insertFreeboard", freeboardInfo);
+		return (String) client.insert("freeboard.insertFreeboard", freeboardInfo);
 	}
 
 	@Override
