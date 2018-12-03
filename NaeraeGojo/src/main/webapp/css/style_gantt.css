@@ -235,6 +235,10 @@
     
 }
 
+.fn-gantt .ganttGray {
+    background-color: #c5c9ce;
+}
+
 
 
 /* === BOTTOM NAVIGATION === */

@@ -144,14 +144,12 @@ public class ProjectWorkController {
 							, HttpSession session
 						) throws Exception{
 		
-		String project_code = (String) session.getAttribute("project_code"); 
+		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
-		List<Map<String, String>> pc = service.getPwChart(params);
+		List<EmpVO> el = vservice.getEmpList(params);
+		model.addAttribute("el",el);
 		
-		
-		
-		model.addAttribute("pc" , pc);
 		
 		return model;
 	}
@@ -177,7 +175,6 @@ public class ProjectWorkController {
 		
 		
 		mav.addObject("pc",pc);
-		
 		
 		mav.setViewName("jsonConvertView");
 		

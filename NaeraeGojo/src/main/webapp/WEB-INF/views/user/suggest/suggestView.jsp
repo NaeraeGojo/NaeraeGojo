@@ -181,6 +181,7 @@ $(function(){
     		query += '&search_keycode=' + encodeURI(search_keycode) 
     		+ '&search_keyword=' + encodeURI(search_keyword);
     	}
+    	
 		$(location).attr('href','${pageContext.request.contextPath}/user/suggest/suggestList.do'+query);
 	});
 	

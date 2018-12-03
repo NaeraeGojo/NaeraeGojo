@@ -1,8 +1,11 @@
 package kr.or.ddit.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 
 import org.slf4j.Logger;
@@ -80,14 +83,22 @@ public class RolePagingUtil {
 		//currentPage, search_keycode, search_keyword
 		String params = "";
 		Enumeration<String> paramKeys = request.getParameterNames();
-//		while(paramKeys.hasMoreElements()){
-//			String key = paramKeys.nextElement();
-//			if("currentPage".intern() != key.intern()){
-//				String value = request.getParameter(key);
-//				//search_keycode = TOTAL & seach_keyword = a001 &  
-//				params += key + "=" + value + "&";
-//			}
-//		}
+		while(paramKeys.hasMoreElements()){
+			String key = paramKeys.nextElement();
+			if("currentPage".intern() != key.intern()){
+				String value = request.getParameter(key);
+				if(value != ""){
+					// 쿼리스트링 끝에 & 붙는건 상관 없음
+					try {
+						value = URLEncoder.encode(value, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					
+					params += key + "=" + value + "&";
+				}
+			}
+		}
 		
 		//이전 |1|2|3|4|5| 다음
 		this.pagingHtmls.append("<div class='text-center'>");
@@ -95,25 +106,28 @@ public class RolePagingUtil {
 		
 		String requestURI = request.getRequestURI();
 		
-		//이전
-		if((this.currentPage - 1) == 0){
+		// 이전 만들기
+		if((this.currentPage -1) == 0){
 			this.pagingHtmls.append("<li class='disabled'><a href='#'>&laquo;</a></li>");
 		}else{
-			this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + (this.currentPage - 1) + "'>&laquo;</a></li>");
+			this.pagingHtmls.append("<li><a href='"+ requestURI + "?"+params +"currentPage=" + (this.currentPage - 1)
+						+"'>&laquo;</a></li>");
 		}
 		
-		//|1|2|3|4|5|
-		for (int i = this.startPage; i <= this.endPage; i++) {
+		// |1|2|3|4|5| 만들기
+		for(int i = this.startPage; i<= this.endPage; i++){
 			if(this.currentPage == i){
-				this.pagingHtmls.append("<li class='active'><a href='#'>" + i + "</a></li>");
+				this.pagingHtmls.append("<li class='active'><a href='#'>"+ i +"</a></li>"); 
 			}else{
-				this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + i + "'>" + i + "</a></li>");
+				this.pagingHtmls.append("<li><a href='"+ requestURI + "?" + params + 
+						"currentPage=" + i +"'>"+ i +"</a></li>");
 			}
 		}
 		
-		//다음
+		// 다음 만들기
 		if(this.currentPage < this.totalPage){
-			this.pagingHtmls.append("<li><a href='" + requestURI + "?currentPage=" + (this.currentPage + 1) + "'>&raquo;</a></li>");
+			this.pagingHtmls.append("<li><a href='"+ requestURI + "?"+ params + "currentPage=" + (this.currentPage + 1)
+					+"'>&raquo;</a></li>");
 		}else{
 			this.pagingHtmls.append("<li class='disabled'><a href='#'>&raquo;</a></li>");
 		}

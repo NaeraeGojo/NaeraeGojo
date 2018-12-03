@@ -110,7 +110,12 @@
 
 			return true;
 		});
+		
+		
+		$('input[name=recsroom_title]').focus();
 	});
+	
+	
 </script>
 
 <div class="row">
@@ -135,7 +140,7 @@
 							<div class="col-sm-6">
 								<input id="name" type="text" name="recsroom_title"
 									class="form-control" style="border-radius: 1em;"
-									placeholder="게시글 제목">
+									placeholder="게시글 제목" >
 							</div>
 						</div>
 
