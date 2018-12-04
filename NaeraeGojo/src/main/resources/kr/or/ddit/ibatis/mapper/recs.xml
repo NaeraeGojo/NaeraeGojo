@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="recs">
+	<typeAlias alias="recsVO" type="kr.or.ddit.vo.RecsRoomVO"/>
+	
+	<resultMap class="recsVO" id="recsMap">
+		<result property="recsroom_code" column="recsroom_code"/>
+		<result property="recsroom_writer" column="recsroom_writer"/>
+		<result property="recsroom_title" column="recsroom_title"/>
+		<result property="recsroom_content" column="recsroom_content"/>
+		<result property="recsroom_date" column="recsroom_date"/>
+		<result property="project_code" column="project_code"/>
+		<result property="emp_nick" column="emp_nick"/>
+		<result property="recsroom_hit" column="recsroom_hit"/>
+		<result property="items" column="{recsroom_code=recsroom_code,project_code=project_code }"  select="profile.recsFiles"/>
+	</resultMap>
+		
+	<sql id="selectAll">
+		select to_char(recsroom_date,'yyyy-mm-dd') as recsroom_date
+				,recsroom_code 
+				, recsroom_writer
+				, recsroom_title
+				, recsroom_content
+				, recsroom_hit
+				, project_code
+				, emp_nick
+			        from recsroom
+			    	where recsroom_delete = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="and">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="total" open="(" close=")">
+					recsroom_title like '%' || #search_keyword# ||'%'
+					or emp_nick like '%' || #search_keyword# ||'%'
+					or recsroom_content like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="title" >
+					recsroom_title like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="nick" >
+					emp_nick like '%' || #search_keyword# ||'%'
+				</isEqual>				
+				<isEqual property="search_keycode" compareValue="content" >
+					recsroom_content like '%' || #search_keyword# ||'%'
+				</isEqual>				
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+	
+	
+	<select id="getRecsroomList" parameterClass="map" resultClass="recsVO">
+	select b.*
+		from (select rownum rnum, a.*
+				from (
+					<include refid="selectAll"/>
+				        and recsroom.project_code = #project_code#
+			        <include refid="searchCondition"/>
+							order by to_number(recsroom_code) asc
+							) a ) b
+		<![CDATA[						
+ 		where b.rnum <= #startNo#
+ 		and b.rnum >= #endNo#
+ 		]]>		
+		order by b.rnum desc
+	</select>
+		
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		select count(*)
+		  from recsroom
+		 where recsroom_delete = 'n'
+		 	and project_code = #project_code#
+		<include refid="searchCondition"/>
+	</select>
+	
+	<insert id="insertRecsroom" parameterClass="recsVO">
+		<selectKey keyProperty="recsroom_code" resultClass="string">
+			select recsroom_seq.nextval from dual
+		</selectKey>
+		insert into recsroom(
+							recsroom_code
+							,recsroom_title
+							,recsroom_writer
+							,recsroom_content
+							,project_code
+							,emp_nick
+						)
+					values(
+							 #recsroom_code#
+							,#recsroom_title#
+							,#recsroom_writer#
+							,#recsroom_content#
+							,#project_code#
+							,#emp_nick#
+					)
+	</insert>
+
+	<select id="getRecsroom" parameterClass="map" resultMap="recsMap">
+		<include refid="selectAll"/>
+		and recsroom_code = #recsroom_code#
+	</select>
+	
+	<update id="updateRecsroom" parameterClass="recsVO">
+		update recsroom
+			set  recsroom_title = #recsroom_title#
+				,recsroom_writer = #recsroom_writer#
+				,recsroom_content = #recsroom_content#
+				,emp_nick = #emp_nick#
+				<dynamic prepend=",">
+					<isNotEmpty property="recsroom_hit">
+					recsroom_hit = #recsroom_hit#
+					</isNotEmpty>
+				</dynamic>
+			where recsroom_code = #recsroom_code#
+	</update>
+
+	<update id="deleteRecsroom" parameterClass="map">
+		update recsroom
+			set recsroom_delete = 'y'
+			where recsroom_code = #recsroom_code#
+	</update>
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

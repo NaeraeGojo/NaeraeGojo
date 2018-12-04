@@ -19,8 +19,7 @@ public class IVideoChatJoinDaoImpl implements IVideoChatJoinDao{
 	@Override
 	public void insertVideoChatJoin(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("videoJoin.insertVideoChatJoin", params);
 	}
 
 	@Override
@@ -48,6 +47,22 @@ public class IVideoChatJoinDaoImpl implements IVideoChatJoinDao{
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getVideoRoomCode(String video_chat_join_code)
+			throws SQLException {
+		return (String) client.queryForObject("videoJoin.getVideoRoomCode",video_chat_join_code);
+	}
+
+	@Override
+	public String getUrlInfo(String video_chat_room_code) throws SQLException {
+		return (String) client.queryForObject("videoJoin.getUrlInfo", video_chat_room_code);
+	}
+
+	@Override
+	public void ChatJoinEnd(Map<String, String> params) throws SQLException {
+		client.update("videoJoin.ChatJoinEnd", params);
 	}
 
 }

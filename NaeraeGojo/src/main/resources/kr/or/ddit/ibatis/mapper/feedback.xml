@@ -51,17 +51,29 @@
     
     
     <!-- 알림 피드백 -->
-    <select id="feedbackInfo" parameterClass="map" resultClass="feedbackVO">
-		select  a.feedback_content, b.emp_name , a.receive_emp, c.pw_function, a.feedback_st, 
+    <select id="feedbackInfoRe" parameterClass="map" resultClass="feedbackVO">
+		select  a.feedback_content, b.emp_name ,  c.pw_function, a.feedback_st, 
 		          d.project_name, a.feedback_rt, a.feedback_alarm
 		from feedback a, emp b, pw c, project d
 		where a.send_emp = b.emp_code
+		and a.pw_code = c.pw_code
+		and a.receive_emp = #emp_code#
+		and a.send_delete ='n'
+		and c.project_code = d.project_code
+		and a.feedback_code=#feedback_code#
+    </select>
+    <select id="feedbackInfoSend" parameterClass="map" resultClass="feedbackVO">
+		select  a.feedback_content, b.emp_name ,  c.pw_function, a.feedback_st, 
+		          d.project_name, a.feedback_rt, a.feedback_alarm
+		from feedback a, emp b, pw c, project d
+		where a.receive_emp = b.emp_code
 		and a.pw_code = c.pw_code
 		and a.send_emp = #emp_code#
 		and a.send_delete ='n'
 		and c.project_code = d.project_code
 		and a.feedback_code=#feedback_code#
     </select>
+    
     
     <update id="fbAlarmCk" parameterClass="map">
         update feedback

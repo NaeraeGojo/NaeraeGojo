@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="videoJoin">
+	<typeAlias alias="videoChatJoinVO" type="kr.or.ddit.vo.VideoChatJoinVO"/>
+	
+	<update id="insertVideoChatJoin" parameterClass="map">
+		update video_chat_join
+		set video_chat_join_intime = sysdate
+		   , video_chat_join_sign = 'y'
+		where video_chat_join_code = #video_chat_join_code#
+	</update>
+    
+    <select id="getVideoRoomCode" parameterClass="string" resultClass="string">
+    	select video_chat_room_code
+    	from video_chat_join
+    	where video_chat_join_code = #video_chat_join_code#
+    </select>
+    
+    <select id="getUrlInfo" parameterClass="string" resultClass="string">
+    	select video_chat_room_url
+    	from video_chat_room
+    	where video_chat_room_code = #video_chat_room_code#
+    </select>
+    
+    <update id="ChatJoinEnd" parameterClass="map">
+        update video_chat_join
+        set video_chat_join_outtime = sysdate
+        where video_chat_room_code = #video_chat_room_code#
+        and emp_code = #emp_code#
+    </update>
+    
+    
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

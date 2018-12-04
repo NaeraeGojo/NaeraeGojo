@@ -72,10 +72,7 @@ public class NoticeboardController {
 			NoPrEmpVO vo,
 			@PathVariable String notice_code, Map<String, String> params
 			)throws Exception{
-//		vo = service.getBBSInfo(params); 
-//		//vo.setRnum(rnum);
-//		service.updateHit(params);
-//		andView.addAttribute("vo",vo);
+		
 		params.put("notice_code", notice_code);
 		
 		vo = service.noticeboardInfo(params);
@@ -86,18 +83,6 @@ public class NoticeboardController {
 		return andView;
 	}
 	
-//	@RequestMapping("deleteNoticeAll/{notice_all_code}")
-//	public String deleteNoticeAll(
-//			HttpServletRequest request,
-//			ModelAndView andView,
-//			@PathVariable String notice_all_code, Map<String, String> params) throws SQLException{
-//		
-//		params.put("notice_all_code", notice_all_code);
-//		service.deleteNoticeAllInfo(params);
-//		System.out.println("asdfsadf");
-//		andView.setViewName("user/noticeAll/notice_allList");
-//		return andView;
-//	}
 	
 	@RequestMapping("deleteNotice/{notice_code}")
 	public String deleteNotice(@PathVariable String notice_code, Map<String, String> params) throws SQLException{

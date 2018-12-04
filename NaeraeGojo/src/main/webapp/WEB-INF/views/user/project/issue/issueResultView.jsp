@@ -33,23 +33,27 @@ $(function(){
 		});
 	}
 	
-	$('body').on('change','select', function (ev){
-	    if($(this).find('option:selected').val() == ""){
-	        $(this).css('color','#999');
-	        $(this).children().css('color','black');
-	    }
-	    else {
-	        $(this).css('color','black');
-	        $(this).children().css('color','black');
-	    }
-	});
 	$('#deleteBtn').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/deleteIssueResult/${issueResultInfo.issue_code}.do')
     });
 	
 	$('#listBtn').click(function(){
-	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueList.do')
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?currentPage=' + currentPage;
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+    	
+	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueResultList.do'+query)
     });
+	
 	$('#issueResultViewForm').submit(function(){
 		if($('input[name=issue_result_day]').val()==""){
 			boalert("이슈를 처리한 일자를 선택해 주세요.")
@@ -103,17 +107,24 @@ $(function(){
 								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='1' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '1'}">checked="checked"</c:if> /> 즉시
-								</label> 
+								</label>
+								 
 								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='2' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '2'}">checked="checked"</c:if> /> 긴급
-								</label> <label for="issue_level" class="col-sm-2 control-label">
+								</label> 
+								
+								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='3' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '3'}">checked="checked"</c:if> /> 높음
-								</label> <label for="issue_level" class="col-sm-2 control-label">
+								</label> 
+								
+								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='4' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '4'}">checked="checked"</c:if> /> 보통
-								</label> <label for="issue_level" class="col-sm-2 control-label">
+								</label> 
+								
+								<label for="issue_level" class="col-sm-2 control-label">
 									<input type='radio' id='issue_level' name='issue_level' value='5' disabled="disabled"
 									<c:if test = "${issueInfo.issue_level eq '5'}">checked="checked"</c:if> /> 낮음
 								</label>

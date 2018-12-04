@@ -13,7 +13,7 @@ import kr.or.ddit.vo.TempMeetingVO;
 public interface IMeetingService {
 	public List<TempMeetingVO> meetingInfo(Map<String,String> params) throws SQLException;
 	public List<TempMeetingVO> meetingList(Map<String, String> params) throws SQLException;
-	public String insertMeetingInfo(MeetingVO mv, MultipartFile files) throws SQLException;
+	public String insertMeetingInfo(MeetingVO mv) throws SQLException;
 	public void deleteMeetingInfo(Map<String,String> params) throws SQLException;
 	public void updateMeetingInfo(MeetingVO mv) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.project.service.IProjectService;
+import kr.or.ddit.rqpps.service.IRqppsService;
+import kr.or.ddit.suggest.service.ISuggestService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.RolePagingUtilJoin;
 import kr.or.ddit.vo.EmpVO;
@@ -28,6 +30,12 @@ public class ProjectController {
 	@Autowired
 	private IProjectService service;
 	
+	@Autowired
+	private ISuggestService sugService;
+	
+	@Autowired
+	private IRqppsService rfpService;
+	
 	@RequestMapping("mainForm")
 	public void mainForm(){}
 	
@@ -45,7 +53,7 @@ public class ProjectController {
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
 		params.put("emp_code", emp_code);
 
-		if(currentPage==null){
+		if(currentPage==null || currentPage == ""){
 			currentPage = "1";
 		}
 		
@@ -114,6 +122,17 @@ public class ProjectController {
 		params.put("emp_code", emp_code);
 		
 		service.insertProjectInfo(projectInfo);
+		
+		params.clear();
+		params.put("suggest_code", projectInfo.getSuggest_code());
+		
+		SuggestVO sugVO = sugService.getSuggest(params);
+		
+		// 프로젝트가 등록되면서 제안요청서의 상태를 4로 업데이트
+		params.clear();
+		params.put("rqpps_code", sugVO.getRqpps_code());
+		params.put("rqpps_now_condition", "4");
+		rfpService.updateRfpCondition(params);
 		
 		return "redirect:/user/project/project_manage.do";
 	}

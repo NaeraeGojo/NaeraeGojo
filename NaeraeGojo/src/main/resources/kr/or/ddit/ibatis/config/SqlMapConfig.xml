@@ -31,9 +31,14 @@
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/feedback.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/pwc.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/report.xml" />
-<!-- 	<sqlMap resource="kr/or/ddit/ibatis/mapper/pw.xml" /> -->
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/pw.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/recs.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/profile.xml" />
 
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/scheduler.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/videochatJoin.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/videoChatFile.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/main.xml" />
 
 
 

@@ -8,6 +8,7 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 import kr.or.ddit.vo.ChatListTempVO;
+import kr.or.ddit.vo.VideoFileVO;
 
 public interface IVideoChatService {
 	public String insertVideoChat(Map<String, String> params) throws SQLException;
@@ -29,5 +30,14 @@ public interface IVideoChatService {
 	public List<EmpVO> getEmpList(Map<String, String> params) throws SQLException;
 
 	public void insertJoin(Map<String, String> params) throws SQLException;
+
+	public ProjectVO getProjectNM(String video_chat_room_code) throws SQLException;
+
+	public void updateUrl(Map<String, String> params) throws SQLException;
+
+	public void ChatRoomEnd(Map<String, String> params) throws SQLException;
+
+	public List<ChatListTempVO> getChatStep3(Map<String, String> params)throws SQLException;
+
 	
 }

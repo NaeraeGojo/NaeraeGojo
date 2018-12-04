@@ -109,7 +109,7 @@ public class RqppsController {
 							, @RequestParam("files") MultipartFile[] files) throws Exception{
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		service.insertRqpps(rqv, files);
-		String rqpps_code = rqv.getRqpps_code();
+		String rqpps_code = rqv.getRqpps_code();// ?? 들어가나? 널아닌가?
 		String position_name = "PM";
 		params.put("emp_code", emp_code);
 		params.put("rqpps_code", rqpps_code);

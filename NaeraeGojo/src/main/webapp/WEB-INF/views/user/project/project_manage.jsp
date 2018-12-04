@@ -14,7 +14,6 @@
 	text-decoration: none;
 }
 
-
 </style>
 
 <script type="text/javascript">
@@ -25,7 +24,22 @@ $(function(){
 	
 	$('.aa').click(function(){
 		var project_code =$(this).attr('name');
+		var currentPage = '${param.currentPage}';
 		var query = '?project_code='+project_code;
+		
+		if (currentPage != null && currentPage != '') {
+			query += '&currentPage=' + currentPage;
+		}
+
+		var search_keyword = '${param.search_keyword}';
+		var search_keycode = '${param.search_keycode}';
+
+		if (search_keyword != null && search_keyword != '') {
+			query += '&search_keycode=' + encodeURI(search_keycode)
+					+ '&search_keyword='
+					+ encodeURI(search_keyword);
+		}
+		
 		$(this).attr('href', '${pageContext.request.contextPath}/user/project/pro/project_manage_see.do' + query)
 
 	})
@@ -92,8 +106,7 @@ $(function(){
 	${pagingUtil}
 	
 	<div class="procont">
-		<form action="${pageContext.request.contextPath }/12/main.jsp"
-			method="post" class="form-inline pull-right">
+		<form action="${pageContext.request.contextPath }/12/main.jsp" method="post" class="form-inline pull-right">
 			<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" />
 			 <select class="form-control" name="search_keycode">
 				<option value="TOTAL">전체</option>

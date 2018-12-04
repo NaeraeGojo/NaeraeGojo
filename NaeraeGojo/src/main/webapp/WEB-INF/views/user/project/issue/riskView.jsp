@@ -24,19 +24,22 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	$('body').on('change','select', function (ev){
-	    if($(this).find('option:selected').val() == ""){
-	        $(this).css('color','#999');
-	        $(this).children().css('color','black');
-	    }
-	    else {
-	        $(this).css('color','black');
-	        $(this).children().css('color','black');
-	    }
-	});
 	
 	$('#listBtn').click(function(){
-	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/riskList.do')
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?currentPage=' + currentPage;
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/riskList.do'+query);
     });
 });
 </script>

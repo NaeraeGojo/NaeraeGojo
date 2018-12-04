@@ -7,7 +7,7 @@ import java.util.Map;
 import kr.or.ddit.vo.ProjectAllFileVO;
 
 public interface IProjectFileDao {
-	public void insertProjectFile(Map<String, String> params) throws SQLException;
+	public void insertProjectFile(ProjectAllFileVO pfv) throws SQLException;
 	
 	public void updateProjectFile(ProjectAllFileVO pv) throws SQLException;
 	

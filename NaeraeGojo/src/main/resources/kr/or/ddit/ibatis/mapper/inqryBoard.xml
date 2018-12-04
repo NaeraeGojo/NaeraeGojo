@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="inqryboard">
+	<typeAlias alias="inqryboardVO" type="kr.or.ddit.vo.InqryBoardVO"/>
+
+	<resultMap id="inqryboardMap" class="inqryboardVO">
+		<result property="inqry_board_code" column="inqry_board_code"/>
+		<result property="inqry_board_title" column="inqry_board_title"/>
+		<result property="inqry_board_content" column="inqry_board_content"/>
+		<result property="inqry_board_date" column="inqry_board_date"/>
+		<result property="inqry_board_delete" column="inqry_board_delete"/>
+<!-- 		<result property="items" column="bo_no" select="fileitem.fileItems"/> -->
+	</resultMap>
+
+	<!-- 전체문의게시글 조회 -->
+	<sql id="selectAll">
+		SELECT *
+		  FROM INQRYBOARD
+		  WHERE INQRY_BOARD_DELETE = 'n'
+	</sql>
+
+	<!-- 문의게시글 목록 -->
+	<select id="inqryList" resultClass="inqryBoardVO" parameterClass="map">
+        SELECT B.*
+        FROM  (SELECT ROWNUM RNUM, A.*
+                FROM ( <include refid="selectAll"/> 
+                        ORDER BY INQRY_BOARD_CODE) A ) B
+<!--         <![CDATA[                 -->
+<!--         WHERE B.rnum <= #startCount# -->
+<!--          AND  B.rnum >= #endCount# -->
+<!--         ]]> -->
+        ORDER BY B.RNUM DESC
+    </select> 
+       
+	<!-- 문의게시글 Info(객체 받아오기) -->
+	<select id="inqryInfo" parameterClass="map" resultClass="inqryBoardVO">
+		<include refid="selectAll"/>
+		AND INQRY_BOARD_CODE = #inqry_board_code#
+	</select>
+
+	<!-- 문의게시글 삭제 -->	
+	<update id="deleteInqryBoard" parameterClass="map">
+		UPDATE INQRYBOARD
+		   SET INQRY_BOARD_DELETE = 'y'
+		 WHERE INQRY_BOARD_CODE = #inqry_board_code#
+	</update>
+	
+
+</sqlMap>
+
+

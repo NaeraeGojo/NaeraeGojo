@@ -32,7 +32,7 @@
                 <isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
                         MEETING_TITLE LIKE '%' || #search_keyword# || '%'
                     OR MEETING_CONTENT LIKE '%' || #search_keyword# || '%'
-                    OR EMP_CODE LIKE '%' || #search_keyword# || '%'
+<!--                     OR EMP.EMP_NAME LIKE '%' || #search_keyword# || '%' -->
                 </isEqual>
                 <isEqual property="search_keycode" compareValue="TITLE" >  
                         MEETING_TITLE LIKE '%' || #search_keyword# || '%'
@@ -40,9 +40,9 @@
                 <isEqual property="search_keycode" compareValue="CONTENT" >  
                         MEETING_CONTENT LIKE '%' || #search_keyword# || '%'
                 </isEqual>
-                <isEqual property="search_keycode" compareValue="WRITER" >  
-                        EMP_CODE LIKE '%' || #search_keyword# || '%'
-                </isEqual>
+<!--                 <isEqual property="search_keycode" compareValue="WRITER" >   -->
+<!--                         EMP.EMP_NAME LIKE '%' || #search_keyword# || '%' -->
+<!--                 </isEqual> -->
             </isNotEmpty>
         
         </dynamic>
@@ -56,24 +56,25 @@
     </select>
     
     <select id="getMeetingList" parameterClass="map" resultClass="TempMeetingVO">
-		 select z.*
-		  from (select rownum rnum, y.*
-				from(select d.project_name, c.emp_name, a.meeting_title, a.meeting_hit, a.meeting_date, a.meeting_code
-                        from meeting a, pw b, emp c, project d, meet_pw e
+         select z.*
+          from (select rownum rnum, y.*
+                from(select d.project_name, emp.emp_name, a.meeting_title, a.meeting_hit, a.meeting_date, a.meeting_code
+                        from meeting a, pw b, emp, project d, meet_pw e, join f
                         where b.project_code = d.project_code
                             and a.meeting_delete = 'n'
-                            and a.emp_code = c.emp_code
+                            and a.emp_code = emp.emp_code
                              and e.pw_code = b.pw_code
-					<include refid = "searchCondition"/>
-					   group by d.project_name, c.emp_name,  a.meeting_title, a.meeting_content, a.meeting_hit, 
-					       a.meeting_date, a.meeting_code
-					   order by a.meeting_date 
-					) y ) z
-		 <![CDATA[
- 		 where z.rnum <= #startCount#
- 		   and z.rnum >= #endCount#
- 		 ]]>
-		 order by z.rnum desc
+                              and f.project_code = d.project_code
+                    <include refid = "searchCondition"/>
+                       group by d.project_name, emp.emp_name,  a.meeting_title, a.meeting_content, a.meeting_hit, 
+                           a.meeting_date, a.meeting_code
+                       order by a.meeting_date 
+                    ) y ) z
+         <![CDATA[
+         where z.rnum <= #startCount#
+           and z.rnum >= #endCount#
+         ]]>
+         order by z.rnum desc
     </select>
     
     <select id="meetingInfo" parameterClass="map" resultMap="meetingMap">

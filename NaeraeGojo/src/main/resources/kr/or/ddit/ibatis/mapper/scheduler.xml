@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="scheduler">
+	<typeAlias alias="schedulerVO" type="kr.or.ddit.vo.SchedulerVO"/>
+	
+	<resultMap id="schedulerMap" class="schedulerVO">
+		<result property="scheduler_code"    column="scheduler_code"/>
+		<result property="scheduler_time"    column="scheduler_time"/>
+		<result property="scheduler_title"   column="scheduler_title"/>
+		<result property="scheduler_explain" column="scheduler_explain"/>
+		<result property="scheduler_keyword" column="scheduler_keyword"/>
+		<result property="scheduler_writer" column="scheduler_writer"/>
+	</resultMap>
+	
+	<sql id="selectAll">
+		SELECT 
+		    SCHEDULER_CODE
+		    ,SCHEDULER_TIME
+		    ,SCHEDULER_TITLE
+		    ,SCHEDULER_EXPLAIN
+		    ,EMP_NAME AS SCHEDULER_WRITER
+		    ,SCHEDULER_KEYWORD
+		    ,SCHEDULER_DELETE
+		    ,SCHEDULER_STATUS
+		FROM SCHEDULER A, EMP B
+		WHERE A.SCHEDULER_WRITER = B.EMP_CODE
+		AND SCHEDULER_DELETE = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic>
+	 		<isNotEmpty property="search_keyword" prepend="and">
+	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
+	 				   SCHEDULER_TITLE LIKE '%' || #search_keyword# || '%'
+	 				OR SCHEDULER_KEYWORD   LIKE '%' || #search_keyword# || '%'
+	 				OR EMP_NAME   LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="TITLE" >  
+	 					SCHEDULER_TITLE LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="KEYWORD" >  
+	 					SCHEDULER_KEYWORD LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="NAME" >  
+	 					EMP_NAME LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
+	 		</isNotEmpty>
+	 	</dynamic>
+	</sql>
+	
+	<select id="schedulerList" resultClass="schedulerVO" parameterClass="map">
+		SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.*
+				FROM ( <include refid="selectAll"/> 
+						<include refid="searchCondition"/> 
+						ORDER BY scheduler_code) A ) B
+ 		<![CDATA[				
+		WHERE B.RNUM <= #startCount#
+		 AND  B.RNUM >= #endCount#
+		]]>
+		ORDER BY B.RNUM DESC
+	</select>	
+	
+	<select id="schedulerInfo" parameterClass="map" resultMap="schedulerMap">
+		SELECT  
+			SCHEDULER_CODE
+		    ,SCHEDULER_TIME
+		    ,SCHEDULER_TITLE
+		    ,SCHEDULER_EXPLAIN
+		    ,SCHEDULER_KEYWORD
+		    ,SCHEDULER_STATUS
+		    ,SCHEDULER_WRITER
+		  FROM SCHEDULER
+		 WHERE SCHEDULER_CODE = #scheduler_code#
+	</select>
+	
+	<insert id="insertScheduler" parameterClass="schedulerVO">
+		<selectKey keyProperty="scheduler_code" resultClass="string">
+			SELECT SCHEDULER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO SCHEDULER(
+				         SCHEDULER_CODE
+					    ,SCHEDULER_TIME
+					    ,SCHEDULER_TITLE
+					    ,SCHEDULER_EXPLAIN
+					    ,SCHEDULER_KEYWORD
+					    ,SCHEDULER_WRITER
+						  )
+					VALUES(
+					     #scheduler_code#
+					    ,#scheduler_time#
+					    ,#scheduler_title#
+					    ,#scheduler_explain#
+					    ,#scheduler_keyword#
+					    ,#scheduler_writer#
+						  )
+	</insert>
+	
+	<update id="updateScheduler" parameterClass="schedulerVO">
+		UPDATE SCHEDULER
+		   SET SCHEDULER_TITLE   = #scheduler_title# 
+		      ,SCHEDULER_TIME    = #scheduler_time#
+		      ,SCHEDULER_KEYWORD = #scheduler_keyword#
+		      ,SCHEDULER_EXPLAIN = #scheduler_explain#
+		      ,SCHEDULER_STATUS  = #scheduler_status#
+		 WHERE SCHEDULER_CODE    = #scheduler_code#
+	</update>
+	
+	<update id="deleteScheduler" parameterClass="map">
+		UPDATE SCHEDULER
+		   SET SCHEDULER_DELETE = 'y'
+		 WHERE SCHEDULER_CODE = #scheduler_code#
+	</update>
+	
+	<update id="changeScheduler" parameterClass="map">
+		UPDATE SCHEDULER
+	    	SET SCHEDULER_STATUS =
+			CASE SCHEDULER_STATUS WHEN 'y' THEN 'n'
+			ELSE 'y'
+			END
+		WHERE SCHEDULER_CODE = #scheduler_code#
+	</update>
+	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		SELECT COUNT(SCHEDULER_CODE)
+		  FROM SCHEDULER A, EMP B
+		WHERE A.SCHEDULER_WRITER = B.EMP_CODE
+		AND SCHEDULER_DELETE = 'n'
+		<include refid="searchCondition"/> 
+	</select>
+	
+	
+</sqlMap>
+
+

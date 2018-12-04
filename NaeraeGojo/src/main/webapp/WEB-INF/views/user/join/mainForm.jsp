@@ -3,11 +3,100 @@
     <!-- 요청주소 : http://localhost/ng/user/join/mainForm.do 
     	화면 : 개발자 로그인 시 화면
     -->
+    
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/fullcalendar.css" rel="stylesheet"/>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/moment.min.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/fullcalendar.js"></script>    
+<script>
+$(document).ready(function() {
+    $.ajax({
+     
+       type : "POST"
+       , url : "${pageContext.request.contextPath}/user/main/fullcalendar.do"
+       , dataType : "json"
+       , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+       , error : function(request, status, error) {
+              alert("error : " + request.status );
+       }
+       , success : function(data) {
+//         alert("success : " + data.data);
+           setCalendar(data.data);
+      }
+     });
+});
+   
+function setCalendar(data){
+
+
+  $('#calendar').fullCalendar({
+    
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    displayEventTime: false,
+//     type : 'post',
+    defaultDate: '2018-12-12',
+    navLinks: true, 
+    selectable: true,
+    selectHelper: true,
+    select: function(start, end) {
+      var title = prompt('Event Title:');
+      var eventData;
+      if (title) {
+        eventData = {
+          title: title,
+          start: start,
+          end: end
+        };
+        $('#calendar').fullCalendar('renderEvent', eventData, true);
+      }
+      $('#calendar').fullCalendar('unselect');
+    },
+    editable: true,
+    eventLimit: true, 
+    events: eval(data),
+    
+    eventClick: function(event) {
+       // opens events in a popup window
+       window.open(event.url, 'gcalevent', 'width=700,height=600');
+       return false;
+     },
+
+     loading: function(bool) {
+       $('#loading').toggle(bool);
+     }
+      
+  });
+
+};
+</script>    
+    
 <style>
 p {
 	font-size: 20px !important;
 }
+
+
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#loading {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 </style>
+
+
+
 
       <!-- Small boxes (Stat box) -->
       <div class="row">
@@ -77,7 +166,7 @@ p {
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->
-        <section class="col-lg-7 connectedSortable">
+        <section class="col-lg-6 connectedSortable">
           <!-- Custom tabs (Charts with tabs)-->
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
@@ -210,58 +299,34 @@ p {
         </section>
         <!-- /.Left col -->
         
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-5 connectedSortable">
+        
+        <!-- 캘린더  -->
+        <section class="col-lg-6 connectedSortable">
 			
           <!-- solid sales graph -->
-          <div class="box box-solid bg-teal-gradient">
-            <div class="box-header">
+          <div class="box box-solid ">
+            <div class="box-header bg-teal">
               <i class="fa fa-th"></i>
 
-              <h3 class="box-title">알림</h3>
+              <h3 class="box-title ">캘린더</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-                </button>
+                  <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
               </div>
             </div>
             <div class="box-body border-radius-none">
-              <div class="chart" id="line-chart" style="height: 250px;"></div>
+              <div id='calendar'></div>
+              <div id='loading'>loading...</div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer no-border">
-              <div class="row">
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="knob-label">Mail-Orders</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="knob-label">Online</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="knob-label">In-Store</div>
-                </div>
-                <!-- ./col -->
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- /.box-footer -->
           </div>
           <!-- /.box -->
 
           <!-- Calendar -->
+          
+          
+          
+          
           <div class="box box-solid bg-green-gradient">
             <div class="box-header">
               <i class="fa fa-calendar"></i>

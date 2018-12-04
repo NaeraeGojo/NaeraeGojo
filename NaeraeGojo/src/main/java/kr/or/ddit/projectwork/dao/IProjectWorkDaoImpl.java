@@ -49,4 +49,10 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 		return (int) client.queryForObject("pw.totalCount",params);
 	}
 
+	@Override
+	public List<Map<String, String>> getPwChart(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("pw.getPwChart",params);
+	}
+
 }

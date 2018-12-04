@@ -15,6 +15,20 @@
         from video_chat_room
         where video_chat_room_delete = 'n'
     </sql>
+    
+    
+    <resultMap  id="videoChatMap" class="chatTempVO">
+        <result property="emp_code" column="emp_code"/>
+        <result property="video_chat_room_title" column="video_chat_room_title"/>
+        <result property="project_name" column="project_name"/>
+        <result property="emp_name" column="emp_name"/>
+        <result property="video_chat_room_content" column="video_chat_room_content"/>
+        <result property="video_chat_join_intime" column="video_chat_join_intime"/>
+        <result property="video_chat_join_outtime" column="video_chat_join_outtime"/>
+        <result property="video_chat_room_code" column="video_chat_room_code"/>
+        <result property="items" column="video_chat_room_code" select="videoFile.videoFileItems"/> 
+    </resultMap>    
+    
 
     <sql id="searchCondition">
         <dynamic>
@@ -22,7 +36,7 @@
                 <isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
                         VIDEO_CHAT_ROOM_TITLE LIKE '%' || #search_keyword# || '%'
                     OR VIDEO_CHAT_ROOM_CONTENT LIKE '%' || #search_keyword# || '%'
-                    OR EMP_CODE LIKE '%' || #search_keyword# || '%'
+                    OR EMP_NAME LIKE '%' || #search_keyword# || '%'
                 </isEqual>
                 <isEqual property="search_keycode" compareValue="TITLE" >  
                         VIDEO_CHAT_ROOM_TITLE LIKE '%' || #search_keyword# || '%'
@@ -31,7 +45,7 @@
                         VIDEO_CHAT_ROOM_CONTENT LIKE '%' || #search_keyword# || '%'
                 </isEqual>
                 <isEqual property="search_keycode" compareValue="WRITER" >  
-                        EMP_CODE LIKE '%' || #search_keyword# || '%'
+                        EMP_NAME LIKE '%' || #search_keyword# || '%'
                 </isEqual>
             </isNotEmpty>
         
@@ -39,17 +53,28 @@
     </sql>
 
     <select id="totalCount" parameterClass="map" resultClass="int">
-        select count(video_chat_room_code)
-        from video_chat_room
-        where video_chat_room_delete = 'n'
-        <include refid="searchCondition"/>
+		 select count(d.video_chat_room_code )
+		from emp , project, video_chat_level ,(select * 
+		            from video_chat_room a
+		            , (select count(*) as emp_cnt , vcr_code
+		                from video_chat_join a,
+		                    (select video_chat_room_code as vcr_code from video_chat_join
+		                        where emp_code = #emp_code#) b
+		                where a.video_chat_room_code = b.vcr_code
+		                group by vcr_code) c
+		            where a.video_chat_room_code = c.vcr_code) d
+		where emp.emp_code = d.emp_code
+		and d.project_code = project.project_code
+		and video_chat_level.video_chat_level_code = d.video_chat_level_code
+		<include refid="searchCondition"/>    
+        
     </select>
     
     <select id="getVideoChatList" parameterClass="map" resultClass="chatTempVO">
          SELECT T.* 
          FROM  (SELECT ROWNUM RNUM, Z.*
-                   FROM (   select emp_name, d.video_chat_room_code, d.video_chat_room_date, d.video_chat_room_title, project_name, d.emp_cnt,
-                                 video_chat_level_name, video_chat_level.video_chat_level_code as video_chat_level_code
+                   FROM (   select emp_name, d.video_chat_room_code as video_chat_room_code, d.video_chat_room_date, d.video_chat_room_title as video_chat_room_title
+                    , project_name, d.emp_cnt,  video_chat_level_name, video_chat_level.video_chat_level_code as video_chat_level_code
 							    from emp , project, video_chat_level ,(select * 
 							                from video_chat_room a
 							                , (select count(*) as emp_cnt , vcr_code
@@ -71,7 +96,7 @@
          ORDER BY t.RNUM DESC
     </select>
     
-    <select id="getVideoInfo" parameterClass="map" resultClass="chatTempVO">
+    <select id="getVideoInfo" parameterClass="map" resultMap="videoChatMap">
 		select  a.emp_code, a.video_chat_room_title, b.project_name, c.emp_name, 
 		          a.video_chat_room_content, d.video_chat_join_intime, d.video_chat_join_outtime, a.video_chat_room_code
 		from  video_chat_room a, project b,  emp c , video_chat_join d
@@ -103,6 +128,7 @@
 		where b.emp_code = #emp_code#
 		and b.emp_code = c.emp_code
 		and b.project_code = a.project_code
+		and a.project_delete = 'n'
 		group by a.project_code, a.project_name, a.project_start, a.project_end
     </select>
     
@@ -151,6 +177,42 @@
                                    )
     </insert>
     
+    <select id="getProjectNM" parameterClass="string" resultClass="projectVO">
+        select b.project_name, to_char(b.project_start, 'YYYY-MM-DD') as project_start, to_char(b.project_end, 'YYYY-MM-DD') as project_end
+                , d.emp_name, c.position_name,  a.emp_code
+		from video_chat_room a, project b, join c, emp d
+		where a.project_code = b.project_code
+		and c.project_code = a.project_code 
+		and c.emp_code= d.emp_code
+		and c.position_name = 'PM'
+		and a.video_chat_room_code=#video_chat_room_code#
+    </select>
+    
+    <update id="updateUrl" parameterClass="map">
+        update video_chat_room
+        set video_chat_room_url = #video_chat_room_url#
+            , video_chat_status = 'y'
+            , video_chat_level_code = 'level2'
+        where video_chat_room_code = #video_chat_room_code#
+    </update>
+    
+    <update id="ChatRoomEnd" parameterClass="map">
+        update video_chat_room
+        set video_chat_level_code = 'level4'
+        where video_chat_room_code = #video_chat_room_code#
+    </update>
+    
+    <select id="getChatStep3" parameterClass="map" resultClass="chatTempVO">
+		select  a.video_chat_room_title, b.project_name, c.emp_name, 
+		            a.video_chat_room_content, a.video_chat_room_code, a.video_chat_room_date
+		from  video_chat_room a, project b,  emp c , video_chat_join d
+		where a.project_code = b.project_code 
+		and a.video_chat_room_code = d.video_chat_room_code 
+		and d.emp_code = c.emp_code
+		and d.video_chat_room_code = #video_chat_room_code#
+		group by a.video_chat_room_title, b.project_name, c.emp_name, a.video_chat_room_content, 
+		        d.video_chat_join_intime, d.video_chat_join_outtime, a.video_chat_room_code ,a.video_chat_room_date        
+    </select>
     
 </sqlMap>
 

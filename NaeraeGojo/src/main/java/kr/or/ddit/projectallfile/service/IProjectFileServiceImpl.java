@@ -9,6 +9,8 @@ import kr.or.ddit.vo.ProjectAllFileVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IProjectFileServiceImpl implements IProjectFileService{
@@ -16,6 +18,7 @@ public class IProjectFileServiceImpl implements IProjectFileService{
 	private IProjectFileDao dao;
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void insertProjectFile(Map<String, String> params)
 			throws SQLException {
 		// TODO Auto-generated method stub
@@ -23,30 +26,28 @@ public class IProjectFileServiceImpl implements IProjectFileService{
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void updateProjectFile(ProjectAllFileVO pv) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.updateProjectFile(pv);
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void deleteProjectFile(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.deleteProjectFile(params);
 	}
 
 	@Override
 	public List<ProjectAllFileVO> getProjectFileList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getProjectFileList(params);
 	}
 
 	@Override
 	public ProjectAllFileVO getProjectFile(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getProjectFile(params);
 	}
 
 }

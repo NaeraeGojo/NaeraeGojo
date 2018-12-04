@@ -1,5 +1,7 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
   .no-margin { 
      padding: 10px !important; 
@@ -21,7 +23,7 @@
             <!-- /.box-header -->
             <div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
               <div class="table-responsive">	<!-- 테이블 기본 설정 (기본설정)-->
-                <table class="table no-margin">
+                <table class="table table-hover"">
                   <thead>						
                   <tr>
                     <th scope="col" width="10%">No.</th>
@@ -32,7 +34,14 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  <c:forEach items="${freeboardList}" var="list">
+	                  <tr>
+	                  	<td><input type="hidden" value="${list.freeboard_code }">${list.rnum }</td>
+						<td>${list.freeboard_title }</td>	                  	
+                  		<td>${list.emp_code }</td>
+                  		<td>${fn:substringBefore(list.freeboard_date, ' ') }</td>
+                		<td></td>  
+                  </c:forEach>
                   	<td>1</td>
                     <td>자유게시판을 오픈하였습니다.</td>
                     <td>이소라</td>

@@ -96,6 +96,10 @@ $(function(){
 		});
 	};
 	
+	$('#btn_chart').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwChart.do');
+	});
+	
 	$('.table_pw tr:gt(0)').click(function(){
 		var pw_code = $(this).attr('code');
 		
@@ -223,15 +227,6 @@ $(function(){
 	});
 	
 	
-	$('#pwForm').click(function(){
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/pw/pwForm.do');
-	});
-
-// 	$('table tr:gt(0)').click(function(){
-// 		var pblanc_board_code = $(this).find('td:eq(0) input').val();
-// 		var rnum = $(this).find('td:eq(0)').text();
-// 		$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardView.do?pblanc_board_code='+pblanc_board_code+'&rnum='+rnum);
-// 	})
 
 	$('#btn_insert_pwc').click(function(){
 		var pwc_name = $('#pwcForm input[name=pwc_name]').val();
@@ -269,6 +264,11 @@ $(function(){
       <div class="row">	
       
       <div class="pwcont">
+    	<div class="col-md-4 pull-left" style="width: auto;" >
+	      <input id="btn_chart" value="업무 차트 조회" type="button" 
+	      class="btn btn-lg btn_pw_upper" style="background-color: #6884c1;"
+	      data-toggle="modal" data-target="#modal-default">
+	    </div>
     	<div class="col-md-4 pull-right" style="width: auto;" >
 	      <input id="btn_pwcForm" value="+ 분류" type="button" 
 	      class="btn btn-lg btn_pw_upper" style="background-color: #dd4b39;"
@@ -328,19 +328,21 @@ $(function(){
           
         </div>
         
-	   </div>
-	   
-	   <form action="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" method="post" class="form-inline pull-right"
-	   style="margin-right: 200px;">
-			<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
+        <form action="${pageContext.request.contextPath}/user/project/pw/pwList.do" method="post" class="form-inline pull-right"
+	   style="margin-right: 15px;">
 			<select class="form-control" name="search_keycode" >
 				<option value="total">전체</option>
 				<option value="function">업무명</option>
 				<option value="pwc">분류</option>
 				<option value="damdang">담당자</option>
 			</select>
+			<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 		    <button type="submit" class="btn btn-primary form-control">검색</button>
 		</form>
+        
+	   </div>
+	   
+	   
 		
 		
 	</div>

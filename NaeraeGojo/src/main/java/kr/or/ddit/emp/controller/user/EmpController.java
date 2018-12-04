@@ -242,6 +242,19 @@ public class EmpController {
 		service.deleteEmpInfo(params);
 		return "redirect:/user/emp/empList.do";
 	}
+	
+	
+	
+	@RequestMapping("empChatList")
+	public ModelAndView empChatList(ModelAndView mav, Map<String, String> params) throws Exception{
+		List<EmpVO> el = service.empList(params);
+		mav.addObject("el",el);
+		mav.setViewName("jsonConvertView");
+		
+		return mav;
+	}
+	
+	
 }
 
 

@@ -10,13 +10,17 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.issue.service.IIssueService;
 import kr.or.ddit.issueresult.service.IIssueResultService;
 import kr.or.ddit.utils.RolePagingUtil;
+import kr.or.ddit.utils.SetContent;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.IssueResultVO;
 import kr.or.ddit.vo.IssueVO;
 import kr.or.ddit.vo.JoinVO;
+import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ProjectWorkVO;
+import kr.or.ddit.vo.RecsRoomVO;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +41,7 @@ public class IssueController {
 			String search_keyword, String search_keycode, String currentPage, 
 			Map<String, String> params, ModelAndView andView ) throws Exception{
 		
-		if(currentPage==null){
+		if(currentPage == null || currentPage == ""){
 			currentPage = "1";
 		}
 		
@@ -97,8 +101,8 @@ public class IssueController {
 	
 		project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
-		
-		if(currentPage==null){
+
+		if(currentPage == null || currentPage == ""){
 			currentPage = "1";
 		}
 		
@@ -111,7 +115,6 @@ public class IssueController {
 		
 		params.put("startCount",  String.valueOf(pagingUtil.getStartCount()));
 		params.put("endCount", String.valueOf(pagingUtil.getEndCount()));
-		
 		
 		List<IssueVO> issueList = service.issueList(params);
 		List<IssueVO> issueStatusList = service.issueStatusList(params);
@@ -133,7 +136,7 @@ public class IssueController {
 		project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
-		if(currentPage==null){
+		if(currentPage == null || currentPage == ""){
 			currentPage = "1";
 		}
 		

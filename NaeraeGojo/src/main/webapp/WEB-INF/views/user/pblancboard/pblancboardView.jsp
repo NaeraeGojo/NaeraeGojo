@@ -82,7 +82,20 @@ $(function(){
     });
 	
 	$('#listBtn').click(function(){
-	  	$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do')
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?currentPage=' + currentPage;
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+	  	$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do'+query)
     });
 	
 	$("#pblanc_board_com_date, #pblanc_board_end_proposal").datepicker({
@@ -177,7 +190,6 @@ $(function(){
 							</div>
 						</div>
 					</c:forEach>	
-						
 
 					<div class="box-footer clearfix">
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
@@ -211,10 +223,7 @@ $(function(){
 				</div>
 			</div>
 			</form>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
-	<!-- /.modal -->
 	
 </section>

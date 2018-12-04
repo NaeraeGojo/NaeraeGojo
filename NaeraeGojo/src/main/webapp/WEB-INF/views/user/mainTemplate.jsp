@@ -19,7 +19,7 @@
 		<div class="content-wrapper">
 	   
 	   <!-- 여기가 content-header -->
-	   <tiles:insertAttribute name="content_header"></tiles:insertAttribute>
+<%-- 	   <tiles:insertAttribute name="content_header"></tiles:insertAttribute> --%>
 	<!-- content-header 끝 -->
 	
 	    <!-- Main content -->

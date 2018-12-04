@@ -30,6 +30,9 @@
 				<isEqual property="search_keycode" compareValue="damdang" >
 					emp.emp_name like '%' || #search_keyword# ||'%'
 				</isEqual>				
+				<isEqual property="search_keycode" compareValue="c_damdang" >
+					pw_damdang = #search_keyword#
+				</isEqual>				
 			</isNotEmpty>
 		</dynamic>
 	</sql>
@@ -134,15 +137,17 @@
 			set pw_delete = 'y'
 			where pw_code = #pw_code#
 	</update>
+	
+	<select id="getPwChart" parameterClass="map" resultClass="java.util.HashMap">
+		select rownum rnum , a.*
+			from(
+				<include refid="selectAll"/>
+				and pw.project_code = #project_code#
+				<include refid="searchCondition"/>
+				order by to_number(pw.pwc_code) asc
+				) a
+	</select>
 </sqlMap>
-
-
-
-
-
-
-
-
 
 
 

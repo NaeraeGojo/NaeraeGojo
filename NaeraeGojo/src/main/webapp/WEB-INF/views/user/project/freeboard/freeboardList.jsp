@@ -1,5 +1,7 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
   .no-margin { 
      padding: 10px !important; 
@@ -32,7 +34,14 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  <c:forEach items="${freeboardList}" var="list">
+	                  <tr>
+	                  	<td><input type="hidden" value="${list.freeboard_code }">${list.rnum }</td>
+						<td>${list.freeboard_title }</td>	                  	
+                  		<td>${list.emp_code }</td>
+                  		<td>${fn:substringBefore(list.freeboard_date, ' ') }</td>
+                		<td></td>  
+                  </c:forEach>
                   	<td>1</td>
                     <td>자유게시판을 오픈하였습니다.</td>
                     <td>이소라</td>

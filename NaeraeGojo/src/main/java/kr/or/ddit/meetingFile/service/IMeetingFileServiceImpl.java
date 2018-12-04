@@ -40,6 +40,18 @@ public class IMeetingFileServiceImpl implements IMeetingFileService{
 		mfile.setMeeting_file_code(filesCode);
 		dao.updateMeetingFile(mfile);
 	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void insertMeetingFile(MultipartFile files, String meeting_code)
+			throws SQLException {
+		MeetFileVO mfile = fileMapper.mapping(files, meeting_code);
+		
+		String filesCode = dao.getfileCode(meeting_code);
+		mfile.setMeeting_file_code(filesCode);
+		
+		dao.insertMeetingFile(mfile);
+	}
 	
 	
 

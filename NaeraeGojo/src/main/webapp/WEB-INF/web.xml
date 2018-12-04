@@ -23,6 +23,17 @@
     <servlet-name>doDispatcher</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+  
+  <!-- 로그인 체크 필터 -->
+  <filter>
+  		<filter-name>loginCheckFilter</filter-name>
+  		<filter-class>kr.or.ddit.filter.loginCheckFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+  		<filter-name>loginCheckFilter</filter-name>
+  		<url-pattern>*.do</url-pattern>
+  	</filter-mapping>
+  
   <filter>
     <filter-name>encodigFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -43,6 +54,7 @@
     <param-name>logbackConfigLocation</param-name>
     <param-value>classpath:kr/or/ddit/logback/config/logback.xml</param-value>
   </context-param>
+  
   <listener>
     <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
   </listener>

@@ -75,8 +75,9 @@ label {
 	                 <div class="col-sm-8">
 	                <select class="form-control select2" name="project_code" style="border-radius: 0.5em;">
 	                  <option selected="selected">선택하세요</option>
-	                      
-		                  <option value="${projectInfo[0].project_code}"> ${projectInfo[0].project_name}</option>
+	                      <c:forEach items="${projectInfo }" var="projectInfo1"> 
+		                   <option value="${projectInfo1.project_code}"> ${projectInfo1.project_name}</option>
+		                  </c:forEach>
 	                </select>
 	                 </div>
 	                
@@ -229,10 +230,10 @@ $(function(){
     
     $('form').submit(function(){
     	
-//     	if($('input[name=meeting_title]').val()=='' ||$('input[name=meeting_title]').val()==null){
-//     		boalert("제목을 입력해주세요");
-//     		return false;
-//     	}
+    	if($('input[name=meeting_title]').val()=='' ||$('input[name=meeting_title]').val()==null){
+    		boalert("제목을 입력해주세요");
+    		return false;
+    	}
     	
     	if($('textarea[name=meeting_content]').val()=='' ||$('textarea[name=meeting_content]').val()==null){
     		boalert("내용을 입력해주세요");
