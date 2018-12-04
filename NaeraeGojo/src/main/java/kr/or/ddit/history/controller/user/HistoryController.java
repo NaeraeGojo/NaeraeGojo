@@ -27,40 +27,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/history/")
 public class HistoryController {
-	@Autowired
-	private AttachPictureMapper pictureMapper;
-	
 	@Resource
 	private IHistoryService service;
 	
 	@Resource
 	private IEmpService empService;
 	
-	@Resource
-	private IUserFileService userFileServ;
 	
-	
-	@RequestMapping("idPicFileUpload")
-	public void idPicFileUpload(){}
-	
-	@RequestMapping("idFileUpload")
-	public ModelAndView idFileUpload(ModelAndView mav
-									, String user_file_save_name
-									, @RequestParam("file") MultipartFile file) throws Exception{
-		
-		UserFileVO ufv = pictureMapper.picture_mapping(file);
-		userFileServ.insertUserFile(ufv);
-		
-		user_file_save_name = ufv.getUser_file_save_name();
-		
-//		mav.addObject("ufv", ufv);
-//		mav.addObject("file", file);
-		mav.addObject("user_file_save_name", user_file_save_name);
-		mav.setViewName("jsonConvertView");
-		
-		return mav;
-	}
-	
+	@RequestMapping("historyForm")
+	public void historyForm(){}
+
 	@RequestMapping("insertHistory")
 	public ModelAndView insertHistory(HistoryVO historyInfo
 			,String emp_code

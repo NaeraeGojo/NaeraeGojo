@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <style>
  .no-margin {
     padding: 10px !important;
@@ -42,6 +43,19 @@ label {
               <div class="box-body">
                 
                 <div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label>
+					<div class="col-sm-9">
+						<!-- select -->
+						<select class="form-control" id="proNm" >
+	                   	 <option>프로젝트를 선택해주세요</option>
+		                   <c:forEach items="${vo }" var="proName">
+		                    	<option value="${proName.project_code}">${proName.project_name}</option>
+		                   </c:forEach>
+	                   </select>
+					</div>
+				</div>
+                
+                <div class="form-group">
                   <label for="inputPassword1" class="col-sm-2 control-label">제목</label>
 
                   <div class="col-sm-9">
@@ -73,17 +87,12 @@ label {
                   </div>
                 </div>
                 
-                <div class="form-group">
-                  <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력2</font></font></label>
-                  <div class="col-sm-10 control-label">
-                  <input type="file" id="file02" name="files">
-                  </div>
-                </div>
                 
               </div>
               <div class="box-footer clearfix">
-              <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
-              <input value="등록" type="submit" id="insert" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
+              <input value="취소" type="reset"  class="btn btn-sm btn-warning btn-flat pull-right">
+              <input value="등록" type="submit"  class="btn btn-sm btn-danger btn-flat pull-right">
+              <input value="목록" type="button" id="listBtn"  class="btn btn-sm btn-info btn-flat pull-right">
           </div>
             </form>
           </div>
@@ -93,12 +102,19 @@ label {
 <script type="text/javascript">
 $(function(){
 	    $('#insert').click(function(){
+	    	if($("#proNm option:selected").val()==''){
+	    		alert('프로젝트를 선택해주세요');
+	    		return false;
 	    	if($('input[name=notice_title]').val()==''){
-	    		alert('입력해봐라');
+	    		alert('제목을 입력하세요');
 	    		return false;
 	    	}
 	    	if($('input[name=notice_content]').val()==''){
-	    		alert('입력해봐라');
+	    		alert('내용을 입력하세요');
+	    		return false;
+	    	}
+	    	if($('input[name=notice_pass]').val()==''){
+	    		alert('비밀번호를 입력하세요');
 	    		return false;
 	    	}
 	    	if($('input[name=notice_pass]').val()==''){
@@ -110,6 +126,10 @@ $(function(){
 // 	    		return false;
 // 	    	}
 	    	return true;
+	    })
+	    
+	    $('#listBtn').click(function(){
+	    	$(location).attr('href', '${pageContext.request.contextPath}/user/project/notice/notice_list.do')
 	    })
 })
 

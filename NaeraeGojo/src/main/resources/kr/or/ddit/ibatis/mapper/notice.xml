@@ -115,6 +115,14 @@
       	AND	B.EMP_CODE = A.EMP_CODE
 	</select>
 	
+	<select id="projectList" parameterClass="map" resultClass="NoticeBoardVO">
+		SELECT C.PROJECT_CODE, C.PROJECT_NAME
+		FROM NOTICE A, EMP B, PROJECT C
+		WHERE A.EMP_CODE = B.EMP_CODE
+		AND   A.PROJECT_CODE = C.PROJECT_CODE
+	</select>
+	
+	
 	<update id="updateNotice" parameterClass="NoPrEmpVO">
 		UPDATE NOTICE
 		   SET NOTICE_TITLE         = #notice_title# 

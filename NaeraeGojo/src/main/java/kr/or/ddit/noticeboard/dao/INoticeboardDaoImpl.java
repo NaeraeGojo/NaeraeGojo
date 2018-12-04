@@ -64,4 +64,10 @@ public class INoticeboardDaoImpl implements INoticeboardDao{
 		
 	}
 
+	@Override
+	public List<NoticeBoardVO> projectList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("notice.projectList",params);
+	}
+
 }

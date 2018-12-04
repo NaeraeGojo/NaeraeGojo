@@ -260,6 +260,9 @@ label {
 						<input type="text" class="form-control" id="emp_name" name="emp_name" style="margin-top: 10px !important">
 						<input type="hidden" class="form-control" value="${vo.emp_code }" name="emp_code">
 						<input type="hidden" class="form-control" value="${vo.report_code }" name="report_code">
+						<c:forEach items="${stList }" var="list">
+							<input type="hidden" class="form-control" value="${list.pl_name }" name="pl_name">
+						</c:forEach>
 						
 					</div>
 				</div>
@@ -323,7 +326,30 @@ label {
 		})
 		
 		 $('#checkFeed').click(function(){
-			 
+			  var emp_code = $('input[name=emp_code]').val();
+			  var report_code = $('input[name=report_code]').val();
+//			  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
+			  
+			  $.ajax({
+					url : '${pageContext.request.contextPath}/user/report/feedDEV.do',
+					dataType: 'json',
+					data : {
+						
+							emp_code:emp_code,
+							report_code :report_code
+							
+							},
+					success : function(data){
+						console.log(data);
+						alert(data.rpo.report_feed_title);
+						$('input[name=report_feed_title]').val(data.rpo.report_feed_title);
+						$('input[name=report_feed_content]').val(data.rpo.report_feed_content);
+						$('input[name=pm_name]').val(data.rpo.pm_name);
+					},
+					error : function(res){
+						alert(res.status);
+					}
+				});
 		 })
 		
 		 $('#modalAdd').submit(function(){

@@ -49,4 +49,10 @@ public class IPblancboardDaoImpl implements IPblancboardDao {
 		return (int) client.queryForObject("pblancboard.totalCount", params);
 	}
 
+	@Override
+	public void insertPblancInfo(PblancBoardVO pb)
+			throws SQLException {
+		client.insert("pblancboard.insertPblancInfo", pb);
+	} 
+
 }

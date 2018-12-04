@@ -10,36 +10,6 @@
 		SELECT * FROM USER_FILE
 		WHERE USER_FILE_DELETE='n'
 	</sql>
-
-
-	<!-- 검색 -->
-	<sql id="searchCondition">
-        <dynamic prepend="AND">
-            <isNotEmpty property="search_keyword" >
-                <isEqual property="search_keycode" compareValue="ALL" open="(" close=")">
-                        EMP_CODE LIKE '%'||#search_keyword#||'%'
-                    EMP_CODE LIKE '%'||#search_keyword#||'%'
-                    OR EMP_NAME LIKE '%'||#search_keyword#||'%'
-                    OR EMP_ROLE LIKE '%'||#search_keyword#||'%'
-                </isEqual>
-            </isNotEmpty>
-        </dynamic>
-    </sql>
-
-	<!-- 프로필 사진 목록 -->
-	<select id="userFileList" resultClass="userFileVO" parameterClass="map">
-        SELECT B.*
-        FROM  (SELECT ROWNUM RNUM, A.*
-                FROM ( <include refid="selectAll"/> 
-                        <include refid="searchCondition"/> 
-                        ORDER BY USER_FILE_CODE) A ) B
-<!--         <![CDATA[                 -->
-<!--         WHERE B.rnum <= #startCount# -->
-<!--          AND  B.rnum >= #endCount# -->
-<!--         ]]> -->
-        ORDER BY B.RNUM DESC
-    </select>    
-	
 	
 	<!-- 프로필 사진 Info(객체 받아오기) -->
 	<select id="userFileInfo" parameterClass="map" resultClass="userFileVO">
@@ -47,7 +17,12 @@
 		 AND EMP_CODE = #emp_code#
 	</select>
 	
-	<!-- 직원등록 -->
+	<statement id="userfileItems" resultClass="userFileVO">
+   		<include refid="selectAll"/>
+   		 AND EMP_CODE = #emp_code#
+   	</statement>
+	
+	<!-- 프로필 사진 등록 -->
 	<insert id="insertUserFile" parameterClass="userFileVO">
 		<selectKey keyProperty="user_file_code" resultClass="string">
          select user_file_seq.nextval from dual
@@ -62,7 +37,7 @@
 						,#user_file_save_name#
 						,#user_file_name#
 						,#user_file_volume#
-						,#user_file_delete#
+						,'n'
 						,#emp_code#)
 	</insert>
 	
@@ -71,14 +46,14 @@
 		   SET USER_FILE_SAVE_NAME	=	#user_file_save_name#
 		   	  ,USER_FILE_NAME		=	#user_file_name# 
 		      ,USER_FILE_VOLUME		=	#user_file_volume#
-		 WHERE USER_FILE_CODE 		=	#user_file_code#
+		      ,USER_FILE_DELETE		=	'n'
+		 WHERE EMP_CODE 			=	#emp_code#
 	</update>
 
-	<update id="deleteUserFile" parameterClass="map">
-		UPDATE USER_FILE
-		   SET USER_FILE_DELETE = 'y'
-		 WHERE USER_FILE_CODE = #user_file_code#
-	</update>
+	<delete id="deleteUserFile" parameterClass="map">
+		DELETE USER_FILE
+		 WHERE EMP_CODE = #emp_code#
+	</delete>
 
 
 

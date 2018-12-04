@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+     
+<!--      <bean id="pblancservice" class="org.springframework.scheduling.quartz.JobDetailBean"> -->
+<!--        <property name="jobClass" value="kr.or.ddit.scheduler.job.TimeCheckJob" /> -->
+       
+<!--        <property name="jobDataAsMap"> -->
+<!--         <map> -->
+<!--             <entry key="pblancservice"> -->
+<!--                 <ref bean="pblancservice"/>     -->
+<!--             </entry> -->
+<!--         </map> -->
+<!--        </property> -->
+<!--      </bean> -->
+     
+<!--      <bean id="timeCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" -->
+<!--         p:cronExpression="0 0 12 * * ?" -->
+<!--         p:jobDetail-ref="timeCheckJob"> -->
+<!--      </bean> -->
+
+<!--      <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"> -->
+<!--         <property name="jobDetail" ref="pblancservice"/> -->
+<!--         <property name="startDelay" value="1000"/> -->
+<!--         <property name="repeatInterval" value="1000000"/> -->
+<!--      </bean> -->
+
+<!--      <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
+<!--         <property name="triggers"> -->
+<!--             <list> -->
+<!--                 <ref bean="simpleTrigger"/> -->
+<!--             </list> -->
+<!--         </property> -->
+<!--         <property name="quartzProperties"> -->
+<!--             <props> -->
+<!--                 <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop> -->
+<!--                 <prop key="org.quartz.threadPool.threadCount">5</prop> -->
+<!--                 <prop key="org.quartz.threadPool.threadPriority">4</prop> -->
+<!--                 <prop key="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</prop> -->
+<!--                 <prop key="org.quartz.jobStore.misfireThreshold">60000</prop> -->
+<!--             </props> -->
+<!--         </property> -->
+
+<!--      </bean> -->
+
+     
+<!--      <bean id="dateCheckJob" class="org.springframework.scheduling.quartz.JobDetailBean" -->
+<!--         p:jobClass="kr.or.ddit.scheduler.job.DateCheckJob"> -->
+<!--      </bean> -->
+     
+<!--      <bean id="dateCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" -->
+<!--         p:cronExpression="0/5 * * * * ?" -->
+<!--         p:jobDetail-ref="dateCheckJob"> -->
+<!--      </bean> -->
+     
+     
+</beans>

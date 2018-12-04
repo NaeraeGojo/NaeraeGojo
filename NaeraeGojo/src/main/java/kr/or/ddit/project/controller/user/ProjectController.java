@@ -53,7 +53,7 @@ public class ProjectController {
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
 		params.put("emp_code", emp_code);
 
-		if(currentPage==null){
+		if(currentPage==null || currentPage == ""){
 			currentPage = "1";
 		}
 		

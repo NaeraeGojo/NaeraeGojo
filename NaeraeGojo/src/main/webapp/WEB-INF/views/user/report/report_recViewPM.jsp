@@ -199,7 +199,7 @@ label {
 						<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:forEach items="${stList }" var="list">
 							<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'i'}">
-								<input value="반려" type="button" class="btn btn-sm btn-info btn-flat pull-right">
+								<input value="반려" id="checkFeed" type="button"  data-toggle="modal" data-target="#modal1" class="btn btn-sm btn-info btn-flat pull-right">
 							</c:if> 
 							<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'i'}">
 								<input value="승인" id="checkPM" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
@@ -211,6 +211,72 @@ label {
 		</div>
 	</div>
 </section>
+
+<!-- 모달모달모달 -->
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="container">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"   >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="exampleModalLabel">관련 업무 피드백</h3>
+      </div>
+      <div class="modal-body" style=" border-top:1px solid orange;">
+      <form class="form-horizontal" role="form"  action="${pageContext.request.contextPath}/user/report/report_feed_insert_PM.do" 
+                            method="post" >
+<!--          <div  class="row" style="padding-left:35px"> -->
+<!--            <select class="col-sm-3" id="pw_function" style="margin:5px; height:30px;" > -->
+<!--             <option selected="selected">분류</option> -->
+<!--            </select> -->
+<!--            <input class="col-sm-4"type="text" style="margin:5px; height:30px;"> -->
+<!--            <button class="col-sm-2" class="btn btn-flat" style="margin:5px; height:30px;">검색</button> -->
+<!--            </div > -->
+            <div  class="row"  style="padding:30px;">
+                <div class="form-group">
+                    <div id="ff"></div>
+              </div>      
+                        
+              <div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">제목</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="report_feed_title" name="report_feed_title" style="margin-top: 10px !important">
+					</div>
+				</div>
+				</br></br>
+                <div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">발신</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="emp_name" name="emp_name" style="margin-top: 10px !important">
+						<input type="hidden" class="form-control" value="${vo.emp_code }" name="emp_code">
+						<input type="hidden" class="form-control" value="${vo.report_code }" name="report_code">
+						<c:forEach items="${stList }" var="list">
+							<input type="hidden" class="form-control" value="${list.pm_name }" name="pl_name">
+						</c:forEach>
+						
+					</div>
+				</div>
+				</br>
+				<div class="form-group">
+					<label for="inputPassword1" class="col-sm-2 control-label" style="margin-top: 10px !important;">내용</label>
+					<div class="col-sm-9">
+						<textarea rows="10" type="text" class="form-control" id="report_feed_content" name="report_feed_content" style="margin-top: 10px !important"></textarea>
+					</div>
+				</div>
+             </div>
+      <div class="modal-footer">
+      		<input type="submit" id="modalAdd" class="btn btn-primary" value="등록">
+<!--            <button type="submit" id="modalAdd" class="btn btn-primary" data-dismiss="modal">등록</button> -->
+      </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+
 <script type="text/javascript">
 	$(function() {
 		//Initialize Select2 Elements
@@ -246,6 +312,12 @@ label {
 	    	var  report_code = $('input[name=report_code]').val();
 	    	$(location).attr('href','${pageContext.request.contextPath}/user/report/updatePM/'+report_code+'.do');
 		})
+		
+		$('#modalAdd').submit(function(){
+			var emp_code = $('input[name=emp_code]').val();
+			var report_code = $('input[name=report_code]').val();
+			 
+		 })
 		
 
 	})

@@ -32,6 +32,15 @@
 		  AND EMP_EMAIL = #emp_email#
 	</select>
 	
+	<!-- 비밀번호 찾기 -->
+	<select id="empPass" parameterClass="map" resultClass="empVO">
+		SELECT *
+		  FROM EMP
+		  WHERE EMP_DELETE = 'n'
+		  AND EMP_CODE = #emp_code#
+		  AND EMP_EMAIL = #emp_email#
+	</select>
+	
 	
 	<!-- 이력목록 -->
 	<select id="historyList" resultClass="historyVO" parameterClass="map">

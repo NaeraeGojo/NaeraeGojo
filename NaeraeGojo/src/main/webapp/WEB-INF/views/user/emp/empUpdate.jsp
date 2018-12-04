@@ -3,7 +3,18 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript">
-	
+//화면에 파일 띄우기
+function readURL(input) {
+   if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+         $('#ShowImage').attr('src', e.target.result).width(350).height(350);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+   }
+}	
 $(function(){
 	$('#form').submit(function(){
 		if (!$('input[name=emp_pass]').val().validationPASS()) {
@@ -92,7 +103,6 @@ $(function(){
 	
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
-		//(이전 페이지 이동으로 수정할 예정)
 	});
 	$('#delete').click(function(){
 		var history_code = $('input[name=history_code]').val();
@@ -171,10 +181,6 @@ $(function(){
 		});
 		}
 	});
-
-	
-// 		$('#project_name').val('${historyList[0].history_project_name}');
-	
     //Initialize Select2 Elements
     $('.select2').select2()
 
@@ -227,22 +233,24 @@ $(function(){
        			<b class="box-title"><h2>직원정보 수정</h2></b>	
            		<div class="box-body">				<!-- 테이블이 나타하는 body부분 (기본설정)-->
            			<br/>
-						<form id="form" method="POST" class=form-horizontal" action="${pageContext.request.contextPath}/user/emp/updateEmp.do">
+						<form id="form" method="POST" class=form-horizontal" action="${pageContext.request.contextPath}/user/emp/updateEmp.do" enctype="multipart/form-data">
 						<div class="form-group">
                				<div class="row">
                					<div class="col-md-4" style="margin: 10px;">
-               						<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none;">
-										<tr><td class="tLine" colspan="2"></td></tr>
-										<tr>
-											<td class="pic" style="vertical-align: bottom; width: 150px; height: 300px; text-align: center;">
-												<div id = "idPicViewDiv" >
-<%-- 													<img src = "/image/${facePictureFileName}" width="235" height="315"> --%>
-												</div>
-<%-- 												<img src="${pageContext.request.contextPath }/image/btn_pic.gif" alt="사진올리기" class="btn" id = "picUpload" title="인적사항에 올릴 증명을 검색합니다." style="cursor: pointer;"/><br/> --%>
-<!-- 												<div style="width: 100%" align="center"> -->
-<!-- 													size : 235x315 이하 -->
-<!-- 												</div> -->
-											</td>
+               						<table>
+										<tr><td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 400px; text-align: center;">
+									    	<div align="center" style="margin-left: 50px;">
+									    		<img id="ShowImage" src="/img/${ufv.user_file_save_name}" style="border-radius: 50%;" width="400" height="400" alt="pic1"/>
+									    	</div>
+									    	<br/>
+									    	<div style="width: 100%" align="center">
+												<label class="btn btn-primary btn-file">
+											     	사진수정 <input type="file" class="form-control" name="files" style="display: none;" onchange="readURL(this);">
+											    </label>
+												<label class="btn btn-primary btn-file">
+											     	사진삭제 <input type="button" class="form-control" name="PhotoDelete" style="display: none;">
+											    </label>
+											</div>
 										</tr>
 									</table>
                					</div>
@@ -421,15 +429,15 @@ $(function(){
 			              				</div>
 			              			</div>
 <!-- 			              			<input type="hidden" name="emp_delete" value="n" /> -->
-			              			<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
-				                  		<div class="col-sm-5">
-				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;">
-		               					</div>                
-			              				<div class="col-sm-3" style="margin-left: -15px !important;">
-											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;">
-										</div>
-			              			</div>
+<!-- 			              			<div class="row"> -->
+<!-- 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label> -->
+<!-- 				                  		<div class="col-sm-5"> -->
+<!-- 				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;"> -->
+<!-- 		               					</div>                 -->
+<!-- 			              				<div class="col-sm-3" style="margin-left: -15px !important;"> -->
+<!-- 											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;"> -->
+<!-- 										</div> -->
+<!-- 			              			</div> -->
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">프로젝트 이력</label>
 				                  		<div class="col-sm-4">
@@ -458,85 +466,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="modal-primary1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-		<div class="container">
-		<div class="modal-dialog" >
-  			<div class="modal-content">
-  				<div class="modal-header">
-      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        			<span aria-hidden="true">&times;</span></button>
-      				<h4 class="modal-title">프로젝트 이력등록</h4>
-    			</div>
-   				<form id="historyInsert" method="POST">
-    			<div class="modal-body">
-    				<div class="box box-warning">
-    				<br/>
-    				<br/>
-    					<div class="row">
-               				<label class="col-sm-3 control-label">프로젝트 명</label>
-                			<div class="col-sm-7">
-                				<input type="text" name="history_project_name" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em;">
-           					</div>                
-           				</div>
-    					<div class="row">
-               				<label class="col-sm-3 control-label">공고기관</label>
-                			<div class="col-sm-7">
-                				<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
-           					</div>                
-           				</div>
-    					<div class="row">
-               				<label class="col-sm-3 control-label">수요기관</label>
-                			<div class="col-sm-7">
-                				<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
-           					</div>                
-           				</div>
-    					<div class="row">
-							<div class="form-group">
-						          <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
-						          <div class="col-md-10" style="margin-left: 100px;">
-						          <table class="date_table">
-						          	<tr>
-						           		<td>
-						           			<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
-						           		</td>
-						              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
-						              	<td>
-						              		<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
-						              	</td>
-						           	</tr>
-						           </table>
-						           </div> 
-						     </div>
-						</div>
-    					<div class="row">
-               				<label class="col-sm-3 control-label">맡은업무</label>
-                			<div class="col-sm-4">
-                				<select class="form-control" name="history_business" style="border-radius: 1em;">
-                					<option value="PM">PM</option>
-                					<option value="PL">PL</option>
-                					<option value="TA">TA</option>
-                					<option value="DA">DA</option>
-                					<option value="AA">AA</option>
-                					<option value="UA">UA</option>
-                				</select>
-           					</div> 
-           					<input type="hidden" name="history_delete" class="form-control upForm" style="border-radius: 1em;" value="n">               
-           				</div>
-           				<br/>
-           				<br/>
-           					<button id="insert" style="border-radius: 1em; width: 100px;" class="form-control btn-danger btn-flat pull-right">등록</button>
-   					</div>
-				</div>
-   				</form>
-				<div class="modal-footer">
-						<button style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-		</div>
-	<!-- /.modal-content -->
-	</div>
-<!-- /.modal-dialog -->
+	
 	<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 		<div class="container">
 		<div class="modal-dialog" >
