@@ -38,17 +38,17 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class,SQLException.class,NestableException.class})
 	@Override
-	public NoPrEmpVO noticeboardInfo(Map<String, String> params)
+	public NoticeBoardVO noticeboardInfo(Map<String, String> params)
 			throws SQLException {
-		NoPrEmpVO vo = null;
+		NoticeBoardVO vo = null;
 		vo = noticeboardDao.noticeboardInfo(params);
 		return vo;
 	}
 
 	@Override
-	public List<NoPrEmpVO> noticeboardList(Map<String, String> params)
+	public List<NoticeBoardVO> noticeboardList(Map<String, String> params)
 			throws SQLException {
-		List<NoPrEmpVO> list = null;
+		List<NoticeBoardVO> list = null;
 		list = noticeboardDao.noticeboardList(params);
 		return list;
 	}
@@ -80,9 +80,9 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class,SQLException.class,NestableException.class})
 	@Override
-	public void updateNoticeboardInfo(NoPrEmpVO nbi)
+	public void updateNoticeboardInfo(NoticeBoardVO nbv)
 			throws SQLException {
-		noticeboardDao.updateNoticeboardInfo(nbi);
+		noticeboardDao.updateNoticeboardInfo(nbv);
 		
 	}
 

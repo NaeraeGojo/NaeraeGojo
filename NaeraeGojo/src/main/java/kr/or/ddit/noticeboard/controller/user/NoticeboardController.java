@@ -67,7 +67,7 @@ public class NoticeboardController {
 		RolePagingUtil paginUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
 		params.put("startCount",  String.valueOf(paginUtil.getStartCount()));
 		params.put("endCount", String.valueOf(paginUtil.getEndCount()));
-		List<NoPrEmpVO> noticeList = service.noticeboardList(params);
+		List<NoticeBoardVO> noticeList = service.noticeboardList(params);
 		andView.addObject("noticeList",noticeList);
 		andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
 		andView.setViewName("user/project/notice/notice_list");
@@ -78,7 +78,7 @@ public class NoticeboardController {
 	public ModelAndView notice_view(
 			HttpServletRequest request,
 			ModelAndView andView,
-			NoPrEmpVO vo,
+			NoticeBoardVO vo,
 			@PathVariable String notice_code, Map<String, String> params
 			)throws Exception{
 		
@@ -101,7 +101,7 @@ public class NoticeboardController {
 	}
 	
 	@RequestMapping("updateNotice")
-	public String updateNotice(NoPrEmpVO vo) throws SQLException{
+	public String updateNotice(NoticeBoardVO vo) throws SQLException{
 		service.updateNoticeboardInfo(vo);
 		
 		return "redirect:/user/project/notice/notice_list.do";

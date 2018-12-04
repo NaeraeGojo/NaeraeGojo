@@ -9,12 +9,12 @@ import kr.or.ddit.vo.NoticeBoardVO;
 
 
 public interface INoticeboardDao {
-	public NoPrEmpVO noticeboardInfo(Map<String,String> params) throws SQLException;
+	public NoticeBoardVO noticeboardInfo(Map<String,String> params) throws SQLException;
 	
-	public List<NoPrEmpVO> noticeboardList(Map<String, String> params) throws SQLException;
-	public String insertNoticeboardInfo(NoticeBoardVO nbi) throws SQLException;
+	public List<NoticeBoardVO> noticeboardList(Map<String, String> params) throws SQLException;
+	public String insertNoticeboardInfo(NoticeBoardVO nbv) throws SQLException;
 	public void deleteNoticeboardInfo(Map<String,String> params) throws SQLException;
-	public void updateNoticeboardInfo(NoPrEmpVO nbi) throws SQLException;
+	public void updateNoticeboardInfo(NoticeBoardVO nbv) throws SQLException;
 	
 	public int totalCount(Map<String, String> params) throws SQLException;
 	public void updateHit(Map<String, String> params) throws SQLException;

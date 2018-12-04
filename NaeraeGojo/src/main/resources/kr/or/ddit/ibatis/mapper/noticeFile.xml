@@ -49,10 +49,9 @@
 		AND NOTICE_FILE_CODE = #notice_file_code#
 	</select>
 	
-	<statement id="noticeFiles" resultClass="noticeFileVO">
+	<statement id="noticeFilexx" resultClass="noticeFileVO">
 		<include refid="selectAll"/>
-			AND ALL_FILE_BOARD_CODE = #notice_all_code#
-			AND ALL_FILE_KIND_CODE = 1
+			AND NOTICE_CODE = #notice_code#
 	</statement>
 	
 	<statement id="allFilesPblanc" resultClass="noticeFileVO">

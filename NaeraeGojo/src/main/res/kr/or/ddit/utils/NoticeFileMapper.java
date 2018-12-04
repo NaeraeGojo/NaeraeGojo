@@ -73,7 +73,7 @@ public class NoticeFileMapper {
 	}
 	
 	private void saveFile(String saveFileName, MultipartFile file) {
-		File saveFile = new File(GlobalConstant.ALL_FILE_SAVE_PATH, saveFileName);
+		File saveFile = new File(GlobalConstant.SAVE_NOTICE, saveFileName);
 		
 		try {
 			file.transferTo(saveFile);
