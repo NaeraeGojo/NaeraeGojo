@@ -14,7 +14,6 @@
 	text-decoration: none;
 }
 
-
 </style>
 
 <script type="text/javascript">
@@ -25,7 +24,22 @@ $(function(){
 	
 	$('.aa').click(function(){
 		var project_code =$(this).attr('name');
+		var currentPage = '${param.currentPage}';
 		var query = '?project_code='+project_code;
+		
+		if (currentPage != null && currentPage != '') {
+			query += '&currentPage=' + currentPage;
+		}
+
+		var search_keyword = '${param.search_keyword}';
+		var search_keycode = '${param.search_keycode}';
+
+		if (search_keyword != null && search_keyword != '') {
+			query += '&search_keycode=' + encodeURI(search_keycode)
+					+ '&search_keyword='
+					+ encodeURI(search_keyword);
+		}
+		
 		$(this).attr('href', '${pageContext.request.contextPath}/user/project/pro/project_manage_see.do' + query)
 
 	})

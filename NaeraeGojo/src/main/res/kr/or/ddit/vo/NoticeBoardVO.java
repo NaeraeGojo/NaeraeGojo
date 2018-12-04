@@ -12,10 +12,25 @@ public class NoticeBoardVO {
 	private String notice_hit;
 	private String notice_pass;
 	private String emp_code;
+	private String emp_name;
 	private String project_code;
+	private String project_name;
 	
 	
 	
+	
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public String getProject_name() {
+		return project_name;
+	}
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
 	public String getNotice_hit() {
 		return notice_hit;
 	}

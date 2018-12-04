@@ -61,6 +61,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	
 		<!-- jQuery 3 -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js" charset="utf-8"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="${pageContext.request.contextPath}/js/validation.js"></script>
 	<script src="${pageContext.request.contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
@@ -151,6 +152,23 @@
     border-color: #63a3ff;
 	}
 	
+	#a_chat_emp{
+		cursor: pointer;
+	}
+	
+	
+	.center{
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	#pwcForm td{
+		text-align: center;
+	}
+	.perful{
+		width: 100% 
+	}
+	
 	</style>
 	
 		<body class="hold-transition skin-blue sidebar-mini">
@@ -174,50 +192,26 @@
         			<ul class="nav navbar-nav">
 	<!-- Notifications: style can be found in dropdown.less -->
           				<li class="dropdown notifications-menu">
+          					<a id="a_chat_emp" data-toggle="modal" data-target="#modal-chat">
+              					<i class="fa  fa-comments"></i>
+              					<span class="label label-danger">N</span>
+           					</a>
+						</li>
+          				<li class="dropdown notifications-menu">
             				<a href="${pageContext.request.contextPath}/user/bell/bellList.do">
               					<i class="fa fa-bell-o"></i>
              					<span class="label label-warning">10</span>
            					</a>
-           					<ul class="dropdown-menu">
-             					<li class="header">You have 10 notifications</li>
-             					<li>
-	<!-- inner menu: contains the actual data -->
-                					<ul class="menu">
-                 						<li>
-                    						<a href="#">
-                      							<i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    						</a>
-                 						</li>
-                  						<li>
-                    						<a href="#">
-                      							<i class="fa fa-warning text-yellow"></i> 
-                      							Very long description here that may not fit into the page and may cause design problems
-                    						</a>
-                  						</li>
-                  						<li>
-                    						<a href="#">
-                     							<i class="fa fa-users text-red"></i> 5 new members joined
-                    						</a>
-                 						</li>
-                  						<li>
-											<a href="#">
-												<i class="fa fa-shopping-cart text-green"></i> 25 sales made
-						                    </a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-user text-red"></i> You changed your username
-											</a>
-										</li>
-                					</ul>
-								</li>
-								<li class="footer"><a href="#">View all</a></li>
-							</ul>
 						</li>
 	<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<c:if test="${!empty PHOTO.emp_code}">
+								<img src="/img/${PHOTO.user_file_save_name}" class="user-image" alt="User Image">
+							 	</c:if>	
+							 	<c:if test="${empty PHOTO.emp_code}">
 								<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+	                            </c:if>
 								<span class="hidden-xs">
 									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
           								${LOGIN_EMPINFO.emp_nick}
@@ -227,8 +221,12 @@
 							<ul class="dropdown-menu">
 	<!-- User image -->
               					<li class="user-header">
+              					<c:if test="${!empty PHOTO.emp_code}">
+									<img src="/img/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
+							 	</c:if>	
+							 	<c:if test="${empty PHOTO.emp_code}">
                 					<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+								</c:if>
 									<p>
 									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
           								${LOGIN_EMPINFO.emp_nick}
@@ -260,4 +258,140 @@
 	<!-- </div> -->
 
 	</body>
+	
+	<div class="modal fade" id="modal-chat">
+          <div class="modal-dialog" style="margin-top: 10%; width: 80%; height: 60%;">
+            <div class="modal-content" style="width:50%; height:100%; margin-left: auto; margin-right: auto; ">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" align="center">새로운 채팅</h4>
+              </div>
+              <div class="modal-body" style="height: 70%; overflow: auto;">
+              <form id="chatForm">
+              	<div class="box box-warning">
+		          
+		            <div class="box-header with-border" style="height: auto;">
+		              <b class="box-title">회원 목록</b>
+		            </div>
+		            <!-- /.box-header -->
+		            <div class="box-body">
+		              <div class="table-responsive">
+		                <table id="table_chat_emp" class="table table-bordered table-striped dataTable table-hover"
+              			role="grid" aria-describedby="example1_info">
+		                	<thead>
+		               			<tr role="row">
+				                    <th tabindex="0"  style="width:10%;" 
+				                  	 rowspan="1" colspan="1"></th>
+				                    <th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
+				                  	 rowspan="1" colspan="1">사원번호</th>
+		                  			<th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
+		                  			rowspan="1" colspan="1">부서</th>
+		                  			<th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
+		                  			rowspan="1" colspan="1">성명</th>
+		                		</tr>
+		                	</thead>
+		                	<tbody>
+		                	
+		                	
+		                 	</tbody>
+              			</table>
+		              </div>
+		              
+		            </div>
+		          </div>
+              </div>
+              <div class="modal-footer">
+              	<div style="width: 70%; margin-top: 3%" class="center">
+              	<table id="pwcForm" class="perful">
+              		<tr>
+              			<td width="10%"></td>
+	              		<td colspan="2">
+	              		<input type="text" name="pwc_name" class="form-control input_foot" style="border-radius: 1em;"
+	              		 placeholder="업무 분류 추가">
+	              		</td>
+	              		<td  style="width: 20%">
+	              		<button id="btn_check_emp" type="button" class="btn btn-primary">추가</button>
+	              		</td>
+	              	</tr>
+	             </table>
+	             
+                </div>
+              </div>
+            </div>
+            
+             
+              
+            </form>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+	
+<script type="text/javascript">
+$(function(){
+	var table;
+	
+	$('#btn_check_emp').click(function(){
+		var empList = $('#check_emp:checked').val();
+		$.each(empList,function(i,v){
+			alert(v);	
+		});
+		
+	});
+	
+	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+		checkboxClass: 'icheckbox_flat-green',
+	  	radioClass   : 'iradio_flat-green'
+	})
+	
+	$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+	  	checkboxClass: 'icheckbox_minimal-red',
+	  	radioClass   : 'iradio_minimal-red'
+	})
+	
+	
+	$('#a_chat_emp').click(function(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/emp/empChatList.do'
+			, dataType : 'json'
+			, async : false
+			, error : function(xhr, status, error){
+				alert(error)
+			}
+			, success : function(json){
+				var tdtag = '';
+	        	$.each(json.el,function(i,v){
+	        		tdtag += '<tr>'
+	        		tdtag += '<td style="text-align: center;"><label><input id="check_emp" type="checkbox" class="flat-red"></label></td>'
+	        		tdtag += '<td>' + v.emp_code + '</td>' 
+	        		tdtag += '<td>' + v.emp_name + '</td>' 
+	        		tdtag += '<td>' + v.part_name + '</td>' 
+	        		tdtag += '</tr>'
+	        	})
+	        	$('#table_chat_emp tbody').append(tdtag);
+	        	
+	        	table = $('#table_chat_emp').DataTable();
+	        	
+	        	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+	        		checkboxClass: 'icheckbox_flat-green',
+	        	  	radioClass   : 'iradio_flat-green'
+	        	})
+				
+				table.on( 'draw', function () {
+					$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+		        		checkboxClass: 'icheckbox_flat-green',
+		        	  	radioClass   : 'iradio_flat-green'
+		        	})
+				} );
+	        	
+			}
+		})
+	});
+	
+	
+});
+
+</script>	
 </html>

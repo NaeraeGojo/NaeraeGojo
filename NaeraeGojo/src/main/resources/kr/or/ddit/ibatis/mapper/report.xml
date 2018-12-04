@@ -370,20 +370,24 @@
 					REPORT_FEED_TITLE,
 					REPORT_FEED_CONTENT,
 					EMP_CODE,
-					REPORT_CODE
+					REPORT_CODE,
+					PL_NAME,
+					PM_NAME
 								)
 		VALUES (   
 					#report_feed_code#,
 					#report_feed_title#,
 					#report_feed_content#,
 					#emp_code#,
-					#report_code#
+					#report_code#,
+					#pl_name#,
+					#pm_name#
 										)
 	
 	</insert>
 	
 	<select id="feedViewDev" parameterClass="map" resultClass="reportVO">
-		SELECT REPORT_FEED_TITLE,REPORT_FEED_CONTENT,REPORT_CODE
+		SELECT REPORT_FEED_TITLE,REPORT_FEED_CONTENT,REPORT_CODE,PL_NAME,PM_NAME
 		FROM REPORT_FEED
 		WHERE EMP_CODE = #emp_code# 
 		AND REPORT_CODE = #report_code#

@@ -19,4 +19,6 @@ public interface INoticeboardService {
 	
 	public int totalCount(Map<String, String> params) throws SQLException;
 	public void updateHit(Map<String, String> params) throws SQLException;
+	
+	public List<NoticeBoardVO> projectList(Map<String, String> params) throws SQLException;
 }

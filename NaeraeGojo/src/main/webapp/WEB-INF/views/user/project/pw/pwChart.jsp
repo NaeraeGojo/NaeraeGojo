@@ -98,8 +98,9 @@
     </div>
     </div>
     
-	<div class="gantt"></div>
-
+    <div>
+		<div class="gantt"></div>
+	</div>
 <script type="text/javascript">
 $(function(){
 	$('#btn_search_gantt').click(function(){

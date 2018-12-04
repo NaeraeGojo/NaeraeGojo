@@ -46,41 +46,10 @@
       <script src="${pageContext.request.contextPath }/dist/js/adminlte.min.js"></script>
       <script type="text/javascript">
          $(function(){
-            //이력등록
-//             $('#insert').click(function(){
-//                if(eval('${!empty param.emp_code}')){
-//                   var emp_code = '${param.emp_code}';
-//                   var history_notice_agency = $('input[name=history_notice_agency]').val();
-//                   var history_demand_agency = $('input[name=history_demand_agency]').val();
-//                   var history_project_start = $('input[name=history_project_start]').val();
-//                   var history_project_end = $('input[name=history_project_end]').val();
-//                   var history_project_name = $('input[name=history_project_name]').val();
-//                   var history_business = $('select[name=history_business]').val();
-//                   var history_delete = $('input[name=history_delete]').val();
-                  
-//                   var allData = { "emp_code" : emp_code , "history_notice_agency" : history_notice_agency , "history_demand_agency" : history_demand_agency,
-//                         "history_project_start" : history_project_start, "history_project_end" : history_project_end, 
-//                         "history_project_name" : history_project_name, "history_business" : history_business, "history_delete" : history_delete};
-//                   if(history_project_name == ""||history_project_start == ""||history_project_end==""||history_notice_agency == "" || history_demand_agency== "" ||history_business==""){
-//                         alert("누락된 정보가 있습니다. 다시 입력해주세요.");
-//                         return false;
-//                    }else{
-//                   $.ajax({
-//                      type : 'POST',
-//                       url : '${pageContext.request.contextPath}/history/insertHistory.do',
-//                       data : allData,
-//                       dataType : 'json',
-//                       success : function(json) {
-//                         alert("이력이 등록되었습니다.");
-//                      }
-//                       ,
-//                       error : function(json) {
-//                         alert("이력등록이 완료되었습니다.");
-//                      }
-//                   });
-//                   }
-//                }
-//             });
+        	 $('#historyForm').click(function(){
+        		 var emp_code = '${param.emp_code}';
+        		 $(location).attr('href', '${pageContext.request.contextPath}/history/historyForm.do?emp_code='+emp_code);
+        	 });
          });
       </script>
       <style>
@@ -101,7 +70,7 @@
                    <table class="table no-margin table-hover" id="projectTable">
                         <thead>   
                            <br/>
-                         <button style="border-radius: 1em; width: 100px; margin-right: 10px;" class="form-control bg-yellow color-palette pull-right">+이력등록</button>
+                         <button style="border-radius: 1em; width: 100px; margin-right: 10px; height: " id="historyForm" class="form-control bg-yellow color-palette pull-right">+이력등록</button>
                          <br/>            
                          <tr>
                              <th scope="col" width="10%">No.</th>
@@ -130,9 +99,6 @@
                      </c:if>
             </div>
          </div>
-      </div>
-      <div class="footer">
-         <button type="button" style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
       </div>
       </div>
     </body>
