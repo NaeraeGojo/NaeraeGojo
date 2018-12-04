@@ -1,5 +1,6 @@
 package kr.or.ddit.emp.controller.user;
 
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -13,16 +14,21 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.history.service.IHistoryService;
 import kr.or.ddit.part.service.IPartService;
+import kr.or.ddit.userfile.service.IUserFileService;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.HistoryVO;
 import kr.or.ddit.vo.PartVO;
+import kr.or.ddit.vo.UserFileVO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -36,6 +42,9 @@ public class EmpController {
 	
 	@Resource
 	private IHistoryService historyServ;
+	
+	@Resource
+	private IUserFileService userServ;
 	
 	@RequestMapping("empList2")
 	public void empList2(){}
@@ -56,8 +65,23 @@ public class EmpController {
 		
 		return andView;
 	}
-	
-	
+
+	@RequestMapping(value="passCheck", method = RequestMethod.POST)
+	public ModelAndView passCheck(String emp_code, String emp_email, String emp_pass,
+			Map<String, String> params, EmpVO empPass,
+			HttpServletRequest request, HttpServletResponse response,
+			Model model, ModelMap modelMap, ModelAndView andView) throws Exception{
+		params.put("emp_code", emp_code);
+		params.put("emp_email", emp_email);
+		
+		empPass = service.empPass(params); 
+		emp_pass = empPass.getEmp_pass();		
+		andView.addObject("empPass", empPass);
+		andView.addObject("emp_pass", emp_pass);
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
+	}
 	
 	/**
 	 * 직원정보 수정창 
@@ -74,11 +98,13 @@ public class EmpController {
 			Map<String, String> params)throws Exception{
 		params.put("emp_code", emp_code);
 		EmpVO empInfo = service.empInfo(params);
-		
+		UserFileVO ufv = userServ.userFileInfo(params);
+
 		List<PartVO> partList = partService.partList();		
 		List<HistoryVO> historyList = historyServ.historyList(params);
 		
 		andView.addObject("historyList", historyList);
+		andView.addObject("ufv", ufv);
 		andView.addObject("partList", partList);
 		andView.addObject("empInfo", empInfo);	
 		andView.setViewName("user/emp/empUpdate");
@@ -104,10 +130,12 @@ public class EmpController {
 		params.put("emp_code", emp_code);
 
 		EmpVO empInfo = service.empInfo(params);
+		UserFileVO ufv = userServ.userFileInfo(params);
 		List<HistoryVO> historyList = historyServ.historyList(params);
 		
 		andView.addObject("historyList", historyList);
 		andView.addObject("empInfo", empInfo);	
+		andView.addObject("ufv", ufv);	
 		andView.setViewName("user/emp/empView");
 		
 		return andView;
@@ -190,9 +218,13 @@ public class EmpController {
 	 * @throws Exception
 	 */
 	@RequestMapping("updateEmp")
-	public String updateEmp(EmpVO empInfo)throws Exception{
-		service.updateEmpInfo(empInfo);
-		return "redirect:/user/emp/empList.do";
+	public ModelAndView updateEmp(EmpVO empInfo, ModelAndView andView, @RequestParam("files") MultipartFile[] files)throws Exception{
+		service.updateEmpInfo(empInfo, files);
+		String message = URLEncoder.encode("수정이 완료되었습니다.", "UTF-8");
+		RedirectView rv = new RedirectView("empList.do?message="+message);
+		rv.setExposeModelAttributes(false);
+		andView.setView(rv);
+		return andView;
 	}
 	
 	/**

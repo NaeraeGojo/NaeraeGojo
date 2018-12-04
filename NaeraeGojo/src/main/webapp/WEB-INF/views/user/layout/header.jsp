@@ -61,6 +61,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	
 		<!-- jQuery 3 -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js" charset="utf-8"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="${pageContext.request.contextPath}/js/validation.js"></script>
 	<script src="${pageContext.request.contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
@@ -217,7 +218,12 @@
 	<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<c:if test="${!empty PHOTO.emp_code}">
+								<img src="/img/${PHOTO.user_file_save_name}" class="user-image" alt="User Image">
+							 	</c:if>	
+							 	<c:if test="${empty PHOTO.emp_code}">
 								<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+	                            </c:if>
 								<span class="hidden-xs">
 									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
           								${LOGIN_EMPINFO.emp_nick}
@@ -227,8 +233,12 @@
 							<ul class="dropdown-menu">
 	<!-- User image -->
               					<li class="user-header">
+              					<c:if test="${!empty PHOTO.emp_code}">
+									<img src="/img/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
+							 	</c:if>	
+							 	<c:if test="${empty PHOTO.emp_code}">
                 					<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+								</c:if>
 									<p>
 									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
           								${LOGIN_EMPINFO.emp_nick}

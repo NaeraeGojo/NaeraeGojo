@@ -8,15 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.emp.dao.IEmpDao;
+import kr.or.ddit.userfile.dao.IUserFileDao;
+import kr.or.ddit.utils.AttachPictureMapper;
 import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.UserFileVO;
 
 @Service
 public class IEmpServiceImpl implements IEmpService {
 
 	@Autowired
 	private IEmpDao dao;
+	
+	@Autowired
+	private AttachPictureMapper fileMapper;
 	
 	@Transactional(readOnly=true)
 	@Override
@@ -40,8 +47,11 @@ public class IEmpServiceImpl implements IEmpService {
 	@Override
 	public void insertEmpInfo(EmpVO empInfo) throws SQLException {
 		dao.insertEmpInfo(empInfo);
+		
+		List<UserFileVO> ufv = fileMapper.picture_mapping(empInfo.getFiles(), empInfo.getEmp_code());
+		dao.insertUserFile(ufv);
 	}
-
+	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void deleteEmpInfo(Map<String, String> params) throws SQLException {
@@ -49,9 +59,24 @@ public class IEmpServiceImpl implements IEmpService {
 	}
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public void updateEmpInfo(EmpVO empInfo) throws SQLException {
+	public void updateEmpInfo(EmpVO empInfo, MultipartFile[] files) throws SQLException {
+		dao.updateEmpInfo(empInfo);
+		if(empInfo.getFilesFileName() == null){
+			List<UserFileVO> ufv = fileMapper.picture_mapping(empInfo.getFiles(), empInfo.getEmp_code());
+			dao.insertUserFile(ufv);
+		}else{
+			List<UserFileVO> ufv = fileMapper.picture_mapping(files, empInfo.getEmp_code());
+			dao.updateUserFile(ufv);
+		}
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateEmpInfo2(EmpVO empInfo, MultipartFile[] files) throws SQLException {
 		dao.updateEmpInfo(empInfo);
 		
+		List<UserFileVO> ufv = fileMapper.picture_mapping(files, empInfo.getEmp_code());
+		dao.insertUserFile(ufv);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
@@ -60,21 +85,32 @@ public class IEmpServiceImpl implements IEmpService {
 		return dao.empNum(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public EmpVO empPass(Map<String, String> params) throws SQLException {
+		return dao.empPass(params);
+	}
 
-//    @Override
-//    public int totalCount(Map<String, String> params) {
-//        int totalCount = 0;
-//        try {
-//            totalCount = dao.totalCount(params);
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }
-//        return totalCount;
-//    }
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void insertUserFile(List<UserFileVO> ufv) throws SQLException {
+		try{
+			dao.insertUserFile(ufv);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 
-//	@Override
-//	public String findEmpId(Map<String, String> params) throws SQLException {
-//		return null;
-//	}
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public UserFileVO userFileInfo(Map<String, String> params) throws SQLException {
+		return dao.userFileInfo(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateUserFile(List<UserFileVO> ufv) throws SQLException {
+		dao.updateUserFile(ufv);
+	}
 
 }

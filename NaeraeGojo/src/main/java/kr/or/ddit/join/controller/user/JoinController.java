@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.join.service.IJoinService;
+import kr.or.ddit.userfile.service.IUserFileService;
 import kr.or.ddit.utils.CryptoGenerator;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.vo.EmpVO;
@@ -21,6 +22,7 @@ import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.NotEmpVO;
 import kr.or.ddit.vo.RqppsVO;
+import kr.or.ddit.vo.UserFileVO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,8 @@ public class JoinController {
 	private IJoinService service;
 	@Resource
 	private IEmpService empServ;
+	@Resource
+	private IUserFileService userServ;
 	@Resource
 	private CryptoGenerator cryptoGen;
 
@@ -83,6 +87,10 @@ public class JoinController {
 			return "redirect:/user/join/loginForm.do?message" + message;
 		} else {
 			session.setAttribute("LOGIN_EMPINFO", empInfo);
+			Map<String, String> param1 = new HashMap<String, String>();
+			param1.put("emp_code", empInfo.getEmp_code());
+			UserFileVO ufv = userServ.userFileInfo(param1);
+			session.setAttribute("PHOTO", ufv);
 			if (empInfo.getEmp_role().equals("DEP")) { // 개발자 권한 로그인
 				return "forward:/user/join/mainForm.do";
 			} else if (empInfo.getEmp_role().equals("MANAGER")) { // 관리자 권한 로그인

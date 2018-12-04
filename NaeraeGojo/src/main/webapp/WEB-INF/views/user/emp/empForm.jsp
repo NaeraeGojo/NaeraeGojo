@@ -4,6 +4,18 @@
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 
 <script type="text/javascript">
+//화면에 파일 띄우기
+function readURL(input) {
+   if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+         $('#ShowImage').attr('src', e.target.result).width(235).height(315);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+   }
+}
 
 $(function() {
 	$('#form_emp').submit(function() {
@@ -60,35 +72,7 @@ $(function() {
 	});
 });
 			
-function idCheck() {
-	
-	$.ajax({
-	    type : "post",
-	    
-// 	    url : "${pageContext.request.contextPath}/user/member/memberIDCheck.do",
-// 	    dataType : "json",
-// 	    data : { mem_id : $('#memberId').val() },
-	    
-// 	    success : function(result) {
-		
-// 	    	// result.flag = "true" or "false"
-// 			// boolean type false : undefined, null
-// 			// "1" + 1 = '11'
-// 			// eval("1" + 1) = 2
-			
-// 			if (eval(result.flag)) {
-// 				alert("사용할 수 있는 아이디 입니다.");
-			
-// 			} else {
-// 				alert("사용할 수 없는 아이디 입니다.");
-			
-// 			}
-// 		},
-	    error : function(request, status, error) {
-			alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
-		}
-	});
-};
+
 $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
@@ -152,13 +136,15 @@ $(function () {
                						<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none;">
 										<tr><td class="tLine" colspan="2"></td></tr>
 										<tr>
-											<td class="pic" style="vertical-align: bottom; width: 150px; height: 300px; text-align: center;">
-												<div id = "idPicViewDiv"></div>
-												<img src="${pageContext.request.contextPath }/image/btn_pic.gif" alt="사진올리기" class="btn" id = "picUpload" title="인적사항에 올릴 증명을 검색합니다." style="cursor: pointer;"/><br/>
-												<div style="width: 100%" align="center">
-													size : 235x315 이하
-												</div>
-											</td>
+											<td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 150px; text-align: center;">
+									        	<div align="center"><img id="ShowImage" src=""/></div>
+									        	<div style="width: 100%" align="center">
+									        	<br/>
+									            	<label class="btn btn-primary btn-file">
+									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" style="display: none;" onchange="readURL(this);">
+									             	</label>
+									            	size : 235x315 이하
+									         	</div>
 										</tr>
 									</table>
                					</div>
