@@ -21,6 +21,7 @@
 	</definition>
 	
 	<definition name="user/join/loginForm" template="/WEB-INF/views/user/loginForm.jsp"></definition>
+	<definition name="user/chat/chatRoom" template="/WEB-INF/views/user/chat/chatRoom.jsp"></definition>
 
 	<definition name="user/*/*" extends="usermain">
 		<put-attribute name="content" value="/WEB-INF/views/user/{1}/{2}.jsp"></put-attribute>
