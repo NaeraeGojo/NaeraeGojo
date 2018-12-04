@@ -24,6 +24,10 @@
    background-color: white;
 }
 </style>
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+<!-- <script src="//code.jquery.com/jquery.min.js"></script> -->
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	
@@ -142,7 +146,7 @@ $(function(){
 							<label class="col-sm-2 control-label" for="issue_event_day">발생일자</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="발생일자"
-								id="issue_event_day" name="issue_event_day">
+								id="issue_event_day" name="issue_event_day" autocomplete="off">
 							</div>
 						</div>
 

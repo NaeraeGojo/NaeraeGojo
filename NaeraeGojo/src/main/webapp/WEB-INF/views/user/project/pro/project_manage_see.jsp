@@ -10,9 +10,8 @@
 .upForm{
 	margin-left: 15px;
 }
-
 </style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	
@@ -95,33 +94,155 @@ $(function(){
 	$('#deleteBtn').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/project/pro/deleteProject/${projectInfo.project_code}.do')
 	});
+	
+	
+	
 });
+
+$(function () {
+	
+	new Chart(document.getElementById("myChart"), {
+
+		// 		 chart.Doughnut.defaults = {
+// 		            segmentShowStroke : true,
+// 		            segmentStrokeColor : "#fff",
+// 		            segmentStrokeWidth : 2,
+// 		            percentageInnerCutout : 50,
+// 		            animation : true,
+// 		            animationSteps : 100,
+// 		            animationEasing : "easeOutBounce",
+// 		            animateRotate : true,
+// 		            animateScale : false,
+// 		            onAnimationComplete : null,
+// 		            labelFontFamily : "Arial",
+// 		            labelFontStyle : "normal",
+// 		            labelFontSize : 24,
+// 		            labelFontColor : "#666"
+// 		    };
+		
+		type: 'doughnut',
+		data: {
+			labels: ["진행", "완료", "예정"],
+				datasets: [
+				{
+					label: "Population (millions)",
+					backgroundColor: ["#f56954", "#00a65a","#f39c12"],
+					data: [600,500,400]
+				}
+			]
+		},
+		options: {
+// 		    cutoutPercentage: 40,
+// 			animation : true,
+		    animationSteps : 100,
+		    animationEasing : "easeOutBounce",
+		    animateRotate : true,
+		    animateScale : false,
+		    onAnimationComplete : null,
+		    legend: {
+		      position: 'right',
+		      fontSize: 30
+		    },
+		}
+	});
+  
+  
+})
+
 
 </script>
 <section class="content">
 	<div class="row">
-		
 		<section class="col-lg-7 connectedSortable">
-			<div class="box box-2team">
-				<div class="box-header with-border">
-					<h3 class="box-title">Bar Chart</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="chart">
-						<canvas id="barChart" style="height: 400px"></canvas>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="nav-tabs-custom">
+						<div class="box box-2team" style="height:480px">
+							
+							<div class="box-header with-border">
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
+									<li><a href="#tab_2" data-toggle="tab"><font size="2">진행 현황</font></a></li>
+								</ul>
+							</div>
+							
+							<div class="tab-content">
+								<div class="tab-pane active box-body" id="tab_1">
+									<div class="table-responsive">
+										<table id="modal1" class="table no-margin table-hover">
+											<thead>
+												<tr>
+													<th>No.</th>
+													<th>업무</th>
+													<th>업무</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>업무</td>
+													<td>업무</td>
+													<td>업무</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+
+								<div class="tab-pane box-body" id="tab_2">
+									<div class="row">
+										<div class="col-md-8">
+<!-- 											<div class="chart-responsive"> -->
+											<div>
+												<canvas id="myChart" height="365" width="493" ></canvas> 
+											</div>
+										</div>
+<!-- 										<div class="col-md-4"> -->
+<!-- 											<ul class="chart-legend clearfix"> -->
+<!-- 												<li><i class="fa fa-circle-o text-red"></i> Chrome</li> -->
+<!-- 												<li><i class="fa fa-circle-o text-green"></i> IE</li> -->
+<!-- 												<li><i class="fa fa-circle-o text-yellow"></i> FireFox</li> -->
+<!-- 												<li><i class="fa fa-circle-o text-aqua"></i> Safari</li> -->
+<!-- 												<li><i class="fa fa-circle-o text-light-blue"></i>Opera</li> -->
+<!-- 												<li><i class="fa fa-circle-o text-gray"></i> Navigator</li> -->
+<!-- 											</ul> -->
+<!-- 										</div> -->
+									</div>
+
+<!-- 									<div class="box-footer no-padding"> -->
+<!-- 										<ul class="nav nav-pills nav-stacked"> -->
+<!-- 											<li> -->
+<!-- 												<a href="#">United States of America  -->
+<!-- 													<span class="pull-right text-red"> -->
+<!-- 														<i class="fa fa-angle-down"></i> 12% -->
+<!-- 													</span> -->
+<!-- 												</a> -->
+<!-- 											</li> -->
+<!-- 											<li> -->
+<!-- 												<a href="#">India  -->
+<!-- 													<span class="pull-right text-green"> -->
+<!-- 														<i class="fa fa-angle-up"></i> 4% -->
+<!-- 													</span> -->
+<!-- 												</a> -->
+<!-- 											</li> -->
+<!-- 											<li> -->
+<!-- 												<a href="#">China  -->
+<!-- 													<span class="pull-right text-yellow"> -->
+<!-- 														<i class="fa fa-angle-left"></i> 0% -->
+<!-- 													</span> -->
+<!-- 												</a> -->
+<!-- 											</li> -->
+<!-- 										</ul> -->
+<!-- 									</div> -->
+								</div>
+							</div>
+							<div class="box-footer clearfix"></div>
+						</div>
 					</div>
 				</div>
 			</div>
-			
-			
+
 			<div class="box box-2team">
 				<div class="box-header with-border">
 					<h3 class="box-title">프로젝트</h3>
