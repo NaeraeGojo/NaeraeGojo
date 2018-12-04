@@ -98,55 +98,53 @@ $(function(){
 	
 	
 });
+// chart.Doughnut.defaults = {
+//         segmentShowStroke : true,
+//         segmentStrokeColor : "#fff",
+//         segmentStrokeWidth : 2,
+//         percentageInnerCutout : 50,
+//         animation : true,
+//         animationSteps : 100,
+//         animationEasing : "easeOutBounce",
+//         animateRotate : true,
+//         animateScale : false,
+//         onAnimationComplete : null,
+//         labelFontFamily : "Arial",
+//         labelFontStyle : "normal",
+//         labelFontSize : 24,
+//         labelFontColor : "#666"
+// };
 
 $(function () {
 	
 	new Chart(document.getElementById("myChart"), {
-
-		// 		 chart.Doughnut.defaults = {
-// 		            segmentShowStroke : true,
-// 		            segmentStrokeColor : "#fff",
-// 		            segmentStrokeWidth : 2,
-// 		            percentageInnerCutout : 50,
-// 		            animation : true,
-// 		            animationSteps : 100,
-// 		            animationEasing : "easeOutBounce",
-// 		            animateRotate : true,
-// 		            animateScale : false,
-// 		            onAnimationComplete : null,
-// 		            labelFontFamily : "Arial",
-// 		            labelFontStyle : "normal",
-// 		            labelFontSize : 24,
-// 		            labelFontColor : "#666"
-// 		    };
+		animation:true,
 		
 		type: 'doughnut',
 		data: {
 			labels: ["진행", "완료", "예정"],
 				datasets: [
 				{
-					label: "Population (millions)",
 					backgroundColor: ["#f56954", "#00a65a","#f39c12"],
 					data: [600,500,400]
 				}
 			]
 		},
 		options: {
-// 		    cutoutPercentage: 40,
-// 			animation : true,
-		    animationSteps : 100,
-		    animationEasing : "easeOutBounce",
-		    animateRotate : true,
-		    animateScale : false,
-		    onAnimationComplete : null,
 		    legend: {
 		      position: 'right',
-		      fontSize: 30
+		      labels: {
+	                fontSize: 16,
+	                padding: 15
+	          }
 		    },
+		    title: {
+		        display: true,
+		        text: 'ㅠㅠ'
+		    }
 		}
 	});
-  
-  
+	
 })
 
 
@@ -193,9 +191,9 @@ $(function () {
 								<div class="tab-pane box-body" id="tab_2">
 									<div class="row">
 										<div class="col-md-8">
-<!-- 											<div class="chart-responsive"> -->
-											<div>
-												<canvas id="myChart" height="365" width="493" ></canvas> 
+											<div class="chart-responsive">
+<!-- 											<div> -->
+												<canvas id="myChart" height="100" width="200" ></canvas> 
 											</div>
 										</div>
 <!-- 										<div class="col-md-4"> -->
