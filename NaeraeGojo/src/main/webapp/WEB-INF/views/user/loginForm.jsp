@@ -14,7 +14,6 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.min.css">
-<%-- 		<link rel="stylesheet" href="${pageContext.request.contextPath }/bower_components/Ionicons/css/ionicons.min.css"> --%>
 		<link rel="stylesheet" href="${pageContext.request.contextPath }/css/form-elements.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath }/dist/css/AdminLTE.css">
@@ -166,6 +165,36 @@ $(function(){
 			
 		});
 		
+		$('#empPass').click(function(){
+			if(!$('input[name=numCode]').val()){
+				alert("사원번호를 정확히 입력해주세요")
+				return false;
+			}
+			email = $('input[name=email11]').val() + '@' + $('label[name=email12]').text();
+			if (!email.validationMAIL()) {
+				alert("이메일을 바르게 입력해주세요.");
+				return false;
+			}
+			$('input[name=Email0]').val(email);
+			var code = $('input[name=numCode]').val();
+			var email = $('input[name=Email0]').val();
+			
+			$.ajax({
+				type : 'POST',
+				 url : '${pageContext.request.contextPath}/user/emp/passCheck.do',
+				 data : { emp_code : code,
+						emp_email : email},
+				 dataType : 'json',
+				 success : function(json) {
+					alert("사원 비밀번호는 "+ "["+  json.emp_pass + "] 입니다.");
+				}
+				 ,
+				 error : function(result) {
+				}
+			});
+			
+		});
+		
 		
 });
 </script>
@@ -280,26 +309,20 @@ $(function(){
               					</div>
               					<div class="modal-body">
 								    <div class="form-group has-feedback">
-								        <input type="text" class="form-control1" placeholder="Name">
-								    </div>
-								    <div class="form-group has-feedback">
-								        <input type="text" class="form-control1" placeholder="ID number">
+								        <input type="text" class="form-control1" name="numCode" placeholder="ID number">
 								    </div>
               						<div class="form-group has-feedback">
-								        <input type="text" class="form-control2" placeholder="email_id">
+              						 	<input type="hidden" name="Email0">
+								        <input type="text" class="form-control2" name="email11" placeholder="email_id">
 								        @
-										<select>
-											<option selected="selected">이메일을 선택해주세요</option>
-											<option>naver.com</option>
-											<option>google.com</option>
-										</select>
+										<label name="email12" class="form-control2">naver.com</label>
 								    </div>
 								    <br/>
               					</div>
               					</div>
               					<div class="modal-footer">
                 					<button type="button" class="btn-outline pull-left" data-dismiss="modal">Close</button>
-                					<button type="button" class="btn-outline">비밀번호 찾기</button>
+                					<button type="button" id="empPass" class="btn-outline">비밀번호 찾기</button>
               					</div>
             				</div>
             				<!-- /.modal-content -->

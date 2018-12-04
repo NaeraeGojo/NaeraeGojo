@@ -13,5 +13,6 @@ public interface IPblancboardDao {
 	public void deletePblancboardInfo(Map<String,String> params) throws SQLException;
 	public void updatePblancboardInfo(PblancBoardVO pblancboardInfo) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
+	public void insertPblancInfo(PblancBoardVO pb) throws SQLException;
 
 }

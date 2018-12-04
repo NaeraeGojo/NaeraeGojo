@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="noticeFile">
+	<typeAlias alias="noticeFileVO" type="kr.or.ddit.vo.NoticeFileVO"/>
+	
+	<sql id="selectAll">
+		SELECT * 
+		FROM NOTICE_FILE
+<!-- 		WHERE ALL_FILE_DELETE = 'n' -->
+		
+	</sql>
+	
+	<insert id="insertNoticeFile" parameterClass="noticeFileVO">
+		<selectKey keyProperty="notice_file_code" resultClass="string">
+			select notice_file_seq.nextval from dual
+		</selectKey>
+		
+		insert into notice_file(
+							NOTICE_FILE_CODE
+							,NOTICE_FILE_NAME
+							,NOTICE_FILE_SAVE_NAME
+							,NOTICE_FILE_VOLUME
+							,NOTICE_FILE_DELETE
+							,NOTICE_CODE
+						)
+		 
+					values(
+							#notice_file_code#
+							,#notice_file_name#
+							,#notice_file_save_name#
+							,#notice_file_volume#
+							,#notice_file_delete#
+							,#notice_code#
+					)
+	</insert>
+	
+	<update id="updateNoticeFile" parameterClass="noticeFileVO">
+		UPDATE NOTICE_FILE
+		SET NOTICE_FILE_SAVE_NAME = #notice_file_save_name#
+			,NOTICE_FILE_NAME     = #notice_file_name#
+			,NOTICE_FILE_VOLUME   = #notice_file_volume#
+		WHERE NOTICE_FILE_CODE    = #notice_file_code#
+	</update>
+	
+	<select id="getNoticeFile" resultClass="noticeFileVO" parameterClass="map">
+		<include refid="selectAll"/>
+		AND NOTICE_FILE_CODE = #notice_file_code#
+	</select>
+	
+	<statement id="noticeFiles" resultClass="noticeFileVO">
+		<include refid="selectAll"/>
+			AND ALL_FILE_BOARD_CODE = #notice_all_code#
+			AND ALL_FILE_KIND_CODE = 1
+	</statement>
+	
+	<statement id="allFilesPblanc" resultClass="noticeFileVO">
+		<include refid="selectAll"/>
+		AND ALL_FILE_BOARD_CODE = #pblanc_board_code#
+		AND ALL_FILE_KIND_CODE = 2
+	</statement>
+	
+	
+<!-- 	<select id="getMp" parameterClass="map" resultClass="mpVO"> -->
+<!-- 		select * from mp -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updateMp" parameterClass="mpVO"> -->
+<!-- 		update mp -->
+<!-- 			set mp_begin = #mp_begin# -->
+<!-- 				, mp_inter = #mp_inter# -->
+<!-- 				, mp_high = #mp_high# -->
+<!-- 				, mp_spec = #mp_spec# -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</update> -->
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

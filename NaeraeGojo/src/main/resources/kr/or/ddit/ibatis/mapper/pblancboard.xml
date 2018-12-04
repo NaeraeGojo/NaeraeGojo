@@ -136,6 +136,27 @@
 		 WHERE PBLANC_BOARD_CODE = #pblanc_board_code#
 	</update>
 	
+	<insert id="insertPblancInfo" parameterClass="pblancboardVO">
+	   <selectKey keyProperty="pblanc_board_code" resultClass="string">
+            SELECT PBLANC_BOARD_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+            INSERT INTO PBLANC_BOARD(
+                            PBLANC_BOARD_CODE
+                            ,PBLANC_BOARD_COM
+                            ,PBLANC_BOARD_COM_DATE
+                            ,PBLANC_BOARD_LINK
+                            ,EMP_CODE
+                            )
+                    values(
+                           #pblanc_board_code#
+                            , #pblanc_board_com#
+                            , sysdate
+                            , #pblanc_board_link#
+                            , 2
+                            )        
+        
+	</insert>
+	
 </sqlMap>
 
 

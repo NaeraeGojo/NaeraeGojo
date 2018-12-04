@@ -3,6 +3,8 @@ package kr.or.ddit.vo;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -27,13 +29,10 @@ public class EmpVO {
 	private String part_name;	// 직원부서
 	private String emp_nick;
 	private String rnum;
-	
-	// input type=file name=files * 2
-	private List<File> files;
-	// FiledName(files) + "ContentType"
+	private List<UserFileVO> fileitem;
 	private List<String> filesContentType;
-	// FiledName(files) + "FileName"
 	private List<String> filesFileName;
+	private MultipartFile[] files;
 	
 	
 	

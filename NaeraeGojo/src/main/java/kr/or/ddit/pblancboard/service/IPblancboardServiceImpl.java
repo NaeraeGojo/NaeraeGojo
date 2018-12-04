@@ -79,4 +79,11 @@ public class IPblancboardServiceImpl implements IPblancboardService {
 		return totalCount;
 	}
 
+//	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void insertPblancInfo(PblancBoardVO pb)
+			throws SQLException {
+		pblancboardDao.insertPblancInfo(pb);
+	}
+
 }

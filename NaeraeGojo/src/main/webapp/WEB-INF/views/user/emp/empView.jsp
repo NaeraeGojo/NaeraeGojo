@@ -3,7 +3,20 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <script>
+//화면에 파일 띄우기
+function readURL(input) {
+   if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+         $('#ShowImage').attr('src', e.target.result).width(250).height(250);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+   }
+}
 $(function() {
+
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
 		//(이전 페이지 이동으로 수정할 예정)
@@ -18,24 +31,6 @@ $(function() {
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empUpdate.do?emp_code=' + emp_code);
 	});
 	
-	
-	// 주소찾기	
-// 	$('#zipCodeBtn').click(function() {
-		// 팝업 : 모달 - 해당 팝업이 포커스 점유
-		//      모달리스 - 팝업의 포커스 다른 윈도우와 천이
-// 		var url = "${pageContext.request.contextPath}/user/member/zipcodeSearch.do";
-// 		var options = "width = 375, height = 400, scrollbars = no";
-		
-// 		window.open(url, "우편번호검색", options);
-// 	});
-	
-	// 프로필 사진 업로드				
-// 	$('#picUpload').click(function() {
-// 		var url = "${pageContext.request.contextPath}/user/member/idPicFileUpload.do";
-// 		var options = "width = 375, height = 400, scrollbars = no";
-	
-// 		window.open(url, "증명사진업로드", options);
-// 	});
 });
 
 $(function () {
@@ -100,18 +95,11 @@ $(function () {
 						<div class="form-group">
                				<div class="row">
                					<div class="col-md-4" style="margin: 10px;">
-               						<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none;">
-										<tr><td class="tLine" colspan="2"></td></tr>
-										<tr>
-											<td class="pic" style="vertical-align: bottom; width: 150px; height: 300px; text-align: center;">
-												<div id = "idPicViewDiv" >
-													<img src = "/image/${facePictureFileName}" width="235" height="315">
-												</div>
-<%-- 												<img src="${pageContext.request.contextPath }/image/btn_pic.gif" alt="사진올리기" class="btn" id = "picUpload" title="인적사항에 올릴 증명을 검색합니다." style="cursor: pointer;"/><br/> --%>
-<!-- 												<div style="width: 100%" align="center"> -->
-<!-- 													size : 235x315 이하 -->
-<!-- 												</div> -->
-											</td>
+               						 <table>
+										<tr><td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 400px; text-align: center;">
+									    	<div align="center" style="margin-left: 50px;">
+									    		<img id="ShowImage" src="/img/${ufv.user_file_save_name}" style="border-radius: 50%;" width="350" height="350" alt="pic1"/>
+									    	</div>
 										</tr>
 									</table>
                					</div>
@@ -224,15 +212,15 @@ $(function () {
 				                  			<label name="emp_level">${empInfo.emp_level}</label>
 		               					</div>
                 					</div>
-			              			<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label>
-				                  		<div class="col-sm-5">
-				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;">
-		               					</div>                
-			              				<div class="col-sm-3" style="margin-left: -15px !important;">
-											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;">
-										</div>
-			              			</div>
+<!-- 			              			<div class="row"> -->
+<!-- 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label> -->
+<!-- 				                  		<div class="col-sm-5"> -->
+<!-- 				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;"> -->
+<!-- 		               					</div>                 -->
+<!-- 			              				<div class="col-sm-3" style="margin-left: -15px !important;"> -->
+<!-- 											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;"> -->
+<!-- 										</div> -->
+<!-- 			              			</div> -->
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">프로젝트 이력</label>
 				                  		<div class="col-sm-5">

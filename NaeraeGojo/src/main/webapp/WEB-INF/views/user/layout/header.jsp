@@ -61,6 +61,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	
 		<!-- jQuery 3 -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js" charset="utf-8"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="${pageContext.request.contextPath}/js/validation.js"></script>
 	<script src="${pageContext.request.contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
@@ -205,7 +206,12 @@
 	<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<c:if test="${!empty PHOTO.emp_code}">
+								<img src="/img/${PHOTO.user_file_save_name}" class="user-image" alt="User Image">
+							 	</c:if>	
+							 	<c:if test="${empty PHOTO.emp_code}">
 								<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+	                            </c:if>
 								<span class="hidden-xs">
 									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
           								${LOGIN_EMPINFO.emp_nick}
@@ -215,8 +221,12 @@
 							<ul class="dropdown-menu">
 	<!-- User image -->
               					<li class="user-header">
+              					<c:if test="${!empty PHOTO.emp_code}">
+									<img src="/img/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
+							 	</c:if>	
+							 	<c:if test="${empty PHOTO.emp_code}">
                 					<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+								</c:if>
 									<p>
 									<c:if test="${!empty LOGIN_EMPINFO.emp_name}">
           								${LOGIN_EMPINFO.emp_nick}
@@ -324,11 +334,16 @@ $(function(){
 	var table;
 	
 	$('#btn_check_emp').click(function(){
-		var empList = $('#check_emp:checked').val();
-		$.each(empList,function(i,v){
-			alert(v);	
+		var ea = new Array();
+		$('input[name=check_emp]:checked').each(function(){
+			var test = $(this).val();
+			ea.push(test);
+			
+			$(this).iCheck('uncheck');
 		});
 		
+		
+		$('#modal-chat').modal('hide');
 	});
 	
 	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -343,6 +358,8 @@ $(function(){
 	
 	
 	$('#a_chat_emp').click(function(){
+		
+		
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/emp/empChatList.do'
 			, dataType : 'json'
@@ -354,7 +371,8 @@ $(function(){
 				var tdtag = '';
 	        	$.each(json.el,function(i,v){
 	        		tdtag += '<tr>'
-	        		tdtag += '<td style="text-align: center;"><label><input id="check_emp" type="checkbox" class="flat-red"></label></td>'
+	        		tdtag += '<td style="text-align: center;"><label><input name="check_emp"  value="'
+	        				+ v.emp_code + '" type="checkbox" class="flat-red"></label></td>'
 	        		tdtag += '<td>' + v.emp_code + '</td>' 
 	        		tdtag += '<td>' + v.emp_name + '</td>' 
 	        		tdtag += '<td>' + v.part_name + '</td>' 

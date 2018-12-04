@@ -1,6 +1,10 @@
 package kr.or.ddit.pblancboard.controller.user;
 
-import java.net.URLEncoder;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +16,6 @@ import kr.or.ddit.pblancboard.service.IPblancboardService;
 import kr.or.ddit.utils.AllFileMapper;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.vo.EmpVO;
-import kr.or.ddit.vo.NoticeAllVO;
 import kr.or.ddit.vo.PblancBoardVO;
 
 import org.jsoup.Jsoup;
@@ -39,8 +42,9 @@ public class PblancboardController {
 	@Autowired
 	private AllFileMapper allFileMapper;
 	
+	
 	// 크롤링할 주소
-	private static String URL = "http://www.g2b.go.kr:8101/ep/tbid/tbidList.do?";  
+	private static String URL = "http://www.g2b.go.kr:8101/ep/tbid/tbidList.do?";
 	
 	@RequestMapping("pblancboardForm")
 	public void pblancboardForm(){}
@@ -122,18 +126,17 @@ public class PblancboardController {
 		return "redirect:/user/pblancboard/pblancboardList.do";
 	}
 	
-	@Scheduled()
-	public String adsf() throws Exception{
+	@Scheduled(cron="5 * * * * *")
+	public void crawling() throws Exception{
+		System.out.println("asdfasdf    : " + new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date()));
 		
-		String KEY_WORD2 = "CCTV";   // 검색하고 싶은 단어.  영어로
-		// 한글은 더 해야함
-		
-		String KEY_WORD = URLEncoder.encode(KEY_WORD2, "UTF-8");
+		String KEY_WORD = "system";   // 검색하고 싶은 단어.  영어로
 		
 		System.out.println("URL ::  " +  URL +getParameter(KEY_WORD) + "\n\n");
 		
 		// 1. Document를 가져온다
-		Document doc = Jsoup.connect(URL + getParameter(KEY_WORD)).get();
+		Document doc = null;
+		doc = Jsoup.connect(URL + getParameter(KEY_WORD)).get();
 		
 		// 2. 목록을 가져온다.
 		//System.out.println("" + doc.toString());
@@ -141,22 +144,23 @@ public class PblancboardController {
 		//
 		////3. 목록(배열 저장된)에서 정보를 가져온다.
 		int idx = 0;
+		
 		for(Element element : elements){
 			
-			// 들어가는 링크가져오는거
-			System.out.println(++idx + " : " + element.text());
-			String tag = element.attr("abs:href"); // 절대 경로
-			System.out.println(tag + "\n");
+			System.out.println(++idx + " : " + element.text()); // PBLANC_BOARD_COM
+			String pblanc_board_link = element.attr("abs:href"); // 절대 경로 -- PBLANC_BOARD_LINK
+			
+			
+			PblancBoardVO pb = new PblancBoardVO();
+			pb.setPblanc_board_com(element.text());
+			pb.setPblanc_board_link(pblanc_board_link);
+			service.insertPblancInfo(pb);
+			
+			System.out.println(pblanc_board_link + "\n");
 			System.out.println("=============================\n\n");
 		}
-			
-			
-			
-		return "";
+		
 	}
-	
-	
-	
 	public static String getParameter(String KEY_WORD){
 		String params = "searchType=1" +
 						"&bidSearchType=1" + 
@@ -183,9 +187,12 @@ public class PblancboardController {
 						"&procmntReqNo=" +
 						"&intbidYn=" +
 						"&regYn=Y" +
-						"&recordCountPerPage=30 " ;
+						"&recordCountPerPage=1" ;
 		return params;
 	}
+	
+	
+	
 	
 }
 
