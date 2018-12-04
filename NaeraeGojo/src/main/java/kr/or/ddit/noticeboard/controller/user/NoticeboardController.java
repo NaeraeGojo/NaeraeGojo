@@ -10,11 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.noticeboard.service.INoticeboardService;
+import kr.or.ddit.utils.AllFileMapper;
+import kr.or.ddit.utils.NoticeFileMapper;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.NoPrEmpVO;
 import kr.or.ddit.vo.NoticeAllVO;
+import kr.or.ddit.vo.NoticeBoardVO;
+import kr.or.ddit.vo.NoticeFileVO;
+import kr.or.ddit.vo.PblancBoardVO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +34,9 @@ public class NoticeboardController {
 	@Resource
 	private INoticeboardService service;
 	
+	@Autowired
+	private NoticeFileMapper noticeFileMapper;
+	 
 	@RequestMapping("notice_list")
 	public ModelAndView notice_list(HttpServletRequest request,
 									ModelAndView andView,
@@ -99,26 +108,36 @@ public class NoticeboardController {
 	}
 	
 	@RequestMapping("insertNotice")
-	public String insertNotice(NoticeAllVO nav,
+	public String insertNotice(NoticeBoardVO nbv,
 								  HttpSession session,
 								  String emp_code,
 									@RequestParam("files") MultipartFile[] files) throws Exception{
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		System.out.println("불러와야해 그래야 살아"+emp_code);
-//		service.insertNoticeboardInfo(nav, files);
+		
+		service.insertNoticeboardInfo(nbv, files);
 		return "redirect:/user/project/notice/notice_list.do";
 	}
 	
 	
-	
-	
-	
-	
 
-	@RequestMapping("notice_allForm")
-	public String notice_allForm(){
-		return "user/noticeAll/notice_allForm"; 
+	@RequestMapping("notice_form")
+	public ModelAndView notice_allForm(ModelAndView andView,
+									Map<String, String> params
+			) throws Exception{
+		List<NoticeBoardVO> vo = service.projectList(params);
+		
+		andView.addObject("vo",vo);
+		andView.setViewName("user/project/notice/notice_form");
+		
+		
+		
+		return andView;
 	}
+	
+	
+	
+	
 	
 	public ModelAndView NoticeboardList(HttpServletRequest request, HttpSession session) throws Exception{
 	
@@ -132,9 +151,14 @@ public class NoticeboardController {
 	}
 	
 	
-	public String insertNoticeboard() throws Exception{
+	public String insertNoticeboard(NoticeBoardVO nbv, HttpSession session,
+			  String emp_code, @RequestParam("files") MultipartFile[] files) throws Exception{
 		
-		return null;
+		
+			service.insertNoticeboardInfo(nbv, files);
+			return "redirect:/user/project/notice/notice_list.do";
+			
+			
 	}
 	
 	

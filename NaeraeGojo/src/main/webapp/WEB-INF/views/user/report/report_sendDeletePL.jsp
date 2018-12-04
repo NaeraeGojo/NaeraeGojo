@@ -198,7 +198,7 @@ label {
 						<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:forEach items="${stList }" var="list">
 							<c:if test="${list.report_pm_status eq 'x' }">
-								<input value="피드백 보기" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+								<input value="피드백 보기"  id="checkFeed" type="button"  data-toggle="modal" data-target="#modal1"  class="btn btn-sm btn-info btn-flat pull-right"> 
 							</c:if> 
 						</c:forEach>
 					</div>
@@ -207,6 +207,62 @@ label {
 		</div>
 	</div>
 </section>
+
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="container">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"   >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="exampleModalLabel">관련 업무 피드백</h3>
+      </div>
+      <div class="modal-body" style=" border-top:1px solid orange;">
+<!--          <div  class="row" style="padding-left:35px"> -->
+<!--            <select class="col-sm-3" id="pw_function" style="margin:5px; height:30px;" > -->
+<!--             <option selected="selected">분류</option> -->
+<!--            </select> -->
+<!--            <input class="col-sm-4"type="text" style="margin:5px; height:30px;"> -->
+<!--            <button class="col-sm-2" class="btn btn-flat" style="margin:5px; height:30px;">검색</button> -->
+<!--            </div > -->
+            <div  class="row"  style="padding:30px;">
+                <div class="form-group">
+                    <div id="ff"></div>
+              </div>      
+                        
+              <div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">제목</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="report_feed_title" name="report_feed_title" style="margin-top: 10px !important">
+					</div>
+				</div>
+				</br></br>
+                <div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">발신자</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="pm_name" name="pm_name" style="margin-top: 10px !important">
+						<input type="hidden" class="form-control" value="${vo.emp_code }" name="emp_code">
+						<input type="hidden" class="form-control" value="${vo.report_code }" name="report_code">
+						
+					</div>
+				</div>
+				</br>
+				<div class="form-group">
+					<label for="inputPassword1" class="col-sm-2 control-label" style="margin-top: 10px !important;">내용</label>
+					<div class="col-sm-9">
+						<textarea rows="10" type="text" class="form-control" id="report_feed_content" name="report_feed_content" style="margin-top: 10px !important"></textarea>
+					</div>
+				</div>
+             </div>
+      <div class="modal-footer">
+<!--            <button type="submit" id="modalAdd" class="btn btn-primary" data-dismiss="modal">등록</button> -->
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
 <script type="text/javascript">
 	$(function() {
 		//Initialize Select2 Elements
@@ -238,7 +294,32 @@ label {
 		$('input[name=report_title]').val('${vo.report_title}');
 	    $('textarea[name=report_content]').val('${vo.report_content}');
 		
-		
+	    $('#checkFeed').click(function(){
+			  var emp_code = $('input[name=emp_code]').val();
+			  var report_code = $('input[name=report_code]').val();
+//			  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
+			  
+			  $.ajax({
+					url : '${pageContext.request.contextPath}/user/report/feedDEV.do',
+					dataType: 'json',
+					data : {
+						
+							emp_code:emp_code,
+							report_code :report_code
+							
+							},
+					success : function(data){
+						console.log(data);
+						alert(data.rpo.report_feed_title);
+						$('input[name=report_feed_title]').val(data.rpo.report_feed_title);
+						$('textarea[name=report_feed_content]').val(data.rpo.report_feed_content);
+						$('input[name=pm_name]').val(data.rpo.pm_name);
+					},
+					error : function(res){
+						alert(res.status);
+					}
+				});
+		 })
 
 	})
 </script>

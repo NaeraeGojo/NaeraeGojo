@@ -12,18 +12,29 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.allfile.dao.IAllFileDao;
+import kr.or.ddit.noticeboard.dao.INoticeFileDao;
 import kr.or.ddit.noticeboard.dao.INoticeboardDao;
+import kr.or.ddit.utils.AllFileMapper;
+import kr.or.ddit.utils.NoticeFileMapper;
 import kr.or.ddit.vo.AllFileVO;
 import kr.or.ddit.vo.NoPrEmpVO;
 import kr.or.ddit.vo.NotEmpVO;
 import kr.or.ddit.vo.NoticeAllVO;
 import kr.or.ddit.vo.NoticeBoardVO;
+import kr.or.ddit.vo.NoticeFileVO;
 
 @Service
 public class INoticeboardServiceImpl implements INoticeboardService {
 
 	@Autowired
 	private INoticeboardDao noticeboardDao;
+	
+	@Autowired
+	private INoticeFileDao noticeFiledao;
+	
+	@Autowired
+	private NoticeFileMapper noticeFileMapper;
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class,SQLException.class,NestableException.class})
 	@Override
@@ -47,14 +58,15 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	@Override
 	public void insertNoticeboardInfo(NoticeBoardVO nbv, MultipartFile[] files)
 			throws SQLException {
-//		String notice_all_code = noticeAllDao.insertNoticeAllInfo(nav);
-//		List<AllFileVO> afvo = new ArrayList<AllFileVO>();
-//		AllFileVO afvo1 = allFileMapper.mapping(files[0],notice_all_code,"1");
+		String notice_code = noticeboardDao.insertNoticeboardInfo(nbv);
+		List<NoticeFileVO> nfvo = new ArrayList<NoticeFileVO>();
+		NoticeFileVO nfvo1 = noticeFileMapper.mapping(files[0],notice_code);
 //		AllFileVO afvo2 = allFileMapper.mapping(files[1],notice_all_code,"1");
-//		afvo.add(afvo1);
+		nfvo.add(nfvo1);
 //		afvo.add(afvo2);
-//		for(AllFileVO afv : afvo){
-//			afdao.insertAllFile(afv);
+		for(NoticeFileVO nfv : nfvo){
+			noticeFiledao.insertNoticeFile(nfv);
+		}
 		
 	}
 	
@@ -85,6 +97,14 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	@Override
 	public void updateHit(Map<String, String> params) throws SQLException {
 		noticeboardDao.updateHit(params);
+	}
+
+	@Override
+	public List<NoticeBoardVO> projectList(Map<String, String> params)
+			throws SQLException {
+		List<NoticeBoardVO> list = null;
+		list = noticeboardDao.projectList(params);
+		return list;
 	}
 
 }

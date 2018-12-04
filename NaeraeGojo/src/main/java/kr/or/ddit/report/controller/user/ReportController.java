@@ -508,14 +508,34 @@ public class ReportController {
 		return "redirect:/user/report/report_listPLRec.do";
 	}
 	
-	@RequestMapping("feedDEV/{report_code}/{emp_code}")
-	public String feedDEV(@PathVariable String report_code,
+	@RequestMapping("report_feed_insert_PM")
+	public String report_feed_insert_PM(
+			ReportVO fvo,
+			HttpSession session,
+			Map<String, String> params) throws SQLException{
+		
+		String report_code =  fvo.getReport_code();
+		params.put("report_code", report_code);
+		service.updatePMx(params);
+		service.insertFeedPL(fvo);
+		
+		return "redirect:/user/report/report_listPM.do";
+	}
+	
+	@RequestMapping("feedDEV")
+	public ModelAndView feedDEV( String report_code,
+										ModelAndView andView,
 										String emp_code, 
 										Map<String, String> params) throws SQLException{
 		params.put("report_code", report_code);
 		params.put("emp_code", emp_code);
-		service.feedViewDev(params);
-		return "redirect:/user/report/report_listPM.do";
+		ReportVO rpo = service.feedViewDev(params);
+		
+		andView.addObject("rpo",rpo);
+		
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
 	}
 	
 	

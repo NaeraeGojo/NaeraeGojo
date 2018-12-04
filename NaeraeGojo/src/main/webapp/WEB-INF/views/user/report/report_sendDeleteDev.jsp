@@ -251,11 +251,10 @@ label {
 				</br></br>
                 <div class="form-group">
 					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">발신자</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="emp_name" name="emp_name" style="margin-top: 10px !important">
+					<div class="col-sm-9" id="test001">
+<!-- 						<input type="text" class="form-control" id="pl_name" name="pl_name" style="margin-top: 10px !important"> -->
 						<input type="hidden" class="form-control" value="${vo.emp_code }" name="emp_code">
 						<input type="hidden" class="form-control" value="${vo.report_code }" name="report_code">
-						
 					</div>
 				</div>
 				</br>
@@ -314,7 +313,37 @@ label {
 		  $('#checkFeed').click(function(){
 			  var emp_code = $('input[name=emp_code]').val();
 			  var report_code = $('input[name=report_code]').val();
-			  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
+// 			  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
+			  
+			  $.ajax({
+					url : '${pageContext.request.contextPath}/user/report/feedDEV.do',
+					dataType: 'json',
+					data : {
+						
+							emp_code:emp_code,
+							report_code :report_code
+							
+							},
+					success : function(data){
+						console.log(data);
+						alert(data.rpo.report_feed_title);
+						$('input[name=report_feed_title]').val(data.rpo.report_feed_title);
+						$('textarea[name=report_feed_content]').val(data.rpo.report_feed_content);
+// 						$('input[name=pl_name]').val(data.rpo.pl_name);
+// 						$('input[name=pm_name]').val(data.rpo.pm_name);
+						$('#test001').empty();
+						var code ='';
+						if(data.rpo.pl_name == null){
+							code += '<input type="text" class="form-control" value="'+data.rpo.pm_name+'" id="pm_name" name="pm_name" style="margin-top: 10px !important">';
+						}else{
+							code += '<input type="text" class="form-control" value="'+data.rpo.pl_name+'" id="pl_name" name="pl_name" style="margin-top: 10px !important">';
+						}
+						$('#test001').append(code);
+					},
+					error : function(res){
+						alert(res.status);
+					}
+				});
 		 })
 
 	})
