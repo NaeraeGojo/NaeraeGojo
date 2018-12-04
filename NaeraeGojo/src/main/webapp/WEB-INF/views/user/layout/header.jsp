@@ -344,6 +344,13 @@ $(function(){
 		
 		
 		$('#modal-chat').modal('hide');
+		
+		var url = "${pageContext.request.contextPath}/user/chat/chatRoom.do";
+		var options = "width = 375, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
+	
+		window.open(url, "대화창", options);
+		
+		window.open('',);
 	});
 	
 	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
