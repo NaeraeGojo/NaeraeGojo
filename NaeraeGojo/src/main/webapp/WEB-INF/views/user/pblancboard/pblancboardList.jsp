@@ -18,7 +18,24 @@ $(function(){
 	$('table tr:gt(0)').click(function(){
 		var pblanc_board_code = $(this).find('td:eq(0) input').val();
 		var rnum = $(this).find('td:eq(0)').text();
-		$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardView.do?pblanc_board_code='+pblanc_board_code+'&rnum='+rnum);
+		
+		var currentPage = '${param.currentPage}';
+		
+		var query = '?pblanc_board_code='+pblanc_board_code+'&rnum='+rnum;
+		
+		if(currentPage != null && currentPage != ''){
+			query += '&currentPage=' + currentPage;
+		}
+		
+		var search_keyword = '${param.search_keyword}';
+    	var search_keycode = '${param.search_keycode}';
+		
+    	if(search_keyword != null && search_keyword != '' ){
+    		query += '&search_keycode=' + encodeURI(search_keycode) 
+    		+ '&search_keyword=' + encodeURI(search_keyword);
+    	}
+		
+		$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/pblancboardView.do'+query);
 	})
 });
 
