@@ -22,6 +22,7 @@
    background-color: white;
 }
 </style>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	
@@ -31,6 +32,17 @@ $(function(){
 	 	    message: mes
 		});
 	}
+	
+	$("#issue_event_day").datepicker({
+		showButtonPanel: true,
+		minDate: 0,
+		changeMonth: true, 
+		dateFormat: "yy-mm-dd",
+		dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+		dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+		monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+		monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+	});
 	
 	$('#listBtn').click(function(){
 		
@@ -156,7 +168,7 @@ $(function(){
 						<div class="form-group">
 							<label for="issue_event_day" class="col-sm-2 control-label">발생일자</label>
 							<div class="col-sm-8">
-								<input type="date" class="form-control" style="border-radius: 1em;" placeholder="발생일자"
+								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="발생일자"
 								id="issue_event_day" name="issue_event_day" value="${issueInfo.issue_event_day}">
 							</div>
 						</div>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.UserFileVO;
 
 @Repository("")
 public class IEmpDaoImpl implements IEmpDao{
@@ -53,6 +54,37 @@ public class IEmpDaoImpl implements IEmpDao{
 	public EmpVO empNum(Map<String, String> params) throws SQLException {
 		return (EmpVO) client.queryForObject("emp.empNum", params);
 		
+	}
+
+	@Override
+	public EmpVO empPass(Map<String, String> params) throws SQLException {
+		return (EmpVO) client.queryForObject("emp.empPass", params);
+	}
+
+	@Override
+	public void insertUserFile(List<UserFileVO> ufv) throws SQLException {
+		for(UserFileVO userFileList : ufv){
+			client.insert("userFile.insertUserFile", userFileList);
+		}
+		
+	}
+
+	@Override
+	public UserFileVO userFileInfo(Map<String, String> params) throws SQLException {
+		return (UserFileVO) client.queryForObject("userFile.userFileInfo", params);
+	}
+
+	@Override
+	public void updateUserFile(List<UserFileVO> ufv) throws SQLException {
+		try{
+			client.startTransaction();
+			for(UserFileVO userFileList : ufv){
+				client.update("userFile.updateUserFile", userFileList);
+			}
+			client.commitTransaction();
+		}finally{
+			client.endTransaction();
+		}
 	}
 
 //	@Override
