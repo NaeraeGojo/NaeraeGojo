@@ -18,33 +18,12 @@
 	<resultMap id="reportMap" class="reportVO">
 		<result property="report_code" column="report_code"/>
 		<result property="report_title" column="report_title"/>
-		<result property="report_day" column="report_day"/>
 		<result property="report_content" column="report_content"/>
-		<result property="report_rc" column="report_rc"/>
 		<result property="report_date" column="report_date"/>
-		<result property="report_delete" column="report_delete"/>
 		<result property="emp_code" column="emp_code"/>
-		<result property="pw_code" column="pw_code"/>
-		<result property="report_pl_status" column="report_pl_status"/>
-		<result property="report_pm_status" column="report_pm_status"/>
-		<result property="emp_code_pl" column="emp_code_pl"/>
-		<result property="emp_code_pm" column="emp_code_pm"/>
-		<result property="position_name" column="position_name"/>
 		<result property="emp_name" column="emp_name"/>
-		<result property="emp_department" column="emp_department"/>
-		<result property="emp_level" column="emp_level"/>
-		<result property="project_code" column="project_code"/>
 		<result property="pw_function" column="pw_function"/>
 		<result property="project_name" column="project_name"/>
-		<result property="report_feed_code" column="report_feed_code"/>
-		<result property="report_feed_title" column="report_feed_title"/>
-		<result property="report_feed_content" column="report_feed_content"/>
-		<result property="pm_position" column="pm_position"/>
-		<result property="pm_level" column="pm_level"/>
-		<result property="pm_name" column="pm_name"/>
-		<result property="pl_position" column="pl_position"/>
-		<result property="pl_level" column="pl_level"/>
-		<result property="pl_name" column="pl_name"/>
 		<result property="items" column="report_code" select="reportFile.reportFilexx" />
 	</resultMap>
 	
