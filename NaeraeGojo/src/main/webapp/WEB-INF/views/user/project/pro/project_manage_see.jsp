@@ -16,6 +16,11 @@
 	width: 250px;
 	display: inline-table;
 }
+.chart2{
+	width: 100%;
+	height: 100%;
+
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script type="text/javascript">
@@ -129,7 +134,7 @@ $(function () {
 		      position: 'right',
 		      labels: {
 	                fontSize: 16,
-	                padding: 15
+	                padding: 25
 	          }
 		    },
 // 		    title: {
@@ -154,8 +159,8 @@ $(function () {
 							
 							<div class="box-header with-border">
 								<ul class="nav nav-tabs">
-									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
 									<li class="active"><a href="#tab_2" data-toggle="tab"><font size="2">진행 현황</font></a></li>
+									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
 								</ul>
 							</div>
 							
@@ -185,25 +190,18 @@ $(function () {
 									<div class="row">
 										<div class="col-md-8">
 											<div class="chart-responsive">
-												<canvas id="myChart"></canvas> 
+												<canvas id="myChart" class="chart2"></canvas> 
 											</div>
 										</div>
 									</div>
 
 									<div class="box-footer no-padding" >
 										<ul class="nav nav-pills nav-stacked">
-<!-- 											<li> -->
-<!-- 												<a href="#"> 전체 업무  -->
-<!-- 													<span class="pull-right text-red"> -->
-<%-- 														${totalComplete+totalIng+totalNew} 개 --%>
-<!-- 													</span> -->
-<!-- 												</a> -->
-<!-- 											</li> -->
 											<li>
 												<a href="#"> 완료
 													<span class="pull-right text-red">
 														<fmt:formatNumber value="${totalComplete/(totalComplete+totalIng+totalNew)*100}"
- 														pattern=""/> % 
+ 														pattern=".0"/> % 
 													</span>
 												</a>
 											</li>
@@ -211,7 +209,7 @@ $(function () {
 												<a href="#"> 진행중 
 													<span class="pull-right text-green">
 														<fmt:formatNumber value="${totalIng/(totalComplete+totalIng+totalNew)*100}"
- 														pattern=""/> % 
+ 														pattern=".0"/> % 
 													</span>
 												</a>
 											</li>
@@ -219,7 +217,7 @@ $(function () {
 												<a href="#"> 신규
 													<span class="pull-right text-yellow">
 														<fmt:formatNumber value="${totalNew/(totalComplete+totalIng+totalNew)*100}"
-														pattern=""/> %
+														pattern=".0"/> %
 													</span>
 												</a>
 											</li>
