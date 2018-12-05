@@ -167,7 +167,94 @@
 	}
 	
 	</style>
+<script type="text/javascript">
+var ws;
+
+var today = new Date();
+$(function(){
+	// WebSocket EndPoint 접속 , 얘가 성공하면 onOpen 이벤트 발생
+// 	ws = new WebSocket("ws://192.168.204.154/SpringToddler/wschat");
+	ws = new WebSocket("ws://192.168.204.49/ng/wschat");
 	
+	ws.onopen = function(){
+// 		alert("WebSocket EndPoint에 정상적으로 접속되어ㄸ");
+	};
+	
+	ws.onmessage = function(message){
+		var obj = JSON.parse(message.data);
+
+		var direc = '';
+		var name_direc = 'pull-left';
+		if(obj.emp_code == '${LOGIN_EMPINFO.emp_code}'){
+			direc = 'right';
+			name_direc = 'pull-right';
+		}
+		
+		var emp_name = obj.emp_name;
+		var now_time = obj.time;
+		var msg = obj.msg;
+		
+		var id_msg = obj.id;
+		
+		var text = 	'<div class="direct-chat-msg '+direc+'">'				
+					+ '<div class="direct-chat-info clearfix">'
+					+ '<span class="direct-chat-name '+name_direc+'">'+emp_name+'</span> <span'
+					+ 'class="direct-chat-timestamp pull-left">'+now_time+'</span></div>'	
+					+ '<img class="direct-chat-img" src="../dist/img/user3-128x128.jpg"'		
+					+ 'alt="alt">'
+					+ '<div class="direct-chat-text">'+msg+'</div></div>'
+					
+					
+		$('.direct-chat-messages').append(text);
+					
+		var div_chat = $('#div_chat');
+
+		var hei = $('#div_chat').prop('scrollHeight');
+		$("#div_chat").scrollTop(hei);
+
+		
+	}
+});
+
+function postToServer(){
+	// WebSocket EndPoint에 문자열 등 전송시 default UTF-8이 적용
+	var text = $('#msg').val();
+	
+	var now_hour = today.getHours();
+	var now_min = today.getMinutes();
+	if(now_min<10){
+		now_min = '0' + now_min;
+	}
+	
+	var now_time = '';
+	
+	
+	if(now_hour > 12){
+		now_hour = now_hour - 12;
+		now_time = '오후 ' + now_hour + ':' + now_min;
+	}else{
+		now_time = '오전 ' + now_hour + ':' + now_min;
+	}
+	
+	
+	var j_msg = JSON.stringify({
+		emp_code : '${LOGIN_EMPINFO.emp_code}'
+		, msg : text
+		, emp_name : '${LOGIN_EMPINFO.emp_name}'
+		, time : now_time
+	});
+	
+	ws.send(j_msg);
+	$('#msg').val('');
+}
+
+function closeConnection(){
+	// onclose 이벤트 전파
+	ws.close();
+}
+
+	
+</script>
 
 <body>
 <div class="col-md-3">
@@ -198,7 +285,9 @@
 			<!-- Conversations are loaded here -->
 			
 			
-			<div class="direct-chat-messages">
+			<div class="direct-chat-messages" id="div_chat">
+			
+			
 				<!-- Message. Default to the left -->
 				<div class="direct-chat-msg">
 					<div class="direct-chat-info clearfix">
@@ -208,7 +297,7 @@
 					</div>
 					<!-- /.direct-chat-info -->
 					<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg"
-						alt="Message User Image">
+						alt="alt">
 					<!-- /.direct-chat-img -->
 					<div class="direct-chat-text">Is this template really for
 						free? That's unbelievable!</div>
@@ -225,14 +314,39 @@
 					</div>
 					<!-- /.direct-chat-info -->
 					<img class="direct-chat-img" src="../dist/img/user3-128x128.jpg"
-						alt="Message User Image">
+						alt="alt">
 					<!-- /.direct-chat-img -->
 					<div class="direct-chat-text">You better believe it!</div>
 					<!-- /.direct-chat-text -->
 				</div>
 				<!-- /.direct-chat-msg -->
+				
+				<!-- Message. Default to the left -->
+				<div class="direct-chat-msg">
+					<div class="direct-chat-info clearfix">
+						<span class="direct-chat-name pull-left">Alexander Pierce</span>
+						<span class="direct-chat-timestamp pull-right">23 Jan 2:00
+							pm</span>
+					</div>
+					<!-- /.direct-chat-info -->
+					<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg"
+						alt="Message User Image">
+					<!-- /.direct-chat-img -->
+					<div class="direct-chat-text">Is this template really for
+						free? That's unbelievable!</div>
+					<!-- /.direct-chat-text -->
+				</div>
+				<!-- /.direct-chat-msg -->
+			
+				<div class="direct-chat-msg">
+					<div class="direct-chat-text">test</div>
+				</div>
+			
+			
 			</div>
 			<!--/.direct-chat-messages-->
+
+
 
 			<!-- Contacts are loaded here -->
 			<div class="direct-chat-contacts">
@@ -257,9 +371,10 @@
 		<div class="box-footer">
 			<form action="#" method="post">
 				<div class="input-group">
-					<input type="text" name="message" placeholder="Type Message ..."
+					<input type="text" id="msg" name="msg" placeholder="Type Message ..."
 						class="form-control"> <span class="input-group-btn">
-						<button type="submit" class="btn btn-success btn-flat">Send</button>
+						<button type="button" onclick="postToServer();"
+						class="btn btn-success btn-flat">Send</button>
 					</span>
 				</div>
 			</form>
