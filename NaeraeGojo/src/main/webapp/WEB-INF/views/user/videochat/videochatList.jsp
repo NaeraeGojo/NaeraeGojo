@@ -56,9 +56,9 @@ table td {
 
 $(function(){
 	
-//     $('input[type="checkbox"].flat-red').iCheck({
-//         checkboxClass: 'icheckbox_flat-blue'
-//       });
+    $('input[type="checkbox"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-blue'
+      });
     
     boalert = function(mes){
         BootstrapDialog.show({
@@ -120,6 +120,8 @@ $(function(){
                     	 
                      }
                      $('#projectdiv').empty().append(projectListt);
+
+                     
 //                      $('#projectdiv').append(projectListt);
                 }
         });
@@ -219,6 +221,10 @@ function ptclick(project_code) {
                 }
                 text += '</table>';
                 $('#tb').empty().append(text);
+                
+                $('input[type="checkbox"].flat-red').iCheck({
+                    checkboxClass: 'icheckbox_flat-blue'
+                });
            }
    });
 }

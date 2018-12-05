@@ -142,20 +142,33 @@
         </selectKey>
             INSERT INTO PBLANC_BOARD(
                             PBLANC_BOARD_CODE
-                            ,PBLANC_BOARD_COM
-                            ,PBLANC_BOARD_COM_DATE
+                            ,PBLANC_BOARD_TITLE
                             ,PBLANC_BOARD_LINK
                             ,EMP_CODE
                             )
                     values(
                            #pblanc_board_code#
-                            , #pblanc_board_com#
-                            , sysdate
+                            , #pblanc_board_title#
                             , #pblanc_board_link#
                             , 2
                             )        
         
 	</insert>
+	
+	<select id="pblanc_board_comVS" parameterClass="string">
+	    select *
+	    from pblanc_board
+	    where pblanc_board_com = #pblanc_board_com#
+	</select>
+	
+    <update id="updatePblancInfo" parameterClass="map">
+       update pblanc_board
+       set pblanc_board_com_date = to_date(#pblanc_board_com_date#, 'YYYY/MM/DD HH24:MI:SS')
+           , pblanc_board_end_proposal =to_date(#pblanc_board_end_proposal#, 'YYYY/MM/DD HH24:MI:SS')
+           , pblanc_board_budget = #pblanc_board_budget#
+           , pblanc_board_com = #pblanc_board_com#
+       where pblanc_board_code = #pblanc_board_code#
+    </update>
 	
 </sqlMap>
 

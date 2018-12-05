@@ -55,6 +55,16 @@
     <param-value>classpath:kr/or/ddit/logback/config/logback.xml</param-value>
   </context-param>
   
+  <!-- 웹소켓 필터 -->
+  	<filter>
+		<filter-name>webSocketFilter</filter-name>
+		<filter-class>kr.or.ddit.filter.WebSocketFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>webSocketFilter</filter-name>
+		<url-pattern>/wschat</url-pattern>
+	</filter-mapping>
+  
   <listener>
     <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
   </listener>
