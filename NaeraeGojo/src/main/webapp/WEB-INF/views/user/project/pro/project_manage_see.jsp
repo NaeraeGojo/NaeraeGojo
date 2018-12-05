@@ -1,5 +1,6 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 .todo-list{
 	background-color: white;
@@ -9,6 +10,16 @@
 }
 .upForm{
 	margin-left: 15px;
+}
+#myChart{
+	height: 100px;
+	width: 250px;
+	display: inline-table;
+}
+.chart2{
+	width: 100%;
+	height: 100%;
+
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -98,35 +109,23 @@ $(function(){
 	
 	
 });
-// chart.Doughnut.defaults = {
-//         segmentShowStroke : true,
-//         segmentStrokeColor : "#fff",
-//         segmentStrokeWidth : 2,
-//         percentageInnerCutout : 50,
-//         animation : true,
-//         animationSteps : 100,
-//         animationEasing : "easeOutBounce",
-//         animateRotate : true,
-//         animateScale : false,
-//         onAnimationComplete : null,
-//         labelFontFamily : "Arial",
-//         labelFontStyle : "normal",
-//         labelFontSize : 24,
-//         labelFontColor : "#666"
-// };
 
 $(function () {
 	
+	var complete = ${totalComplete}
+	var ing = ${totalIng}
+	var totalnew = ${totalNew}
+	
 	new Chart(document.getElementById("myChart"), {
 		animation:true,
-		
 		type: 'doughnut',
 		data: {
-			labels: ["진행", "완료", "예정"],
+// 			labels: ["진행", "완료", "신규"],
+			labels: ["완료", "진행", "신규"],
 				datasets: [
 				{
 					backgroundColor: ["#f56954", "#00a65a","#f39c12"],
-					data: [600,500,400]
+					data: [complete,ing,totalnew]
 				}
 			]
 		},
@@ -135,13 +134,13 @@ $(function () {
 		      position: 'right',
 		      labels: {
 	                fontSize: 16,
-	                padding: 15
+	                padding: 25
 	          }
 		    },
-		    title: {
-		        display: true,
-		        text: 'ㅠㅠ'
-		    }
+// 		    title: {
+// 		        display: true,
+// 		        text: 'ㅠㅠ'
+// 		    }
 		}
 	});
 	
@@ -160,13 +159,13 @@ $(function () {
 							
 							<div class="box-header with-border">
 								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
-									<li><a href="#tab_2" data-toggle="tab"><font size="2">진행 현황</font></a></li>
+									<li class="active"><a href="#tab_2" data-toggle="tab"><font size="2">진행 현황</font></a></li>
+									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
 								</ul>
 							</div>
 							
 							<div class="tab-content">
-								<div class="tab-pane active box-body" id="tab_1">
+								<div  class="tab-pane box-body"  id="tab_1">
 									<div class="table-responsive">
 										<table id="modal1" class="table no-margin table-hover">
 											<thead>
@@ -187,53 +186,45 @@ $(function () {
 									</div>
 								</div>
 
-
-								<div class="tab-pane box-body" id="tab_2">
+								<div class="tab-pane active box-body" id="tab_2">
 									<div class="row">
 										<div class="col-md-8">
 											<div class="chart-responsive">
-<!-- 											<div> -->
-												<canvas id="myChart" height="100" width="200" ></canvas> 
+												<canvas id="myChart" class="chart2"></canvas> 
 											</div>
 										</div>
-<!-- 										<div class="col-md-4"> -->
-<!-- 											<ul class="chart-legend clearfix"> -->
-<!-- 												<li><i class="fa fa-circle-o text-red"></i> Chrome</li> -->
-<!-- 												<li><i class="fa fa-circle-o text-green"></i> IE</li> -->
-<!-- 												<li><i class="fa fa-circle-o text-yellow"></i> FireFox</li> -->
-<!-- 												<li><i class="fa fa-circle-o text-aqua"></i> Safari</li> -->
-<!-- 												<li><i class="fa fa-circle-o text-light-blue"></i>Opera</li> -->
-<!-- 												<li><i class="fa fa-circle-o text-gray"></i> Navigator</li> -->
-<!-- 											</ul> -->
-<!-- 										</div> -->
 									</div>
 
-<!-- 									<div class="box-footer no-padding"> -->
-<!-- 										<ul class="nav nav-pills nav-stacked"> -->
-<!-- 											<li> -->
-<!-- 												<a href="#">United States of America  -->
-<!-- 													<span class="pull-right text-red"> -->
-<!-- 														<i class="fa fa-angle-down"></i> 12% -->
-<!-- 													</span> -->
-<!-- 												</a> -->
-<!-- 											</li> -->
-<!-- 											<li> -->
-<!-- 												<a href="#">India  -->
-<!-- 													<span class="pull-right text-green"> -->
-<!-- 														<i class="fa fa-angle-up"></i> 4% -->
-<!-- 													</span> -->
-<!-- 												</a> -->
-<!-- 											</li> -->
-<!-- 											<li> -->
-<!-- 												<a href="#">China  -->
-<!-- 													<span class="pull-right text-yellow"> -->
-<!-- 														<i class="fa fa-angle-left"></i> 0% -->
-<!-- 													</span> -->
-<!-- 												</a> -->
-<!-- 											</li> -->
-<!-- 										</ul> -->
-<!-- 									</div> -->
+									<div class="box-footer no-padding" >
+										<ul class="nav nav-pills nav-stacked">
+											<li>
+												<a href="#"> 완료
+													<span class="pull-right text-red">
+														<fmt:formatNumber value="${totalComplete/(totalComplete+totalIng+totalNew)*100}"
+ 														pattern=".0"/> % 
+													</span>
+												</a>
+											</li>
+											<li>
+												<a href="#"> 진행중 
+													<span class="pull-right text-green">
+														<fmt:formatNumber value="${totalIng/(totalComplete+totalIng+totalNew)*100}"
+ 														pattern=".0"/> % 
+													</span>
+												</a>
+											</li>
+											<li>
+												<a href="#"> 신규
+													<span class="pull-right text-yellow">
+														<fmt:formatNumber value="${totalNew/(totalComplete+totalIng+totalNew)*100}"
+														pattern=".0"/> %
+													</span>
+												</a>
+											</li>
+										</ul>
+									</div>
 								</div>
+								
 							</div>
 							<div class="box-footer clearfix"></div>
 						</div>

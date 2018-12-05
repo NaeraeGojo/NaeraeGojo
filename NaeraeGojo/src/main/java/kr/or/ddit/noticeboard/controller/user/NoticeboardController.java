@@ -1,5 +1,6 @@
 package kr.or.ddit.noticeboard.controller.user;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +10,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.allfile.service.IAllFileService;
+import kr.or.ddit.global.GlobalConstant;
+import kr.or.ddit.noticeboard.service.INoticeFileService;
 import kr.or.ddit.noticeboard.service.INoticeboardService;
 import kr.or.ddit.utils.AllFileMapper;
 import kr.or.ddit.utils.NoticeFileMapper;
 import kr.or.ddit.utils.RolePagingUtil;
+import kr.or.ddit.vo.AllFileVO;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.NoPrEmpVO;
 import kr.or.ddit.vo.NoticeAllVO;
@@ -35,8 +40,25 @@ public class NoticeboardController {
 	private INoticeboardService service;
 	
 	@Autowired
+	INoticeFileService fileService;
+	
+	@Autowired
 	private NoticeFileMapper noticeFileMapper;
-	 
+	
+	@RequestMapping("noticeFileDownload")
+	public ModelAndView downloadFile(ModelAndView andView,String notice_file_code
+			, Map<String, String> params) throws Exception{
+		params.put("notice_file_code", notice_file_code);
+		NoticeFileVO nfv =fileService.getNoticeFile(params);
+		
+		File targetFile = new File(GlobalConstant.SAVE_NOTICE, nfv.getNotice_file_save_name()); 
+		andView.addObject("downloadFile", targetFile);
+		andView.addObject("downloadFileName",nfv.getNotice_file_name());
+		andView.setViewName("downloadView");
+		return andView;
+	}
+	
+	
 	@RequestMapping("notice_list")
 	public ModelAndView notice_list(HttpServletRequest request,
 									ModelAndView andView,

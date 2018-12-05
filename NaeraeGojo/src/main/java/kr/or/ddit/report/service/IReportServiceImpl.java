@@ -1,30 +1,63 @@
 package kr.or.ddit.report.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.noticeboard.dao.INoticeFileDao;
 import kr.or.ddit.report.dao.IReportDao;
+import kr.or.ddit.reportfile.dao.IReportFileDao;
+import kr.or.ddit.utils.NoticeFileMapper;
+import kr.or.ddit.utils.ReportFileMapper;
 import kr.or.ddit.vo.NotEmpVO;
+import kr.or.ddit.vo.NoticeFileVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ProjectWorkVO;
+import kr.or.ddit.vo.ReportFileVO;
 import kr.or.ddit.vo.ReportVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class IReportServiceImpl implements IReportService{
 	@Autowired
 	private IReportDao dao;
+	
+	@Autowired
+	private IReportFileDao reportFiledao;
+	
+	@Autowired
+	private ReportFileMapper reportFileMapper;
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	@Override
-	public void insertReport(ReportVO rvo) throws SQLException {
-		dao.insertReport(rvo);
+	public void insertReport(ReportVO rvo, MultipartFile[] files) throws SQLException {
+		String report_code = dao.insertReport(rvo);
+		List<ReportFileVO> rfvo = new ArrayList<ReportFileVO>();
+		ReportFileVO rfvo1 = reportFileMapper.mapping(files[0], report_code);
+		rfvo.add(rfvo1);
+		for(ReportFileVO rfv : rfvo){
+			reportFiledao.insertReportFile(rfv);
+		}
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void insertReportPL(ReportVO rvo, MultipartFile[] files) throws SQLException {
+		String report_code = dao.insertReportPL(rvo);
+		List<ReportFileVO> rfvo = new ArrayList<ReportFileVO>();
+		ReportFileVO rfvo1 = reportFileMapper.mapping(files[0], report_code);
+		rfvo.add(rfvo1);
+		for(ReportFileVO rfv : rfvo){
+			reportFiledao.insertReportFile(rfv);
+		}
+	}
+
 
 	@Override
 	public void updateReport(ReportVO pv) throws SQLException {
@@ -107,12 +140,7 @@ public class IReportServiceImpl implements IReportService{
 		return list;
 	}
 	
-	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
-	@Override
-	public void insertReportPL(ReportVO rvo) throws SQLException {
-		dao.insertReportPL(rvo);
-	}
-
+	
 	@Override
 	public List<ReportVO> reportListPL(Map<String, String> params)
 			throws SQLException {
