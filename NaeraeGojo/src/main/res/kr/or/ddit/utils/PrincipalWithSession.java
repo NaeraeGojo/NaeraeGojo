@@ -21,4 +21,5 @@ public class PrincipalWithSession implements Principal {
 	public HttpSession getSession() {
 		return session;
 	}
+	
 }

@@ -2,6 +2,8 @@ package kr.or.ddit.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,8 @@ import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.codehaus.jettison.json.JSONObject;
+
 // P2P 간 이벤트 드리븐 방식의 접근 후  중계자
 // ws://192.168.204.47/ng/wschat 
 @ServerEndpoint("/wschat")
@@ -23,10 +27,14 @@ public class WebSocketEPChattingClazz {
 	
 	private static ArrayList<Map<Session, String>> seList = new ArrayList<Map<Session,String>>();
 	
+	private static Map<String, List<Session>> seMap = new HashMap<String, List<Session>>();
+	
 	// Peer가 웹소켓 앤드포인트 정상 접근이 완료 콜ㅐㅂㄱ
 	@OnOpen
 	public void onOpen(Session webSocketSession){
 		httpSession = ((PrincipalWithSession)webSocketSession.getUserPrincipal()).getSession();
+		
+		
 		
 		sessionList.add(webSocketSession);
 		
@@ -53,7 +61,6 @@ public class WebSocketEPChattingClazz {
 			// HttpSession ID : HttpSession.getId();
 			// javax.websocket.SessionID : Session.getID();
 			System.out.println("WebSocketSession ID : " + webSocketSession.getId());
-			
 			try {
 				peerBasic.sendText(msg);
 			} catch (IOException e) {

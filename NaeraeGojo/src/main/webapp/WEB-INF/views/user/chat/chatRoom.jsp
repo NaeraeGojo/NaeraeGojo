@@ -179,7 +179,7 @@ var today = new Date();
 $(function(){
 	// WebSocket EndPoint 접속 , 얘가 성공하면 onOpen 이벤트 발생
 // 	ws = new WebSocket("ws://192.168.204.154/SpringToddler/wschat");
-	ws = new WebSocket("ws://192.168.204.49/ng/wschat");
+	ws = new WebSocket("ws://localhost/ng/wschat");
 	
 	ws.onopen = function(){
 // 		alert("WebSocket EndPoint에 정상적으로 접속되어ㄸ");
