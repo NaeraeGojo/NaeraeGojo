@@ -7,7 +7,7 @@ import java.util.Map;
 import kr.or.ddit.vo.ReportFileVO;
 
 public interface IReportFileDao {
-	public void insertReportFile(Map<String, String> params) throws SQLException;
+	public void insertReportFile(ReportFileVO rfv) throws SQLException;
 	
 	public void updateReportFile(ReportFileVO rfv) throws SQLException;
 	

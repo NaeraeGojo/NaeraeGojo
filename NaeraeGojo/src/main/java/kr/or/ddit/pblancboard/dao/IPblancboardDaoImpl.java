@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Repository;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -50,9 +51,21 @@ public class IPblancboardDaoImpl implements IPblancboardDao {
 	}
 
 	@Override
-	public void insertPblancInfo(PblancBoardVO pb)
+	public String insertPblancInfo(PblancBoardVO pb)
 			throws SQLException {
-		client.insert("pblancboard.insertPblancInfo", pb);
+		return (String) client.insert("pblancboard.insertPblancInfo", pb);
+	}
+
+	@Override
+	public String pblanc_board_comVS(String pblanc_board_com)
+			throws SQLException {
+		return (String) client.queryForObject("pblancboard.pblanc_board_comVS", pblanc_board_com);
+	}
+
+	@Override
+	public void updatePblancInfo(Map<String, String> params)
+			throws SQLException {
+		client.update("pblancboard.updatePblancInfo", params);
 	} 
 
 }

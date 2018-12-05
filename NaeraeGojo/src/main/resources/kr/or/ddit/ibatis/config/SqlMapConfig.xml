@@ -40,6 +40,7 @@
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/videoChatFile.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/main.xml" />
 	<sqlMap resource="kr/or/ddit/ibatis/mapper/noticeFile.xml" />
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/reportFile.xml" />
 
 
 

@@ -81,7 +81,7 @@ label {
 				<!--             form start -->
 			<div class="box-body">
 				<form role="form" id="reportForm" class="form-horizontal" 
-         			method="post" action="${pageContext.request.contextPath }/user/report/report_FinalInsert.do">
+         			method="post" action="${pageContext.request.contextPath }/user/report/report_FinalInsert.do" enctype="multipart/form-data">
 
 						<!--                 <div class="form-group"> -->
 						<!--                   <label for="inputEmail3" class="col-sm-2 control-label" >보고서 분류</label> -->
@@ -164,21 +164,21 @@ label {
 							</div>
 						</div>
 
-<!-- 						<div class="form-group"> -->
-<!-- 							<label for="exampleInputFile" class="col-sm-2 control-label"><font -->
-<!-- 								style="vertical-align: inherit;"><font -->
-<!-- 									style="vertical-align: inherit;">파일 첨부</font></font></label> -->
-<!-- 							<div class="col-sm-10 control-label"> -->
-<!-- 								<input type="file" id="file01" name="file"> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
+						<div class="form-group">
+							<label for="exampleInputFile" class="col-sm-2 control-label"><font
+								style="vertical-align: inherit;"><font
+									style="vertical-align: inherit;">파일 첨부</font></font></label>
+							<div class="col-sm-10 control-label">
+								<input type="file" id="file01" name="files">
+							</div>
+						</div>
 
 
 					</div>
 					<div class="box-footer clearfix">
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
 						<input value="임시저장" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
-						<input value="등록" type="submit" href="${pageContext.request.contextPath}/user/report/report_listDev.do" class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="등록" type="submit"  class="btn btn-sm btn-danger btn-flat pull-right">
 					</div>
 				</form>
 			</div>

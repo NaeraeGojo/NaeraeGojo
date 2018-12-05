@@ -37,7 +37,7 @@ drone.on('open', error => {
   room.on('members', members => {
     console.log('MEMBERS', members);
     // If we are the second user to connect to the room we will be creating the offer
-    const isOfferer = members.length === 3;
+    const isOfferer = members.length === 2;
     startWebRTC(isOfferer);
   });
 });
@@ -71,12 +71,12 @@ function startWebRTC(isOfferer) {
   // When a remote stream arrives display it in the #remoteVideo element
   pc.ontrack = event => {
     const stream = event.streams[0];
-    if (!remoteVideo1.srcObject || remoteVideo1.srcObject.id !== stream.id) {
-      remoteVideo1.srcObject = stream;
+    if (!remoteVideo.srcObject || remoteVideo.srcObject.id !== stream.id) {
+      remoteVideo.srcObject = stream;
     }
-    if (!remoteVideo2.srcObject || remoteVideo2.srcObject.id !== stream.id) {
-		  remoteVideo2.srcObject = stream;
-    }
+//    if (!remoteVideo2.srcObject || remoteVideo2.srcObject.id !== stream.id) {
+//		  remoteVideo2.srcObject = stream;
+//    }
   };
 
   navigator.mediaDevices.getUserMedia({
