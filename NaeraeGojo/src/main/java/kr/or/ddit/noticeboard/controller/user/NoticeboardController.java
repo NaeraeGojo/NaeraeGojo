@@ -44,7 +44,7 @@ public class NoticeboardController {
 	
 	@Autowired
 	private NoticeFileMapper noticeFileMapper;
-	
+	//
 	@RequestMapping("noticeFileDownload")
 	public ModelAndView downloadFile(ModelAndView andView,String notice_file_code
 			, Map<String, String> params) throws Exception{
