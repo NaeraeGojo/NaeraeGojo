@@ -166,6 +166,11 @@
 		width: 100% 
 	}
 	
+	.right .direct-chat-text{
+		width: fit-content;
+		margin-right: 30px;
+	}
+	
 	</style>
 <script type="text/javascript">
 var ws;
@@ -198,11 +203,12 @@ $(function(){
 		
 		var text = 	'<div class="direct-chat-msg '+direc+'">'				
 					+ '<div class="direct-chat-info clearfix">'
-					+ '<span class="direct-chat-name '+name_direc+'">'+emp_name+'</span> <span'
-					+ 'class="direct-chat-timestamp pull-left">'+now_time+'</span></div>'	
-					+ '<img class="direct-chat-img" src="../dist/img/user3-128x128.jpg"'		
+					+ '<span class="direct-chat-name '+name_direc+'">'+emp_name+'</span>'
+					+ '</div>'	
+					+ '<img class="direct-chat-img" src="${pageContext.request.contextPath}/images/icons/person2.jpeg"'		
 					+ 'alt="alt">'
-					+ '<div class="direct-chat-text">'+msg+'</div></div>'
+					+ '<div class="direct-chat-text '+name_direc+'">'+msg +'</div>'
+					+ '<span class="direct-chat-timestamp">'+now_time+'</span></div>'
 					
 					
 		$('.direct-chat-messages').append(text);
