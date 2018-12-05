@@ -4,13 +4,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.ReportVO;
 
 public interface IReportService {
-	public void insertReport(ReportVO rvo) throws SQLException;
-	public void insertReportPL(ReportVO rvo) throws SQLException;
+	public void insertReport(ReportVO rvo, MultipartFile[] files) throws SQLException;
+	public void insertReportPL(ReportVO rvo, MultipartFile[] files) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;
 	public List<ReportVO> getReportList(Map<String, String> params) throws SQLException;

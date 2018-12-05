@@ -9,7 +9,16 @@ public class ReportFileVO {
 	private String report_file_save_name;
 	private String report_file_volume;
 	private String report_file_delete;
+	private String report_code;
+	
+	
 
+	public String getReport_code() {
+		return report_code;
+	}
+	public void setReport_code(String report_code) {
+		this.report_code = report_code;
+	}
 	public String getReport_file_code() {
 		return report_file_code;
 	}

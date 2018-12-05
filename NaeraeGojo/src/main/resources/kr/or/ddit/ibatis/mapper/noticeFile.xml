@@ -46,12 +46,12 @@
 	
 	<select id="getNoticeFile" resultClass="noticeFileVO" parameterClass="map">
 		<include refid="selectAll"/>
-		AND NOTICE_FILE_CODE = #notice_file_code#
+		WHERE NOTICE_FILE_CODE = #notice_file_code#
 	</select>
 	
 	<statement id="noticeFilexx" resultClass="noticeFileVO">
 		<include refid="selectAll"/>
-			AND NOTICE_CODE = #notice_code#
+			WHERE NOTICE_CODE = #notice_code#
 	</statement>
 	
 	<statement id="allFilesPblanc" resultClass="noticeFileVO">
