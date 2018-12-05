@@ -47,7 +47,7 @@ label {
 					<div class="col-sm-9">
 						<!-- select -->
 						<select class="form-control" name="project_code" id="project_code" >
-	                   	 <option>프로젝트를 선택해주세요</option>
+	                   	  <option>프로젝트를 선택해주세요</option>
 		                   <c:forEach items="${vo }" var="proName">
 		                    	<option value="${proName.project_code}">${proName.project_name}</option>
 		                   </c:forEach>

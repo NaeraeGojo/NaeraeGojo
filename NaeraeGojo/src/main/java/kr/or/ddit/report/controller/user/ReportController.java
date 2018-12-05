@@ -131,7 +131,7 @@ public class ReportController {
 		public String report_FinalInsertPL(
 				ReportVO rvo,
 				HttpSession session,
-				Map<String, String> params) throws SQLException{
+				Map<String, String> params,@RequestParam("files") MultipartFile[] files) throws SQLException{
 			
 			String fullEmpCode = rvo.getEmp_code();
 			rvo.setEmp_code_pm(fullEmpCode);
@@ -139,7 +139,7 @@ public class ReportController {
 			String emp_code = null;
 			emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 			rvo.setEmp_code(emp_code);
-			service.insertReportPL(rvo);
+			service.insertReportPL(rvo,files);
 			
 			return "redirect:/user/report/report_listPL.do";
 		}
@@ -302,7 +302,8 @@ public class ReportController {
 			ModelAndView andView,
 			String emp_code,
 			HttpSession session,
-			Map<String, String> params) throws SQLException{
+			Map<String, String> params
+			) throws SQLException{
 		
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		params.put("emp_code", emp_code);
@@ -317,7 +318,8 @@ public class ReportController {
 	public String report_FinalInsert(
 			ReportVO rvo,
 			HttpSession session,
-			Map<String, String> params) throws SQLException{
+			Map<String, String> params,
+			@RequestParam("files") MultipartFile[] files) throws SQLException{
 		
 		String[] fullEmpCode = rvo.getEmp_code().split(",");
 		rvo.setEmp_code_pm(fullEmpCode[0]);
@@ -326,7 +328,7 @@ public class ReportController {
 		String emp_code = null;
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		rvo.setEmp_code(emp_code);
-		service.insertReport(rvo);
+		service.insertReport(rvo,files);
 		
 		return "redirect:/user/report/report_listDev.do";
 	}

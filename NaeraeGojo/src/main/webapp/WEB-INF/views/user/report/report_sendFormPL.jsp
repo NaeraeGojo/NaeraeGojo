@@ -81,7 +81,7 @@ label {
 				<!--             form start -->
 			<div class="box-body">
 				<form role="form" id="reportForm" class="form-horizontal" 
-         			method="post" action="${pageContext.request.contextPath }/user/report/report_FinalInsertPL.do">
+         			method="post" action="${pageContext.request.contextPath }/user/report/report_FinalInsertPL.do" enctype="multipart/form-data">
 
 						<!--                 <div class="form-group"> -->
 						<!--                   <label for="inputEmail3" class="col-sm-2 control-label" >보고서 분류</label> -->

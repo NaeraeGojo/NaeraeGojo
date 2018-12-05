@@ -16,8 +16,8 @@
 		<result property="notice_pass" column="notice_pass"/>
 <!-- 		<result property="emp_code" column="emp_code"/> -->
 		<result property="emp_name" column="emp_name"/>
-<!-- 		<result property="project_code" column="project_code"/> -->
-<!-- 		<result property="project_name" column="project_name"/> -->
+		<result property="project_code" column="project_code"/>
+		<result property="project_name" column="project_name"/>
 		<result property="items" column="notice_code" select="noticeFile.noticeFilexx" />
 	</resultMap>
 	
@@ -103,7 +103,7 @@
  		WHERE RNUM <= #startCount# 
  		 AND  RNUM >= #endCount# 
  		]]> 
-		ORDER BY RNUM DESC
+		ORDER BY RNUM ASC
 	</select>	
 	
 <!-- 	<select id="noticeAllInfo" parameterClass="map" resultClass="notEmpVO"> -->
@@ -115,7 +115,7 @@
 	
 	<select id="noticeInfo" parameterClass="map" resultMap="noticeMap">
 		SELECT A.NOTICE_CODE, B.EMP_NAME,A.NOTICE_TITLE,A.NOTICE_CONTENT,A.NOTICE_PASS,
-		A.NOTICE_DATE,A.NOTICE_DELETE,A.NOTICE_HIT,C.PROJECT_NAME
+		A.NOTICE_DATE,A.NOTICE_DELETE,A.NOTICE_HIT,C.PROJECT_NAME,A.PROJECT_CODE
 		FROM NOTICE A, EMP B , PROJECT C
       	WHERE A.NOTICE_CODE = #notice_code#
       	AND	B.EMP_CODE = A.EMP_CODE
@@ -127,6 +127,7 @@
 		FROM NOTICE A, EMP B, PROJECT C
 		WHERE A.EMP_CODE = B.EMP_CODE
 		AND   A.PROJECT_CODE = C.PROJECT_CODE
+		GROUP BY C.PROJECT_CODE, C.PROJECT_NAME
 	</select>
 	
 	

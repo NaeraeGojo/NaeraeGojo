@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="reportFile">
+	<typeAlias alias="reportFileVO" type="kr.or.ddit.vo.ReportFileVO"/>
+	
+	<sql id="selectAll">
+		SELECT * 
+		FROM REPORT_FILE
+<!-- 		WHERE ALL_FILE_DELETE = 'n' -->
+		
+	</sql>
+	
+	<insert id="insertReportFile" parameterClass="reportFileVO">
+		<selectKey keyProperty="report_file_code" resultClass="string">
+			select report_file_seq.nextval from dual
+		</selectKey>
+		
+		insert into REPORT_FILE(
+							REPORT_FILE_CODE
+							,REPORT_FILE_NAME
+							,REPORT_FILE_SAVE_NAME
+							,REPORT_FILE_VOLUME
+							,REPORT_CODE
+						)
+		 
+					values(
+							#report_file_code#
+							,#report_file_name#
+							,#report_file_save_name#
+							,#report_file_volume#
+							,#report_code#
+					)
+	</insert>
+	
+<!-- 	<update id="updateNoticeFile" parameterClass="reportFileVO"> -->
+<!-- 		UPDATE NOTICE_FILE -->
+<!-- 		SET NOTICE_FILE_SAVE_NAME = #notice_file_save_name# -->
+<!-- 			,NOTICE_FILE_NAME     = #notice_file_name# -->
+<!-- 			,NOTICE_FILE_VOLUME   = #notice_file_volume# -->
+<!-- 		WHERE NOTICE_FILE_CODE    = #notice_file_code# -->
+<!-- 	</update> -->
+	
+	<select id="getReportFile" resultClass="reportFileVO" parameterClass="map">
+		<include refid="selectAll"/>
+		WHERE REPORT_FILE_CODE = #report_file_code#
+	</select>
+	
+	<statement id="reportFilexx" resultClass="reportFileVO">
+		<include refid="selectAll"/>
+			WHERE REPORT_CODE = #report_code#
+	</statement>
+	
+	
+	
+<!-- 	<select id="getMp" parameterClass="map" resultClass="mpVO"> -->
+<!-- 		select * from mp -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updateMp" parameterClass="mpVO"> -->
+<!-- 		update mp -->
+<!-- 			set mp_begin = #mp_begin# -->
+<!-- 				, mp_inter = #mp_inter# -->
+<!-- 				, mp_high = #mp_high# -->
+<!-- 				, mp_spec = #mp_spec# -->
+<!-- 			where mp_code = #mp_code# -->
+<!-- 	</update> -->
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

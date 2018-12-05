@@ -10,6 +10,22 @@ public class NoticeFileVO {
 	private String notice_file_volume;
 	private String notice_file_delete;
 	private String notice_code; // fk
+//	private String project_code;
+//	private String project_name;
+	
+	
+//	public String getProject_code() {
+//		return project_code;
+//	}
+//	public void setProject_code(String project_code) {
+//		this.project_code = project_code;
+//	}
+//	public String getProject_name() {
+//		return project_name;
+//	}
+//	public void setProject_name(String project_name) {
+//		this.project_name = project_name;
+//	}
 	public String getNotice_file_code() {
 		return notice_file_code;
 	}

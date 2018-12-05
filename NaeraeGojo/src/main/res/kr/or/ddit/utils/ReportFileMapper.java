@@ -8,9 +8,7 @@ import java.util.UUID;
 
 import kr.or.ddit.aop.Loggable;
 import kr.or.ddit.global.GlobalConstant;
-import kr.or.ddit.vo.AllFileVO;
-import kr.or.ddit.vo.NoticeFileVO;
-import kr.or.ddit.vo.SuggestFileVO;
+import kr.or.ddit.vo.ReportFileVO;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -18,35 +16,35 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public class NoticeFileMapper {
+public class ReportFileMapper {
 	@Loggable
 	private Logger logger;
 	
-	public List<NoticeFileVO> mapping(MultipartFile[] files, String notice_code){
-		List<NoticeFileVO> fileItemList = new ArrayList<NoticeFileVO>();
+	public List<ReportFileVO> mapping(MultipartFile[] files, String report_code){
+		List<ReportFileVO> fileItemList = new ArrayList<ReportFileVO>();
 		if(files != null){
-			NoticeFileVO fileItemInfo = null;
+			ReportFileVO fileItemInfo = null;
 			for(MultipartFile file : files){
 				if(file.getSize() > 0){
-					fileItemInfo = getFile(file, notice_code);
+					fileItemInfo = getFile(file, report_code);
 					
 					fileItemList.add(fileItemInfo);
 					
-					saveFile(fileItemInfo.getNotice_file_save_name(), file);
+					saveFile(fileItemInfo.getReport_file_save_name(), file);
 				}
 			}
 		}
 		return fileItemList;
 	}
 	
-	private NoticeFileVO getFile(MultipartFile file, String notice_code) {
-		NoticeFileVO fileItemInfo = new NoticeFileVO();
+	private ReportFileVO getFile(MultipartFile file, String report_code) {
+		ReportFileVO fileItemInfo = new ReportFileVO();
 		
-		fileItemInfo.setNotice_code(notice_code); 
+		fileItemInfo.setReport_code(report_code); 
 		
 		String fileName = FilenameUtils.getName(file.getOriginalFilename());
 
-		fileItemInfo.setNotice_file_name(fileName);
+		fileItemInfo.setReport_file_name(fileName);
 		
 		// a.png => a
 		String baseName = FilenameUtils.getBaseName(fileName);
@@ -57,23 +55,23 @@ public class NoticeFileMapper {
 		// a12314123124123.png
 		String saveFileName = baseName + genID + "." + extension;
 		
-		fileItemInfo.setNotice_file_save_name(saveFileName);
-		fileItemInfo.setNotice_file_volume(String.valueOf(file.getSize()));
+		fileItemInfo.setReport_file_save_name(saveFileName);
+		fileItemInfo.setReport_file_volume(String.valueOf(file.getSize()));
 		
 		return fileItemInfo;
 	}
 
-	public NoticeFileVO mapping(MultipartFile file, String notice_code){
-		NoticeFileVO fileItemInfo = null;
+	public ReportFileVO mapping(MultipartFile file, String report_code){
+		ReportFileVO fileItemInfo = null;
 			if(file.getSize() > 0){
-				fileItemInfo = getFile(file, notice_code);
-				saveFile(fileItemInfo.getNotice_file_save_name(), file);
+				fileItemInfo = getFile(file, report_code);
+				saveFile(fileItemInfo.getReport_file_save_name(), file);
 			}
 		return fileItemInfo;
 	}
 	
 	private void saveFile(String saveFileName, MultipartFile file) {
-		File saveFile = new File(GlobalConstant.SAVE_NOTICE, saveFileName);
+		File saveFile = new File(GlobalConstant.SAVE_REPORT, saveFileName);
 		
 		try {
 			file.transferTo(saveFile);

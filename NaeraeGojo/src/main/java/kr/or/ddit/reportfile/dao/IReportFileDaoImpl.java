@@ -17,9 +17,9 @@ public class IReportFileDaoImpl implements IReportFileDao{
 	private SqlMapClient client;
 
 	@Override
-	public void insertReportFile(Map<String, String> params)
+	public void insertReportFile(ReportFileVO rfv)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		client.insert("reportFile.insertReportFile",rfv);
 		
 	}
 
@@ -47,7 +47,7 @@ public class IReportFileDaoImpl implements IReportFileDao{
 	public ReportFileVO getReportFile(Map<String, String> params)
 			throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return (ReportFileVO) client.queryForObject("reportFile.getReportFile",params);
 	}
 
 }
