@@ -46,7 +46,12 @@ $(function(){
 	                     for (var i = 0; i < modalPro.modalPro.length; i++) {
 	                         
 	                         $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label>');
+	                         $('input[type="checkbox"].flat-red').iCheck({
+	                             checkboxClass: 'icheckbox_flat-blue'
+	                         });
 	                     }
+	                     
+	                     
 	                }
 	        });
 	  });

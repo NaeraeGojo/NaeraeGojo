@@ -1,50 +1,46 @@
-//package kr.or.ddit.filter;
-//
-//import java.io.ioexception;
-//import java.security.principal;
-//
-//import javax.servlet.filter;
-//import javax.servlet.filterchain;
-//import javax.servlet.filterconfig;
-//import javax.servlet.servletexception;
-//import javax.servlet.servletrequest;
-//import javax.servlet.servletresponse;
-//import javax.servlet.http.httpservletrequest;
-//import javax.servlet.http.httpservletrequestwrapper;
-//
-//import kr.or.ddit.utils.principalwithsession;
-//
-//public class websocketfilter implements filter {
-//
-//	@override
-//	public void destroy() {
-//	}
-//
-//	@override
-//	public void init(filterconfig arg0) throws servletexception {
-//	}
-//
-//	@override
-//	public void dofilter(servletrequest servletrequest, servletresponse servletresponse,
-//			filterchain filterchain) throws ioexception, servletexception {
-//		httpservletrequest request = (httpservletrequest) servletrequest;
-//		
-//		final principalwithsession princiapl = new principalwithsession(request.getsession());
-//		
-//		httpservletrequestwrapper requestwrapper = new httpservletrequestwrapper(request){
-//
-//			@override
-//			public principal getuserprincipal() {
-//				return princiapl;
-//			}
-//		};
-//		
-//		filterchain.dofilter(requestwrapper, servletresponse);
-//	}
-//	
-//}
-//
-//
+package kr.or.ddit.filter;
 
+import java.io.IOException;
+import java.security.Principal;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
+import kr.or.ddit.utils.PrincipalWithSession;
+
+public class WebSocketFilter implements Filter {
+
+	@Override
+	public void destroy() {
+
+	}
+
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+			FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		
+		final PrincipalWithSession principal = new PrincipalWithSession(request.getSession());
+		
+		HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(request){
+
+			@Override
+			public Principal getUserPrincipal() {
+				return principal;
+			}
+		};
+		
+		chain.doFilter(requestWrapper, servletResponse);
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+	}
+
+}

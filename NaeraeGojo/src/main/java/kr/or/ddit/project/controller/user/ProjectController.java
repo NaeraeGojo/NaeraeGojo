@@ -15,6 +15,7 @@ import kr.or.ddit.utils.RolePagingUtilJoin;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.SuggestVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,14 +93,19 @@ public class ProjectController {
 		
 		params.put("startCount",  String.valueOf(pagingUtil.getStartCount()));
 		params.put("endCount", String.valueOf(pagingUtil.getEndCount()));
-		
 
 		ProjectVO projectInfo = service.projectInfo(params);
 		List<JoinVO> joinList = service.joinList(params);
+		int totalComplete = service.totalComplete(params);
+		int totalIng = service.totalIng(params);
+		int totalNew = service.totalNew(params);
 		
 		andView.addObject("pagingUtil",pagingUtil.getPagingHtmls());
 		andView.addObject("projectInfo", projectInfo);
 		andView.addObject("joinList", joinList);
+		andView.addObject("totalComplete", totalComplete);
+		andView.addObject("totalIng", totalIng);
+		andView.addObject("totalNew", totalNew);
 		andView.setViewName("user/project/pro/project_manage_see");
 		return andView;
 	}

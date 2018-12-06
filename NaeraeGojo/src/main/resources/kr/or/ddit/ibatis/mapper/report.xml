@@ -15,6 +15,19 @@
 	<!-- column이 select와 같이 사용되면 select의 파라메터로 전달된다 -->
 	<!-- fileitem.fileItems의 결과가 리스트로 만들어지고 items에 저장된다. -->
 	
+	<resultMap id="reportMap" class="reportVO">
+		<result property="report_code" column="report_code"/>
+		<result property="report_title" column="report_title"/>
+		<result property="report_content" column="report_content"/>
+		<result property="report_date" column="report_date"/>
+		<result property="emp_code" column="emp_code"/>
+		<result property="emp_name" column="emp_name"/>
+		<result property="pw_function" column="pw_function"/>
+		<result property="project_name" column="project_name"/>
+		<result property="items" column="report_code" select="reportFile.reportFilexx" />
+	</resultMap>
+	
+	
 	<sql id="selectAll">
 		select * from report
 		where report_delete = 'n'
@@ -229,7 +242,7 @@
 		order by b.rnum desc
 	</select>
 	
-	<select id="reportView" parameterClass="map" resultClass="reportVO">
+	<select id="reportView" parameterClass="map" resultMap="reportMap">
 		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE,B.EMP_CODE
 	     FROM REPORT A, EMP B, PW C, PROJECT D,JOIN E
 	     WHERE A.EMP_CODE = B.EMP_CODE

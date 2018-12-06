@@ -8,6 +8,7 @@ import com.ibatis.sqlmap.client.SqlMapException;
 
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.SuggestVO;
 
 public interface IProjectService {
@@ -22,5 +23,8 @@ public interface IProjectService {
 	public void deleteProjectInfo(Map<String,String> params) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
 	public int totalCountPL(Map<String, String> params) throws SQLException;
+	public int totalComplete(Map<String, String> params) throws SQLException;
+	public int totalIng(Map<String, String> params) throws SQLException;
+	public int totalNew(Map<String, String> params) throws SQLException;
 
 }

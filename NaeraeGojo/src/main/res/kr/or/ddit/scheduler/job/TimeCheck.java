@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class TimeCheck{
 	
 	@Autowired
@@ -76,7 +76,6 @@ public class TimeCheck{
 			
 			try {
 				service.insertPblancInfo(pb);
-				params.clear();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

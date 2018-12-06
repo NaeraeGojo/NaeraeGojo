@@ -21,7 +21,7 @@
 		<property name="transactionConfigClass" value="com.ibatis.sqlmap.engine.transaction.external.ExternalTransactionConfig"></property>
 		<property name="transactionConfigProperties">
 			<props>
-				<prop key="DefaultAutoCommit">false</prop>
+				<prop key="DefaultAutoCommit">true</prop>
 				<prop key="SetAutoCommitAllowed">true</prop>
 			</props>
 		</property>
