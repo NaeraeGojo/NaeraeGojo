@@ -29,7 +29,7 @@
 				,a.project_code
 		  from freeboard a, emp b
 		 where a.emp_code = b.emp_code
-		 and freeboard_delete = 'n'
+		 and a.freeboard_delete = 'n'
 	</sql>
 	
 	<sql id="searchCondition">
@@ -59,7 +59,7 @@
 		  from (select rownum rnum, a.*
 				from(
 					<include refid = "selectAll"/>
-					 and freeboard.project_code = #project_code#
+					 and a.project_code = #project_code#
 					<include refid = "searchCondition"/>
 					order by to_number(freeboard_code) asc) a ) b
 		 <![CDATA[
@@ -102,7 +102,7 @@
 		UPDATE FREEBOARD
 		   SET FREEBOARD_TITLE    = #freeboard_title# 
 		      ,FREEBOARD_CONTENT  = #freeboard_content#
-		      ,EMP_NICK      = #emp_nick#
+		      ,EMP_code      = #emp_code#
 		      <dynamic prepend=",">
 		      	<isNotEmpty property="freeboard_hit">
 		      	FREEBOARD_HIT = #freeboard_hit#
