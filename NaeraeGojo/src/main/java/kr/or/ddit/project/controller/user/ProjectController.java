@@ -106,6 +106,7 @@ public class ProjectController {
 		andView.addObject("totalComplete", totalComplete);
 		andView.addObject("totalIng", totalIng);
 		andView.addObject("totalNew", totalNew);
+		andView.addObject("project_code", project_code);
 		andView.setViewName("user/project/pro/project_manage_see");
 		return andView;
 	}
