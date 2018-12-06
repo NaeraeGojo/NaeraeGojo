@@ -105,7 +105,7 @@ public class JoinController {
 	}
 
 	// 직원등록 인증 Controller
-	@RequestMapping(value = "check", method = RequestMethod.POST)
+	@RequestMapping(value = "idMail", method = RequestMethod.POST)
 	public String loginCheck(String emp_code, Map<String, String> params,
 			EmpVO paramVO) throws Exception {
 		params.put("emp_code", emp_code);
@@ -123,8 +123,7 @@ public class JoinController {
 		if (session.getAttribute("LOGIN_EMPINFO") == null) {
 			return "redirect:/user/join/loginForm.do";
 		} else {
-			Map<String, String> publicKeyMap = cryptoGen
-					.getGeneratePairKey(session);
+			Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
 			session.setAttribute("publicKeyMap", publicKeyMap);
 			return "user/join/mainForm";
 		}

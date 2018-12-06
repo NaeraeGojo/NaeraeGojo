@@ -479,69 +479,53 @@ table th,td{
               </div>
             
 <!-- 프로젝트 초대 알림 -->
-        
-        <div class="row">
-        <div class="col-md-12">
-        <!-- TABLE: LATEST ORDERS -->
-          <div class="box box-2team">
-            <div class="box-header with-border">
-              <h3 class="box-title">프로젝트 초대 알림
-              <span class="label label-warning pull-right">2</span></h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin table-hover">
-                  <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>프로젝트명</th>
-                    <th>초대자</th>
-                    <th>초대날짜</th>
-                    <th>참여여부</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>OR9842</td>
-                    <td>Call of Duty IV</td>
-                    <td>2018-11-14</td>
-                    <td>
-                      <input type="button" class="btn btn-primary " value="참여">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>OR1848</td>
-                    <td>Samsung Smart TV</td>
-                    <td>2018-11-14</td>
-                    <td>
-                      <input type="button" class="btn btn-primary " value="참여">
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
-            </div>            
 
-          <div class="box-footer clearfix">
-<!--               <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
-<!--               <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-          </div>
-          <!-- /.box-footer -->
-        </div>
-        <!-- /.box -->
-      </div>
-      </div>
-      <!-- /.col -->
-      
- <!-- 받은 피드백 알림 -->                    
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-2team">
+			<div class="box-header with-border">
+				<h3 class="box-title">
+					프로젝트 초대 알림 <span class="label label-warning pull-right">2</span>
+				</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse">
+						<i class="fa fa-minus"></i>
+					</button>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="table-responsive">
+					<table class="table no-margin table-hover">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>프로젝트명</th>
+								<th>프로젝트 시작일자</th>
+								<th>프로젝트 수요기관</th>
+								<th>담당자</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${projectAlarmList }" var="projectAlarmList">
+								<tr>
+									<td>1</td>
+									<td>${projectAlarmList.project_name }</td>
+									<td>${projectAlarmList.project_start }</td>
+									<td>${projectAlarmList.rqpps_notice_agency }</td>
+									<td>${projectAlarmList.rqpps_nickname }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="box-footer clearfix">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 받은 피드백 알림 -->                    
     <div class="modal fade" id="receivemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="container">
       <div class="modal-dialog" role="document">

@@ -159,7 +159,7 @@
 	
 	<select id="totalComplete" resultClass="int" parameterClass="map">
 		SELECT 
-		    SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 90 AND 100 THEN '완료' END ))
+		    NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 90 AND 100 THEN '완료' END )),0)
 		FROM PW
 		WHERE PROJECT_CODE = #project_code#
 		GROUP BY PW_PERCENT   
@@ -167,7 +167,7 @@
 	
 	<select id="totalIng" resultClass="int" parameterClass="map">
 		SELECT 
-		    SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 1 AND 89 THEN '진행중' END))
+		    NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 1 AND 89 THEN '진행중' END)),0)
 		FROM PW
 		WHERE PROJECT_CODE = #project_code#
 		GROUP BY PW_PERCENT   
@@ -175,7 +175,7 @@
 	
 	<select id="totalNew" resultClass="int" parameterClass="map">
 		SELECT 
-		    SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 0 AND 0 THEN '신규' END))
+		    NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 0 AND 0 THEN '신규' END)),0)
 		FROM PW
 		WHERE PROJECT_CODE = #project_code#
 		GROUP BY PW_PERCENT   
@@ -211,7 +211,9 @@
 	<update id="updateJoinProjectCode" parameterClass="projectVO">
 		UPDATE 
 		    JOIN 
-		SET PROJECT_CODE = #project_code# 
+		SET 
+			PROJECT_CODE = #project_code#
+			,JOIN_ALARM = 'y'  
 		WHERE RQPPS_CODE = #rqpps_code#
 	</update>
 	

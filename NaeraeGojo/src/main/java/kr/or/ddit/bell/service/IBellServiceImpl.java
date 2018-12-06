@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.ddit.bell.dao.IBellDao;
 import kr.or.ddit.vo.FeedbackVO;
 import kr.or.ddit.vo.IssueVO;
+import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,12 @@ public class IBellServiceImpl implements IBellService {
 	public List<VideoChatRoomVO> getVideoChatList(Map<String, String> params)
 			throws SQLException {
 		return dao.getVideoChatList(params);
+	}
+
+	@Override
+	public List<ProjectVO> projectAlarmList(Map<String, String> params)
+			throws SQLException {
+		return dao.projectAlarmList(params);
 	}
 
 	

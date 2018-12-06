@@ -29,7 +29,6 @@ $(function(){
 	    
 	    $('#btn3').click(function() {
 	    	var video_chat_room_code =  $('input[name=video_chat_room_code]').val();
-	    	alert(video_chat_room_code);
 	    	$(location).attr('href', '${pageContext.request.contextPath}/user/video/deleteVideoChat/'+video_chat_room_code+'.do');
 		});
 	
