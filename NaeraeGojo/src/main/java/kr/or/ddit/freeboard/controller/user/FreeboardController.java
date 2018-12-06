@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.annotation.Resources;
+import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +18,11 @@ import kr.or.ddit.vo.FreeBoardVO;
 import kr.or.ddit.vo.ProjectVO;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -31,9 +36,12 @@ public class FreeboardController {
 	IProjectService pservice;
 	
 	
+	@RequestMapping("freeboardForm")
+	public void freeboardForm(){}
+	
 	@RequestMapping("freeboardList")
-	public ModelAndView freeboardList(HttpServletRequest request, HttpSession session, String currentPage,
-			Map<String, String> params, ModelAndView andView) throws SQLException{
+	public Model freeboardList(Model model, Map<String, String> params, HttpServletRequest request, 
+			HttpSession session, String currentPage) throws SQLException{
 		params = SetContent.getParams(request);
 		
 		String project_code = (String) session.getAttribute("project_code");
@@ -42,55 +50,71 @@ public class FreeboardController {
 		SetContent.setPath(request);
 		
 		currentPage = SetContent.getPage(request);
+		
 		int totalCount = service.totalCount(params);
+		
 		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage), totalCount, request, 10);
+		
 		params = SetContent.setParams(params, paging);
 		
 		List<FreeBoardVO> freeboardList = service.freeboardList(params);
 		
-		andView.addObject("freeboardList", freeboardList);
+		model.addAttribute("freeboardList", freeboardList);
 		
 		ProjectVO pv = pservice.projectInfo(params);
-		andView.addObject("pv", pv);
 		
-		andView.setViewName("user/project/freeboard/freeboardList");
+		model.addAttribute("pv", pv);
 		
-		return andView;
+		model.addAttribute("page", paging.getPagingHtmls());
+		
+		return model;
 	}
 	
-	@RequestMapping("freeboardForm")
-	public void freeboardForm(){}
-	
 	@RequestMapping("freeboardView")
-	public void freeboardView(){}
+	public Model freeboardView(String freeboard_code, Model model, 
+			Map<String, String> params) throws Exception{
+		params.put("freeboard_code", freeboard_code);
+		FreeBoardVO fbv = service.freeboardInfo(params);
+		
+		int freeboard_hit = Integer.parseInt(fbv.getFreeboard_hit());
+		freeboard_hit ++;
+		
+		fbv.setFreeboard_hit(String.valueOf(freeboard_hit));
+		
+		MultipartFile[] files = {};
+		service.updateFreeboardInfo(fbv, files);
+				
+		model.addAttribute("fbv", fbv);
+		
+		return model;
+	}
+	
+	
 	@RequestMapping("freeboardUpdate")
-	public void freeboardUpdate(){}
+	public String freeboardUpdate(FreeBoardVO freeboardInfo, @RequestParam("files") MultipartFile[] files
+								, HttpServletRequest request) throws Exception{
+		service.updateFreeboardInfo(freeboardInfo, files);
+		return "redirect:/user/project/freeboard/freeboardList.do";
+	}
 	@RequestMapping("freeboardReply")
 	public void freeboardReply(){}
 
-	
-	
-	public ModelAndView freebaordList(HttpServletRequest request, HttpSession session) throws Exception{
-	
-		return null;
-	}
-	
-	
-	public ModelAndView updateFreebaord(ModelAndView andView) throws Exception{
+	@RequestMapping("freeboardInsert")
+	public String freeboardInsert(FreeBoardVO freeboardInfo, @RequestParam("files") MultipartFile[] files) throws Exception {
+		service.insertFreeboardInfo(freeboardInfo, files);
 		
-		return null;
+		return "redirect:/user/project/freeboard/freeboardList.do";
 	}
 	
-	
-	public String insertFreebaord() throws Exception{
+	@RequestMapping("freeboardDelete")
+	public String freeboardDelete(String freeboard_code, Map<String, String> params) throws Exception{
+		params.put("freeboard_code", freeboard_code);
 		
-		return null;
-	}
-	
-	
-	public String deleteFreebaord() throws Exception{
+		service.deleteFreeboardInfo(params);
 		
-		return null;
+		return "redirect:/user/project/freeboard/freeboardList.do";
 	}
+	
+	
 }
 

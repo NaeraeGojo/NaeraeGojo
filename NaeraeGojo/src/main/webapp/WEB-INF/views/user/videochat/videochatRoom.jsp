@@ -313,7 +313,7 @@ $(function(){
 	
 		initialize();
 	
-		$('#btn-mic').click();
+// 		$('#btn-mic').click();
 	// 	$('#btn-mic').hide();
 
 	});
