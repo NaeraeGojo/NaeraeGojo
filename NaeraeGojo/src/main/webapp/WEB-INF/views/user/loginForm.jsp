@@ -39,32 +39,26 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/plugins/iCheck/icheck.min.js"></script>
 
-<!-- 부트스트랩 다이얼로그 js -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
-	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 <!-- AdminLTE App -->
 <script src="${pageContext.request.contextPath }/dist/js/adminlte.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	boalert = function(mes) {
-		BootstrapDialog.show({
-			title : '알림',
-			message : mes
-		});
-	};
+    boalert = function(mes) {
+        BootstrapDialog.show({
+            title : '알림',
+            message : mes
+        });
+    };
 	
-	var message = '${param.message}';
-	if(!message == ''){
-		boalert(message);
-		
-		setTimeout(function(){
-			$(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
-		},800)
-		
-	}
-	
+    var message = '${param.message}';
+    if(!message == ''){
+        boalert(message);
+        
+        setTimeout(function(){
+            $(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
+        },800)
+        
+    }
 	
 	if(Get_Cookie('emp_code') != null){
 		$('input[name=emp_code]').val(Get_Cookie('emp_code'));
@@ -75,6 +69,7 @@ $(function(){
 		alert("해당정보가 존재하지 않습니다.");
 	}
 	$('.btn').click(function(){
+	$('#login4').click(function(){
 		if(!$('input[name=emp_code]').val()){
 			alert('해당사원번호를 찾을 수 없습니다.');
 			return false;
@@ -116,9 +111,9 @@ $(function(){
 			var emp_code = '${param.emp_code}';
 			$.ajax({
 			    type : 'post',
-			    url : '${pageContext.request.contextPath}/user/join/check.do?emp_code='+emp_code,
+			    url : '${pageContext.request.contextPath}/user/join/idMail.do',
 			    dataType : "json",
-// 			    data : { emp_code : emp_code },
+			    data : { emp_code : emp_code },
 			    success : function() {
 //						$('#code').val(result.code);
 			    	// result.flag = "true" or "false"
@@ -150,7 +145,6 @@ $(function(){
 			var email = $('input[name=empEmail]').val();
 			
 			$.ajax({
-				type : 'POST',
 				 url : '${pageContext.request.contextPath}/user/emp/idCheck.do',
 				 data : { emp_name : name,
 						emp_email : email},
@@ -160,6 +154,7 @@ $(function(){
 				}
 				 ,
 				 error : function(result) {
+					 alert("에러");
 				}
 			});
 			
@@ -249,7 +244,7 @@ $(function(){
 			                        </div>
 			                        <div class="row">
 			                        <div class="col-sm-12">
-			                        	<button type="button" class="btn" style="border-radius: 1em;">로그인</button>
+			                        	<button type="button" class="btn" id="login4" style="border-radius: 1em;">로그인</button>
 			                        </div>
 			                        </div>
 			                    </form>

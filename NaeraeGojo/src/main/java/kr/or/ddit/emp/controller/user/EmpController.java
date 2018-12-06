@@ -1,7 +1,6 @@
 package kr.or.ddit.emp.controller.user;
 
 import java.net.URLEncoder;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,11 +48,10 @@ public class EmpController {
 	@RequestMapping("empList2")
 	public void empList2(){}
 	
-	@RequestMapping(value="idCheck", method = RequestMethod.POST)
+	@RequestMapping("idCheck")
 	public ModelAndView idCheck(String emp_name, String emp_email, String emp_code,
-			Map<String, String> params, EmpVO empNum,
-			HttpServletRequest request, HttpServletResponse response,
-			Model model, ModelMap modelMap, ModelAndView andView) throws Exception{
+			Map<String, String> params, EmpVO empNum, ModelAndView andView) throws Exception{
+		
 		params.put("emp_name", emp_name);
 		params.put("emp_email", emp_email);
 		
