@@ -8,6 +8,7 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
+import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 
 public interface IJoinService {
@@ -22,4 +23,5 @@ public interface IJoinService {
 	public List<EmpVO> empList1(Map<String, String> params) throws SQLException;
 	public List<JoinVO> joinFinalList() throws SQLException;
 	public List<JoinVO> clickList(Map<String, String> params) throws SQLException;
+	public void updateRole(JoinVO jvo) throws SQLException;
 }

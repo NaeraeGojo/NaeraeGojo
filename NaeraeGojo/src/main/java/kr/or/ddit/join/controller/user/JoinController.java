@@ -21,6 +21,7 @@ import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.NotEmpVO;
+import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 import kr.or.ddit.vo.UserFileVO;
 
@@ -279,6 +280,27 @@ public class JoinController {
 		}
 		andView.setViewName("jsonConvertView");
 
+		return andView;
+	}
+	
+	@RequestMapping("join_updateRole")
+	public ModelAndView join_updateRole(JoinVO vo, String select,
+			String listHigh, String selectHigh, Map<String, String> params,
+			ModelAndView andView) throws Exception {
+
+		String[] joincodeList = vo.getJoin_code().split(",");
+		String[] positionNameList = vo.getPosition_name().split(",");
+		
+		for (int i = 0; i < joincodeList.length; i++) {
+			JoinVO joinInfo = new JoinVO();
+			joinInfo.setJoin_code(joincodeList[i]);
+			joinInfo.setPosition_name(positionNameList[i]);
+			service.updateRole(joinInfo);
+		}
+		
+		andView.addObject("vo",vo);
+		andView.setViewName("user/join/join_list");
+		
 		return andView;
 	}
 }
