@@ -169,6 +169,15 @@
 		width: 100% 
 	}
 	
+	.modal-content{
+		border-radius : 10px;
+	}
+	
+	.container_chat_emp {
+	   width: 200%;
+	   overflow: hidden;
+	 } 
+	
 	</style>
 	
 		<body class="hold-transition skin-blue sidebar-mini">
@@ -260,8 +269,10 @@
 	</body>
 	
 	<div class="modal fade" id="modal-chat">
-          <div class="modal-dialog" style="margin-top: 10%; width: 80%; height: 60%;">
-            <div class="modal-content" style="width:50%; height:100%; margin-left: auto; margin-right: auto; ">
+		<div class="container_chat_emp">
+		
+			<div class="modal-dialog" style="margin-top: 10%; width: 50%; height: 60%; float: left;">
+            <div class="modal-content" style="width:50%; margin-left: auto; margin-right: auto; ">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
@@ -275,7 +286,69 @@
 		              <b class="box-title">회원 목록</b>
 		            </div>
 		            <!-- /.box-header -->
-		            <div class="box-body">
+		            <div class="box-body" style="height: 100%;">
+		              <div class="table-responsive">
+		                <table id="" class="table table-bordered table-striped dataTable table-hover"
+              			role="grid" aria-describedby="example1_info">
+		                	<thead>
+		               			<tr role="row">
+				                    <th tabindex="0"  style="width:10%;" 
+				                  	 rowspan="1" colspan="1"></th>
+				                    <th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
+				                  	 rowspan="1" colspan="1">사원번호</th>
+		                  			<th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
+		                  			rowspan="1" colspan="1">부서</th>
+		                  			<th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
+		                  			rowspan="1" colspan="1">성명</th>
+		                		</tr>
+		                	</thead>
+		                	<tbody>
+		                	
+		                	
+		                 	</tbody>
+              			</table>
+		              </div>
+		              
+		            </div>
+		          </div>
+              </div>
+              <div class="modal-footer">
+              	<div style="width: 10%;" class="center">
+              	<table id="" class="perful">
+              		<tr>
+	              		<td  style="width: 100%">
+	              		<input id="btn_show_emp" type="button" class="btn btn-primary" value="다음">
+	              		</td>
+	              	</tr>
+	             </table>
+	             
+                </div>
+              </div>
+              
+            </div>
+              
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+		
+	
+	
+          <div class="modal-dialog" style="margin-top: 10%; width: 50%; height: 60%; float: left;">
+            <div class="modal-content" style="width:50%; margin-left: auto; margin-right: auto; ">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" align="center">새로운 채팅</h4>
+              </div>
+              <div class="modal-body" style="height: 70%; overflow: auto;">
+              <form id="chatForm">
+              	<div class="box box-warning">
+		          
+		            <div class="box-header with-border" style="height: auto;">
+		              <b class="box-title">회원 목록</b>
+		            </div>
+		            <!-- /.box-header -->
+		            <div class="box-body" style="height: 100%;">
 		              <div class="table-responsive">
 		                <table id="table_chat_emp" class="table table-bordered table-striped dataTable table-hover"
               			role="grid" aria-describedby="example1_info">
@@ -302,37 +375,49 @@
 		          </div>
               </div>
               <div class="modal-footer">
-              	<div style="width: 70%; margin-top: 3%" class="center">
+              	<div style="width: 20%;" class="center">
               	<table id="pwcForm" class="perful">
               		<tr>
-              			<td width="10%"></td>
-	              		<td colspan="2">
-	              		<input type="text" name="pwc_name" class="form-control input_foot" style="border-radius: 1em;"
-	              		 placeholder="업무 분류 추가">
+	              		<td  style="width: 100%">
+	              		<input type="button" class="pull-left btn btn-default" value="채팅 목록">
 	              		</td>
-	              		<td  style="width: 20%">
-	              		<button id="btn_check_emp" type="button" class="btn btn-primary">추가</button>
+	              		<td  style="width: 100%">
+	              		<button id="btn_check_emp" type="button" class="btn btn-primary">초대</button>
 	              		</td>
 	              	</tr>
 	             </table>
 	             
                 </div>
               </div>
-            </div>
-            
-             
               
-            </form>
+            </div>
+              
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
+
+		</div>
         </div>
         <!-- /.modal -->
 	
 <script type="text/javascript">
 $(function(){
+	boalert = function(mes){
+		BootstrapDialog.show({
+	 	    title: '알림',
+	 	    message: mes
+		});
+	};
+
 	var table;
 	
+	$('#btn_show_emp').click(function(){
+		$('.container_chat_emp').animate({
+    	    'margin-left': '-=100%'
+    	 }, 500);
+	});
+	
+	// emp체크 하고 시작 누르는 부분
 	$('#btn_check_emp').click(function(){
 		var ea = new Array();
 		$('input[name=check_emp]:checked').each(function(){
@@ -342,9 +427,38 @@ $(function(){
 			$(this).iCheck('uncheck');
 		});
 		
+		var ealen = ea.length;
+
+		if(ealen == 0){
+			boalert("채팅에 초대할 직원을 선택해주세요.");
+			return false;
+		}
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/chat/chatRoomInsert.do'
+			, type : 'post'
+			, data : {
+				chatroom_writer : '${LOGIN_EMPINFO.emp_code}'
+				, el : ea
+			}
+			, dataType : 'json'
+			, async : false
+			, traditional : true
+			, error : function(xhr, status, error){
+				boalert(error);
+			}
+			, success : function(json){
+				
+			}
+		})
+		
+		
 		
 		$('#modal-chat').modal('hide');
 		
+		return false;
+		
+		// 여기서 채팅방개설, 채팅참여 목록 인서트 작업 필요
 		var url = "${pageContext.request.contextPath}/user/chat/chatRoom.do";
 		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 	
@@ -380,8 +494,8 @@ $(function(){
 	        		tdtag += '<td style="text-align: center;"><label><input name="check_emp"  value="'
 	        				+ v.emp_code + '" type="checkbox" class="flat-red"></label></td>'
 	        		tdtag += '<td>' + v.emp_code + '</td>' 
-	        		tdtag += '<td>' + v.emp_name + '</td>' 
 	        		tdtag += '<td>' + v.part_name + '</td>' 
+	        		tdtag += '<td>' + v.emp_name + '</td>' 
 	        		tdtag += '</tr>'
 	        	})
 	        	$('#table_chat_emp tbody').append(tdtag);
