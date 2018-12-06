@@ -48,6 +48,13 @@
 		and project_code = #project_code#
 	</statement>
 
+	<statement id="freeFiles" resultClass="profileVO">
+		<include refid="selectAll"/>
+		and doc_code = #recsroom_code#
+		and doc_class = 2
+		and project_code = #project_code#
+	</statement>
+
 	<select id="fileList" parameterClass="map" resultClass="profileVO">
 		<include refid="selectAll"/>
 		and project_code = #project_code# 
