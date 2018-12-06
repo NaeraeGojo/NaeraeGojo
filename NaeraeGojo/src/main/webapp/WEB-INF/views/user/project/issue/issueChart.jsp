@@ -85,12 +85,6 @@
 					<option value="pwc">분류</option>
 					<option value="c_damdang">담당자</option>
 				</select>
-				<select class="form-control"  name="damdang" style="display: none;">
-					<option value="" selected="selected" disabled="disabled"></option>
-					<c:forEach items="${el }" var="ev">
-						<option value="${ev.emp_code }">${ev.emp_name }</option>
-					</c:forEach>
-				</select>
 				<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 				<input type="button" class="btn btn-primary form-control" value="검색" id="btn_search_gantt">
 		</form>
@@ -148,7 +142,7 @@ $(function(){
 	   	var dummy2 = {
 	   			 desc : ''
 	   			, values : [{
-	   				from : thistimes('2018-11-10')
+	   				from : thistimes('2018-10-29')
 	   				, to : ''
 	   				, label : ''
 	   				, customClass : 'ganttOpa'
@@ -173,21 +167,21 @@ $(function(){
 	           useCookie: true,
 	           onItemClick: function(data) {
 	           	var title = data.myTitle;
-	           	var mes = '선택 업무 : ' + title
-	           				+ '\n\n선택업무의 상세정보를 조회하시겠습니까?';
+	           	var mes = '선택 이슈 : ' + title
+	           				+ '\n\n이슈 결과의 상세정보를 조회하시겠습니까?';
 	           	
-	           	var pw_code = data.pw_code;
+	           	var issue_code = data.issue_code;
 	           	
-	           	confirm(mes, pw_code,1);
+	           	confirm(mes, issue_code,1);
 	           },
-	           onAddClick: function(dt, rowId) {
-	           	var cd = thisdate(dt);
-	           	var cdt = thistimes(cd);
-	           	var mes = '선택 날짜 : ' +cd
-	           				+ '\n\n선택 날짜에 새로운 업무를 등록하시겠습니까?';
+// 	           onAddClick: function(dt, rowId) {
+// 	           	var cd = thisdate(dt);
+// 	           	var cdt = thistimes(cd);
+// 	           	var mes = '선택 날짜 : ' +cd
+// 	           				+ '\n\n선택 날짜에 새로운 업무를 등록하시겠습니까?';
 	           	
-	           	confirm(mes ,cd,2);
-	           },
+// 	           	confirm(mes ,cd,2);
+// 	           },
 	           onRender: function() {
 	               if (window.console && typeof console.log === "function") {
 	                   console.log("chart rendered");
@@ -219,19 +213,18 @@ $(function(){
 						action: function(){
 							//조회
 							if(part == 1){
-								var href = '${pageContext.request.contextPath}/user/project/pw/pwView.do';
-								var query = '?pw_code='+data;
+								var href = '${pageContext.request.contextPath}/user/project/issue/issueResultView.do';
+								var query = '?issue_code='+data;
 					        	
 					        	$(location).attr('href',href + query)
 								
 								$(location).attr('href',href + query);
-							}else{
-								var href = '${pageContext.request.contextPath}/user/project/pw/pwForm.do';
-								var query = '?cdate=' + data;
-								$(location).attr('href',href + query);
 							}
-							
-							 
+// 							else{
+// 								var href = '${pageContext.request.contextPath}/user/project/pw/pwForm.do';
+// 								var query = '?cdate=' + data;
+// 								$(location).attr('href',href + query);
+// 							}
 							}
 						}
 			           , {
@@ -282,7 +275,7 @@ $(function(){
     	var testArray = new Array();
     	
     	$.ajax({
-    		url : '${pageContext.request.contextPath}/user/project/pw/getPwChart.do'
+    		url : '${pageContext.request.contextPath}/user/project/issue/issueChartInfo.do'
     		, data : {search_keycode:search_keycode , search_keyword:search_keyword}
     		, type : 'post'
     		, dataType : 'json'
@@ -291,56 +284,53 @@ $(function(){
     			boalert(error);
     		}
     		, success : function(json){
-    			var len = json.pc.length;
+    			var len = json.issueChartInfo.length;
     			if(len == 0){
     				boalert("검색 결과가 존재하지 않습니다.")
     				return;
     			}
     			var name1 = '';
-    			var nameGo = '';
-    			$.each(json.pc,function(i,v){
-    				nameGo = v.PWC_NAME;
-    				if(name1 == nameGo){
-    					nameGo = '';
-    				}else{
-    					name1 = nameGo;
-    				}
-    				
-    				
-    				var cc = 'ganttGray';
+//     			var nameGo = '';
+    			$.each(json.issueChartInfo,function(i,v){
+//     				nameGo = v.PWC_NAME;
+//     				if(name1 == nameGo){
+//     					nameGo = '';
+//     				}else{
+//     					name1 = nameGo;
+//     				}
+    				var cc = 'ganttRed';
     				
     				var today = new Date();
     				
-    				var eetTime = thistimes(v.PW_EET);
+    				var resultTime = thistimes(v.ISSUE_RESULT_DAY);
     				
-    				var per = parseInt(v.PW_PERCENT);
-    				
+//     				var per = parseInt(v.PW_PERCENT);
     				// percent 가 90 이상이면 파란색
-    				if(per >= 90){
-    					cc = 'ganttBlue';
-    				}
-    				
+//     				if(per >= 90){
+//     					cc = 'ganttBlue';
+//     				}
     				// percent 가 90 미만, 완료기한이 지났으면 빨간색
-    				if(today.getTime() > eetTime){
-    					if(per < 90){
-    						cc = 'ganttRed';
-    					}
-    				}
+//     				if(today.getTime() > eetTime){
+//     					if(per < 90){
+//     						cc = 'ganttRed';
+//     					}
+//     				}
     				
-    				var content_text = '업무 기한 : ' + v.PW_EST + ' ~ ' + v.PW_EET 
-    									+ '<br> 담당자 : ' + v.EMP_NAME 
-    									+ '<br> 진척도 : ' + v.PW_PERCENT + '%'
-    									+ '<br> 업무내용 : ' + v.PW_CONTENT;
+    				var content_text = '이슈 발생일자 : ' + v.ISSUE_EVENT_DAY 
+    									+ '<br> 이슈 처리일자 : ' + v.ISSUE_RESULT_DAY 
+    									+ '<br> 담당자 : ' + v.EMP_DAMDANG 
+    									+ '<br> 이슈 등급 : ' + v.ISSUE_LEVEL 
+    									+ '<br> 이슈 처리 내용 : ' + v.ISSUE_RESULT_CONTENT;
     				
     				var testSource = {
-    						name : nameGo
-    						, desc : v.PW_FUNCTION
+    						name : v.ISSUE_NAME,
+    						desc : ""
     						, values : [{
-    							from : thistimes(v.PW_EST)
-    							, to : thistimes(v.PW_EET)
-    							, label : v.PW_FUNCTION
+    							from : thistimes(v.ISSUE_EVENT_DAY)
+    							, to : thistimes(v.ISSUE_RESULT_DAY)
+    							, label : v.ISSUE_NAME
     							, customClass : cc
-    							, dataObj: {myTitle: v.PW_FUNCTION , myContent: content_text , pw_code:v.PW_CODE}
+    							, dataObj: {myTitle: v.ISSUE_NAME , myContent: content_text , issue_code:v.ISSUE_CODE}
     						}]
     				};
     				testArray.push(testSource);

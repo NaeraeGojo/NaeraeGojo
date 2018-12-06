@@ -19,5 +19,7 @@ public interface IIssueResultDao {
 	public List<IssueResultVO> riskList(Map<String, String> params) throws SQLException;
 	public void updateRiskHit(Map<String, String> params) throws SQLException;
 	public int totalCountIssueResult(Map<String, String> params) throws SQLException;
+	public List<Map<String, String>> issueChartInfo(Map<String, String> params) throws SQLException;
+
 
 }
