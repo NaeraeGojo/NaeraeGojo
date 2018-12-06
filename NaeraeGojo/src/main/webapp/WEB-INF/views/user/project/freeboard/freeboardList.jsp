@@ -11,8 +11,12 @@
 }
 </style>
     <!-- Main content -->
-    <section class="content">	<!-- content 기본 큰 창 (기본설정)-->
-      <div class="row">		<!-- 행을 나누는 기준의 큰 div(기본 설정) -->
+      <div class="row">
+      <div class="freecont">
+      	<div class="col-md-4 pull-right" style="width: auto;">
+			<input id="btn_freeForm" value="+게시물 등록" type="button" class="btn btn-lg btn_free_upper">    	
+      	</div>
+      </div>
       <div class="col-md-11">	<!-- 원하는 width 비율로 class를 수정 -->
   		<!-- TABLE: LATEST ORDERS -->
           <div class="box box-warning">		<!-- 테이블을 넣을 박스 기본설정 warning일 경우 진한 노랑색 (수정해도 됨)-->
@@ -86,7 +90,6 @@
 	    <a href="${pageContext.request.contextPath}/user/project/project_manage_see.do" class="btn bg-maroon pull-left">뒤로가기</a>
        </div>
 	   </div>
-	</section>
 <script>
 $(function(){
 	$('table tr:gt(0)').click(function(){

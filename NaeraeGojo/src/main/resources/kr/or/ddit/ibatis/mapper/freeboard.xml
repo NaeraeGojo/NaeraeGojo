@@ -6,59 +6,46 @@
 	<typeAlias alias="freeboardVO" type="kr.or.ddit.vo.FreeBoardVO"/>
 	
 	<resultMap id="freeboardMap" class="freeboardVO">
-		<result property="bo_no" column="bo_no"/>
-		<result property="bo_title" column="bo_title"/>
-		<result property="bo_writer" column="bo_writer"/>
-		<result property="bo_nickname" column="bo_nickname"/>
-		<result property="bo_pwd" column="bo_pwd"/>
-		<result property="bo_mail" column="bo_mail"/>
-		<result property="bo_ip" column="bo_ip"/>
-		<result property="bo_content" column="bo_content"/>
-		<result property="bo_hit" column="bo_hit"/>
-		<result property="bo_reg_date" column="bo_reg_date"/>
-		<result property="bo_status" column="bo_status"/>
-		<result property="bo_group" column="bo_group"/>
+		<result property="freeboard_code" column="freeboard_code"/>
+		<result property="freeboard_title" column="freeboard_title"/>
+		<result property="freeboard_content" column="freeboard_content"/>
+		<result property="freeboard_date" column="freeboard_date"/>
+		<result property="freeboard_hit" column="freeboard_hit"/>
+		<result property="emp_code" column="emp_code"/>
+		<result property="emp_name" column="emp_name"/>
 		<result property="project_code" column="project_code"/>
-		<result property="bo_seq" column="bo_seq"/>
-		<result property="bo_depth" column="bo_depth"/>
-		<result property="items" column="{bo_no=bo_no,project_code=project_code}" select="profile.freeFiles"/>
+		<result property="items" column="{freeboard_code=freeboard_code,project_code=project_code}" select="profile.freeFiles"/>
 	</resultMap>
 	
 	<sql id="selectAll">
-		SELECT TO_CHAR(BO_REG_DATE,'yyyy-mm-dd') AS BO_REG_DATE
-				,BO_NO
-				,BO_TITLE
-				,BO_WRITER
-				,BO_NICKNAME
-				,BO_PWD
-				,BO_MAIL
-				,BO_IP
-				,BO_CONTENT
-				,BO_HIT
-				,BO_STATUS
-				,BO_GROUP
-				,BO_SEQ
-				,BO_DEPTH
+		SELECT TO_CHAR(FREEBOARD_DATE,'yyyy-mm-dd') AS FREEBOARD_DATE
+				,FREEBOARD_CODE
+				,FREEBOARD_TITLE
+				,FREEBOARD_CONTENT
+				,FREEBOARD_HIT
+				,EMP_CODE
+				,EMP_NAME
+				,PROJECT_CODE
 		  FROM FREEBOARD
-		 WHERE BO_STATUS = 'y'
+		 WHERE FREEBOARD_DELETE = 'n'
 	</sql>
 	
 	<sql id="searchCondition">
 		<dynamic prepend="AND">
 			<isNotEmpty property="search_keyword">
 				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
-						BO_TITLE LIKE '%'||#search_keyword#||'%'
-					 OR BO_CONTENT LIKE '%'||#search_keyword#||'%'
-					 OR BO_WRITER LIKE '%'||#search_keyword#||'%'
+						FREEBOARD_TITLE LIKE '%'||#search_keyword#||'%'
+					 OR FREEBOARD_CONTENT LIKE '%'||#search_keyword#||'%'
+					 OR EMP_CODE LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="TITLE">
-					BO_TITLE LIKE '%'||#search_keyword#||'%'
+					FREEBOARD_TITLE LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="CONTENT">
-					BO_CONTENT LIKE '%'||#search_keyword#||'%'
+					FREEBOARD_CONTENT LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="WRITER">
-					BO_WRITER LIKE '%'||#search_keyword#||'%'
+					EMP_CODE LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 			</isNotEmpty>
 		</dynamic>
@@ -72,117 +59,64 @@
 					<include refid = "selectAll"/>
 					 and freeboard.project_code = #project_code#
 					<include refid = "searchCondition"/>
-					order by bo_group, bo_seq asc) a ) b
+					order by to_number(freeboard_code) asc) a ) b
 		 <![CDATA[
- 		 where b.rnum <= #startCount#
- 		   and b.rnum >= #endCount#
+ 		 where b.rnum <= #startNo#
+ 		   and b.rnum >= #endNo#
  		 ]]>
 		 order by b.rnum desc
 	</select>
 	
+	<select id="totalCount" parameterClass="map" resultClass="int">
+		SELECT COUNT(*)
+		  FROM FREEBOARD
+		 WHERE FREEBOARD_DELETE = 'n'
+		 AND PROJECT_CODE = #project_code#
+		 <include refid="searchCondition"/> 
+	</select>
+	
+	<insert id="insertFreeboard" parameterClass="freeboardVO">
+		<selectKey keyProperty="freeboard_code" resultClass="string">
+			SELECT FREEBOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO FREEBOARD(FREEBOARD_CODE
+							,FREEBOARD_TITLE
+							,FREEBOARD_CONTENT
+							,EMP_CODE
+							,EMP_NAME
+							,PROJECT_CODE)
+					VALUES(#freeboard_code#
+						  ,#freeboard_title#
+						  ,#freeboard_content#
+						  ,#emp_code#
+						  ,#emp_name#
+						  ,#project_code#)
+	</insert>
+	
 	<select id="freeboardInfo" parameterClass="map" resultMap="freeboardMap">
 		<include refid="selectAll"/>
-		AND BO_NO = #bo_no#
+		AND FREEBOARD_CODE = #freeboard_code#
 	</select>
-
-	<update id="updateBOHIT" parameterClass="map">
-		UPDATE FREEBOARD
-		   SET BO_HIT = BO_HIT + 1
-		 WHERE BO_NO = #bo_no#
-	</update>
 	
 	<update id="updateFreeboard" parameterClass="freeboardVO">
 		UPDATE FREEBOARD
-		   SET BO_TITLE    = #bo_title# 
-		      ,BO_NICKNAME = #bo_nickname#
-		      ,BO_PWD      = #bo_pwd#
-		      ,BO_MAIL     = #bo_mail#
-		      ,BO_CONTENT  = #bo_content#
-		 WHERE BO_NO = #bo_no#
+		   SET FREEBOARD_TITLE    = #freeboard_title# 
+		      ,FREEBOARD_CONTENT  = #freeboard_content#
+		      ,EMP_NAME      = #emp_name#
+		      <dynamic prepend=",">
+		      	<isNotEmpty property="freeboard_hit">
+		      	FREEBOARD_HIT = #freeboard_hit#
+		      	</isNotEmpty>
+		      </dynamic>
+		 WHERE FREEBOARD_CODE = #freeboard_code#
 	</update>
 	
 	<update id="deleteFreeboard" parameterClass="map">
 		UPDATE FREEBOARD
-		   SET BO_STATUS = 'n'
-		 WHERE BO_NO = #bo_no#
+		   SET FREEBOARD_DELETE = 'y'
+		 WHERE FREEBOARD_CODE = #freeboard_code#
 	</update>
 	
-	<insert id="insertFreeboard" parameterClass="freeboardVO">
-		<selectKey keyProperty="bo_no" resultClass="string">
-			SELECT FREEBOARD_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO FREEBOARD(BO_NO
-							,BO_TITLE
-							,BO_WRITER
-							,BO_NICKNAME
-							,BO_PWD
-							,BO_MAIL
-							,BO_IP
-							,BO_CONTENT
-							,BO_GROUP)
-					VALUES(#bo_no#
-						,#bo_title#
-						,#bo_writer#
-						,#bo_nickname#
-						,#bo_pwd#
-						,#bo_mail#
-						,#bo_ip#
-						,#bo_content#
-						,#bo_no#)
-	</insert>
-	
-	<select id="incrementSEQ" parameterClass="freeboardVO" 
-		resultClass="string">
-		SELECT MAX(BO_SEQ) + 1
-		  FROM FREEBOARD
-		 WHERE BO_GROUP = #bo_group#	
-	</select>
-	
-	<update id="updateSEQ" parameterClass="freeboardVO">
-		UPDATE FREEBOARD
-		   SET BO_SEQ = BO_SEQ + 1
-		 WHERE BO_GROUP = #bo_group#
-		 <![CDATA[ 
-		   AND BO_SEQ > #bo_seq#
-		 ]]>
-	</update>	
-	
-	<insert id="insertFreeboardReply" parameterClass="freeboardVO">
-		<selectKey keyProperty="bo_no" resultClass="string">
-			SELECT FREEBOARD_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO FREEBOARD(BO_NO
-							,BO_TITLE
-							,BO_WRITER
-							,BO_NICKNAME
-							,BO_PWD
-							,BO_MAIL
-							,BO_IP
-							,BO_CONTENT
-							,BO_GROUP
-							,BO_SEQ
-							,BO_DEPTH)
-					VALUES(#bo_no#
-						,#bo_title#
-						,#bo_writer#
-						,#bo_nickname#
-						,#bo_pwd#
-						,#bo_mail#
-						,#bo_ip#
-						,#bo_content#
-						,#bo_group#
-						,#bo_seq#
-						,#bo_depth#)
-	</insert>
-	
-	<select id="totalCount" parameterClass="map" resultClass="int">
-		SELECT COUNT(*)
-		  FROM FREEBOARD
-		 WHERE BO_STATUS = 'y'
-		 AND PROJECT_CODE = #project_code#
-		 <include refid="searchCondition"/> 
-	</select>
-
 </sqlMap>
 
 
