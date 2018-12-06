@@ -68,7 +68,6 @@ $(function(){
 	if(eval('${!empty params.message}')){
 		alert("해당정보가 존재하지 않습니다.");
 	}
-	$('.btn').click(function(){
 	$('#login4').click(function(){
 		if(!$('input[name=emp_code]').val()){
 			alert('해당사원번호를 찾을 수 없습니다.');
@@ -190,8 +189,7 @@ $(function(){
 			
 		});
 		
-		
-});
+	});
 </script>
 </head>
    <body>
