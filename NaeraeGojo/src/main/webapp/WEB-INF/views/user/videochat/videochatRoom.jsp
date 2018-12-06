@@ -150,175 +150,179 @@ $(function(){
         });		
 	});
 	
-	
-	$('#btn-mic').click(function(){
 		
 	
 	// 	if (typeof webkitSpeechRecognition !== 'function') {
 		// 	    alert('크롬에서만 동작 합니다.');
 		// 	    return false;
 		// 	  }
-		var isRecognizing = false;
-		var ignoreEndProcess = false;
+// 		var isRecognizing = false;
+// 		var ignoreEndProcess = false;
 	
-		// 	  const audio = document.querySelector('#audio');
-		const
-		recognition = new webkitSpeechRecognition();
-		const
-		language = 'ko-KR';
+// 		// 	  const audio = document.querySelector('#audio');
+// 		const recognition = new webkitSpeechRecognition();
+// 		const language = 'ko-KR';
 	
-		const
-		$btnMic = $('#btn-mic');
-		const
-		$result = $('#result');
+// 		const $btnMic = $('#btn-mic');
+// 		const $result = $('#result');
 	
-		recognition.continuous = true;
-		recognition.interimResults = true;
+// 		recognition.continuous = true;
+// 		recognition.interimResults = true;
 	
-		/**
-		 * 음성 인식 시작 처리
-		 */
-		recognition.onstart = function() {
-			console.log('onstart', arguments);
-			isRecognizing = true;
-			$btnMic.attr('class', 'on');
-		};
+// 		/**
+// 		 * 음성 인식 시작 처리
+// 		 */
+// 		recognition.onstart = function() {
+// 			console.log('onstart', arguments);
+// 			isRecognizing = true;
+// 			$btnMic.attr('class', 'on');
+// 		};
 	
-		/**
-		 * 음성 인식 종료 처리
-		 * @returns {boolean}
-		 */
-		recognition.onend = function() {
-			console.log('onend', arguments);
-			isRecognizing = false;
-			isRecognizing = true;
-			$('#btn-mic').click();
+// 		/**
+// 		 * 음성 인식 종료 처리
+// 		 * @returns {boolean}
+// 		 */
+// 		recognition.onend = function() {
+// 			console.log('onend', arguments);
+// 			isRecognizing = false;
+// 			isRecognizing = true;
+// 			$('#btn-mic').click();
 	
-			if (ignoreEndProcess) {
-				return false;
-			}
+// 			if (ignoreEndProcess) {
+// 				return false;
+// 			}
 	
-			// DO end process
-			$btnMic.attr('class', 'off');
-			if (!finalTranscript) {
-				console.log('empty finalTranscript');
-				return false;
-			}
-		};
+// 			// DO end process
+// 			$btnMic.attr('class', 'off');
+// 			if (!finalTranscript) {
+// 				console.log('empty finalTranscript');
+// 				return false;
+// 			}
+// 		};
 	
-		/**
-		 * 음성 인식 결과 처리
-		 * @param event
-		 */
-		var finalTranscript = '';
-		var interimTranscript = '';
-		recognition.onresult = function(event) {
-			console.log('onresult', event);
+// 		/**
+// 		 * 음성 인식 결과 처리
+// 		 * @param event
+// 		 */
+// 		var finalTranscript = '';
+// 		var interimTranscript = '';
+// 		recognition.onresult = function(event) {
+// 			console.log('onresult', event);
 	
-			for (var i = event.resultIndex; i < event.results.length; ++i) {
-				if (event.results[i].isFinal) {
-					finalTranscript += event.results[i][0].transcript;
-				} else {
-					interimTranscript += event.results[i][0].transcript;
-				}
-			}
+// 			for (var i = event.resultIndex; i < event.results.length; ++i) {
+// 				if (event.results[i].isFinal) {
+// 					finalTranscript += event.results[i][0].transcript;
+// 				} else {
+// 					interimTranscript += event.results[i][0].transcript;
+// 				}
+// 			}
 	
-			//포커스된  객체!
-			fireCommand(interimTranscript);
-			console.log('interimTranscript', interimTranscript);
-			console.log('finalTranscript', finalTranscript);
-			var $focused = $(':focus');
-			if (interimTranscript.endsWith('지워')
-					|| finalTranscript.endsWith('지워')) {
-				interimTranscript = '';
-				finalTranscript = '';
-				$focused.val('');
-				$('#result').summernote('code', '');
-			}
+// 			//포커스된  객체!
+// 			fireCommand(interimTranscript);
+// 			console.log('interimTranscript', interimTranscript);
+// 			console.log('finalTranscript', finalTranscript);
+// 			var $focused = $(':focus');
+// 			if (interimTranscript.endsWith('지워')
+// 					|| finalTranscript.endsWith('지워')) {
+// 				interimTranscript = '';
+// 				finalTranscript = '';
+// 				$focused.val('');
+// 				$('#result').val('code', '');
+// 			}
 	
 	
-		};
+// 		};
 	
-		/**
-		 * 음성 인식 에러 처리
-		 * @param event
-		 */
-		// 	  recognition.onerror = function(event) {
-		// 	    console.log('onerror', event);
-		// 	    if (event.error.match(/no-speech|audio-capture|not-allowed/)) {
-		// 	      ignoreEndProcess = true;
-		// 	    }
-		// 	    $btnMic.attr('class', 'off');
-		// 	  };
-		/**
-		 * 명령어 처리
-		 * @param string
-		 */
-		// 	  function fireCommand(string) {
-		// 	    if (string.endsWith('레드')) {
-		// 	        $result.attr('class', 'red');
-		// 	    } else if (string.endsWith('블루')) {
-		// 	        $result.attr('class', 'blue');
-		// 	    } else if (string.endsWith('그린')) {
-		// 	        $result.attr('class', 'green');
-		// 	    } else if (string.endsWith('옐로우')) {
-		// 	        $result.attr('class', 'yellow');
-		// 	    } else if (string.endsWith('오렌지')) {
-		// 	        $result.attr('class', 'orange');
-		// 	    } else if (string.endsWith('그레이')) {
-		// 	        $result.attr('class', 'grey');
-		// 	    } else if (string.endsWith('골드')) {
-		// 	        $result.attr('class', 'gold');
-		// 	    } else if (string.endsWith('화이트')) {
-		// 	        $result.attr('class', 'white');
-		// 	    } else if (string.endsWith('블랙')) {
-		// 	        $result.attr('class', 'black');
-		// 	    }  else if (string.endsWith('스피치') || string.endsWith('말해줘') || string.endsWith('말 해 줘')) {
-		// 	      textToSpeech($('#final_span').text() || '전 음성 인식된 글자를 읽습니다.');
-		// 	    }
-		// 	  }
-		/**
-		 * 개행 처리
-		 * @param s
-		 * @returns {string}
-		 */
-		function linebreak(s) {
-			return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-		}
+// 		/**
+// 		 * 음성 인식 에러 처리
+// 		 * @param event
+// 		 */
+// 		  recognition.onerror = function(event) {
+// 		    console.log('onerror', event);
+// 		    if (event.error.match(/no-speech|audio-capture|not-allowed/)) {
+// 		      ignoreEndProcess = true;
+// 		    }
+// 		    $btnMic.attr('class', 'off');
+// 		  };
+// 		/**
+// 		 * 명령어 처리
+// 		 * @param string
+// 		 */
+// 		// 	  function fireCommand(string) {
+// 		// 	    if (string.endsWith('레드')) {
+// 		// 	        $result.attr('class', 'red');
+// 		// 	    } else if (string.endsWith('블루')) {
+// 		// 	        $result.attr('class', 'blue');
+// 		// 	    } else if (string.endsWith('그린')) {
+// 		// 	        $result.attr('class', 'green');
+// 		// 	    } else if (string.endsWith('옐로우')) {
+// 		// 	        $result.attr('class', 'yellow');
+// 		// 	    } else if (string.endsWith('오렌지')) {
+// 		// 	        $result.attr('class', 'orange');
+// 		// 	    } else if (string.endsWith('그레이')) {
+// 		// 	        $result.attr('class', 'grey');
+// 		// 	    } else if (string.endsWith('골드')) {
+// 		// 	        $result.attr('class', 'gold');
+// 		// 	    } else if (string.endsWith('화이트')) {
+// 		// 	        $result.attr('class', 'white');
+// 		// 	    } else if (string.endsWith('블랙')) {
+// 		// 	        $result.attr('class', 'black');
+// 		// 	    }  else if (string.endsWith('스피치') || string.endsWith('말해줘') || string.endsWith('말 해 줘')) {
+// 		// 	      textToSpeech($('#final_span').text() || '전 음성 인식된 글자를 읽습니다.');
+// 		// 	    }
+// 		// 	  }
+// 		/**
+// 		 * 개행 처리
+// 		 * @param s
+// 		 * @returns {string}
+// 		 */
+// 		function linebreak(s) {
+// 			return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+// 		}
 	
-		/**
-		 * 음성 인식 트리거
-		 * @param event
-		 */
-		function start(event) {
-	// 		if (isRecognizing) {
-	// 			recognition.stop();
-	// 			return;
-	// 		}
-			recognition.lang = language;
-			recognition.start();
-	// 		ignoreEndProcess = false;
+// 		/**
+// 		 * 음성 인식 트리거
+// 		 * @param event
+// 		 */
+// 		function start(event) {
+// 	// 		if (isRecognizing) {
+// 	// 			recognition.stop();
+// 	// 			return;
+// 	// 		}
+// 			recognition.lang = language;
+// 			recognition.start();
+// 	// 		ignoreEndProcess = false;
 	
-			finalTranscript = '';
-			final_span.innerHTML = '';
-			interim_span.innerHTML = '';
-		}
+// 			finalTranscript = '';
+// 			final_span.innerHTML = '';
+// 			interim_span.innerHTML = '';
+// 		}
 	
-		/**
-		 * 초기 바인딩
-		 */
-		function initialize() {
-			$btnMic.click(start);
-		}
+// 		/**
+// 		 * 초기 바인딩
+// 		 */
+// 		function initialize() {
+// 			$btnMic.click(start);
+// 		}
 	
-		initialize();
+// 		initialize();
 	
 // 		$('#btn-mic').click();
 	// 	$('#btn-mic').hide();
 
-	});
 
 });
+
+function hasGetUserMedia() { 
+	  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || 
+	            navigator.mozGetUserMedia || navigator.msGetUserMedia); 
+} 
+
+if (hasGetUserMedia()) { 
+  // Good to go! 
+} else { 
+  alert('getUserMedia() is not supported in your browser'); 
+} 
 </script>
 
 
@@ -337,8 +341,6 @@ $(function(){
 						<input id="urlText" name="video_chat_room_url" type="text" class="pull-right"  placeholder="상단의 url 주소를 복사하여 입력해주세요.">
 					</c:if>
 					<input type="hidden" value="${video_chat_room_code }" name="room_code"> 
-<!-- 					<button id="btn-mic" class="off">마이크</button> -->
-<!-- 					<audio id="audio" src="audio/ending.mp3"></audio> -->
 				</div>
 				
 				<div class="box-body">
@@ -348,6 +350,8 @@ $(function(){
 					    <div>
 						   <video id="localVideo" autoplay mute></video>   <!--  로컬 -->
 						   <video id="remoteVideo" autoplay></video>            <!--  원격카메ㅏ -->
+						   <input type="file" accept="audio/*;capture=microphone"> 
+<
 	<!-- 					   <video id="remoteVideo2" autoplay></video>  -->
 	<!-- 				       <video src="" ></video> -->
 	<!-- 				       <video src="" ></video> -->
@@ -358,7 +362,7 @@ $(function(){
 					      <span class="final" id="final_span"></span>
 					      <span class="interim" id="interim_span"></span>
    						 </div>
-   						 <button id="btn-mic" class="off">마이크 <span></span></button>
+   						 <button id="btn-mic" class="off">마이크</button>
 					</div>
 				    <!--관련업무  div -->
 				    <div class="dd" id="secondDiv" style="width: 38%; float: right;  height: 680px !important;">

@@ -73,11 +73,18 @@ $(function(){
     	
         var video_chat_room_code = $(this).find('td:eq(0) input').val();
         var video_chat_level= $(this).find('td:eq(5) input').val();
+        var emp_code =  $(this).find('td:eq(6) input').val();
         
-        if(video_chat_level== 'level1' ||video_chat_level== 'level2'||video_chat_level== 'level3'){
+//         if(emp_code == LOGIN_EMPINFO.emp_code){
+// 	        $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatView/'+video_chat_room_code+'.do');
+//         }
+        if(video_chat_level== 'level1' ||video_chat_level== 'level2'||video_chat_level== 'level3' ){
         	boalert("회의 진행중입니다. 종료 시 다시 눌러주세요.");
-        }
-        if(video_chat_level== 'level4'){
+        } 
+//         if(emp_code == LOGIN_EMPINFO.emp_code) {
+//         	 $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatView/'+video_chat_room_code+'.do');
+//         }
+        if(video_chat_level== 'level4' ){
 	        $(location).attr('href', '${pageContext.request.contextPath}/user/video/chatView/'+video_chat_room_code+'.do');
         }
     });
@@ -297,7 +304,7 @@ function ptclick(project_code) {
 	                               </span>
 	                           </td>
                             </c:if>
-                            <td style="width: 120px;">${chatroomInfo.emp_name}</td>
+                            <td style="width: 120px;"><input type="hidden" value="${chatroomInfo.emp_code }">${chatroomInfo.emp_name}</td>
 	                  </tr>
                   </c:forEach>
                   </tbody>  
