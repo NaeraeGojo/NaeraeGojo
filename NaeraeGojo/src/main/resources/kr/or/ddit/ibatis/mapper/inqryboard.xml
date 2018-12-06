@@ -47,7 +47,15 @@
 		 WHERE INQRY_BOARD_CODE = #inqry_board_code#
 	</update>
 	
-
+	<!-- 문의게시글 수정 -->
+	<update id="updateInqryBoard" parameterClass="map">
+		UPDATE INQRYBOARD
+		   SET INQRY_BOARD_TITLE = #inqry_board_title#
+			  ,INQRY_BOARD_CONTENT = #inqry_board_content# 
+		 WHERE INQRY_BOARD_CODE = #inqry_board_code#
+	</update>
+	
+	
 </sqlMap>
 
 

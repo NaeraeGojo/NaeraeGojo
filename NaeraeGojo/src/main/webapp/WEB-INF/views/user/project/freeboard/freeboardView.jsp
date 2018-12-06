@@ -219,11 +219,11 @@ $(function() {
 	});
 	
 	$('#btn_del').click(function(){
-		var recsroom_code = '${rrv.recsroom_code}';
+		var freeboard_code = '${fbv.freeboard_code}';
 		
-		var query = '?recsroom_code=' + recsroom_code;
+		var query = '?freeboard_code=' + freeboard_code;
 		
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/recs/recsDelete.do'+query)
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/freeboard/freeboardDelete.do'+query)
 	});
 
 	$('#btn_back').click(function() {
@@ -240,24 +240,24 @@ $(function() {
     	}
 		
 		
-		$(location).attr('href','${pageContext.request.contextPath}/user/project/recs/recsList.do' + query);
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/freeboard/freeboardList.do' + query);
 	});
 	
 
-	$('#recsUpForm').submit(function() {
+	$('#freeUpForm').submit(function() {
 		var project_code = $('input[name=project_code]').val();
-		var recsroom_code = $('input[name=recsroom_code]').val();
-		var recsroom_title = $('input[name=recsroom_title]').val();
-		var recsroom_writer = $('input[name=recsroom_writer]').val();
-		var recsroom_content = $('textarea[name=recsroom_content]').val();
+		var freeboard_code = $('input[name=freeboard_code]').val();
+		var freeboard_title = $('input[name=freeboard_title]').val();
+		var emp_code = $('input[name=emp_code]').val();
 		var emp_nick = $('input[name=emp_nick]').val();
+		var freeboard_content = $('textarea[name=freeboard_content]').val();
 
-		if (recsroom_title == '') {
+		if (freeboard_title == '') {
 			boalert("제목을 입력해주세요.");
 			return false;
 		}
 
-		if (recsroom_content == '') {
+		if (freeboard_content == '') {
 			boalert("내용을 입력해주세요.");
 			return false;
 		}
@@ -268,13 +268,13 @@ $(function() {
 	refresh();
 	
 	
-	$('input[name=recsroom_title]').val('${rrv.recsroom_title}');
-	$('textarea[name=recsroom_content]').val('${rrv.recsroom_content}');
-	$('input[name=recsroom_writer]').val('${rrv.recsroom_writer}');
-	$('input[name=emp_nick]').val('${rrv.emp_nick}');
+	$('input[name=freeboard_title]').val('${fbv.freeboard_title}');
+	$('textarea[name=freeboard_content]').val('${fbv.freeboard_content}');
+	$('input[name=emp_code]').val('${fbv.emp_code}');
+	$('input[name=emp_nick]').val('${fbv.emp_nick}');
 
-	$('input[name=recsroom_title_view]').val('${rrv.recsroom_title}');
-	$('textarea[name=recsroom_content_view]').val('${rrv.recsroom_content}');
+	$('input[name=freeboard_title_view]').val('${fbv.freeboard_title}');
+	$('textarea[name=freeboard_content_view]').val('${fbv.freeboard_content}');
 });
 </script>
 <div class="row">
@@ -288,7 +288,7 @@ $(function() {
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<form role="form" id="freeViewForm" class="form-horizontal"
+					<form role="form" id="freeUpForm" class="form-horizontal"
 						enctype="multipart/form-data" method="post"
 						action="${pageContext.request.contextPath }/user/project/freeboard/freeboardUpdate.do">
 						<input type="hidden" name="project_code" value="${fbv.project_code}" /> 
