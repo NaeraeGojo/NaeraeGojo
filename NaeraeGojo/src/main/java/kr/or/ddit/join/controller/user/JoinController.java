@@ -302,4 +302,27 @@ public class JoinController {
 		
 		return andView;
 	}
+	
+	
+	@RequestMapping("listAdd")
+	public ModelAndView listAdd(String list, String select,
+			String listHigh, String selectHigh, Map<String, String> params,
+			ModelAndView andView) throws Exception {
+		
+		System.out.println(list);// EMP코드
+		System.out.println(select);// 제안요청서코드
+		String[] sp = list.split("/");
+		for (int i = 0; i < sp.length; i++) {
+			params.put("emp_code", sp[i]);
+			params.put("rqpps_code", select);
+			service.insertJoinInfo(params);
+			params.clear();
+		}
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
+	}
+	
+	
+	
 }
