@@ -35,8 +35,8 @@ video {
 
 
 <!-- 전체 라이브러리 -->
-<!-- <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script> -->
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/js/realWebRTC.js"></script> --%>
+<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/realWebRTC.js"></script>
 <script>
 
 $(function(){
