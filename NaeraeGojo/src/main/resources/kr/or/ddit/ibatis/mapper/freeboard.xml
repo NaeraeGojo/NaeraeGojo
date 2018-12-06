@@ -4,6 +4,7 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="freeboard">
 	<typeAlias alias="freeboardVO" type="kr.or.ddit.vo.FreeBoardVO"/>
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
 	
 	<resultMap id="freeboardMap" class="freeboardVO">
 		<result property="freeboard_code" column="freeboard_code"/>
@@ -12,22 +13,23 @@
 		<result property="freeboard_date" column="freeboard_date"/>
 		<result property="freeboard_hit" column="freeboard_hit"/>
 		<result property="emp_code" column="emp_code"/>
-		<result property="emp_name" column="emp_name"/>
+		<result property="emp_nick" column="emp_nick"/>
 		<result property="project_code" column="project_code"/>
 		<result property="items" column="{freeboard_code=freeboard_code,project_code=project_code}" select="profile.freeFiles"/>
 	</resultMap>
 	
 	<sql id="selectAll">
-		SELECT TO_CHAR(FREEBOARD_DATE,'yyyy-mm-dd') AS FREEBOARD_DATE
-				,FREEBOARD_CODE
-				,FREEBOARD_TITLE
-				,FREEBOARD_CONTENT
-				,FREEBOARD_HIT
-				,EMP_CODE
-				,EMP_NAME
-				,PROJECT_CODE
-		  FROM FREEBOARD
-		 WHERE FREEBOARD_DELETE = 'n'
+		select to_char(freeboard_date,'yyyy-mm-dd') as freeboard_date
+				,a.freeboard_code
+				,a.freeboard_title
+				,a.freeboard_content
+				,a.freeboard_hit
+				,a.emp_code
+				,b.emp_nick
+				,a.project_code
+		  from freeboard a, emp b
+		 where a.emp_code = b.emp_code
+		 and freeboard_delete = 'n'
 	</sql>
 	
 	<sql id="searchCondition">
@@ -68,10 +70,10 @@
 	</select>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">
-		SELECT COUNT(*)
-		  FROM FREEBOARD
-		 WHERE FREEBOARD_DELETE = 'n'
-		 AND PROJECT_CODE = #project_code#
+		select count(*)
+		  from freeboard
+		 where freeboard_delete = 'n'
+		 and project_code = #project_code#
 		 <include refid="searchCondition"/> 
 	</select>
 	
@@ -83,13 +85,11 @@
 							,FREEBOARD_TITLE
 							,FREEBOARD_CONTENT
 							,EMP_CODE
-							,EMP_NAME
 							,PROJECT_CODE)
 					VALUES(#freeboard_code#
 						  ,#freeboard_title#
 						  ,#freeboard_content#
 						  ,#emp_code#
-						  ,#emp_name#
 						  ,#project_code#)
 	</insert>
 	
@@ -102,7 +102,7 @@
 		UPDATE FREEBOARD
 		   SET FREEBOARD_TITLE    = #freeboard_title# 
 		      ,FREEBOARD_CONTENT  = #freeboard_content#
-		      ,EMP_NAME      = #emp_name#
+		      ,EMP_NICK      = #emp_nick#
 		      <dynamic prepend=",">
 		      	<isNotEmpty property="freeboard_hit">
 		      	FREEBOARD_HIT = #freeboard_hit#

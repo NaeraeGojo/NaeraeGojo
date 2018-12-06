@@ -96,7 +96,7 @@ $(function(){
 									<tr code="${list.freeboard_code }">
 										<td>${list.rnum}</td>
 										<td>${list.freeboard_title }</td>	                  	
-										<td>${list.emp_name }</td>
+										<td>${list.emp_nick }</td>
 										<td>${list.freeboard_date }</td>
 										<td>${list.freeboard_hit}</td>
 									</tr> 

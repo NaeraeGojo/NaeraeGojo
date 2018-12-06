@@ -39,26 +39,31 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/plugins/iCheck/icheck.min.js"></script>
 
+<!-- 부트스트랩 다이얼로그 js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="${pageContext.request.contextPath }/dist/js/adminlte.min.js"></script>
 <script type="text/javascript">
 $(function(){
-    boalert = function(mes) {
-        BootstrapDialog.show({
-            title : '알림',
-            message : mes
-        });
-    };
-	
-    var message = '${param.message}';
-    if(!message == ''){
-        boalert(message);
-        
-        setTimeout(function(){
-            $(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
-        },800)
-        
-    }
+	 boalert = function(mes) {
+	      BootstrapDialog.show({
+	         title : '알림',
+	         message : mes
+	      });
+	   };
+	   
+	   var message = '${param.message}';
+	   if(!message == ''){
+	      boalert(message);
+	      
+	      setTimeout(function(){
+	         $(location).attr('href','${pageContext.request.contextPath}/user/join/loginForm.do');
+	      },800)
+	      
+	   }
 	
 	if(Get_Cookie('emp_code') != null){
 		$('input[name=emp_code]').val(Get_Cookie('emp_code'));
