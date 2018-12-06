@@ -276,14 +276,14 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" align="center">새로운 채팅</h4>
+                <h4 class="modal-title" align="center">채팅</h4>
               </div>
               <div class="modal-body" style="height: 70%; overflow: auto;">
               <form id="chatForm">
               	<div class="box box-warning">
 		          
 		            <div class="box-header with-border" style="height: auto;">
-		              <b class="box-title">회원 목록</b>
+		              <b class="box-title">채팅 초대 알림</b>
 		            </div>
 		            <!-- /.box-header -->
 		            <div class="box-body" style="height: 100%;">
@@ -317,7 +317,7 @@
               	<table id="" class="perful">
               		<tr>
 	              		<td  style="width: 100%">
-	              		<input id="btn_show_emp" type="button" class="btn btn-primary" value="다음">
+	              		<input id="btn_show_emp" type="button" class="btn btn-primary" value="New">
 	              		</td>
 	              	</tr>
 	             </table>
@@ -379,7 +379,7 @@
               	<table id="pwcForm" class="perful">
               		<tr>
 	              		<td  style="width: 100%">
-	              		<input type="button" class="pull-left btn btn-default" value="채팅 목록">
+	              		<input type="button" id="btn_show_cl" class="pull-left btn btn-default" value="채팅 목록">
 	              		</td>
 	              		<td  style="width: 100%">
 	              		<button id="btn_check_emp" type="button" class="btn btn-primary">초대</button>
@@ -414,6 +414,12 @@ $(function(){
 	$('#btn_show_emp').click(function(){
 		$('.container_chat_emp').animate({
     	    'margin-left': '-=100%'
+    	 }, 500);
+	});
+	
+	$('#btn_show_cl').click(function(){
+		$('.container_chat_emp').animate({
+    	    'margin-left': '+=100%'
     	 }, 500);
 	});
 	
