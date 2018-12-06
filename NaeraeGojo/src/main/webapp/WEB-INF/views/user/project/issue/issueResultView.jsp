@@ -67,8 +67,12 @@ $(function(){
 			boalert("이슈 처리 내용을 입력해 주세요.")
 			return false;
 	    }
-		return false;
+		return true;
 	});
+	$('#issueChart').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/issue/issueChart.do');
+	});
+	
 });
 </script>
 <section class="content">
@@ -171,6 +175,7 @@ $(function(){
 							<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
 							<input value="결과 삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">결과 수정</button>
+							<input value="이슈 차트" id="issueChart" type="button" class="btn btn-sm btn-success btn-flat pull-right">
 						</div>
 					</form>
 				</div>

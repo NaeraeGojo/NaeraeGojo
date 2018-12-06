@@ -40,7 +40,7 @@ public class loginCheckFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest) request;
 		String uri = req.getRequestURI();
 		
-		if(!uri.contains("loginForm")&&!uri.contains("loginCheck")){
+		if(!uri.contains("loginForm")&&!uri.contains("loginCheck")&&!uri.contains("idCheck")&&!uri.contains("passCheck")&&!uri.contains("idMail")){
 			HttpSession session = req.getSession();
 			EmpVO ev = (EmpVO) session.getAttribute("LOGIN_EMPINFO");
 			if( ev == null){

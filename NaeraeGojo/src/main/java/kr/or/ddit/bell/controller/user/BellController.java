@@ -17,10 +17,12 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import kr.or.ddit.bell.service.IBellService;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.FeedbackVO;
 import kr.or.ddit.vo.IssueVO;
+import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 
 import org.springframework.stereotype.Controller;
@@ -60,6 +62,9 @@ public class BellController {
 		String videoChatCnt = service.getvideoChatCnt(params);
 		List<VideoChatRoomVO> videoChatList = service.getVideoChatList(params);
 		
+		//프로젝트 알람 리스트
+		List<ProjectVO> projectAlarmList = service.projectAlarmList(params);
+		
 		
 		andview.addObject("issueList", issueList); // 이슈 리스트
 		andview.addObject("listCnt", listCnt); // 이슈 카운트
@@ -72,6 +77,8 @@ public class BellController {
 		
 		andview.addObject("videoChatCnt", videoChatCnt); // 화상 초대 count
 		andview.addObject("videoChatList", videoChatList); // 화상 초대 리스트
+		
+		andview.addObject("projectAlarmList", projectAlarmList); // 프로젝트 알람 리스트
 		
 		andview.setViewName("user/bellNotice/bellList");
 		return andview;

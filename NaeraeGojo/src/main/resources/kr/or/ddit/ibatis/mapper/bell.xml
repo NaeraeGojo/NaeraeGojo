@@ -6,6 +6,7 @@
 	<typeAlias alias="issueVO" type="kr.or.ddit.vo.IssueVO"/>
 	<typeAlias alias="feedbackVO" type="kr.or.ddit.vo.FeedbackVO"/>
 	<typeAlias alias="videoChatVO" type="kr.or.ddit.vo.VideoChatRoomVO"/>
+	<typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
 
     
     <select id="getIssueList" resultClass="issueVO" parameterClass="map">
@@ -133,7 +134,24 @@
          order by z.rnum desc 
     </select>
     
-    
+    <select id="projectAlramList" parameterClass="map" resultClass="projectVO">
+    	SELECT 
+			A.PROJECT_CODE
+			,A.PROJECT_NAME
+			,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
+            ,TO_CHAR(SUGGEST_COST,'L9,999,999,999,999') AS SUGGEST_COST
+            ,D.RQPPS_NOTICE_AGENCY
+            ,B.EMP_CODE
+            ,B.JOIN_ALARM
+            ,D.RQPPS_NICKNAME
+		FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E
+		WHERE A.PROJECT_DELETE = 'n'
+		AND B.PROJECT_CODE = A.PROJECT_CODE
+        AND A.SUGGEST_CODE = E.SUGGEST_CODE
+        AND D.RQPPS_CODE = E.RQPPS_CODE
+        AND B.JOIN_ALARM = 'y'
+        AND B.EMP_CODE = #emp_code#	
+    </select>
     
     
 </sqlMap>

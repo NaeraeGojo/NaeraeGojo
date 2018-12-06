@@ -33,8 +33,7 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 	@Override
 	public FreeBoardVO freeboardInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.freeboardInfo(params);
 	}
 
 	@Override
@@ -46,8 +45,8 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void insertFreeboardInfo(FreeBoardVO freeboardInfo, MultipartFile[] files) throws SQLException{
-		String bo_no = dao.insertFreeboardInfo(freeboardInfo);
-		List<ProjectAllFileVO> pfl = fileMapper.mapping(files, bo_no, "3", freeboardInfo.getProject_code());
+		String freeboard_code = dao.insertFreeboardInfo(freeboardInfo);
+		List<ProjectAllFileVO> pfl = fileMapper.mapping(files, freeboard_code, "2", freeboardInfo.getProject_code());
 		
 		for(ProjectAllFileVO pfv : pfl){
 			pfdao.insertProjectFile(pfv);
@@ -57,21 +56,24 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 	@Override
 	public void deleteFreeboardInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		dao.deleteFreeboardInfo(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public void updateFreeboardInfo(FreeBoardVO freeboardInfo)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public void updateFreeboardInfo(FreeBoardVO freeboardInfo, MultipartFile[] files) throws SQLException {
+		dao.updateFreeboardInfo(freeboardInfo);
 		
+		List<ProjectAllFileVO> pfl = fileMapper.mapping(files, freeboardInfo.getFreeboard_code(), "2", freeboardInfo.getProject_code());
+		
+		for(ProjectAllFileVO pfv : pfl){
+			pfdao.insertProjectFile(pfv);
+		}
 	}
 
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.totalCount(params);
 	}
 
 }
