@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.SuggestVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class IProjectDaoImpl implements IProjectDao{
 	public List<SuggestVO> suggestList(Map<String, String> params) throws SQLException {
 		return client.queryForList("project.suggestList", params);
 	}
+	
 
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
@@ -69,6 +71,21 @@ public class IProjectDaoImpl implements IProjectDao{
 	@Override
 	public SuggestVO suggestInfo(Map<String, String> params) throws SQLException {
 		return (SuggestVO) client.queryForObject("project.suggestInfo", params);
+	}
+
+	@Override
+	public int totalComplete(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("project.totalComplete", params);
+	}
+
+	@Override
+	public int totalIng(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("project.totalIng", params);
+	}
+
+	@Override
+	public int totalNew(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("project.totalNew", params);
 	}
 
 }

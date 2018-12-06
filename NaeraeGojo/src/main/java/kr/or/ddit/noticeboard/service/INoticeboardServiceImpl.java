@@ -38,17 +38,17 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class,SQLException.class,NestableException.class})
 	@Override
-	public NoPrEmpVO noticeboardInfo(Map<String, String> params)
+	public NoticeBoardVO noticeboardInfo(Map<String, String> params)
 			throws SQLException {
-		NoPrEmpVO vo = null;
+		NoticeBoardVO vo = null;
 		vo = noticeboardDao.noticeboardInfo(params);
 		return vo;
 	}
 
 	@Override
-	public List<NoPrEmpVO> noticeboardList(Map<String, String> params)
+	public List<NoticeBoardVO> noticeboardList(Map<String, String> params)
 			throws SQLException {
-		List<NoPrEmpVO> list = null;
+		List<NoticeBoardVO> list = null;
 		list = noticeboardDao.noticeboardList(params);
 		return list;
 	}
@@ -60,10 +60,8 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 			throws SQLException {
 		String notice_code = noticeboardDao.insertNoticeboardInfo(nbv);
 		List<NoticeFileVO> nfvo = new ArrayList<NoticeFileVO>();
-		NoticeFileVO nfvo1 = noticeFileMapper.mapping(files[0],notice_code);
-//		AllFileVO afvo2 = allFileMapper.mapping(files[1],notice_all_code,"1");
+		NoticeFileVO nfvo1 = noticeFileMapper.mapping(files[0], notice_code);
 		nfvo.add(nfvo1);
-//		afvo.add(afvo2);
 		for(NoticeFileVO nfv : nfvo){
 			noticeFiledao.insertNoticeFile(nfv);
 		}
@@ -80,9 +78,9 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class,SQLException.class,NestableException.class})
 	@Override
-	public void updateNoticeboardInfo(NoPrEmpVO nbi)
+	public void updateNoticeboardInfo(NoticeBoardVO nbv)
 			throws SQLException {
-		noticeboardDao.updateNoticeboardInfo(nbi);
+		noticeboardDao.updateNoticeboardInfo(nbv);
 		
 	}
 

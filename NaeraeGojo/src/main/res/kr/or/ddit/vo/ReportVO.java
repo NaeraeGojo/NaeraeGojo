@@ -32,7 +32,6 @@ public class ReportVO {
 	private String report_feed_content;
 	
 	
-	
 	public String getReport_feed_code() {
 		return report_feed_code;
 	}

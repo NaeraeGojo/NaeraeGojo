@@ -46,8 +46,8 @@ label {
 					<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label>
 					<div class="col-sm-9">
 						<!-- select -->
-						<select class="form-control" id="proNm" >
-	                   	 <option>프로젝트를 선택해주세요</option>
+						<select class="form-control" name="project_code" id="project_code" >
+	                   	  <option>프로젝트를 선택해주세요</option>
 		                   <c:forEach items="${vo }" var="proName">
 		                    	<option value="${proName.project_code}">${proName.project_name}</option>
 		                   </c:forEach>
@@ -102,9 +102,10 @@ label {
 <script type="text/javascript">
 $(function(){
 	    $('#insert').click(function(){
-	    	if($("#proNm option:selected").val()==''){
-	    		alert('프로젝트를 선택해주세요');
-	    		return false;
+	    	if($('select[name=project_code] option:selected').val()==null){
+	    		alert('관련업무를 선택하세요');
+				return false;
+		    }
 	    	if($('input[name=notice_title]').val()==''){
 	    		alert('제목을 입력하세요');
 	    		return false;

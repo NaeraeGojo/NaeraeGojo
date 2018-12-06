@@ -43,6 +43,19 @@ label {
                 <form role="form" class="form-horizontal" action="${pageContext.request.contextPath}/user/project/notice/updateNotice.do" method="post">
                 
                 <div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label>
+					<div class="col-sm-9">
+						<!-- select -->
+						<select class="form-control" name="project_code" id="project_code" >
+<!-- 	                   	 <option>프로젝트를 선택해주세요</option> -->
+<%-- 		                   <c:forEach items="${vo }" var="proName"> --%>
+		                    	<option value="${vo.project_code}">${vo.project_name}</option>
+<%-- 		                   </c:forEach> --%>
+	                   </select>
+					</div>
+				</div>
+                
+                <div class="form-group">
                   <label for="inputPassword1" class="col-sm-2 control-label">제목</label>
 
                   <div class="col-sm-9">
@@ -63,7 +76,7 @@ label {
 
                   <div class="col-sm-9">
                     <input type="password" class="form-control" name="notice_pass" id="notice_pass">
-                    <input type="hidden" name="notice_all_code" value="${vo.notice_code }">
+                    <input type="hidden" name="notice_code" value="${vo.notice_code }">
                   </div>
                 </div>
                 
@@ -75,14 +88,16 @@ label {
                   </div>
                 </div>
                 
+                <c:forEach items="${vo.items }" var="noticeFileItem" varStatus="stat">
                 <div class="form-group">
                   <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력</font></font></label>
-                <c:forEach items="${vo.items }" var="allFileItem" varStatus="stat">
                   <div class="col-sm-10 control-label">
-	                  <input type="file" id="file01" name="files" value="/ALL_FILE_SAVE_NAME/${allFileItem.all_file_save_name}">
+                  	  <a id="${noticeFileItem.notice_file_code }" href="${pageContext.request.contextPath }/user/project/notice/noticeFileDownload.do?notice_file_code=${noticeFileItem.notice_file_code }">
+								${noticeFileItem.notice_file_name}</a>
+<%-- 	                  <input type="file" id="file01" name="files" value="/SAVE_NOTICE/${noticeFileItem.notice_file_save_name}"> --%>
                   </div>
-                </c:forEach>
                 </div>
+                </c:forEach>
                 
 <!--                 <div class="form-group"> -->
 <!--                   <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력2</font></font></label> -->
@@ -115,21 +130,21 @@ $(function(){
 	    	
 	    	$(location).attr('href','${pageContext.request.contextPath}/user/project/notice/deleteNotice/'+notice_code+'.do');
 	    });
-	    $('form').submit(function(){
-	    	if($('input[name=notice_title]').val()==''){
-	    		return false;
-	    	}
-	    	if($('input[name=notice_content]').val()==''){
-	    		return false;
-	    	}
-	    	if($('input[name=notice_pass]').val()==''){
-	    		return false;
-	    	}
-	    	if(!$('input[name=emp_name]').val().validationMAIL()){
-	    		return false;
-	    	}
-	    	return true;
-	    })
+// 	    $('form').submit(function(){
+// 	    	if($('input[name=notice_title]').val()==''){
+// 	    		return false;
+// 	    	}
+// 	    	if($('input[name=notice_content]').val()==''){
+// 	    		return false;
+// 	    	}
+// 	    	if($('input[name=notice_pass]').val()==''){
+// 	    		return false;
+// 	    	}
+// 	    	if(!$('input[name=emp_name]').val().validationMAIL()){
+// 	    		return false;
+// 	    	}
+// 	    	return true;
+// 	    })
 })
 
 </script>

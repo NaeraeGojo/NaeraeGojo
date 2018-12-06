@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -79,11 +80,23 @@ public class IPblancboardServiceImpl implements IPblancboardService {
 		return totalCount;
 	}
 
-//	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Transactional(propagation=Propagation.REQUIRES_NEW, noRollbackFor={Exception.class})
 	@Override
-	public void insertPblancInfo(PblancBoardVO pb)
+	public String insertPblancInfo(PblancBoardVO pb)
 			throws SQLException {
-		pblancboardDao.insertPblancInfo(pb);
+		return pblancboardDao.insertPblancInfo(pb);
+	}
+
+	@Override
+	public String pblanc_board_comVS(String pblanc_board_com)
+			throws SQLException {
+		return pblancboardDao.pblanc_board_comVS(pblanc_board_com);
+	}
+
+	@Override
+	public void updatePblancInfo(Map<String, String> params)
+			throws SQLException {
+		pblancboardDao.updatePblancInfo(params);
 	}
 
 }

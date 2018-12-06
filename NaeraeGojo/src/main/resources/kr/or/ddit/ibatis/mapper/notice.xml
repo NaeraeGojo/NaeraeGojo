@@ -6,14 +6,7 @@
 	<typeAlias alias="NoticeBoardVO" type="kr.or.ddit.vo.NoticeBoardVO"/>
 	<typeAlias alias="NoPrEmpVO" type="kr.or.ddit.vo.NoPrEmpVO"/>
 	
-	<sql id="selectAll">
-		SELECT * 
-		FROM NOTICE
-		WHERE NOTICE_DELETE = 'n'
-		
-	</sql>
-	
-	<resultMap class="NoPrEmpVO" id="noticeMap">
+	<resultMap id="noticeMap" class="NoticeBoardVO">
 		<result property="notice_code" column="notice_code"/>
 		<result property="notice_title" column="notice_title"/>
 		<result property="notice_content" column="notice_content"/>
@@ -21,9 +14,20 @@
 		<result property="notice_delete" column="notice_delete"/>
 		<result property="notice_hit" column="notice_hit"/>
 		<result property="notice_pass" column="notice_pass"/>
+<!-- 		<result property="emp_code" column="emp_code"/> -->
 		<result property="emp_name" column="emp_name"/>
-		<result property="items" column="notice_code" select="allFile.allFiles" />
+		<result property="project_code" column="project_code"/>
+		<result property="project_name" column="project_name"/>
+		<result property="items" column="notice_code" select="noticeFile.noticeFilexx" />
 	</resultMap>
+	
+	
+	<sql id="selectAll">
+		SELECT * 
+		FROM NOTICE
+		WHERE NOTICE_DELETE = 'n'
+		
+	</sql>
 	
 	<insert id="insertNotice" parameterClass="NoticeBoardVO">
 		<selectKey keyProperty="notice_code" resultClass="string">
@@ -38,6 +42,7 @@
 							,NOTICE_DATE
 							,NOTICE_HIT
 							,NOTICE_DELETE
+							,PROJECT_CODE
 							,EMP_CODE
 						)
 		 
@@ -49,6 +54,7 @@
 							,sysdate
 							,default
 							,default
+							,#project_code#
 							,#emp_code#
 					)
 	</insert>
@@ -70,7 +76,7 @@
 	 	</dynamic>
 	</sql>
 	
-	<select id="noticeList" resultClass="NoPrEmpVO" parameterClass="map">
+	<select id="noticeList" resultClass="NoticeBoardVO" parameterClass="map">
 		SELECT B.*
 		FROM  (SELECT ROWNUM RNUM, A.NOTICE_CODE, A.NOTICE_TITLE , A.NOTICE_DATE, A.EMP_NAME, A.NOTICE_HIT
 				FROM ( SELECT * 
@@ -97,7 +103,7 @@
  		WHERE RNUM <= #startCount# 
  		 AND  RNUM >= #endCount# 
  		]]> 
-		ORDER BY RNUM DESC
+		ORDER BY RNUM ASC
 	</select>	
 	
 <!-- 	<select id="noticeAllInfo" parameterClass="map" resultClass="notEmpVO"> -->
@@ -109,10 +115,11 @@
 	
 	<select id="noticeInfo" parameterClass="map" resultMap="noticeMap">
 		SELECT A.NOTICE_CODE, B.EMP_NAME,A.NOTICE_TITLE,A.NOTICE_CONTENT,A.NOTICE_PASS,
-		A.NOTICE_DATE,A.NOTICE_DELETE,A.NOTICE_HIT
-		FROM NOTICE A, EMP B 
+		A.NOTICE_DATE,A.NOTICE_DELETE,A.NOTICE_HIT,C.PROJECT_NAME,A.PROJECT_CODE
+		FROM NOTICE A, EMP B , PROJECT C
       	WHERE A.NOTICE_CODE = #notice_code#
       	AND	B.EMP_CODE = A.EMP_CODE
+        AND A.PROJECT_CODE = C.PROJECT_CODE
 	</select>
 	
 	<select id="projectList" parameterClass="map" resultClass="NoticeBoardVO">
@@ -120,10 +127,11 @@
 		FROM NOTICE A, EMP B, PROJECT C
 		WHERE A.EMP_CODE = B.EMP_CODE
 		AND   A.PROJECT_CODE = C.PROJECT_CODE
+		GROUP BY C.PROJECT_CODE, C.PROJECT_NAME
 	</select>
 	
 	
-	<update id="updateNotice" parameterClass="NoPrEmpVO">
+	<update id="updateNotice" parameterClass="NoticeBoardVO">
 		UPDATE NOTICE
 		   SET NOTICE_TITLE         = #notice_title# 
 		      ,NOTICE_CONTENT       = #notice_content#

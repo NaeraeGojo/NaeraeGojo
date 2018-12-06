@@ -1,5 +1,7 @@
 package kr.or.ddit.vo;
 
+import java.util.List;
+
 public class NoticeBoardVO {
 
 	// 공지사항(전체)
@@ -15,10 +17,24 @@ public class NoticeBoardVO {
 	private String emp_name;
 	private String project_code;
 	private String project_name;
+	private List<NoticeFileVO> items;
+	private String rnum;
 	
 	
 	
 	
+	public String getRnum() {
+		return rnum;
+	}
+	public void setRnum(String rnum) {
+		this.rnum = rnum;
+	}
+	public List<NoticeFileVO> getItems() {
+		return items;
+	}
+	public void setItems(List<NoticeFileVO> items) {
+		this.items = items;
+	}
 	public String getEmp_name() {
 		return emp_name;
 	}

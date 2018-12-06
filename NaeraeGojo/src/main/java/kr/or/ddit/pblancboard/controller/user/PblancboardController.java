@@ -1,9 +1,6 @@
 package kr.or.ddit.pblancboard.controller.user;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +42,8 @@ public class PblancboardController {
 	
 	// 크롤링할 주소
 	private static String URL = "http://www.g2b.go.kr:8101/ep/tbid/tbidList.do?";
+	
+	private static String URL22 = "http://www.g2b.go.kr:8081/ep/invitation/publish/bidInfoDtl.do?bidno=20181109970&bidseq=00&releaseYn=Y&taskClCd=1";
 	
 	@RequestMapping("pblancboardForm")
 	public void pblancboardForm(){}
@@ -126,69 +125,101 @@ public class PblancboardController {
 		return "redirect:/user/pblancboard/pblancboardList.do";
 	}
 	
-	@Scheduled(cron="5 * * * * *")
+//	@Scheduled(cron="* * * * * *")
 	public void crawling() throws Exception{
-		System.out.println("asdfasdf    : " + new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date()));
-		
-		String KEY_WORD = "system";   // 검색하고 싶은 단어.  영어로
+		String KEY_WORD2 = "정부청사";   // 검색하고 싶은 단어.  영어로
+		// 한글은 더 해야함
+
+		String KEY_WORD = URLEncoder.encode(KEY_WORD2, "euc-kr");
 		
 		System.out.println("URL ::  " +  URL +getParameter(KEY_WORD) + "\n\n");
 		
 		// 1. Document를 가져온다
-		Document doc = null;
-		doc = Jsoup.connect(URL + getParameter(KEY_WORD)).get();
+		Document doc = Jsoup.connect(URL + getParameter(KEY_WORD)).get();
 		
 		// 2. 목록을 가져온다.
 		//System.out.println("" + doc.toString());
 		Elements elements = doc.select("tbody tr .tl a");
-		//
-		////3. 목록(배열 저장된)에서 정보를 가져온다.
-		int idx = 0;
 		
+		// 3. 목록(배열 저장된)에서 정보를 가져온다.
+		int idx = 0;
 		for(Element element : elements){
+			String setPblanc_board_title = element.text();  // setPblanc_board_title - 사업 이름
 			
-			System.out.println(++idx + " : " + element.text()); // PBLANC_BOARD_COM
-			String pblanc_board_link = element.attr("abs:href"); // 절대 경로 -- PBLANC_BOARD_LINK
+			//기존에 정보있는지 확인
+			String tmp = service.pblanc_board_comVS(setPblanc_board_title);
+			if(tmp == null){
+				
+				System.out.println(++idx + " : " + setPblanc_board_title);
+				String pblanc_board_link = element.attr("abs:href"); // 절대 경로 -- PBLANC_BOARD_LINK
+				
+				
+				PblancBoardVO pb = new PblancBoardVO();
+				pb.setPblanc_board_title(element.text());
+				pb.setPblanc_board_link(pblanc_board_link);
+				String pblanc_board_code = service.insertPblancInfo(pb);
+				
+				
+				Document doc2 = Jsoup.connect(URL22).get();
+				
+				Elements pblanc_board_com = doc2.select("#container div:eq(7) .table_info tbody tr:eq(3) td:eq(3)");  // 공고일시 
+				Elements com_date = doc2.select("#container div:eq(9) .table_info tbody tr:eq(2) td:eq(1)");  // 공고일시 
+				Elements end_proposal = doc2.select("#container div:eq(9) .table_info tbody tr:eq(2) td:eq(3)");  // 마감일시 
+				Elements budget = doc2.select("#container div:eq(13) .table_info tbody tr:eq(2) td:eq(1)");  // 예산 
+				
+				String realbudget = budget.text();
+				realbudget = realbudget.replaceAll("원", "");
+				
+				realbudget = realbudget.replaceAll(",", "" );
+				
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("pblanc_board_com_date", com_date.text());
+				params.put("pblanc_board_end_proposal", end_proposal.text());
+				params.put("pblanc_board_budget", realbudget);
+				params.put("pblanc_board_com", pblanc_board_com.text());
+				params.put("pblanc_board_code", pblanc_board_code);
+				
+				service.updatePblancInfo(params);
+				
+			}
 			
-			
-			PblancBoardVO pb = new PblancBoardVO();
-			pb.setPblanc_board_com(element.text());
-			pb.setPblanc_board_link(pblanc_board_link);
-			service.insertPblancInfo(pb);
-			
-			System.out.println(pblanc_board_link + "\n");
-			System.out.println("=============================\n\n");
 		}
+		
+
+		
+		
+		
 		
 	}
 	public static String getParameter(String KEY_WORD){
 		String params = "searchType=1" +
-						"&bidSearchType=1" + 
-						"&taskClCds=" +
-						"&bidNm="+ KEY_WORD + "" +
-						"&searchDtType=1" +
-						"&fromBidDt=2018" +
-						"%2F11%2F03" +
-						"&toBidDt=2018%2F12%2F03" +
-						"&fromOpenBidDt=" +
-						"&toOpenBidDt=" +
-						"&radOrgan=1" +
-						"&instNm=" +
-						"&instSearchRangeType=" +
-						"&refNo=" +
-						"&area=" +
-						"&areaNm=" +
-						"&industry=" +
-						"&industryCd=" +
-						"&budget=" +
-						"&budgetCompare=UP" +
-						"&detailPrdnmNo=" +
-						"&detailPrdnm=" +
-						"&procmntReqNo=" +
-						"&intbidYn=" +
-						"&regYn=Y" +
-						"&recordCountPerPage=1" ;
+				"&bidSearchType=1" + 
+				"&taskClCds=" +
+				"&bidNm="+ KEY_WORD + "" +
+				"&searchDtType=1" +
+				"&fromBidDt=2018" +
+				"%2F11%2F03" +
+				"&toBidDt=2018%2F12%2F03" +
+				"&fromOpenBidDt=" +
+				"&toOpenBidDt=" +
+				"&radOrgan=1" +
+				"&instNm=" +
+				"&instSearchRangeType=" +
+				"&refNo=" +
+				"&area=" +
+				"&areaNm=" +
+				"&industry=" +
+				"&industryCd=" +
+				"&budget=" +
+				"&budgetCompare=UP" +
+				"&detailPrdnmNo=" +
+				"&detailPrdnm=" +
+				"&procmntReqNo=" +
+				"&intbidYn=" +
+				"&regYn=Y" +
+				"&recordCountPerPage=1" ;
 		return params;
+		
 	}
 	
 	

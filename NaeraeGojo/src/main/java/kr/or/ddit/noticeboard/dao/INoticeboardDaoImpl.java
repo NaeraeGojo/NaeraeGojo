@@ -21,21 +21,21 @@ public class INoticeboardDaoImpl implements INoticeboardDao{
 	private SqlMapClient client;
 	
 	@Override
-	public NoPrEmpVO noticeboardInfo(Map<String, String> params)
+	public NoticeBoardVO noticeboardInfo(Map<String, String> params)
 			throws SQLException {
-		return (NoPrEmpVO) client.queryForObject("notice.noticeInfo",params);
+		return (NoticeBoardVO) client.queryForObject("notice.noticeInfo",params);
 	}
 
 	@Override
-	public List<NoPrEmpVO> noticeboardList(Map<String, String> params)
+	public List<NoticeBoardVO> noticeboardList(Map<String, String> params)
 			throws SQLException {
-		return (List<NoPrEmpVO>) client.queryForList("notice.noticeList",params);
+		return (List<NoticeBoardVO>) client.queryForList("notice.noticeList",params);
 	}
 
 	@Override
-	public String insertNoticeboardInfo(NoticeBoardVO nbi)
+	public String insertNoticeboardInfo(NoticeBoardVO nbv)
 			throws SQLException {
-		return (String) client.insert("notice.insertNotice",nbi);
+		return (String) client.insert("notice.insertNotice",nbv);
 		
 	}
 
@@ -47,9 +47,9 @@ public class INoticeboardDaoImpl implements INoticeboardDao{
 	}
 
 	@Override
-	public void updateNoticeboardInfo(NoPrEmpVO nbi)
+	public void updateNoticeboardInfo(NoticeBoardVO nbv)
 			throws SQLException {
-		client.update("notice.updateNotice",nbi);
+		client.update("notice.updateNotice",nbv);
 		
 	}
 

@@ -57,6 +57,10 @@ $(function(){
 		$(this).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueList2.do');
 	})
 	
+	$('#issueChart').click(function(){
+		$(location).attr('href','${pageContext.request.contextPath}/user/project/issue/issueChart.do');
+	});
+	
 });
 </script>
     
@@ -122,7 +126,7 @@ $(function(){
 							<option value="LEVEL">등급</option>
 						</select>
 						<button type="submit" class="btn btn-primary form-control">검색</button>
-						<button type="button" id="" class="btn btn-warning form-control">이슈 차트</button>
+						<button type="button" id="issueChart" class="btn btn-warning form-control">이슈 차트</button>
 						<button type="button" id="insertIssue" class="btn btn-danger form-control">이슈 등록</button>
 						<button type="button" id="listBtn1" class="btn btn-info form-control">프로젝트 목록</button>
 					</form>
