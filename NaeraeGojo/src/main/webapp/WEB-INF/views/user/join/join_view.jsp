@@ -58,7 +58,7 @@ select{
             </div>
 <!--             /.box-header -->
 <!--             form start -->
-            <form class="form-horizontal">
+            <form role="form" class="form-horizontal" action="${pageContext.request.contextPath}/user/join/join_updateRole.do" method="post">
               <div class="box-body" >
                 
                 <div class="form-group">
@@ -82,14 +82,14 @@ select{
                   <tbody >
                   	<c:forEach items="${joList }" var="list">
 	                  <tr>
-	                  	<input type="hidden" value="${ list.join_code}"/>
+	                  	<input type="hidden" value="${ list.join_code}" name="join_code" />
 	                  	<td>${ list.rnum}</td>
 	                    <td>${list.emp_level}</td>
 	                    <td>${list.emp_name}</td>
-	                    <td><select  id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
+	                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
 							<option  value="">권한 선택</option>
-		                    <option  value="">PM</option>
-		                    <option  value="">PL</option>
+		                    <option  value="PM">PM</option>
+		                    <option  value="PL">PL</option>
 			            </select></td>
 	                 </tr>
 	                </c:forEach>
@@ -97,15 +97,10 @@ select{
                  </tbody>
                </table>
               </div>
-                
-                
-                
-                
-                
               </div>
               <div class="box-footer clearfix">
               <input value="목록" type="button" id="returnList" class="btn btn-sm btn-warning btn-flat pull-right">
-              <input value="수정" type="button" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
+              <input value="수정" type="submit"  class="btn btn-sm btn-info btn-flat pull-right">
 <!--               <button type="button" class="btn btn-sm btn-info btn-flat pull-right" data-toggle="modal" data-target="#exampleModal">피드백</button> -->
               </div>
             </form>

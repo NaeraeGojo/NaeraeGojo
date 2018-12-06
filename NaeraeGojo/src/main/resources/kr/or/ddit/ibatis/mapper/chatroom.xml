@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="chatroom">
+	<typeAlias alias="chatroomVO" type="kr.or.ddit.vo.ChatRoomVO"/>
+		
+	<sql id="selectAll">
+		select * from chatroom
+	</sql>
+	
+	
+	<insert id="insertChatRoom" parameterClass="chatroomVO">
+		<selectKey keyProperty="chatroom_code" resultClass="string">
+			select chatroom_seq.nextval from dual
+		</selectKey>
+		
+		insert into chatroom (
+						chatroom_code
+						, chatroom_writer
+						)
+						
+					values(
+						#chatroom_code#
+						, #chatroom_writer#
+					)
+	</insert>
+	
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

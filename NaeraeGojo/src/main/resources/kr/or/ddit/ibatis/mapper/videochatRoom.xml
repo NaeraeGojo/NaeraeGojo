@@ -22,6 +22,7 @@
         <result property="video_chat_room_title" column="video_chat_room_title"/>
         <result property="project_name" column="project_name"/>
         <result property="emp_name" column="emp_name"/>
+        <result property="emp_code" column="emp_code"/>
         <result property="video_chat_room_content" column="video_chat_room_content"/>
         <result property="video_chat_join_intime" column="video_chat_join_intime"/>
         <result property="video_chat_join_outtime" column="video_chat_join_outtime"/>
@@ -65,6 +66,7 @@
 		            where a.video_chat_room_code = c.vcr_code) d
 		where emp.emp_code = d.emp_code
 		and d.project_code = project.project_code
+		and  d.video_chat_room_delete = 'n'
 		and video_chat_level.video_chat_level_code = d.video_chat_level_code
 		<include refid="searchCondition"/>    
         
@@ -73,7 +75,7 @@
     <select id="getVideoChatList" parameterClass="map" resultClass="chatTempVO">
          SELECT T.* 
          FROM  (SELECT ROWNUM RNUM, Z.*
-                   FROM (   select emp_name, d.video_chat_room_code as video_chat_room_code, d.video_chat_room_date, d.video_chat_room_title as video_chat_room_title
+                   FROM (   select emp_name, emp.emp_code, d.video_chat_room_code as video_chat_room_code, d.video_chat_room_date, d.video_chat_room_title as video_chat_room_title
                     , project_name, d.emp_cnt,  video_chat_level_name, video_chat_level.video_chat_level_code as video_chat_level_code
 							    from emp , project, video_chat_level ,(select * 
 							                from video_chat_room a
@@ -86,6 +88,7 @@
 							                where a.video_chat_room_code = c.vcr_code) d
 							  where emp.emp_code = d.emp_code
 							    and d.project_code = project.project_code
+							    and  d.video_chat_room_delete = 'n'
 							    and video_chat_level.video_chat_level_code = d.video_chat_level_code
 							    <include refid="searchCondition"/>
 							    order by d.video_chat_room_date) Z ) T

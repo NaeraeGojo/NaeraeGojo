@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="chatjoin">
+	<typeAlias alias="chatjoinVO" type="kr.or.ddit.vo.ChatJoinVO"/>
+		
+	<sql id="selectAll">
+		select * from chatjoin
+	</sql>
+	
+	
+	<insert id="insertChatJoin" parameterClass="chatjoinVO">
+		<selectKey keyProperty="chatjoin_code" resultClass="string">
+			select chatjoin_seq.nextval from dual
+		</selectKey>
+		
+		insert into chatjoin (
+						chatjoin_code
+						, chatjoin_chatroom
+						, chatjoin_emp
+						<dynamic>
+							<isNotEmpty property="chatjoin_check">
+							, chatjoin_check
+							</isNotEmpty>
+							<isNotEmpty property="chatjoin_join">
+							, chatjoin_join
+							</isNotEmpty>
+						</dynamic>
+						)
+						
+					values(
+						#chatjoin_code#
+						, #chatjoin_chatroom#
+						, #chatjoin_emp#
+						<dynamic>
+							<isNotEmpty property="chatjoin_check">
+							, #chatjoin_check#
+							</isNotEmpty>
+							<isNotEmpty property="chatjoin_join">
+							, #chatjoin_join#
+							</isNotEmpty>
+						</dynamic>
+					)
+	</insert>
+	
+
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+
