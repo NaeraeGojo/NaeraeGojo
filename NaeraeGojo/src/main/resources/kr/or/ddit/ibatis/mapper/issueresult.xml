@@ -205,6 +205,17 @@
 		 WHERE ISSUE_RESULT_CODE = #issue_result_code#
 	</update>
 	
+	<select id="issueChartInfo" parameterClass="map" resultClass="java.util.HashMap">
+		SELECT ROWNUM RNUM, a.*
+			FROM(
+				<include refid="selectAll"/>
+				AND PROJECT_CODE = #project_code#
+				<include refid="searchCondition"/>
+				ORDER BY ISSUE_RESULT_CODE asc
+				) a
+	
+	</select>
+	
 	
 </sqlMap>
 

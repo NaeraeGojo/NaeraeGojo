@@ -23,12 +23,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/user/reportfile/")
 public class ReportFileController {
 	@Autowired
 	private IReportFileService service;
 	
 	@Autowired
 	private ReportFileMapper fileMapper;
+	
+	
 	
 	@RequestMapping("reportFileDownload")
 	public ModelAndView reportFileDownload(ModelAndView andView,String report_file_code

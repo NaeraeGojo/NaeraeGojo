@@ -205,6 +205,11 @@ public class VideoChatController {
 		
 		ProjectVO projectInfo = service.getProjectNM(video_chat_room_code);
 		
+		
+		
+		
+		
+		
 		andView.addObject("video_chat_room_code",video_chat_room_code);
 		andView.addObject("projectInfo", projectInfo);
 		andView.setViewName("user/videochat/videochatRoom");

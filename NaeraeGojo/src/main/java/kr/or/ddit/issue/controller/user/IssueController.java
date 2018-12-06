@@ -270,7 +270,8 @@ public class IssueController {
 	}
 	
 	@RequestMapping("insertIssueResult")
-	public String insertIssueResult(IssueVO issueInfo, IssueResultVO issueResultInfo, HttpSession session, HttpServletRequest request, Map<String, String> params) throws Exception{
+	public String insertIssueResult(IssueVO issueInfo, IssueResultVO issueResultInfo, HttpSession session, 
+			HttpServletRequest request, Map<String, String> params) throws Exception{
 		
 		if(session.getAttribute("LOGIN_EMPINFO")!=null){
 			issueResultInfo.setEmp_code_ir(((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code());
@@ -290,19 +291,63 @@ public class IssueController {
 		}
 		
 		service2.updateIssueResultInfo(issueResultInfo);
-		andView.setViewName("redirect:/user/project/issue/issueList.do");
+		andView.setViewName("redirect:/user/project/issue/issueResultList.do");
 		return andView;
 	}
 	
 	@RequestMapping("deleteIssueResult/{issue_code}")
-	public String deleteIssueResult(@PathVariable("issue_code") String issue_code, IssueVO issueInfo, Map<String, String> params) throws Exception{
+	public String deleteIssueResult(@PathVariable("issue_code") String issue_code, IssueVO issueInfo, 
+			Map<String, String> params) throws Exception{
 		params.put("issue_code",issue_code);
 		
 		service2.deleteIssueResultInfo(params, issueInfo);
 		
 		return "redirect:/user/project/issue/issueList.do";
 	}
+	
+	@RequestMapping("issueChart")
+	public Model pwChart(Model model ,Map<String, String> params , HttpSession session) throws Exception{
+		
+		String project_code = (String) session.getAttribute("project_code");
+		params.put("project_code", project_code);
+		
+//		List<EmpVO> el = vservice.getEmpList(params);
+//		model.addAttribute("el",el);
+		
+		
+		return model;
+	}
+	
+	@RequestMapping("issueChartInfo")
+	public ModelAndView getPwChart(ModelAndView andView 
+									, String search_keycode
+									, String search_keyword
+									, HttpSession session
+									, Map<String, String> params) throws Exception{
 
+		params.put("search_keycode", search_keycode);
+		params.put("search_keyword", search_keyword);
+		
+		String project_code = (String) session.getAttribute("project_code");
+		params.put("project_code", project_code);
+		
+		List<Map<String, String>> issueChartInfo = service2.issueChartInfo(params);
+		
+		for(Map<String, String> icv : issueChartInfo){
+			String start_date = String.valueOf(icv.get("ISSUE_EVENT_DAY"));
+			start_date = start_date.substring(0,10);
+			icv.put("ISSUE_EVENT_DAY", start_date);
+			
+			String end_date = String.valueOf(icv.get("ISSUE_RESULT_DAY"));
+			end_date = end_date.substring(0,10);
+			icv.put("ISSUE_RESULT_DAY", end_date);
+		}
+		andView.addObject("issueChartInfo", issueChartInfo);
+		
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
+	}
 	
 }
 

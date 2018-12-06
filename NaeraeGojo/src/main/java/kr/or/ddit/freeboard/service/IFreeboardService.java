@@ -13,6 +13,6 @@ public interface IFreeboardService {
 	public List<FreeBoardVO> freeboardList(Map<String, String> params) throws SQLException;
 	public void insertFreeboardInfo(FreeBoardVO freeboardInfo, MultipartFile[] files) throws SQLException;
 	public void deleteFreeboardInfo(Map<String,String> params) throws SQLException;
-	public void updateFreeboardInfo(FreeBoardVO freeboardInfo) throws SQLException;
+	public void updateFreeboardInfo(FreeBoardVO freeboardInfo, MultipartFile[] files) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
 }

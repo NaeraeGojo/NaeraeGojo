@@ -86,4 +86,9 @@ public class IIssueResultServiceImpl implements IIssueResultService {
 		return totalCount;
 	}
 
+	@Override
+	public List<Map<String, String>> issueChartInfo(Map<String, String> params) throws SQLException {
+		return issueResultDao.issueChartInfo(params);
+	}
+
 }

@@ -50,7 +50,7 @@
 				 #join_code#
 				,#join_start#
 				,#join_end#
-				,#join_alarm#
+				,default
 				,#emp_code#
 				,#rqpps_code#
 				,#position_name#
@@ -118,6 +118,13 @@
 						) a ) b
 		order by b.rnum asc
 	</select>
+	
+	<update id="updateRole" parameterClass="joinVO" >
+		 UPDATE JOIN 
+		 SET POSITION_NAME = #position_name# 
+		 WHERE JOIN_CODE = #join_code#
+	
+	</update>
 	
 	
 

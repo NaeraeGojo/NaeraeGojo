@@ -48,7 +48,7 @@
 
 
 
-<sqlMap resource="kr/or/ddit/ibatis/mapper/userFile.xml" /></sqlMapConfig>
+<sqlMap resource="kr/or/ddit/ibatis/mapper/userFile.xml" /><sqlMap resource="kr/or/ddit/ibatis/mapper/freeboard.xml" /></sqlMapConfig>
 
 
 

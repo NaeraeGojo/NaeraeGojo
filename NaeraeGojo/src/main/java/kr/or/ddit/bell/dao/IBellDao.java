@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.ddit.vo.ComputationVO;
 import kr.or.ddit.vo.FeedbackVO;
 import kr.or.ddit.vo.IssueVO;
+import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 
 public interface IBellDao {
@@ -20,5 +21,6 @@ public interface IBellDao {
 	public List<FeedbackVO> sendfeedCnt(Map<String, String> params) throws SQLException;
 	public String getvideoChatCnt(Map<String, String> params) throws SQLException;
 	public List<VideoChatRoomVO> getVideoChatList(Map<String, String> params) throws SQLException;
+	public List<ProjectVO> projectAlarmList(Map<String, String> params) throws SQLException;
 
 }

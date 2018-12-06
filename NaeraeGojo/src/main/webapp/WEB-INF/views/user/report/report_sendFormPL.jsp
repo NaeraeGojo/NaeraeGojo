@@ -163,15 +163,16 @@ label {
 									id="contents" name="report_content"></textarea>
 							</div>
 						</div>
+						
+						<div class="form-group">
+							<label for="exampleInputFile" class="col-sm-2 control-label"><font
+								style="vertical-align: inherit;"><font
+									style="vertical-align: inherit;">파일 첨부</font></font></label>
+							<div class="col-sm-10 control-label">
+								<input type="file" id="file01" name="files">
+							</div>
+						</div>
 
-<!-- 						<div class="form-group"> -->
-<!-- 							<label for="exampleInputFile" class="col-sm-2 control-label"><font -->
-<!-- 								style="vertical-align: inherit;"><font -->
-<!-- 									style="vertical-align: inherit;">파일 첨부</font></font></label> -->
-<!-- 							<div class="col-sm-10 control-label"> -->
-<!-- 								<input type="file" id="file01" name="file"> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
 
 
 					</div>

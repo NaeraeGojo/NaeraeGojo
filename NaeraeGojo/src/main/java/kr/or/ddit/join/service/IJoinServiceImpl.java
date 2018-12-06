@@ -14,6 +14,7 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
+import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 
 @Service
@@ -81,6 +82,12 @@ public class IJoinServiceImpl implements IJoinService{
 	public List<JoinVO> clickList(Map<String, String> params)
 			throws SQLException {
 		return joinDao.clickList(params);
+	}
+
+	@Override
+	public void updateRole(JoinVO jvo) throws SQLException {
+		joinDao.updateRole(jvo);
+		
 	}
 
 }
