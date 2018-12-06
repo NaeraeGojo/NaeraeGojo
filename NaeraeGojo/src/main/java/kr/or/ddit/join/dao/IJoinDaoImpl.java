@@ -14,6 +14,7 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
+import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 
 @Repository("")
@@ -77,6 +78,11 @@ public class IJoinDaoImpl implements IJoinDao{
 	public List<JoinVO> clickList(Map<String, String> params)
 			throws SQLException {
 		return client.queryForList("join.clickList",params);
+	}
+
+	@Override
+	public void updateRole(JoinVO jvo) throws SQLException {
+		client.update("join.updateRole",jvo);
 	}
 
 }
