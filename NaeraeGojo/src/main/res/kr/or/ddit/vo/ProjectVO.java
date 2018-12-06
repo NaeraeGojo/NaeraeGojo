@@ -25,6 +25,6 @@ public class ProjectVO {
 	private String emp_name;
 	
 	private String rqpps_code;
-	
+	private String rqpps_nickname;
 	
 }
