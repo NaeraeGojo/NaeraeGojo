@@ -292,12 +292,10 @@ $(function() {
 	
 	
 	$('input[name=recsroom_title]').val('${rrv.recsroom_title}');
-	$('textarea[name=recsroom_content]').val('${rrv.recsroom_content}');
 	$('input[name=recsroom_writer]').val('${rrv.recsroom_writer}');
 	$('input[name=emp_nick]').val('${rrv.emp_nick}');
 
 	$('input[name=recsroom_title_view]').val('${rrv.recsroom_title}');
-	$('textarea[name=recsroom_content_view]').val('${rrv.recsroom_content}');
 });
 </script>
 
@@ -342,10 +340,10 @@ $(function() {
 							<label for="contents" class="col-sm-2 control-label">내용</label>
 							<div class="col-sm-8">
 								<textarea name="recsroom_content_view" class="form-control view_form" rows="10"
-									style="border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+									style="border: 1px solid #d2d2d2; border-radius: 1em;">${rrv.recsroom_content}</textarea>
 
 								<textarea name="recsroom_content" class="form-control up_form" rows="10"
-									style="border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+									style="border: 1px solid #d2d2d2; border-radius: 1em;">${rrv.recsroom_content}</textarea>
 							</div>
 						</div>
 

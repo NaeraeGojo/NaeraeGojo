@@ -11,6 +11,10 @@ public class ProjectWorkClassVO {
 	private String pwc_name;
 	private String project_code;
 	private String emp_code;
+	
+	//임시 
+	private String pw_code;
+	private String pw_function;
 
 		
 }

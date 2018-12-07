@@ -73,8 +73,27 @@ public class IBellDaoImpl implements IBellDao{
 	}
 
 	@Override
-	public List<ProjectVO> projectAlarmList(Map<String, String> params) throws SQLException {
-		return client.queryForList("bellList.projectAlramList", params);
+	public List<ProjectVO> projectAlarmList(Map<String, String> params) 
+			throws SQLException {
+		return client.queryForList("bellList.projectAlarmList", params);
+	}
+
+	@Override
+	public String projectAlarmCnt(Map<String, String> params)
+			throws SQLException {
+		return (String) client.queryForObject("bellList.projectAlramCnt", params);
+	}
+
+	@Override
+	public void deleteProjectAlarm(Map<String, String> params)
+			throws SQLException {
+		client.update("bellList.deleteProjectAlarm", params);
+	}
+
+	@Override
+	public List<IssueVO> issueDamdangList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("bellList.issueDamdangList", params);
 	}
 
 	

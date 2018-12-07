@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.videochatroom.dao.IVideoChatDao;
+import kr.or.ddit.vo.ChatPwVO;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkClassVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 import kr.or.ddit.vo.ChatListTempVO;
 
@@ -100,6 +102,31 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 	public List<ChatListTempVO> getChatStep3(Map<String, String> params)
 			throws SQLException {
 		return dao.getChatStep3(params);
+	}
+
+	@Override
+	public List<ProjectWorkClassVO> getPwcList(Map<String, String> params)
+			throws SQLException {
+		return dao.getPwcList(params);
+	}
+
+	@Override
+	public List<ProjectWorkClassVO> getPWList(Map<String, String> params)
+			throws SQLException {
+		return dao.getPWList(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public String insertChatPw(ChatPwVO cpv) throws SQLException {
+		return dao.insertChatPw(cpv);
+	}
+
+	
+	@Override
+	public List<ChatPwVO> getchatPwLsit()
+			throws SQLException {
+		return dao.getchatPwLsit();
 	}
 
 }

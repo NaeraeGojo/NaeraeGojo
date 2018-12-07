@@ -12,6 +12,7 @@
 #divdiv{
 	height: 700px;
 }
+
 </style>
 <script type="text/javascript">
 $(function(){
@@ -93,6 +94,11 @@ $(function(){
 										</tr>
 									</thead>
 									<tbody>
+										<c:if test="${empty issueList }">
+											<tr>
+												<td colspan="12" onclick="event.cancelBubble=true;" align="center"><font color="red">등록된 이슈가 없습니다.</font></td>
+											</tr>
+										</c:if>									
 										<c:forEach items="${issueList}" var="issueList">
 											<tr>
 												<td><input type="hidden" value="${issueList.issue_code }">${issueList.rnum }</td>

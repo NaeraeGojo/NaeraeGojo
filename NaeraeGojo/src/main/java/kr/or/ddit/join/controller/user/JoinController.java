@@ -21,6 +21,7 @@ import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.NotEmpVO;
+import kr.or.ddit.vo.NoticeBoardVO;
 import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 import kr.or.ddit.vo.UserFileVO;
@@ -30,6 +31,8 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -213,7 +216,12 @@ public class JoinController {
 
 		params.put("rqpps_code", rqpps_code);
 		List<JoinVO> joList = service.clickList(params);
+		String project_code = joList.get(0).getProject_code();
+		List<JoinVO> addList = service.addList(params);
 		model.addAttribute("joList", joList);
+		model.addAttribute("rqpps_code",rqpps_code);
+		model.addAttribute("project_code",project_code);
+		model.addAttribute("addList", addList);
 
 		return model;
 	}
@@ -281,6 +289,32 @@ public class JoinController {
 
 		return andView;
 	}
+	
+	@RequestMapping("join_add_insert")
+	public ModelAndView join_add_insert(
+			Map<String, String> params,
+			ModelAndView andView,
+			String rqpps_code,
+			String project_code,
+			JoinVO jvo,
+			HttpServletRequest request) throws Exception {
+		String dong[] = request.getParameterValues("myArray[]");
+		System.out.println(dong[0]);
+		for (int i = 0; i < dong.length; i++) {
+			jvo.setEmp_code(dong[i]);
+			jvo.setRqpps_code(rqpps_code);
+			jvo.setProject_code(project_code);
+			service.insertAdd(jvo);
+			jvo.setEmp_code(null);
+		}
+		
+		System.out.println("asdfasdfsdfsdfsd fesdfsdddf"+rqpps_code);
+		andView.addObject("rqpps_code",rqpps_code);
+		andView.setViewName("jsonConvertView");
+		
+		return andView;
+	}
+	
 	
 	@RequestMapping("join_updateRole")
 	public ModelAndView join_updateRole(JoinVO vo, String select,

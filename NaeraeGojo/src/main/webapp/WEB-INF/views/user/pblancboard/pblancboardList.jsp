@@ -65,10 +65,14 @@ $(function(){
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty pblancboardList }">
+									<tr>
+										<td colspan="5" align="center"><font color="red">등록된 게시글이 없습니다.</font></td>
+									</tr>
+								</c:if>
 								<c:forEach items="${pblancboardList}" var="pblancboardList">
 									<tr>
-										<td><input type="hidden"
-											value="${pblancboardList.pblanc_board_code }">${pblancboardList.rnum }</td>
+										<td><input type="hidden" value="${pblancboardList.pblanc_board_code }">${pblancboardList.rnum }</td>
 										<td>${pblancboardList.pblanc_board_title }</td>
 										<td>${pblancboardList.pblanc_board_com }</td>
 										<td>${pblancboardList.pblanc_board_budget }</td>

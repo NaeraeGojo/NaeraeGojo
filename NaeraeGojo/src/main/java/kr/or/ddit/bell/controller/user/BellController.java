@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import kr.or.ddit.bell.service.IBellService;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.FeedbackVO;
@@ -64,7 +65,10 @@ public class BellController {
 		
 		//프로젝트 알람 리스트
 		List<ProjectVO> projectAlarmList = service.projectAlarmList(params);
+		String projectAlarmCnt = service.projectAlarmCnt(params);
 		
+		//이슈 등록자 알림 리스트
+		List<IssueVO> issueDamdangList = service.issueDamdangList(params);
 		
 		andview.addObject("issueList", issueList); // 이슈 리스트
 		andview.addObject("listCnt", listCnt); // 이슈 카운트
@@ -79,6 +83,9 @@ public class BellController {
 		andview.addObject("videoChatList", videoChatList); // 화상 초대 리스트
 		
 		andview.addObject("projectAlarmList", projectAlarmList); // 프로젝트 알람 리스트
+		andview.addObject("projectAlarmCnt", projectAlarmCnt); // 프로젝트 알람 count
+		
+		andview.addObject("issueDamdangList", issueDamdangList); // 이슈 담당자 알람 리스트
 		
 		andview.setViewName("user/bellNotice/bellList");
 		return andview;
@@ -95,6 +102,15 @@ public class BellController {
 		return andView;
 	}
 	
+	@RequestMapping("deleteProjectAlarm")
+	public String deleteProjectAlarm(String join_code, Map<String, String> params) throws Exception{
+		
+		params.put("join_code", join_code);
+
+		service.deleteProjectAlarm(params);
+		
+		return "redirect:/user/bell/bellList.do";
+	}
 	
 	public ModelAndView updateComputation(ModelAndView andView) throws Exception{
 		

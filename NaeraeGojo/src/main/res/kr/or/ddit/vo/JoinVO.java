@@ -22,4 +22,5 @@ public class JoinVO {
 	private String part_name;
 	
 	
+	
 }

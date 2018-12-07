@@ -27,7 +27,6 @@
 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
 <!-- <script src="//code.jquery.com/jquery.min.js"></script> -->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-
 <script type="text/javascript">
 $(function(){
 	
@@ -55,10 +54,6 @@ $(function(){
     });
 
 	$('#issueForm').submit(function(){
-		if($('select[name=pw_code] option:selected').val()==null && $('select[name=pw_code] option:eq(0)')){
-			boalert("관련업무를 선택해 주세요.")
-			return false;
-	    }
 		if($('input[name=issue_name]').val()==""){
 			boalert("이슈 제목을 입력해 주세요.")
 			return false;
@@ -75,6 +70,11 @@ $(function(){
 			boalert("이슈 내용을 입력해 주세요.")
 			return false;
 	    }
+		
+// 		if($("#pwSelBox option:eq(0)")){
+// 			boalert("관련 업무를 선택해 주세요.")
+// 			return false;
+// 		}
 		return true;
 	});
 });
@@ -92,8 +92,8 @@ $(function(){
 						<div class="form-group">
 							<label for="pw_code" class="col-sm-2 control-label">관련 업무</label>
 							<div class="col-sm-8">
-								<select class="form-control" style="border-radius: 0em;" name="pw_code" id="pw_code">
-									<!-- <option style="color:white" disabled selected hidden>관련 업무를 선택</option> -->
+								<select class="form-control" style="border-radius: 0em;" name="pw_code" id="pwSelBox" id="pwSelBox">
+<!-- 									<option style="color:gray" >관련 업무를 선택 해주세요</option> -->
 									<c:forEach items="${pwList}" var="pwList">
 										<option value="${pwList.pw_code}">${pwList.pw_function}</option>
 									</c:forEach>
@@ -160,11 +160,11 @@ $(function(){
 							<label for="emp_damdang" class="col-sm-2 control-label">담당자</label>
 							<div class="col-sm-8">
 								<select class="form-control" style="border-radius: 0em;" name="emp_damdang" id="emp_damdang">
-									<option style="color: white" disabled selected hidden>담당자 선택</option>
+<!-- 									<option style="color: white" disabled selected hidden id="damSelBox">담당자 선택</option> -->
+									<option style="color: black" value="n">추후 등록</option>
 									<c:forEach items="${joinEmpList}" var="joinEmpList">
 										<option value="${joinEmpList.emp_code}">${joinEmpList.emp_name}</option>
 									</c:forEach>
-									<option style="color: white">추후 등록</option>
 								</select>
 							</div>
 						</div>

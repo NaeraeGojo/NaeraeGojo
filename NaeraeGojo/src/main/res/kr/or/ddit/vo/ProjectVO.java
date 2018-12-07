@@ -26,5 +26,5 @@ public class ProjectVO {
 	
 	private String rqpps_code;
 	private String rqpps_nickname;
-	
+	private String join_code;
 }

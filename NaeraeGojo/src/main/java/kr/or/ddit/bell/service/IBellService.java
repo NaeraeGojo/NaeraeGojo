@@ -31,6 +31,11 @@ public interface IBellService {
 	
 	public List<ProjectVO> projectAlarmList(Map<String, String> params) throws SQLException;
 
+	public String projectAlarmCnt(Map<String, String> params) throws SQLException;
+
+	public void deleteProjectAlarm(Map<String, String> params) throws SQLException;
+
+	public List<IssueVO> issueDamdangList(Map<String, String> params) throws SQLException;
 
 
 }

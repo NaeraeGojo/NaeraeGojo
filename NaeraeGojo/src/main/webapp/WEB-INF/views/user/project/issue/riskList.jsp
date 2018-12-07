@@ -65,6 +65,11 @@ $(function() {
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty riskList }">
+									<tr>
+										<td colspan="12" onclick="event.cancelBubble=true;" align="center"><font color="red">등록된 이슈가 없습니다.</font></td>
+									</tr>
+								</c:if>		
 								<c:forEach items="${riskList}" var="riskList">
 									<tr>
 										<td><input type="hidden" value="${riskList.issue_result_code }">${riskList.rnum }</td>
