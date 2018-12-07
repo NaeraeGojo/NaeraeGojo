@@ -35,7 +35,8 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 			throws SQLException {
 		return dao.freeboardInfo(params);
 	}
-
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public List<FreeBoardVO> freeboardList(Map<String, String> params)
 			throws SQLException {
@@ -61,16 +62,17 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public void updateFreeboardInfo(FreeBoardVO freeboardInfo, MultipartFile[] files) throws SQLException {
-		dao.updateFreeboardInfo(freeboardInfo);
+	public void updateFreeboardInfo(FreeBoardVO fbv, MultipartFile[] files) throws SQLException {
+		dao.updateFreeboardInfo(fbv);
 		
-		List<ProjectAllFileVO> pfl = fileMapper.mapping(files, freeboardInfo.getFreeboard_code(), "2", freeboardInfo.getProject_code());
+		List<ProjectAllFileVO> pfl = fileMapper.mapping(files, fbv.getFreeboard_code(), "2", fbv.getProject_code());
 		
 		for(ProjectAllFileVO pfv : pfl){
 			pfdao.insertProjectFile(pfv);
 		}
 	}
-
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
 		return dao.totalCount(params);
