@@ -79,6 +79,24 @@ public class IBellServiceImpl implements IBellService {
 		return dao.projectAlarmList(params);
 	}
 
+	@Override
+	public String projectAlarmCnt(Map<String, String> params)
+			throws SQLException {
+		return dao.projectAlarmCnt(params);
+	}
+
+	@Override
+	public void deleteProjectAlarm(Map<String, String> params)
+			throws SQLException {
+		dao.deleteProjectAlarm(params);
+	}
+
+	@Override
+	public List<IssueVO> issueDamdangList(Map<String, String> params)
+			throws SQLException {
+		return dao.issueDamdangList(params);
+	}
+
 	
 
 	

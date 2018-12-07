@@ -165,6 +165,11 @@ $(function(){
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty schedulerList }">
+									<tr>
+										<td colspan="12" onclick="event.cancelBubble=true;" align="center"><font color="red">등록된 이슈가 없습니다.</font></td>
+									</tr>
+								</c:if>
 								<c:forEach items="${schedulerList}" var="schedulerList">
 									<tr>
 										<td>

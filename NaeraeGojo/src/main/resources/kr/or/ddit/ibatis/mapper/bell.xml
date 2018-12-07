@@ -134,26 +134,78 @@
          order by z.rnum desc 
     </select>
     
-    <select id="projectAlramList" parameterClass="map" resultClass="projectVO">
-    	SELECT 
-			A.PROJECT_CODE
-			,A.PROJECT_NAME
-			,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
-            ,TO_CHAR(SUGGEST_COST,'L9,999,999,999,999') AS SUGGEST_COST
-            ,D.RQPPS_NOTICE_AGENCY
-            ,B.EMP_CODE
-            ,B.JOIN_ALARM
-            ,D.RQPPS_NICKNAME
-		FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E
-		WHERE A.PROJECT_DELETE = 'n'
-		AND B.PROJECT_CODE = A.PROJECT_CODE
+    <select id="projectAlarmList" parameterClass="map" resultClass="projectVO">
+    	SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.*
+				 FROM (SELECT 
+                            A.PROJECT_CODE
+                            ,A.PROJECT_NAME
+                            ,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
+                            ,TO_CHAR(SUGGEST_COST,'L9,999,999,999,999') AS SUGGEST_COST
+                            ,D.RQPPS_NOTICE_AGENCY
+                            ,B.EMP_CODE
+                            ,B.JOIN_ALARM
+                            ,D.RQPPS_NICKNAME
+                            ,B.JOIN_CODE
+                            ,D.RQPPS_CODE
+                        FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E
+                        WHERE A.PROJECT_DELETE = 'n'
+                        AND B.PROJECT_CODE = A.PROJECT_CODE
+                        AND A.SUGGEST_CODE = E.SUGGEST_CODE
+                        AND D.RQPPS_CODE = E.RQPPS_CODE
+                        AND B.JOIN_ALARM = 'y'
+                        AND B.EMP_CODE = #emp_code#
+						ORDER BY PROJECT_CODE) A ) B
+		ORDER BY B.RNUM DESC
+    </select>
+    
+    <select id="projectAlramCnt" parameterClass="map" resultClass="string">
+		SELECT 
+            COUNT(A.PROJECT_CODE)
+        FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E
+        WHERE A.PROJECT_DELETE = 'n'
+        AND B.PROJECT_CODE = A.PROJECT_CODE
         AND A.SUGGEST_CODE = E.SUGGEST_CODE
         AND D.RQPPS_CODE = E.RQPPS_CODE
         AND B.JOIN_ALARM = 'y'
-        AND B.EMP_CODE = #emp_code#	
+        AND B.EMP_CODE = #emp_code#
     </select>
     
+    <update id="deleteProjectAlarm" parameterClass="map">
+    	UPDATE JOIN
+		   SET JOIN_ALARM = 'n'
+		 WHERE JOIN_CODE = #join_code#
+    </update>
     
+    <select id="issueDamdangList" parameterClass="map" resultClass="issueVO">
+    	SELECT B.*
+		FROM  (SELECT ROWNUM RNUM, A.*
+				 FROM (SELECT 
+                             TO_NUMBER(A.ISSUE_CODE) AS ISSUE_CODE
+                            ,A.ISSUE_ALARM
+                            ,A.ISSUE_EVENT_DAY
+                            ,A.ISSUE_NAME 
+                            ,B.ISLEV_NAME AS ISSUE_LEVEL
+                            ,A.EMP_DAMDANG
+                            ,A.EMP_CODE
+                            ,C.EMP_NICK
+                            ,D.PROJECT_NAME
+                            ,F.RQPPS_NICKNAME
+                        FROM ISSUE A, ISLEV B, EMP C, PROJECT D, PW E, RQPPS F, SUGGEST G
+                        WHERE A.ISSUE_LEVEL = B.ISLEV_CODE
+                        AND F.EMP_CODE = C.EMP_CODE
+                        AND A.PW_CODE = E.PW_CODE
+                        AND D.PROJECT_CODE = E.PROJECT_CODE
+                        AND F.RQPPS_CODE = G.SUGGEST_CODE
+                        AND D.SUGGEST_CODE = G.SUGGEST_CODE
+                        AND A.ISSUE_ALARM = 'n'
+                        AND A.EMP_DAMDANG = 'n'
+                        AND A.ISSUE_DELETE = 'n'
+                        AND F.EMP_CODE = #emp_code#
+						ORDER BY ISSUE_CODE) A ) B
+		ORDER BY B.RNUM DESC
+    </select>
+	
 </sqlMap>
 
 
