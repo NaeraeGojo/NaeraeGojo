@@ -4,7 +4,7 @@
     
 <style>
 #secondDiv {
-    border: 1px solid black;
+    border: 1px solid gary;
 
 }
 /* #firstDiv { */
@@ -28,8 +28,23 @@ video {
 	font-size: 1.2em;
 }
 
+#scroll{
+    overflow-y:scroll;
+    height: 520px;
+}
+
 .bootstrap-dialog{
     padding-top: 200px;
+}
+
+.fa-book  {
+    font-size: x-large;
+}
+strong {
+    font-size: medium;
+}
+.text-muted{
+    font-size: large;
 }
 </style>
 
@@ -150,6 +165,85 @@ $(function(){
         });		
 	});
 	
+	$('#pwcSelect').on('change', function() {
+		  var pwc_code = this.value;
+		  var video_chat_room_code = '${video_chat_room_code}';
+		  
+		  $.ajax({
+			  type : "POST"
+			  , url : "${pageContext.request.contextPath}/user/video/pwfunction.do"
+			  , dataType : "json"
+			  , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+			  , data : {pwc_code : pwc_code , video_chat_room_code : video_chat_room_code}
+			  , error : function(request, status, error) {
+				  alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			  } , success : function(result) {
+				  var data = '';
+				  for (var i = 0; i < result.pwList.length; i++) {
+					data = $('<option  value="' + result.pwList[i].pw_code+ '">'+ result.pwList[i].pw_function +'</option>');
+				  }
+				  $('#pwSelect').empty().append(data);
+			  }
+		  });
+	});	
+	$('#addPw').click(function(){
+		
+		if($("#pwSelect option:selected").val() == null ||$("#pwSelect option:selected").val()=='' 
+			  ||$("#pwcSelect option:selected").val()=='대분류' || $("#pwSelect option:selected").val() =='관련 업무'){
+			alert('관련 업무를 선택하여 주세요');
+			 return false;
+		}
+		
+		if($("select option:selected").val() !=null){
+			
+			var pwc_code= $("#pwcSelect option:selected").val();
+			var pw_code= $("#pwSelect option:selected").val();
+			$.ajax({
+				 type : "POST"
+				 , url : "${pageContext.request.contextPath}/user/video/pwAdd.do"
+				 , dataType : "json"
+				 , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+				 , data : {pwc_code : pwc_code , pw_code : pw_code}
+				 , error : function(request, status, error) {
+					  alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				 } , success : function(result) {
+					 var data = '';
+					for (var i = 0; i < result.chatPwList.length; i++) {
+						data += ' <strong><i class="fa fa-book margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
+		                data += ' <label class="text-muted" >'; 
+                        data += result.chatPwList[i].pw_function + '</label><hr>';
+					}
+					$('#pwdiv').empty().append(data);
+					
+				 }
+			});
+		}
+
+	}) ;
+	setTimeout(function(){
+		$.ajax({
+            type : "POST"
+            , url : "${pageContext.request.contextPath}/user/video/getNewpwList.do"
+            , dataType : "json"
+            , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+            , error : function(request, status, error) {
+                 alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+            } , success : function(result) {
+                var data = '';
+               for (var i = 0; i < result.chatPwList.length; i++) {
+                   data += ' <strong><i class="fa fa-book margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
+                   data += ' <label class="text-muted" >'; 
+                   data += result.chatPwList[i].pw_function + '</label><hr>';
+               }
+               $('#pwdiv').empty().append(data);
+               
+            }
+       });
+		
+    },1500);
+	
+	
+	
 
 });
 
@@ -180,25 +274,60 @@ $(function(){
 					    <div>
 						   <video id="localVideo" autoplay mute></video>   <!--  로컬 -->
 						   <video id="remoteVideo" autoplay></video>            <!--  원격카메ㅏ -->
-<
+
 	<!-- 				       <video src="" ></video> -->
 	<!-- 				       <video src="" ></video> -->
 	<!-- 				       <video src="" ></video> -->
 						</div>
 						
-						<div id="result" style="border: 1px solid gray; height: 100px;">
-					      <span class="final" id="final_span"></span>
-					      <span class="interim" id="interim_span"></span>
-   						 </div>
-   						 <button id="btn-mic" class="off">마이크</button>
 					</div>
 				    <!--관련업무  div -->
-				    <div class="dd" id="secondDiv" style="width: 38%; float: right;  height: 680px !important;">
-				        <div>  
-				            <b>관련 업무 확인하기</b>
+				    <div class="dd box box-primary" id="secondDiv" style="width: 38%; float: right;  height: 680px !important;" c>
+				        <div style="text-align: center;">  
+				             <label></label><br/>
+				            <b style="font-size: 1.8em;">관련 업무 확인하기</b>
 				        </div>
+				        <div style="text-align: center;">  
+				            <div class="form-group">
+			                <label></label><br/>
+			                <select class="form-control select2" id="pwcSelect" style="width: 30%; float: left; margin-right: 10px;  margin-left: 10px; ">
+			                  <option selected="selected">대분류</option>
+			                  <c:forEach items="${pwcList }" var="pwcInfo">
+				                  <option value="${pwcInfo.pwc_code}">${pwcInfo.pwc_name}</option>
+			                  </c:forEach>
+			                </select>
+			                <select class="form-control select2" id="pwSelect" style="width: 48%; float: left; margin-right: 5px;  " >
+			                  <option selected="selected">관련 업무</option>
+			                </select>
+			                <button id="addPw" class="btn btn-block btn-primary btn-sm" style="width: 15%; height: 33px; font-size: 1.1em;">추가</button>
+                        </div>
+				        </div>
+				        <div id="scroll">
+				                 <div class="box-body" id="pwdiv">
+					              <strong><i class="fa fa-book margin-r-5"></i> Education</strong> <br/>
+					
+					              <label class="text-muted" >
+					                B.S. in Computer Science from the University of Tennessee at Knoxville
+					              </label>
+					
+					              <hr>
+					              <strong><i class="fa fa-book margin-r-5"></i> Education</strong> <br/>
+					
+					              <label class="text-muted" >
+					                B.S. in Computer Science from the University of Tennessee at Knoxville
+					              </label>
+					
+					              <hr>
+					              <strong><i class="fa fa-book margin-r-5"></i> Education</strong> <br/>
+					
+					              <label class="text-muted" >
+					                B.S. in Computer Science from the University of Tennessee at Knoxville
+					              </label>
+					
+					              <hr>
+					
+					            </div>
 				        
-				        <div>
 				        
 				        </div>
 				    
