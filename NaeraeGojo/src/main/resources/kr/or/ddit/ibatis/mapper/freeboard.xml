@@ -102,7 +102,7 @@
 		UPDATE FREEBOARD
 		   SET FREEBOARD_TITLE    = #freeboard_title# 
 		      ,FREEBOARD_CONTENT  = #freeboard_content#
-		      ,EMP_code      = #emp_code#
+		      ,EMP_CODE      = #emp_code#
 		      <dynamic prepend=",">
 		      	<isNotEmpty property="freeboard_hit">
 		      	FREEBOARD_HIT = #freeboard_hit#

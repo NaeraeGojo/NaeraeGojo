@@ -88,16 +88,13 @@ public class FreeboardController {
 		
 		return model;
 	}
-	
-	
+		
 	@RequestMapping("freeboardUpdate")
 	public String freeboardUpdate(FreeBoardVO freeboardInfo, @RequestParam("files") MultipartFile[] files
 								, HttpServletRequest request) throws Exception{
 		service.updateFreeboardInfo(freeboardInfo, files);
 		return "redirect:/user/project/freeboard/freeboardList.do";
 	}
-	@RequestMapping("freeboardReply")
-	public void freeboardReply(){}
 
 	@RequestMapping("freeboardInsert")
 	public String freeboardInsert(FreeBoardVO freeboardInfo, @RequestParam("files") MultipartFile[] files) throws Exception {
@@ -115,6 +112,8 @@ public class FreeboardController {
 		return "redirect:/user/project/freeboard/freeboardList.do";
 	}
 	
+	@RequestMapping("freeboardReply")
+	public void freeboardReply(){}
 	
 }
 

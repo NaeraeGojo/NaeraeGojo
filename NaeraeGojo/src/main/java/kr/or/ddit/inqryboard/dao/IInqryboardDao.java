@@ -9,7 +9,9 @@ import kr.or.ddit.vo.InqryBoardVO;
 public interface IInqryboardDao {
 	public InqryBoardVO inqryBoardInfo(Map<String,String> params) throws SQLException;
 	public List<InqryBoardVO> inqryBoardList(Map<String, String> params) throws SQLException;
-	public void insertInqryBoardInfo(InqryBoardVO inqryBoardInfo) throws SQLException;
-	public void deleteInqryBoardInfo(Map<String,String> params) throws SQLException;
-	public void updateInqryBoardInfo(InqryBoardVO inqryBoardInfo) throws SQLException;
+	public String insertInqryInfo(InqryBoardVO inqryBoardInfo) throws SQLException;
+	public void deleteInqryInfo(Map<String,String> params) throws SQLException;
+	public void updateInqryInfo(InqryBoardVO inqryBoardInfo) throws SQLException;
+	public int totalCount(Map<String, String> params) throws SQLException;
+	
 }

@@ -108,6 +108,36 @@ $(function(){
 		$(document.body).append($frm);
 		$frm.submit();
 	});
+	$('#sample').keydown(function(key){
+		if(key.keyCode == 13){
+			if(!$('input[name=emp_code]').val()){
+				alert('해당사원번호를 찾을 수 없습니다.');
+				return false;
+			}
+			if(!$('input[name=emp_pass]').val().validationPASS()){
+				alert('비밀번호가 일치하지 않습니다.');
+				return false;
+			}
+			// 평문을 암호문으로 변경
+			var modulus = '${publicKeyMap["publicModulus"]}';
+			var exponent = '${publicKeyMap["publicExponent"]}';
+			
+			// 공개키 설정
+			var rsaObj = new RSAKey();
+			rsaObj.setPublic(modulus, exponent);
+			
+			var encryptEMPCODE = rsaObj.encrypt($('input[name=emp_code]').val());
+			var encryptEMPPASS = rsaObj.encrypt($('input[name=emp_pass]').val());
+			
+			var $frm = $('<form action="${pageContext.request.contextPath }/user/join/loginCheck.do" method="post"></form>');
+			$frm.append('<input type="text" name="emp_code" value="' + encryptEMPCODE + '"/>');
+			$frm.append('<input type="text" name="emp_pass" value="' + encryptEMPPASS + '"/>');
+			
+			$(document.body).append($frm);
+			$frm.submit();
+		}
+	});	
+
 	
 	// 이메일 인증 이후 링크로 직원등록 완료창 
 	if (eval('${!empty param.emp_code}')) {
@@ -133,7 +163,7 @@ $(function(){
 			});
 // 		return ture;
 		}
-		
+	
 		$('#empNum').click(function(){
 			if(!$('input[name=empName]').val().validationNM()){
 				alert("이름을 정확히 입력해주세요")
@@ -234,7 +264,7 @@ $(function(){
 			                        <div class="row">
 			                        	<label class="col-sm-3 control-label" style="color: white; font-size: 18px; margin-left:30px; margin-top: 10px;">비밀번호</label>
 			                        	<div class="col-sm-8">
-			                        		<input type="password" name="emp_pass" placeholder="비밀번호를 입력해주세요" class="form-control" style="border-radius: 1em; margin-left: 10px;">
+			                        		<input type="password" name="emp_pass" placeholder="비밀번호를 입력해주세요" class="form-control" style="border-radius: 1em; margin-left: 10px;" id="sample">
 			                        	</div>
 			                        </div>
 			                        </div>
