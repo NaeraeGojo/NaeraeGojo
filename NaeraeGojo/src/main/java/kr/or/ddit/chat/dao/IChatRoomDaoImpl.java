@@ -1,6 +1,9 @@
 package kr.or.ddit.chat.dao;
 
 
+import java.util.List;
+import java.util.Map;
+
 import kr.or.ddit.vo.ChatRoomVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,12 @@ public class IChatRoomDaoImpl implements IChatRoomDao{
 	@Override
 	public String insertChatRoom(ChatRoomVO crv) throws Exception {
 		return (String) client.insert("chatroom.insertChatRoom",crv);
+	}
+
+	@Override
+	public List<ChatRoomVO> getChatList(Map<String, String> params)
+			throws Exception {
+		return client.queryForList("chatroom.getChatList",params);
 	}
 	
 

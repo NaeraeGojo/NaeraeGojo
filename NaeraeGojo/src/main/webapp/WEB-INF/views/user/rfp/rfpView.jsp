@@ -260,7 +260,6 @@ $(function(){
 	$('input[name=rqpps_end_date]').val('${rv.rqpps_end_date}');
 	$('input[name=rqpps_qualification]').val('${rv.rqpps_qualification}');
 	$('input[name=rqpps_budget]').val('${rv.rqpps_budget}');
-	$('#contents').val('${rv.rqpps_contents}');
 	
 	
 	var ptag = $('<div class="box"><table class="table_rp table">'
@@ -377,7 +376,8 @@ $(function(){
 	    <div class="form-group">
 	      <label for="contents" class="col-sm-2 control-label">요청서 내용</label>
 	      <textarea id="contents" name="rqpps_contents" class="col-sm-10"
-	       rows="10" placeholder="요청서 내용" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;" readonly="readonly"></textarea>
+	       rows="10" placeholder="요청서 내용" style=" width:68%; border: 1px solid #d2d2d2; 
+	       border-radius: 1em;" readonly="readonly">${rv.rqpps_contents}</textarea>
 	      
 	    </div>
 	    

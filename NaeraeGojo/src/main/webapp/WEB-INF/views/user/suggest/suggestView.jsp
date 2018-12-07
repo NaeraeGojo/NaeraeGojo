@@ -267,7 +267,6 @@ $(function(){
 	$('input[name=suggest_start_date]').val('${sv.suggest_start_date}');
 	$('input[name=suggest_end_date]').val('${sv.suggest_end_date}');
 	$('input[name=suggest_cost]').val('${sv.suggest_cost}');
-	$('textarea[name=suggest_content]').val('${sv.suggest_content}');
 	$('input[name=suggest_result]').val('${sv.suggest_result}');
 	$('#sel_result').val('${sv.suggest_result}');
 });
@@ -378,7 +377,7 @@ $(function(){
 	    <div class="form-group">
 	      <label for="contents" class="col-sm-2 control-label">제안서 내용</label>
 	      <textarea id="contents" name="suggest_content" class="col-sm-10 form-control upForm"
-	       rows="10" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+	       rows="10" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;">${sv.suggest_content}</textarea>
 	      
 	    </div>
 	    
