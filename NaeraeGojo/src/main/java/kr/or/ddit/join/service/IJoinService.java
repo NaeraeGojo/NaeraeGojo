@@ -24,4 +24,6 @@ public interface IJoinService {
 	public List<JoinVO> joinFinalList() throws SQLException;
 	public List<JoinVO> clickList(Map<String, String> params) throws SQLException;
 	public void updateRole(JoinVO jvo) throws SQLException;
+	public List<JoinVO> addList(Map<String, String> params) throws SQLException;
+	public void insertAdd(JoinVO jvo) throws SQLException;
 }

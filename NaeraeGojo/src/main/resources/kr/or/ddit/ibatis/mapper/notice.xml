@@ -83,6 +83,7 @@
 						FROM NOTICE C, EMP D
 						WHERE C.EMP_CODE = D.EMP_CODE
 						AND C.NOTICE_DELETE = 'n'
+						and C.PROJECT_CODE = #project_code#
 						<include refid="searchCondition"/>
 <!-- 						<dynamic> -->
 <!-- 					 		<isNotEmpty property="search_keyword" prepend="and"> -->
@@ -152,9 +153,11 @@
     </update>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">
-		SELECT COUNT(NOTICE_CODE)
-			FROM NOTICE
-		WHERE 1=1<!-- BO_STATUS = 'y' -->
+		SELECT count(*) 
+		FROM NOTICE C, EMP D
+		WHERE C.EMP_CODE = D.EMP_CODE
+		AND C.NOTICE_DELETE = 'n'
+		and C.PROJECT_CODE = #project_code#
 		<include refid="searchCondition"/>
 	</select>
 	

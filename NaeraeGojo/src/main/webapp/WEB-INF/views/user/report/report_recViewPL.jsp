@@ -246,39 +246,49 @@ label {
       <div class="modal-body" style=" border-top:1px solid orange;">
       <form class="form-horizontal" role="form"  action="${pageContext.request.contextPath}/user/report/report_feed_insert.do" 
                             method="post" >
-<!--          <div  class="row" style="padding-left:35px"> -->
-<!--            <select class="col-sm-3" id="pw_function" style="margin:5px; height:30px;" > -->
-<!--             <option selected="selected">분류</option> -->
-<!--            </select> -->
-<!--            <input class="col-sm-4"type="text" style="margin:5px; height:30px;"> -->
-<!--            <button class="col-sm-2" class="btn btn-flat" style="margin:5px; height:30px;">검색</button> -->
-<!--            </div > -->
-            <div  class="row"  style="padding:30px;">
+         <div  class="row"  style="padding:30px;">
                 <div class="form-group">
                     <div id="ff"></div>
               </div>      
-              
-              <table class="table no-margin" id="mView">
-                  <thead>
-                  <tr>
-                    <th scope="col" width="25%">소속부서</th>
-                    <th scope="col" width="25%">레벨</th>
-                    <th scope="col" width="25%">이름</th>
-                    <th scope="col" width="25%">체크여부</th>
-                  </tr>
-                  </thead>
-                  <tbody id="bodytable">
-<!-- 	                  <tr> -->
-<%-- 	                  	<td>${list.emp_department }</td> --%>
-<%-- 	                    <td>${list.emp_level }</td> --%>
-<%-- 	                    <td>${list.emp_name }</td> --%>
-<!-- 	                 </tr> -->
-
-                 </tbody>
-               </table>
                         
+              <div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">제목</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="report_feed_title" name="report_feed_title" style="margin-top: 10px !important">
+					</div>
+				</div>
 				</br></br>
+                <div class="form-group">
+					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">발신</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="emp_name" name="emp_name" style="margin-top: 10px !important">
+						<input type="hidden" class="form-control" value="${vo.emp_code }" name="emp_code">
+						<input type="hidden" class="form-control" value="${vo.report_code }" name="report_code">
+						<c:forEach items="${stList }" var="list">
+							<input type="hidden" class="form-control" value="${list.pm_name }" name="pl_name">
+						</c:forEach>
+						
+					</div>
+				</div>
 				</br>
+				<div class="form-group">
+					<label for="inputPassword1" class="col-sm-2 control-label" style="margin-top: 10px !important;">내용</label>
+					<div class="col-sm-9">
+						<textarea rows="10" type="text" class="form-control" id="report_feed_content" name="report_feed_content" style="margin-top: 10px !important"></textarea>
+					</div>
+				</div>
+				
+<%-- 				<c:forEach items="${vo.items }" var="reportFileItem" varStatus="stat"> --%>
+<!-- 	                <div class="form-group"> -->
+<!-- 	                  <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력</font></font></label> -->
+<!-- 	                  <div class="col-sm-10 control-label"> -->
+<%-- 	                  	  <a id="${reportFileItem.report_file_code }" href="${pageContext.request.contextPath }/user/reportfile/reportFileDownload.do?report_file_code=${reportFileItem.report_file_code }"> --%>
+<%-- 									${reportFileItem.report_file_name}</a> --%>
+<!-- 	                  </div> -->
+<!-- 	                </div> -->
+<%--            		</c:forEach> --%>
+				
+				
              </div>
       <div class="modal-footer">
       		<input type="submit" id="modalAdd" class="btn btn-primary" value="등록">

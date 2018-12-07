@@ -90,4 +90,14 @@ public class IJoinServiceImpl implements IJoinService{
 		
 	}
 
+	@Override
+	public List<JoinVO> addList(Map<String, String> params) throws SQLException {
+		return joinDao.addList(params);
+	}
+
+	@Override
+	public void insertAdd(JoinVO jvo) throws SQLException {
+		joinDao.insertAdd(jvo);
+	}
+
 }

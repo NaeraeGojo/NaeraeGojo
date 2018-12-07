@@ -85,4 +85,14 @@ public class IJoinDaoImpl implements IJoinDao{
 		client.update("join.updateRole",jvo);
 	}
 
+	@Override
+	public List<JoinVO> addList(Map<String, String> params) throws SQLException {
+		return client.queryForList("join.addList", params);
+	}
+
+	@Override
+	public String insertAdd(JoinVO jvo) throws SQLException {
+		return (String) client.insert("join.insertAdd",jvo);
+	}
+
 }

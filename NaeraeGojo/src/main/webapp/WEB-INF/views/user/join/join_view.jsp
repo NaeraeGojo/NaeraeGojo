@@ -123,50 +123,45 @@ select{
         </button>
         <h3 class="modal-title" id="exampleModalLabel">인력 추가</h3>
       </div>
-      <div class="modal-body" style=" border-top:1px solid orange;">
-      <form class="form-horizontal" role="form"  action="${pageContext.request.contextPath}/user/join/join_add_insert.do" 
+      <div class="modal-body" style=" border-top:1px solid orange; height:680px; ">
+      <form class="form-horizontal" id="sdfd" role="form"  action="${pageContext.request.contextPath}/user/join/join_add_insert.do" 
                             method="post" >
-<!--          <div  class="row" style="padding-left:35px"> -->
-<!--            <select class="col-sm-3" id="pw_function" style="margin:5px; height:30px;" > -->
-<!--             <option selected="selected">분류</option> -->
-<!--            </select> -->
-<!--            <input class="col-sm-4"type="text" style="margin:5px; height:30px;"> -->
-<!--            <button class="col-sm-2" class="btn btn-flat" style="margin:5px; height:30px;">검색</button> -->
-<!--            </div > -->
-            <div  class="row"  style="padding:30px;">
+            <div  class="row" style="padding:30px; overflow:scroll; width:775px; height:600px;">
                 <div class="form-group">
                     <div id="ff"></div>
               </div>      
                         
-              <div class="form-group">
-					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">제목</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="report_feed_title" name="report_feed_title" style="margin-top: 10px !important">
-					</div>
-				</div>
-				</br></br>
-                <div class="form-group">
-					<label for="inputPassword2" class="col-sm-2 control-label" style="margin-top: 10px !important;">발신</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="emp_name" name="emp_name" style="margin-top: 10px !important">
-						<input type="hidden" class="form-control" value="${vo.emp_code }" name="emp_code">
-						<input type="hidden" class="form-control" value="${vo.report_code }" name="report_code">
-						<c:forEach items="${stList }" var="list">
-							<input type="hidden" class="form-control" value="${list.pl_name }" name="pl_name">
-						</c:forEach>
-						
-					</div>
-				</div>
-				</br>
-				<div class="form-group">
-					<label for="inputPassword1" class="col-sm-2 control-label" style="margin-top: 10px !important;">내용</label>
-					<div class="col-sm-9">
-						<textarea rows="10" type="text" class="form-control" id="report_feed_content" name="report_feed_content" style="margin-top: 10px !important"></textarea>
-					</div>
-				</div>
+              <table class="table no-margin" id="mView" >
+                  <thead>
+                  <tr>
+                    <th scope="col" width="20%">NO.</th>
+                    <th scope="col" width="20%">소속부서</th>
+                    <th scope="col" width="20%">레벨</th>
+                    <th scope="col" width="20%">이름</th>
+                    <th scope="col" width="20%">체크여부</th>
+                  </tr>
+                  </thead>
+                  <tbody id="bodytable"  >
+                  		<input type="hidden" value="${ rqpps_code}" name="rqpps_code" />
+	                  	<input type="hidden" value="${ project_code}" name="project_code" />
+                  
+               		<c:forEach items="${addList }" var="alist">
+	                  <tr>
+<%-- 	                  	<input type="hidden" value="${ alist.emp_code}" name="emp_code" /> --%>
+		                  	<td>${ alist.rnum}</td>
+		                    <td>${alist.part_name}</td>
+		                    <td>${alist.emp_level}</td>
+		                    <td>${alist.emp_name}</td>
+		                    <td><input type="checkbox" value="${ alist.emp_code}" name="micro" class="flat-red" ></td>
+		                    <input type="hidden" name ="myArray">
+	                 </tr>
+	                </c:forEach>
+
+                 </tbody>
+               </table>
              </div>
       <div class="modal-footer">
-      		<input type="submit" id="modalAdd" class="btn btn-primary" value="등록">
+      		<input type="button" id="modalAdd" class="btn btn-primary" value="등록">
 <!--            <button type="submit" id="modalAdd" class="btn btn-primary" data-dismiss="modal">등록</button> -->
       </div>
       </form>
@@ -178,39 +173,41 @@ select{
           
 <script type="text/javascript">
 $(function(){
-	$('input[name=rqpps_name]').val('${joList[0].rqpps_name}');
-	$('#returnList').click(function(){
-		$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
+		$('input[name=rqpps_name]').val('${joList[0].rqpps_name}');
+		$('#returnList').click(function(){
+			$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
+		});
+		
+		$('#modalAdd').click(function(){
+			var myArray= [];
+	        $('input[name=micro]:checked').each(function(index){
+	            myArray.push( $(this).val());
+	       });
+		
+			var rqpps_code = $('input[name=rqpps_code]').val();
+			var project_code = $('input[name=project_code]').val();
+		        
+	 		$.ajax({
+		            
+		            type : "POST"
+		                , url : "${pageContext.request.contextPath}/user/join/join_add_insert.do"
+		                , dataType : "json"
+		                , data: {myArray : myArray,
+				                rqpps_code:rqpps_code,
+								project_code:project_code}
+		                		
+		                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+		                , error : function(request, status, error) {
+		                    boalert("error : " + request.status );
+		                }
+		                , success : function(list) {
+		                	alert(list.rqpps_code);
+// 		                	$(location).attr('href','${pageContext.request.contextPath}/user/join/join_view.do?rqpps_code='+list.rqpps_code);
+		                	
+		                }
+		    });
+		});
 	});
-	
-	$('#listAdd').click(function(){
-		  var rqpps_code = $('input[name="rqpps_code"]').val();
-		  var project_code = $('input[name=project_code]').val();
-// 		  var emp_code = $('input[name=emp_code]').val();
-//		  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
-		  
-		  $.ajax({
-				url : '${pageContext.request.contextPath}/user/join/listAdd.do',
-				dataType: 'json',
-				data : {
-					
-					rqpps_code:rqpps_code,
-					project_code :project_code
-						
-						},
-				success : function(data){
-					console.log(data);
-					alert(data.rpo.report_feed_title);
-					$('input[name=report_feed_title]').val(data.rpo.report_feed_title);
-					$('input[name=report_feed_content]').val(data.rpo.report_feed_content);
-					$('input[name=pm_name]').val(data.rpo.pm_name);
-				},
-				error : function(res){
-					alert(res.status);
-				}
-			});
-	 })
-});
 
 
 </script>
