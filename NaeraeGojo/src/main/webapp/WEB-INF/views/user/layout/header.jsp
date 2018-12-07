@@ -288,23 +288,21 @@
 		            <!-- /.box-header -->
 		            <div class="box-body" style="height: 100%;">
 		              <div class="table-responsive">
-		                <table id="" class="table table-bordered table-striped dataTable table-hover"
+		                <table id="table_chat_list" class="table table-bordered table-striped dataTable table-hover"
               			role="grid" aria-describedby="example1_info">
 		                	<thead>
 		               			<tr role="row">
-				                    <th tabindex="0"  style="width:10%;" 
+				                    <th tabindex="0" style="width: 3%;"
 				                  	 rowspan="1" colspan="1"></th>
 				                    <th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
-				                  	 rowspan="1" colspan="1">사원번호</th>
+				                  	 rowspan="1" colspan="1">초대자</th>
 		                  			<th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
-		                  			rowspan="1" colspan="1">부서</th>
+		                  			rowspan="1" colspan="1">개설일</th>
 		                  			<th tabindex="0" class="sorting" aria-controls="table_chat_emp" style="width:10%;" 
-		                  			rowspan="1" colspan="1">성명</th>
+		                  			rowspan="1" colspan="1">참여자</th>
 		                		</tr>
 		                	</thead>
 		                	<tbody>
-		                	
-		                	
 		                 	</tbody>
               			</table>
 		              </div>
@@ -462,8 +460,6 @@ $(function(){
 		
 		$('#modal-chat').modal('hide');
 		
-		return false;
-		
 		// 여기서 채팅방개설, 채팅참여 목록 인서트 작업 필요
 		var url = "${pageContext.request.contextPath}/user/chat/chatRoom.do";
 		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
@@ -485,7 +481,54 @@ $(function(){
 	
 	$('#a_chat_emp').click(function(){
 		
+		getChatList();
 		
+	});
+	
+	$(document).delegate('.btn_join_chat','click',function(){
+		var chatroom_code = $(this).attr('code');
+		var url = '${pageContext.request.contextPath}/user/chat/chatRoom.do';
+		var query = '?chatroom_code=' + chatroom_code;
+		
+		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
+		
+		$('#modal-chat').modal('hide');
+		
+		window.open(url+query, "대화창", options);
+	})
+	
+	
+	getChatList = function(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/chat/chatList.do'
+			, type : 'post'
+			, data : {emp_code:'${LOGIN_EMPINFO.emp_code}'}
+			, dataType : 'json'
+			, async : false
+			, error : function(xhr,stauts, error){
+				boalert(error);
+			}
+			, success: function(json){
+				var tdtag = '';
+				$.each(json.crl,function(i,v){
+					tdtag += '<tr><td style=" text-align: center;">';
+					tdtag += '<input type="button" class="btn btn-success btn_join_chat" code="'
+								+v.chatroom_code+'" value="참여"></td>';
+					tdtag += '<td>'+v.chatroom_writer_name+'</td>';
+					tdtag += '<td>'+v.chatroom_reg_date+'</td>';
+					tdtag += '<td>'+v.chatroom_jl+'</td></tr>';
+				})
+				
+				$('#table_chat_list tbody tr').remove();
+	        	$('#table_chat_list tbody').append(tdtag);
+	        	
+	        	var table = $('#table_chat_list').DataTable();
+	        	
+			}
+		});
+	}
+	
+	getEmpList = function(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/emp/empChatList.do'
 			, dataType : 'json'
@@ -504,6 +547,7 @@ $(function(){
 	        		tdtag += '<td>' + v.emp_name + '</td>' 
 	        		tdtag += '</tr>'
 	        	})
+	        	$('#table_chat_emp tbody').clear();
 	        	$('#table_chat_emp tbody').append(tdtag);
 	        	
 	        	table = $('#table_chat_emp').DataTable();
@@ -522,8 +566,7 @@ $(function(){
 	        	
 			}
 		})
-	});
-	
+	}
 	
 });
 

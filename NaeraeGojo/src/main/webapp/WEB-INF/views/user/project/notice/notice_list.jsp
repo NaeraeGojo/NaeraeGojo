@@ -53,11 +53,19 @@
                   </tr>
                   </c:forEach>
                   </tbody>
+                
                 </table>
-                ${pagingHtmls }
+                <c:if test="${empty noticeList}">
+                	<div style="text-align: center;">
+	                	<p style="margin-top: 20px;">
+	                	작성된 게시글이 존재하지 않습니다.
+    	            	</p>
+			      	</div>
+			      </c:if>
               </div>
               <!-- /.table-responsive -->
             </div>
+                ${pagingHtmls }
             <!-- /.box-body -->
             <div class="box-footer clearfix">
 <!--               <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->

@@ -75,14 +75,16 @@ public class NoticeboardController {
 		params.put("search_keyword", search_keyword);
 		params.put("search_keycode", search_keycode);
 		
-		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
-		System.out.println("아디아디아디아디"+emp_code);
-		params.put("emp_code", emp_code);
+//		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+//		System.out.println("아디아디아디아디"+emp_code);
+//		params.put("emp_code", emp_code);
 		
-		if(params != null){
-			String message = (String) params.get("message");
-			System.out.println("RedirectAttribute post 전송 파람 : " + message);
-		}
+//		if(params != null){
+//			String message = (String) params.get("message");
+//			System.out.println("RedirectAttribute post 전송 파람 : " + message);
+//		}
+		String project_code = (String) session.getAttribute("project_code");
+		params.put("project_code", project_code);
 		
 		
 		int totalCount = service.totalCount(params);
@@ -135,7 +137,6 @@ public class NoticeboardController {
 								  String emp_code,
 									@RequestParam("files") MultipartFile[] files) throws Exception{
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
-		System.out.println("불러와야해 그래야 살아"+emp_code);
 		
 		service.insertNoticeboardInfo(nbv, files);
 		return "redirect:/user/project/notice/notice_list.do";

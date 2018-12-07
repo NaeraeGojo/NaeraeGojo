@@ -41,19 +41,19 @@ label {
 <!--             form start -->
 		<form role="form" class="form-horizontal" action="${pageContext.request.contextPath}/user/project/notice/insertNotice.do" method="post" enctype="multipart/form-data">
               <div class="box-body">
-                
-                <div class="form-group">
-					<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label>
-					<div class="col-sm-9">
-						<!-- select -->
-						<select class="form-control" name="project_code" id="project_code" >
-	                   	  <option>프로젝트를 선택해주세요</option>
-		                   <c:forEach items="${vo }" var="proName">
-		                    	<option value="${proName.project_code}">${proName.project_name}</option>
-		                   </c:forEach>
-	                   </select>
-					</div>
-				</div>
+                <input type="hidden" name="project_code" value="${project_code}" />
+<!--                 <div class="form-group"> -->
+<!-- 					<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label> -->
+<!-- 					<div class="col-sm-9"> -->
+<!-- 						select -->
+<!-- 						<select class="form-control" name="project_code" id="project_code" > -->
+<!-- 	                   	  <option>프로젝트를 선택해주세요</option> -->
+<%-- 		                   <c:forEach items="${vo }" var="proName"> --%>
+<%-- 		                    	<option value="${proName.project_code}">${proName.project_name}</option> --%>
+<%-- 		                   </c:forEach> --%>
+<!-- 	                   </select> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
                 
                 <div class="form-group">
                   <label for="inputPassword1" class="col-sm-2 control-label">제목</label>

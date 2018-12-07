@@ -7,6 +7,8 @@
 	<typeAlias alias="chatTempVO" type="kr.or.ddit.vo.ChatListTempVO"/>
 	<typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
 	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
+	<typeAlias alias="pwcVO" type="kr.or.ddit.vo.ProjectWorkClassVO"/>
+	<typeAlias alias="chatpwVO" type="kr.or.ddit.vo.ChatPwVO"/>
 	
 
 
@@ -215,6 +217,56 @@
 		and d.video_chat_room_code = #video_chat_room_code#
 		group by a.video_chat_room_title, b.project_name, c.emp_name, a.video_chat_room_content, 
 		        d.video_chat_join_intime, d.video_chat_join_outtime, a.video_chat_room_code ,a.video_chat_room_date        
+    </select>
+    
+    <select id="getPwcList" parameterClass="map" resultClass="pwcVO">
+		select b.pwc_name, b.pwc_code
+		from video_chat_room a, pwc b , project c
+		where a.video_chat_room_code = #video_chat_room_code#
+		and b.project_code = c.project_code
+		and b.pwc_delete = 'n'
+		and c.project_code = a.project_code
+
+    </select>
+    
+    <select id="getPWList" parameterClass="map" resultClass="pwcVO">
+        select c.pw_code, c.pw_function
+		from video_chat_room a, pwc b, pw c
+		where a.video_chat_room_code = #video_chat_room_code#
+		and b.pwc_code = c.pwc_code
+		and c.pwc_code = #pwc_code#
+		and b.pwc_delete = 'n'
+		and c.pw_delete = 'n'
+		and c.project_code = a.project_code
+    </select>
+    
+    <insert id="insertChatPw" parameterClass="chatpwVO">
+        <selectKey keyProperty="chat_pw_code" resultClass="string">
+            select chat_pw_seq.nextval from dual
+        </selectKey>
+        insert into chat_pw(
+					        chat_pw_code
+							, pwc_code
+							, pw_code
+							, chat_pw_date
+							, emp_code
+                            )
+                    values(
+                            #chat_pw_code#
+                            , #pwc_code#
+                            , #pw_code#
+                            , sysdate
+                            ,#emp_code# 
+                            )
+    </insert>
+    
+    <select id="getchatPwLsit" resultClass="chatpwVO">
+		select a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name
+		from chat_pw a, pw b, pwc c, emp d
+		where a.pwc_code = c.pwc_code
+		and a.pw_code = b.pw_code
+		and d.emp_code = a.emp_code
+		and a.chat_pw_delete = 'n'
     </select>
     
 </sqlMap>

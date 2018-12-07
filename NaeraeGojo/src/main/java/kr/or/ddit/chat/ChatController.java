@@ -2,6 +2,9 @@ package kr.or.ddit.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.chat.service.IChatJoinService;
 import kr.or.ddit.chat.service.IChatRoomService;
@@ -24,8 +27,11 @@ public class ChatController {
 	
 	
 	@RequestMapping("chatRoom")
-	public void chatRoom() throws Exception{
-		
+	public void chatRoom(String chatroom_code
+						, HttpSession session) throws Exception{
+		String chatjoin_emp = (String) session.getAttribute("LOGIN_EMPINFO.emp_code");
+		System.out.println(chatroom_code);
+		session.setAttribute("chatroom_code", chatroom_code);
 	}
 	
 	@RequestMapping("chatRoomInsert")
@@ -65,4 +71,16 @@ public class ChatController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("chatList")
+	public ModelAndView chatList(ModelAndView mav , String emp_code
+									,Map<String, String> params) throws Exception{
+		params.put("emp_code", emp_code);
+		List<ChatRoomVO> crl = crservice.getChatList(params);
+		
+		mav.addObject("crl", crl);
+		mav.setViewName("jsonConvertView");
+		return mav;
+	}
+	
 }

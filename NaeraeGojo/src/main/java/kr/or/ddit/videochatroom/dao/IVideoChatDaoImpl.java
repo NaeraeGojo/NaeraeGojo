@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.vo.ChatListTempVO;
+import kr.or.ddit.vo.ChatPwVO;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectVO;
+import kr.or.ddit.vo.ProjectWorkClassVO;
 import kr.or.ddit.vo.VideoChatRoomVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +89,29 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 	public List<ChatListTempVO> getChatStep3(Map<String, String> params)
 			throws SQLException {
 		return client.queryForList("videoRoom.getChatStep3", params);
+	}
+
+	@Override
+	public List<ProjectWorkClassVO> getPwcList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("videoRoom.getPwcList", params);
+	}
+
+	@Override
+	public List<ProjectWorkClassVO> getPWList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("videoRoom.getPWList", params);
+	}
+
+	@Override
+	public String insertChatPw(ChatPwVO cpv) throws SQLException {
+		return (String) client.insert("videoRoom.insertChatPw", cpv);
+	}
+
+	@Override
+	public List<ChatPwVO> getchatPwLsit()
+			throws SQLException {
+		return client.queryForList("videoRoom.getchatPwLsit");
 	}
 
 }
