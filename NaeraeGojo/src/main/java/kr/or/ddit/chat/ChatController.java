@@ -10,6 +10,7 @@ import kr.or.ddit.chat.service.IChatJoinService;
 import kr.or.ddit.chat.service.IChatRoomService;
 import kr.or.ddit.vo.ChatJoinVO;
 import kr.or.ddit.vo.ChatRoomVO;
+import kr.or.ddit.vo.EmpVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +30,11 @@ public class ChatController {
 	@RequestMapping("chatRoom")
 	public void chatRoom(String chatroom_code
 						, HttpSession session) throws Exception{
-		String chatjoin_emp = (String) session.getAttribute("LOGIN_EMPINFO.emp_code");
-		System.out.println(chatroom_code);
+		String emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		session.setAttribute("chatroom_code", chatroom_code);
+		
 	}
+	
 	
 	@RequestMapping("chatRoomInsert")
 	public ModelAndView chatRoomInsert(ModelAndView mav
@@ -66,7 +68,7 @@ public class ChatController {
 		
 		cjservice.insertChatJoin(cjl);
 		
-		
+		mav.addObject("chatroom_code",chatroom_code);
 		mav.setViewName("jsonConvertView");
 		
 		return mav;

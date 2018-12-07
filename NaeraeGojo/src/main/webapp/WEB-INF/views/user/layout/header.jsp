@@ -437,7 +437,7 @@ $(function(){
 			boalert("채팅에 초대할 직원을 선택해주세요.");
 			return false;
 		}
-		
+		var chatroom_code = '';
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/chat/chatRoomInsert.do'
 			, type : 'post'
@@ -452,7 +452,7 @@ $(function(){
 				boalert(error);
 			}
 			, success : function(json){
-				
+				chatroom_code = json.chatroom_code;
 			}
 		})
 		
@@ -462,9 +462,11 @@ $(function(){
 		
 		// 여기서 채팅방개설, 채팅참여 목록 인서트 작업 필요
 		var url = "${pageContext.request.contextPath}/user/chat/chatRoom.do";
+		var query = "?chatroom_code="+chatroom_code;
+		
 		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 	
-		window.open(url, "대화창", options);
+		window.open(url+query, "대화창", options);
 		
 	});
 	
@@ -487,6 +489,8 @@ $(function(){
 	
 	$(document).delegate('.btn_join_chat','click',function(){
 		var chatroom_code = $(this).attr('code');
+		
+		
 		var url = '${pageContext.request.contextPath}/user/chat/chatRoom.do';
 		var query = '?chatroom_code=' + chatroom_code;
 		

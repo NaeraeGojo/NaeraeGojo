@@ -248,6 +248,7 @@ function postToServer(){
 		, msg : text
 		, emp_name : '${LOGIN_EMPINFO.emp_name}'
 		, time : now_time
+		, chatroom_code : '${param.chatroom_code}'
 	});
 	
 	ws.send(j_msg);
@@ -375,12 +376,12 @@ function closeConnection(){
 		</div>
 		<!-- /.box-body -->
 		<div class="box-footer">
-			<form action="#" method="post">
+			<form method="post">
 				<div class="input-group">
 					<input type="text" id="msg" name="msg" placeholder="Type Message ..."
 						class="form-control"> <span class="input-group-btn">
-						<button type="button" onclick="postToServer();"
-						class="btn btn-success btn-flat">Send</button>
+						<input type="button" onclick="postToServer();"
+						class="btn btn-success btn-flat" value="전송">
 					</span>
 				</div>
 			</form>
