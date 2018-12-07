@@ -14,7 +14,7 @@ $(function(){
 // 	    	$('input[name=video_chat_join_intime]').val('참여하지 않았습니다.');
 // 	    }
 // 	    $('input[name=video_chat_join_outtime]').val('${chatInfo[0].video_chat_join_outtime }');
-	    $('textarea[name=video_chat_room_content]').val('${chatInfo[0].video_chat_room_content}');
+	    
 // 	    $('select[name=project_name]').val('${chatInfo[0].project_name}');
 	    
 	    $("#project_name").append('<option selected="selected">${chatInfo[0].project_name}</option>');
@@ -128,7 +128,7 @@ label {
                        </tr>
                         <tr >
                           </c:if>
-                   			<td width="50" height="50"><img src="${pageContext.request.contextPath }/images/icons/An.jpg" ></td>
+                   			<td width="50" height="50"><img src="${pageContext.request.contextPath }/images/icons/person2.jpeg" ></td>
                    			<td width="200" height="50">${chatInfo_emp.emp_name}</td>
                         </c:forEach>
                    		</tr>
@@ -139,7 +139,7 @@ label {
                 
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">회의내용</label>
-                  <textarea class="col-sm-10" rows="10" name="video_chat_room_content" placeholder="회의내용" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+                  <textarea class="col-sm-10" rows="10" name="video_chat_room_content" placeholder="회의내용" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;">${chatInfo[0].video_chat_room_content}</textarea>
                 </div>
                <br/><br/>
                

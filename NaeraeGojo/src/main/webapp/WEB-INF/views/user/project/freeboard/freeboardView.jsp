@@ -156,8 +156,8 @@ $(function() {
 		
 		var project_all_file_code = $('input[name=project_all_file_code]').val();
 		var project_code = $('input[name=project_code]').val();
-		var doc_code = $('input[name=recsroom_code]').val();
-		var doc_class = '1';
+		var doc_code = $('input[name=freeboard_code]').val();
+		var doc_class = '2';
 		
 		var formData = new FormData(); 
 		formData.append("project_all_file_code", project_all_file_code);
@@ -269,12 +269,10 @@ $(function() {
 	
 	
 	$('input[name=freeboard_title]').val('${fbv.freeboard_title}');
-	$('textarea[name=freeboard_content]').val('${fbv.freeboard_content}');
 	$('input[name=emp_code]').val('${fbv.emp_code}');
 	$('input[name=emp_nick]').val('${fbv.emp_nick}');
 
 	$('input[name=freeboard_title_view]').val('${fbv.freeboard_title}');
-	$('textarea[name=freeboard_content_view]').val('${fbv.freeboard_content}');
 });
 </script>
 <div class="row">
@@ -298,8 +296,8 @@ $(function() {
 						<div class="form-group">
 							<label for="name" class="col-sm-2 control-label">제목</label>
 							<div class="col-sm-6">
-								<input id="name" type="text" name="recsroom_title_view" class="form-control view_form">
-								<input id="name" type="text" name="recsroom_title" class="form-control up_form" style="border-radius: 1em;">
+								<input id="name" type="text" name="freeboard_title_view" class="form-control view_form">
+								<input id="name" type="text" name="freeboard_title" class="form-control up_form" style="border-radius: 1em;">
 							</div>
 						</div>
 						
@@ -317,9 +315,9 @@ $(function() {
 							<label for="contents" class="col-sm-2 control-label">내용</label>
 							<div class="col-sm-8">
 								<textarea name="freeboard_content_view" class="form-control view_form" rows="10"
-									style="border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+									style="border: 1px solid #d2d2d2; border-radius: 1em;">${fbv.freeboard_content}</textarea>
 								<textarea name="freeboard_content" class="form-control up_form" rows="10"
-									style="border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+									style="border: 1px solid #d2d2d2; border-radius: 1em;">${fbv.freeboard_content}</textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -345,6 +343,7 @@ $(function() {
 							</div>
 						</div>
 						<div class="box-footer clearfix">
+							<input value="등록" type="submit" style="width:80px;" class="btn btn-warning btn-flat pull-right up_form ">
 			              	<input id="btn_cancle" value="취소" type="button" class="btn btn-default btn-flat pull-right up_form">
 			              	<c:if test="${LOGIN_EMPINFO.emp_code == fbv.emp_code }">
 			              		<input id="btn_del" value="삭제" type="button" class="btn btn-danger btn-flat pull-right">

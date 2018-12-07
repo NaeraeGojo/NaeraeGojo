@@ -26,6 +26,28 @@
 					)
 	</insert>
 	
+	<select id="getChatList" parameterClass="map" resultClass="chatroomVO">
+		select chatjoin_chatroom as chatroom_code
+        ,chatroom.chatroom_writer
+        , to_char(chatroom.chatroom_reg_date,'yyyy-MM-dd hh:mm:dd') as chatroom_reg_date
+        , chatroom.chatroom_open , chatroom.chatroom_writer_name
+        , listagg(emp_name,',') within group(order by emp_code) as chatroom_jl
+	        from chatjoin , emp, (
+	                            select a.* 
+	                                from (select chatroom.* ,emp_name as chatroom_writer_name
+	                                        from emp, chatroom
+	                                        where chatroom_writer = emp_code) a , chatjoin b
+	                                where a.chatroom_code = b.chatjoin_chatroom
+	                                and b.chatjoin_emp = #emp_code#
+	                                ) chatroom
+		    where chatjoin_chatroom in (chatroom.chatroom_code)
+		    and chatjoin.chatjoin_emp = emp.emp_code
+		    and chatjoin.chatjoin_join = 'y'
+		    group by chatjoin_chatroom,chatroom.chatroom_writer
+		    , chatroom.chatroom_reg_date, chatroom.chatroom_open
+		    , chatroom.chatroom_writer_name
+	</select>
+	
 
 </sqlMap>
 

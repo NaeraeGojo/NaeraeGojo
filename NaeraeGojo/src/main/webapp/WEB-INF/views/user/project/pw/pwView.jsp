@@ -295,7 +295,6 @@ $(function(){
 	$('.pw_up_form input[name=pw_code]').val('${pwv.PW_CODE}');
 	$('.pw_up_form input[name=pwc_code]').val('${pwv.PWC_CODE}');
 	$('.pw_up_form input[name=pw_function]').val('${pwv.PW_FUNCTION}');
-	$('.pw_up_form textarea[name=pw_content]').val('${pwv.PW_CONTENT}');
 	$('.pw_up_form input[name=pw_writer]').val('${pwv.PW_WRITER}');
 	$('.pw_up_form select[name=pw_damdang]').val('${pwv.PW_DAMDANG}');
 	$('.pw_up_form input[name=pw_est]').val('${pwv.PW_EST}');
@@ -305,7 +304,6 @@ $(function(){
 	
 	$('.pw_up_form input[name=show_pwc_name_view]').val('${pwv.PWC_NAME}');
 	$('.pw_up_form input[name=pw_function_view]').val('${pwv.PW_FUNCTION}');
-	$('.pw_up_form textarea[name=pw_content_view]').val('${pwv.PW_CONTENT}');
 	$('.pw_up_form input[name=pw_writer_view]').val('${pwv.WRITER_NAME}');
 	$('.pw_up_form input[name=pw_damdang_view]').val('${pwv.DAMDANG_NAME}');
 	$('.pw_up_form input[name=pw_est_view]').val('${pwv.PW_EST}');
@@ -472,10 +470,10 @@ $(function(){
 		      <label for="contents" class="col-sm-2 control-label">업무 내용</label>
 		      <div  class="col-sm-8">
 		      <textarea name="pw_content_view" class="form-control view_form" rows="10"
-		      style=" border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+		      style=" border: 1px solid #d2d2d2; border-radius: 1em;">${pwv.PW_CONTENT}</textarea>
 		      
 		      <textarea name="pw_content" class="form-control up_form" rows="10" placeholder="업무 내용" 
-		      style=" border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+		      style=" border: 1px solid #d2d2d2; border-radius: 1em;">${pwv.PW_CONTENT}</textarea>
 		       </div>
 		    </div>
             

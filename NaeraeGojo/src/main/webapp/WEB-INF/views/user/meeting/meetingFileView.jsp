@@ -11,7 +11,6 @@ $(function(){
 	};
 	
 	$('input[name=meeting_title]').val('${meetingInfo[0].meeting_title}');
-	$('textarea[name=meeting_content]').val('${meetingInfo[0].meeting_content}');
 	$('input[name=project_name]').val('${meetingInfo[0].project_name}');
 	
 	
@@ -218,7 +217,7 @@ label {
                 
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">회의내용</label>
-                  <textarea class="col-sm-10" rows="10" name="meeting_content" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+                  <textarea class="col-sm-10" rows="10" name="meeting_content" style=" width:68%; border: 1px solid #d2d2d2; border-radius: 1em;">${meetingInfo[0].meeting_content }</textarea>
                 </div>
                <br/><br/><br/><br/>
                
