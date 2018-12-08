@@ -18,11 +18,12 @@
 	width : 80px;
 	margin-right:5px; 
 }
+.form-control[disabled] {
+	background-color: white;
+}
+
 label {
 	font-size: 20px !important;
-}
-.col-md-11 {
-	margin: 10px;
 }
 </style>
 <script type="text/javascript">
