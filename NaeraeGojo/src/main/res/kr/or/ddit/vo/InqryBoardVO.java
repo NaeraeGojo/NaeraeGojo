@@ -17,7 +17,8 @@ public class InqryBoardVO {
 	private String inqry_board_delete;
 	private String inqry_board_hit;
 	private String rnum;
-	private String emp_code;
+	private String emp_code; 
+	private String emp_nick; 
 	
 	private List<AllFileVO> items;
 	

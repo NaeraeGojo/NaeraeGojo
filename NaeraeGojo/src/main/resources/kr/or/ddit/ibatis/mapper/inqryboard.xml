@@ -54,10 +54,10 @@
         select b.*
         from  (select rownum rnum, a.*
                 from ( 
-                	<include refid="selectall"/>
+                	<include refid="selectAll"/>
                 	<include refid = "searchCondition"/> 
                     order by inqry_board_code asc) a ) b
-        <![cdata[                
+        <![CDATA[                
         where b.rnum <= #startNo#
          and  b.rnum >= #endNo#
         ]]>
