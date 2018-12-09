@@ -42,7 +42,7 @@
 	                                ) chatroom
 		    where chatjoin_chatroom in (chatroom.chatroom_code)
 		    and chatjoin.chatjoin_emp = emp.emp_code
-		    and chatjoin.chatjoin_join = 'y'
+		    and chatjoin.chatjoin_delete = 'n'
 		    group by chatjoin_chatroom,chatroom.chatroom_writer
 		    , chatroom.chatroom_reg_date, chatroom.chatroom_open
 		    , chatroom.chatroom_writer_name

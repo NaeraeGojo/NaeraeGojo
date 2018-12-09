@@ -8,4 +8,8 @@ import kr.or.ddit.vo.ChatJoinVO;
 public interface IChatJoinDao {
 
 	void insertChatJoin(List<ChatJoinVO> cjl) throws Exception;
+
+	void joinRoom(ChatJoinVO cjv) throws Exception;
+
+	void deleteRoom(ChatJoinVO cjv) throws Exception;
 }
