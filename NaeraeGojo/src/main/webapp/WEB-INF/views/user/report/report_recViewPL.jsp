@@ -207,7 +207,7 @@ label {
 					</div>
 					<div class="box-footer clearfix">
 						<input value="목록" id="reList" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
-						<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:forEach items="${stList }" var="list">
 							<c:if test="${list.report_pm_status eq 'x'}">
 								
@@ -340,6 +340,12 @@ label {
 	    	var  report_code = $('input[name=report_code]').val();
 	    	$(location).attr('href','${pageContext.request.contextPath}/user/report/updatePL/'+report_code+'.do');
 		})
+		
+		$('#delete').click(function(){
+	    	var  report_code = $('input[name=report_code]').val();
+	    	$(location).attr('href','${pageContext.request.contextPath}/user/report/deleteReportPLRec/'+report_code+'.do');
+	    });
+		
 		
 		 $('#checkFeed').click(function(){
 			  var emp_code = $('input[name=emp_code]').val();

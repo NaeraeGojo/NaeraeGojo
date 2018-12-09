@@ -135,11 +135,12 @@
 	<select id="clickList" parameterClass="map" resultClass ="joinVO">
 		select b.*
 		from (select rownum rnum, a.*
-				from (select b.emp_name,c.rqpps_name,b.emp_level,a.join_code,a.emp_code,a.project_code,a.rqpps_code 
-					 from join a, emp b, rqpps c , project d
+				from (select b.emp_name,c.rqpps_name,b.emp_level,a.join_code,a.emp_code,a.project_code,a.rqpps_code,a.position_name 
+					 from join a, emp b, rqpps c , project d, position e
 					 where a.emp_code = b.emp_code  
 					 and a.rqpps_code = c.rqpps_code 
 					 and a.project_code = d.project_code
+					 and a.position_name = e.position_name (+)
 					 and a.rqpps_code = #rqpps_code#
 						order by b.emp_level
 						) a ) b

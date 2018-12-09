@@ -4,6 +4,7 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="inqryboard">
 	<typeAlias alias="inqryboardVO" type="kr.or.ddit.vo.InqryBoardVO"/>
+	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
 
 	<resultMap id="inqryboardMap" class="inqryboardVO">
 		<result property="inqry_board_code" column="inqry_board_code"/>
@@ -11,50 +12,106 @@
 		<result property="inqry_board_content" column="inqry_board_content"/>
 		<result property="inqry_board_date" column="inqry_board_date"/>
 		<result property="inqry_board_delete" column="inqry_board_delete"/>
-<!-- 		<result property="items" column="bo_no" select="fileitem.fileItems"/> -->
+		<result property="inqry_board_hit" column="inqry_board_hit"/>
+		<result property="emp_code" column="emp_code"/>
+		<result property="emp_nick" column="emp_nick"/>
+		<result property="items" column="inqry_board_code" select="allFile.allFiles" />
 	</resultMap>
 
 	<!-- 전체문의게시글 조회 -->
 	<sql id="selectAll">
-		SELECT *
-		  FROM INQRYBOARD
-		  WHERE INQRY_BOARD_DELETE = 'n'
+		select to_char(inqry_board_date, 'yyyy-mm-dd') as inqry_board_date
+			  , a.inqry_board_code
+			  , a.inqry_board_title
+			  , a.inqry_board_content
+			  , a.inqry_board_hit
+			  , a.emp_code
+			  , b.emp_nick
+		  from inqry_board a, emp b
+		  where a.emp_code = b.emp_code
+		  and inqry_board_delete = 'n'
+	</sql>
+	
+	<sql id="searchCondition">
+		<dynamic prepend="AND">
+			<isNotEmpty property="search_keyword">
+				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
+						INQRY_BOARD_TITLE LIKE '%'||#search_keyword#||'%'
+					 OR INQRY_BOARD_CONTENT LIKE '%'||#search_keyword#||'%'
+				</isEqual>
+				<isEqual property="search_keycode" compareValue="TITLE">
+					INQRY_BOARD_TITLE LIKE '%'||#search_keyword#||'%'
+				</isEqual>
+				<isEqual property="search_keycode" compareValue="CONTENT">
+					INQRY_BOARD_CONTENT LIKE '%'||#search_keyword#||'%'
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
 	</sql>
 
 	<!-- 문의게시글 목록 -->
-	<select id="inqryList" resultClass="inqryBoardVO" parameterClass="map">
-        SELECT B.*
-        FROM  (SELECT ROWNUM RNUM, A.*
-                FROM ( <include refid="selectAll"/> 
-                        ORDER BY INQRY_BOARD_CODE) A ) B
-<!--         <![CDATA[                 -->
-<!--         WHERE B.rnum <= #startCount# -->
-<!--          AND  B.rnum >= #endCount# -->
+	<select id="inqryList" resultClass="inqryboardVO" parameterClass="map">
+        select b.*
+        from  (select rownum rnum, a.*
+                from ( 
+                	<include refid="selectAll"/>
+                	<include refid = "searchCondition"/> 
+                    order by inqry_board_code asc) a ) b
+        <![CDATA[                
+<!--         where b.rnum <= #startNo# -->
+<!--          and  b.rnum >= #endNo# -->
 <!--         ]]> -->
-        ORDER BY B.RNUM DESC
+        order by b.rnum desc
     </select> 
        
+    <select id="totalCount" parameterClass="map" resultClass="int">
+		select count(*)
+		  from inqry_board
+		 where inqry_board_delete = 'n'
+		 <include refid="searchCondition"/> 
+	</select>
+    
 	<!-- 문의게시글 Info(객체 받아오기) -->
-	<select id="inqryInfo" parameterClass="map" resultClass="inqryBoardVO">
+	<select id="inqryInfo" parameterClass="map" resultClass="inqryboardVO">
 		<include refid="selectAll"/>
 		AND INQRY_BOARD_CODE = #inqry_board_code#
 	</select>
 
-	<!-- 문의게시글 삭제 -->	
-	<update id="deleteInqryBoard" parameterClass="map">
-		UPDATE INQRYBOARD
+	<!-- 문의게시글 등록 -->
+	<insert id="insertInqry" parameterClass="inqryboardVO">
+		<selectKey keyProperty="inqry_board_code" resultClass="string">
+			SELECT INQRY_BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO INQRY_BOARD(INQRY_BOARD_CODE
+							,INQRY_BOARD_TITLE
+							,INQRY_BOARD_CONTENT
+							,EMP_CODE)
+					VALUES(#inqry_board_code#
+						  ,#inqry_board_title#
+						  ,#inqry_board_content#
+						  ,#emp_code#)
+	</insert>
+	
+	<!-- 문의게시글 삭제	 -->
+	<update id="deleteInqry" parameterClass="map">
+		UPDATE INQRY_BOARD
 		   SET INQRY_BOARD_DELETE = 'y'
 		 WHERE INQRY_BOARD_CODE = #inqry_board_code#
 	</update>
 	
 	<!-- 문의게시글 수정 -->
-	<update id="updateInqryBoard" parameterClass="map">
-		UPDATE INQRYBOARD
+	<update id="updateInqry" parameterClass="inqryboardVO">
+		UPDATE INQRY_BOARD
 		   SET INQRY_BOARD_TITLE = #inqry_board_title#
 			  ,INQRY_BOARD_CONTENT = #inqry_board_content# 
+			  ,EMP_CODE = #emp_code#
+			  <dynamic prepend=",">
+		      	<isNotEmpty property="inqry_board_hit">
+		      	INQRY_BOARD_HIT = #inqry_board_hit#
+		      	</isNotEmpty>
+		      </dynamic>
 		 WHERE INQRY_BOARD_CODE = #inqry_board_code#
 	</update>
-	
 	
 </sqlMap>
 

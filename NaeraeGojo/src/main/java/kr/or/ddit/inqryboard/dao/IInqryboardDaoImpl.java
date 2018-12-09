@@ -21,36 +21,35 @@ public class IInqryboardDaoImpl implements IInqryboardDao{
 	@Override
 	public InqryBoardVO inqryBoardInfo(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (InqryBoardVO) client.queryForObject("inqryboard.inqryInfo", params);
 	}
 
 	@Override
 	public List<InqryBoardVO> inqryBoardList(Map<String, String> params)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return client.queryForList("inqryboard.inqryList", params);
 	}
 
 	@Override
-	public void insertInqryBoardInfo(InqryBoardVO inqryBoardInfo)
+	public String insertInqryInfo(InqryBoardVO inqryBoardInfo)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		return (String) client.insert("inqryboard.insertInqry", inqryBoardInfo);
 	}
 
 	@Override
-	public void deleteInqryBoardInfo(Map<String, String> params)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void deleteInqryInfo(Map<String, String> params) throws SQLException {
+		client.update("inqryboard.deleteInqry", params);
 	}
 
 	@Override
-	public void updateInqryBoardInfo(InqryBoardVO inqryBoardInfo)
+	public void updateInqryInfo(InqryBoardVO inqryBoardInfo)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.update("inqryboard.updateInqry", inqryBoardInfo);
+	}
+
+	@Override
+	public int totalCount(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("inqryboard.totalCount", params);
 	}
 
 }

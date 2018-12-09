@@ -21,5 +21,17 @@ public class IChatJoinServiceImpl implements IChatJoinService{
 	public void insertChatJoin(List<ChatJoinVO> cjl) throws Exception {
 		dao.insertChatJoin(cjl);
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void joinRoom(ChatJoinVO cjv) throws Exception {
+		dao.joinRoom(cjv);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void deleteRoom(ChatJoinVO cjv) throws Exception {
+		dao.deleteRoom(cjv);
+	}
 	
 }

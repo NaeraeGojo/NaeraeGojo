@@ -541,6 +541,36 @@ public class ReportController {
 	}
 	
 	
+	//PL받은보고서함 삭제
+	@RequestMapping("deleteReportPLRec/{report_code}")
+	public String deleteNoticeAll(@PathVariable String report_code, Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		service.deleteReportPLRec(params);
+		return "redirect:/user/report/report_listPLRec.do";
+	}
+	//PL보낸보고서함 삭제
+	@RequestMapping("deleteReportPLSend/{report_code}")
+	public String deleteReportPLSend(@PathVariable String report_code, Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		service.deleteReportPLSend(params);
+		return "redirect:/user/report/report_listPL.do";
+	}
+	//PM받은보고서함 삭제
+	@RequestMapping("deleteReportPMRec/{report_code}")
+	public String deleteReportPMRec(@PathVariable String report_code, Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		service.deleteReportPMRec(params);
+		return "redirect:/user/report/report_listPM.do";
+	}
+	//개발자보낸보고서함 삭제
+	@RequestMapping("deleteReportDEVSend/{report_code}")
+	public String deleteReportDEVSend(@PathVariable String report_code, Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		service.deleteReportDEVSend(params);
+		return "redirect:/user/report/report_listDev.do";
+	}
+	
+	
 	
 	
 	

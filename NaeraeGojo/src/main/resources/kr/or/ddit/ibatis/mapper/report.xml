@@ -131,6 +131,7 @@
 			AND  A.EMP_CODE = #emp_code#
 			AND  A.REPORT_PL_STATUS in ('i','k','x' )
 			AND  A.REPORT_PM_STATUS in ('i','k','x' )
+			AND  A.REPORT_DELETE_DEV_SEND = 'n'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -141,6 +142,7 @@
 			AND  A.EMP_CODE = #emp_code#
 			AND  A.REPORT_PL_STATUS = 'k'
 			AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
+			AND  A.REPORT_DELETE_PL_SEND = 'n'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -152,6 +154,7 @@
 			AND  A.EMP_CODE_PL != A.EMP_CODE 
 			AND  A.REPORT_PL_STATUS IN ('i' ,'k','x')
 			AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
+			AND  A.REPORT_DELETE_PL_REC = 'n'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -162,6 +165,7 @@
             AND  A.EMP_CODE_PM = #emp_code#
             AND  A.REPORT_PL_STATUS IN ('k','x')
             AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
+            AND  A.REPORT_DELETE_PM_REC = 'n'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -174,6 +178,7 @@
 						AND  A.EMP_CODE = #emp_code#
 						AND  A.REPORT_PL_STATUS in ('i','k','x' )
 						AND  A.REPORT_PM_STATUS in ('i','k','x' )
+						AND  A.REPORT_DELETE_DEV_SEND = 'n'
 						<include refid="searchCondition"/>
 						order by report_code asc
 						) a ) b
@@ -194,6 +199,7 @@
 						AND  A.EMP_CODE_PL != A.EMP_CODE
 						AND  A.REPORT_PL_STATUS IN ( 'i','k','x')
 						AND  A.REPORT_PM_STATUS IN ( 'i','k','x')
+						AND  A.REPORT_DELETE_PL_REC = 'n'
 						<include refid="searchCondition"/>
 						order by report_code asc
 						) a ) b
@@ -213,6 +219,7 @@
 						AND  A.EMP_CODE = #emp_code#
 						AND  A.REPORT_PL_STATUS = 'k'
 						AND  A.REPORT_PM_STATUS IN ('k','i','x')
+						AND  A.REPORT_DELETE_PL_SEND  = 'n'
 						<include refid="searchCondition"/>
 						order by report_code
 						) a ) b
@@ -232,6 +239,7 @@
 		                  AND  A.EMP_CODE_PM = #emp_code#
 		                  AND  A.REPORT_PL_STATUS IN ('k','x')
 		                  AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
+		                  AND  A.REPORT_DELETE_PM_REC  = 'n'
 						<include refid="searchCondition"/>
 						order by report_code
 						) a ) b
@@ -405,6 +413,30 @@
 		WHERE EMP_CODE = #emp_code# 
 		AND REPORT_CODE = #report_code#
 	</select>
+	
+	<update id="deleteReportDEVSend" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_DELETE_DEV_SEND = 'y' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<update id="deleteReportPLRec" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_DELETE_PL_REC = 'y' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<update id="deleteReportPLSend" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_DELETE_PL_SEND = 'y' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<update id="deleteReportPMRec" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_DELETE_PM_REC = 'y' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
 	
 	
 	

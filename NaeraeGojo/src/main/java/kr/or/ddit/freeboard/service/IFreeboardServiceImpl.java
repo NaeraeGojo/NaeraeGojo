@@ -54,6 +54,7 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 		}
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void deleteFreeboardInfo(Map<String, String> params)
 			throws SQLException {
@@ -72,7 +73,6 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 		}
 	}
 	
-	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
 		return dao.totalCount(params);
