@@ -231,4 +231,28 @@ public class IReportServiceImpl implements IReportService{
 		list = dao.feedViewDev(params);
 		return list;
 	}
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteReportPLRec(Map<String, String> params)
+			throws SQLException {
+		dao.deleteReportPLRec(params);
+	}
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteReportPLSend(Map<String, String> params)
+			throws SQLException {
+		dao.deleteReportPLSend(params);
+	}
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteReportPMRec(Map<String, String> params)
+			throws SQLException {
+		dao.deleteReportPMRec(params);
+	}
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	@Override
+	public void deleteReportDEVSend(Map<String, String> params)
+			throws SQLException {
+		dao.deleteReportDEVSend(params);
+	}
 }

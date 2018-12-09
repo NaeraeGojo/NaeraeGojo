@@ -220,27 +220,27 @@ $(function(){
 		}
 
 	}) ;
-	setTimeout(function(){
-		$.ajax({
-            type : "POST"
-            , url : "${pageContext.request.contextPath}/user/video/getNewpwList.do"
-            , dataType : "json"
-            , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
-            , error : function(request, status, error) {
-                 alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-            } , success : function(result) {
-                var data = '';
-               for (var i = 0; i < result.chatPwList.length; i++) {
-                   data += ' <strong><i class="fa fa-book margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
-                   data += ' <label class="text-muted" >'; 
-                   data += result.chatPwList[i].pw_function + '</label><hr>';
-               }
-               $('#pwdiv').empty().append(data);
+// 	setTimeout(function(){
+// 		$.ajax({
+//             type : "POST"
+//             , url : "${pageContext.request.contextPath}/user/video/getNewpwList.do"
+//             , dataType : "json"
+//             , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+//             , error : function(request, status, error) {
+//                  alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+//             } , success : function(result) {
+//                 var data = '';
+//                for (var i = 0; i < result.chatPwList.length; i++) {
+//                    data += ' <strong><i class="fa fa-book margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
+//                    data += ' <label class="text-muted" >'; 
+//                    data += result.chatPwList[i].pw_function + '</label><i class="fa fa-remove"></i><hr>';
+//                }
+//                $('#pwdiv').empty().append(data);
                
-            }
-       });
+//             }
+//        });
 		
-    },1500);
+//     },1500);
 	
 	
 	
@@ -304,27 +304,6 @@ $(function(){
 				        </div>
 				        <div id="scroll">
 				                 <div class="box-body" id="pwdiv">
-					              <strong><i class="fa fa-book margin-r-5"></i> Education</strong> <br/>
-					
-					              <label class="text-muted" >
-					                B.S. in Computer Science from the University of Tennessee at Knoxville
-					              </label>
-					
-					              <hr>
-					              <strong><i class="fa fa-book margin-r-5"></i> Education</strong> <br/>
-					
-					              <label class="text-muted" >
-					                B.S. in Computer Science from the University of Tennessee at Knoxville
-					              </label>
-					
-					              <hr>
-					              <strong><i class="fa fa-book margin-r-5"></i> Education</strong> <br/>
-					
-					              <label class="text-muted" >
-					                B.S. in Computer Science from the University of Tennessee at Knoxville
-					              </label>
-					
-					              <hr>
 					
 					            </div>
 				        
