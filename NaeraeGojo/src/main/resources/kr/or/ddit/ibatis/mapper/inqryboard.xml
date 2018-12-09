@@ -58,9 +58,9 @@
                 	<include refid = "searchCondition"/> 
                     order by inqry_board_code asc) a ) b
         <![CDATA[                
-        where b.rnum <= #startNo#
-         and  b.rnum >= #endNo#
-        ]]>
+<!--         where b.rnum <= #startNo# -->
+<!--          and  b.rnum >= #endNo# -->
+<!--         ]]> -->
         order by b.rnum desc
     </select> 
        
@@ -92,7 +92,7 @@
 						  ,#emp_code#)
 	</insert>
 	
-	<!-- 문의게시글 삭제 -->	
+	<!-- 문의게시글 삭제	 -->
 	<update id="deleteInqry" parameterClass="map">
 		UPDATE INQRY_BOARD
 		   SET INQRY_BOARD_DELETE = 'y'

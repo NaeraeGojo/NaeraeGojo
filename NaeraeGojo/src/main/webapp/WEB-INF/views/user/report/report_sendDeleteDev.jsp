@@ -206,7 +206,7 @@ label {
 					</div>
 					<div class="box-footer clearfix">
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
-						<input value="삭제" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:forEach items="${stList }" var="list">
 							<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
 								<input value="피드백 보기" id="checkFeed" type="button" data-toggle="modal" data-target="#modal1"  class="btn btn-sm btn-info btn-flat pull-right"> 
@@ -346,6 +346,10 @@ label {
 					}
 				});
 		 })
-
+		
+		 $('#delete').click(function(){
+		    	var  report_code = $('input[name=report_code]').val();
+		    	$(location).attr('href','${pageContext.request.contextPath}/user/report/deleteReportDEVSend/'+report_code+'.do');
+		 });
 	})
 </script>

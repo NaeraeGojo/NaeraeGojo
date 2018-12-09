@@ -54,4 +54,10 @@ public interface IReportDao {
 	public int totalCountPL(Map<String, String> params) throws SQLException;
 	public int totalCountPLRec(Map<String, String> params) throws SQLException;
 	public int totalCountPMRec(Map<String, String> params) throws SQLException;
+	
+	public void deleteReportPLRec(Map<String,String> params) throws SQLException;
+	public void deleteReportPLSend(Map<String,String> params) throws SQLException;
+	public void deleteReportPMRec(Map<String,String> params) throws SQLException;
+	public void deleteReportDEVSend(Map<String,String> params) throws SQLException;
+	
 }
