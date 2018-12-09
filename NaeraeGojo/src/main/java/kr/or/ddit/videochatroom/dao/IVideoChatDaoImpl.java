@@ -86,8 +86,7 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 	}
 
 	@Override
-	public List<ChatListTempVO> getChatStep3(Map<String, String> params)
-			throws SQLException {
+	public List<ChatListTempVO> getChatStep3(Map<String, String> params)throws SQLException {
 		return client.queryForList("videoRoom.getChatStep3", params);
 	}
 
