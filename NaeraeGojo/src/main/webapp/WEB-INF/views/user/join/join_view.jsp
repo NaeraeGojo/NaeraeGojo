@@ -89,11 +89,48 @@ select{
 	                  	<td>${ list.rnum}</td>
 	                    <td>${list.emp_level}</td>
 	                    <td>${list.emp_name}</td>
+	                    <c:if test="${list.emp_level  eq '특급' }">
+		                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
+<!-- 								<option  value="">권한 선택</option> -->
+							<c:if test="${empty list.position_name}">
+								<option  value="">권한 선택</option>
+							</c:if>
+							<c:if test="${!empty list.position_name}">
+								<option  value="${list.position_name}">${list.position_name}</option>
+							</c:if>
+			                    <option  value="PL">PL</option>
+				            </select></td>
+	                    </c:if>
+	                    <c:if test="${list.emp_level  eq '중급' || list.emp_level  eq '고급'}">
 	                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
-							<option  value="">권한 선택</option>
-		                    <option  value="PM">PM</option>
+<%-- 							<option  value="${list.position_name}">권한 선택</option> --%>
+							<c:if test="${empty list.position_name}">
+								<option  value="">권한 선택</option>
+							</c:if>
+							<c:if test="${!empty list.position_name}">
+								<option  value="${list.position_name}">${list.position_name}</option>
+							</c:if>
 		                    <option  value="PL">PL</option>
+		                    <option  value="TA">TA</option>
+		                    <option  value="DA">DA</option>
+		                    <option  value="UA">UA</option>
+		                    <option  value="AA">AA</option>
 			            </select></td>
+	                    </c:if>
+	                    <c:if test="${list.emp_level  eq '초급' }">
+	                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
+							<c:if test="${empty list.position_name}">
+								<option  value="">권한 선택</option>
+							</c:if>
+							<c:if test="${!empty list.position_name}">
+								<option  value="${list.position_name}">${list.position_name}</option>
+							</c:if>
+		                    <option  value="TA">TA</option>
+		                    <option  value="DA">DA</option>
+		                    <option  value="UA">UA</option>
+		                    <option  value="AA">AA</option>
+			            </select></td>
+	                    </c:if>
 	                 </tr>
 	                </c:forEach>
 	                  
@@ -202,7 +239,7 @@ $(function(){
 		                }
 		                , success : function(list) {
 		                	alert(list.rqpps_code);
-// 		                	$(location).attr('href','${pageContext.request.contextPath}/user/join/join_view.do?rqpps_code='+list.rqpps_code);
+		                	$(location).attr('href','${pageContext.request.contextPath}/user/join/join_view.do?rqpps_code='+list.rqpps_code);
 		                	
 		                }
 		    });
