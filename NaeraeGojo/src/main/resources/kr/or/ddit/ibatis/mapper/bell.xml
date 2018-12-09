@@ -183,17 +183,17 @@
 				 FROM (SELECT 
                              TO_NUMBER(A.ISSUE_CODE) AS ISSUE_CODE
                             ,A.ISSUE_ALARM
-                            ,A.ISSUE_EVENT_DAY
+							,TO_CHAR(issue_event_day, 'YYYY-MM-DD') as issue_event_day
                             ,A.ISSUE_NAME 
                             ,B.ISLEV_NAME AS ISSUE_LEVEL
                             ,A.EMP_DAMDANG
                             ,A.EMP_CODE
-                            ,C.EMP_NICK
+                            ,C.EMP_NAME
                             ,D.PROJECT_NAME
                             ,F.RQPPS_NICKNAME
                         FROM ISSUE A, ISLEV B, EMP C, PROJECT D, PW E, RQPPS F, SUGGEST G
                         WHERE A.ISSUE_LEVEL = B.ISLEV_CODE
-                        AND F.EMP_CODE = C.EMP_CODE
+                        AND A.EMP_CODE = C.EMP_CODE
                         AND A.PW_CODE = E.PW_CODE
                         AND D.PROJECT_CODE = E.PROJECT_CODE
                         AND F.RQPPS_CODE = G.SUGGEST_CODE

@@ -26,6 +26,25 @@ $(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/bell/deleteProjectAlarm.do?join_code='+join_code);
 	});
     
+    $('#issueDamdangTable tr:gt(0)').click(function(){
+    		var issue_code = $(this).find('td:eq(0) input').val()
+    	
+    	$.ajax({
+    		type : 'POST'
+    		, url : '${pageContext.request.contextPath}/user/bell/issueAlarm.do'
+    		, data : {'issue_code' : issue_code}
+    		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    		, error : function(request, status, error) {
+                     alert('error : ' + request.status );
+              }
+    		, success : function(dd){
+		    	issue_code = $(this).find('td:eq(0) input').val();
+		        rnum = $(this).find('td:eq(0)').text();
+    			
+		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
+    		}
+    	})
+    });
     
     $('#issuetable tr:gt(0)').click(function(){
     	
@@ -311,7 +330,7 @@ table th,td{
 			</div>
 			<div class="box-body">
 				<div class="table-responsive">
-					<table class="table no-margin table-hover " id="issuetable">
+					<table class="table no-margin table-hover " id="issueDamdangTable">
 						<thead>
 							<tr>
 								<th>No.</th>
@@ -322,13 +341,12 @@ table th,td{
 								<th>작성날짜</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody data-toggle="modal" data-target="#issueDamdangForm">
 							<c:if test="${empty issueDamdangList}">
 								<tr>
 									<td onclick='event.cancelBubble=true;' colspan="6">등록된 이슈가 없슈</td>
 								</tr>
 							</c:if>
-
 							<c:if test="${!empty issueDamdangList}">
 								<c:forEach items="${issueDamdangList}" var="issueDamdangList">
 									<tr>
@@ -337,7 +355,7 @@ table th,td{
 										<td>${issueDamdangList.project_name }</td>
 										<td>${issueDamdangList.issue_name }</td>
 										<td>${issueDamdangList.emp_name }</td>
-										<td>${issueDamdangList.islev_name }</td>
+										<td>${issueDamdangList.issue_level }</td>
 										<td>${issueDamdangList.issue_event_day}</td>
 									</tr>
 								</c:forEach>
@@ -679,7 +697,7 @@ table th,td{
     
 <!-- 프로젝트 삭제 알림창 -->    
 <div class="modal fade" id="deleteForm">
-	<div class="modal-dialog" style="top: 20%;">
+	<div class="modal-dialog" style="top: 30%; left: 10%;">
 		<div class="modal-content" style="width: 50%">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -699,4 +717,26 @@ table th,td{
 		</div>
 	</div>
 </div>
-    
+
+<!-- 이슈 담당자 등록 알림창 -->    
+<div class="modal fade" id="issueDamdangForm">
+	<div class="modal-dialog" style="top: 30%; left: 10%;">
+		<div class="modal-content" style="width: 55%">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">이슈 담당자 등록</h4>
+			</div>
+				<div class="modal-body">
+					<h5>이슈 담당자 등록화면으로 이동하시겠습니까?</h5>
+				</div>
+				<div class="modal-footer" id="dddd">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
+					<button id="damdangBtn" type="button" class="btn btn-warning">확인</button>
+				</div>
+			</form>
+			
+		</div>
+	</div>
+</div>
