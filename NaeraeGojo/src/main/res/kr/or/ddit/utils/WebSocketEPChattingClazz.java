@@ -52,12 +52,24 @@ public class WebSocketEPChattingClazz {
 		}
 		
 		
-//		sessionList.add(webSocketSession);
-		
+		JSONObject job = new JSONObject();
 		try {
-			webSocketSession.getBasicRemote().sendText("WebSocket EndPoint에 접속 되었습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
+			job.put("ref_cpl", "true");
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		
+		for(Session webSocketSession2 : seMap.get(chatroom_code)){
+			Basic peerBasic =  webSocketSession2.getBasicRemote();
+			
+			// HttpSession ID : HttpSession.getId();
+			// javax.websocket.SessionID : Session.getID();
+			System.out.println("WebSocketSession ID : " + webSocketSession2.getId());
+			try {
+				peerBasic.sendText(job.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -65,9 +77,29 @@ public class WebSocketEPChattingClazz {
 	public void onClose(Session webSocketSession){
 		httpSession = ((PrincipalWithSession)webSocketSession.getUserPrincipal()).getSession();
 		
-//		sessionList.remove(webSocketSession);
 		String chatroom_code = (String) httpSession.getAttribute("chatroom_code");
+		
 		seMap.get(chatroom_code).remove(webSocketSession);
+		
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ref_cpl", "true");
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		
+		for(Session webSocketSession2 : seMap.get(chatroom_code)){
+			Basic peerBasic =  webSocketSession2.getBasicRemote();
+			
+			System.out.println("WebSocketSession ID : " + webSocketSession2.getId());
+			try {
+				peerBasic.sendText(job.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		
 	}
 	

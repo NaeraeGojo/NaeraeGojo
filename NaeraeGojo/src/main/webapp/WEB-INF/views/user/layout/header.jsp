@@ -460,7 +460,7 @@ $(function(){
 		var url = "${pageContext.request.contextPath}/user/chat/chatRoom.do";
 		var query = "?chatroom_code="+chatroom_code;
 		
-		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
+		var options = "width = 500, height = 450, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 	
 		window.open(url+query, "대화창"+query, options);
 		
@@ -468,9 +468,14 @@ $(function(){
 	
 	// 채팅버튼 눌렀을때
 	$('#a_chat_emp').click(function(){
+		ea= new Array();
+		
+		// 여기서 일단 uncheck
+		$('input[name=check_emp]').iCheck('uncheck');
+		$('input[name=check_emp]').iCheck('update');
 		
 		getChatList();
-		
+		getEmpList();
 	});
 	
 	// 채팅방 참여 눌렀을 때
@@ -481,7 +486,7 @@ $(function(){
 		var url = '${pageContext.request.contextPath}/user/chat/chatRoom.do';
 		var query = '?chatroom_code=' + chatroom_code;
 		
-		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
+		var options = "width = 500, height = 500, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 		
 		$('#modal-chat').modal('hide');
 		
@@ -556,28 +561,32 @@ $(function(){
 
 					$('input[name=check_emp]').on('ifUnchecked',function(event){
 		        		var emp_code = $(this).val();
-		        		ea.splice(emp_code, 1);
+		        		ea.splice(ea.indexOf(emp_code), 1);
 		        		
 					});
 				} );
 				
-				$('input[name=check_emp].flat-red, input[type="radio"].flat-red').iCheck({
-					checkboxClass: 'icheckbox_flat-green',
-				  	radioClass   : 'iradio_flat-green'
-				})
+				table_emp.draw();
+// 				$('input[name=check_emp].flat-red, input[type="radio"].flat-red').iCheck({
+// 					checkboxClass: 'icheckbox_flat-green',
+// 				  	radioClass   : 'iradio_flat-green'
+// 				})
 
-				$('input[name=check_emp]').on('ifUnchecked',function(event){
-					var emp_code = $(this).val();
-					ea.splice(emp_code, 1);
-					
-					
-				});
+// 				$('input[name=check_emp]').on('ifChecked',function(event){
+// 		        		var emp_code = $(this).val();
+// 		        		ea.push(emp_code);
+// 				});
+				
+// 				$('input[name=check_emp]').on('ifUnchecked',function(event){
+// 					var emp_code = $(this).val();
+// 					ea.splice(emp_code, 1);
+// 				});
 				
 	        	
 			}
 		})
 	}
-	getEmpList();
+	
 	
 	
 	

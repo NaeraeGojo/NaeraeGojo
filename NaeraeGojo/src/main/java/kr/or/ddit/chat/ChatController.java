@@ -14,6 +14,7 @@ import kr.or.ddit.vo.EmpVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,11 +29,39 @@ public class ChatController {
 	
 	
 	@RequestMapping("chatRoom")
-	public void chatRoom(String chatroom_code
-						, HttpSession session) throws Exception{
+	public Model chatRoom(Model model
+							, String chatroom_code
+							, Map<String, String> params
+							, HttpSession session) throws Exception{
 		String emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		session.setAttribute("chatroom_code", chatroom_code);
 		
+		// 여기서 초대자 목록 가져감
+		params.put("chatjoin_chatroom", chatroom_code);
+		
+		String ivl = cjservice.invList(params);
+		model.addAttribute("ivl",ivl);
+		
+		return model;
+	}
+	
+
+	@RequestMapping("partList")
+	public ModelAndView partList(String chatjoin_chatroom
+								, ModelAndView mav
+								, Map<String, String> params
+								) throws Exception{
+		
+		params.put("chatjoin_chatroom", chatjoin_chatroom);
+		
+		// invList 에서 part가 존재할 시에 partList 를뽑아오도록 dynamic 쿼리
+		params.put("part", "true");
+		
+		String cpl = cjservice.invList(params);
+		
+		mav.addObject("cpl", cpl);
+		mav.setViewName("jsonConvertView");
+		return mav;
 	}
 	
 	

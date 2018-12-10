@@ -27,4 +27,6 @@ public interface IJoinDao {
 	public void updateRole(JoinVO jvo) throws SQLException;
 	public List<JoinVO> addList(Map<String, String> params) throws SQLException;
 	public String insertAdd(JoinVO jvo) throws SQLException;
+	public void deleteAdd(Map<String, String> params) throws SQLException;
+	
 }
