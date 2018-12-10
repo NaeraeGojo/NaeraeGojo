@@ -262,7 +262,7 @@ $(function(){
 			                    	<div class="row">
 			                    		<label class="col-sm-3 control-label" style="color: white; font-size: 18px; margin-left:30px; margin-top: 10px;" >사원번호</label>
 			                        	<div class="col-sm-8">
-			                        		<input type="text" name="emp_code" placeholder="사원번호를 입력해주세요" class="form-control" style="border-radius: 1em; margin-left: 10px;">
+			                        		<input type="text" name="emp_code" placeholder="사원번호를 입력해주세요" class="form-control" style="border-radius: 1em; margin-left: 10px;" autocomplete="off">
 			                       		</div>
 			                    	</div>
 			                        </div>
