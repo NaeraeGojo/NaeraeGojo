@@ -95,4 +95,9 @@ public class IJoinDaoImpl implements IJoinDao{
 		return (String) client.insert("join.insertAdd",jvo);
 	}
 
+	@Override
+	public void deleteAdd(Map<String, String> params) throws SQLException {
+		client.update("join.deleteAdd",params);
+	}
+
 }

@@ -190,4 +190,9 @@ public class IReportDaoImpl implements IReportDao{
 		client.update("report.deleteReportDEVSend",params);
 	}
 
+	@Override
+	public String insertReportSave(ReportVO rvo) throws SQLException {
+		return (String) client.insert("report.insertReportSave",rvo);
+	}
+
 }

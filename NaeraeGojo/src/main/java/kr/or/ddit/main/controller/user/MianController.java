@@ -33,7 +33,7 @@ public class MianController {
 		for (int i = 0; i < projectTimeInfo.size(); i++) {
 			color = String.valueOf((int)(Math.random() * 16777216));
 			array[i] = color;
-			System.out.println("색깔 ㅁㄴㅇㄹㄴㅁㅇㄹ:: " + array[i]);
+//			System.out.println("색깔 ㅁㄴㅇㄹㄴㅁㅇㄹ:: " + array[i]);
 		}
 		
 		for(int i = 0; i< projectTimeInfo.size(); i++){
@@ -41,7 +41,7 @@ public class MianController {
 			if(i>0){
 				data += ",";
 			}
-			data += "{title:'" + "시작: " +projectTimeInfo.get(i).getProject_name()
+			data += "{title:'" + "시: " +projectTimeInfo.get(i).getProject_name()
 					+ "',start:'" + projectTimeInfo.get(i).getProject_start()
 					+ "',color :'" + "#"+ array[i]
 					+ "'}";
@@ -52,7 +52,7 @@ public class MianController {
 			if(i>0){
 				data += ",";
 			}
-			data += "{title:'" + "종료: "  +projectTimeInfo.get(i).getProject_name()
+			data += "{title:'" + "종: "  +projectTimeInfo.get(i).getProject_name()
 					+ "',start:'" + projectTimeInfo.get(i).getProject_end()
 					+ "',color :'" + "#"+ array[i]
 					+ "'}";

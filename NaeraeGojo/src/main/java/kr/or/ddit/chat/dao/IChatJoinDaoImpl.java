@@ -1,6 +1,7 @@
 package kr.or.ddit.chat.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.vo.ChatJoinVO;
 
@@ -30,5 +31,15 @@ public class IChatJoinDaoImpl implements IChatJoinDao{
 	@Override
 	public void deleteRoom(ChatJoinVO cjv) throws Exception {
 		client.update("chatjoin.deleteRoom",cjv);
+	}
+
+	@Override
+	public int joinCount(Map<String, String> params) throws Exception {
+		return (int) client.queryForObject("chatjoin.joinCount",params);
+	}
+
+	@Override
+	public String invList(Map<String, String> params) throws Exception {
+		return (String) client.queryForObject("chatjoin.invList",params);
 	}
 }

@@ -48,15 +48,20 @@
 											<tr>
 												<td><input type=hidden value="${list.report_code }">${list.rnum }</td>
 												<c:if test="${list.report_pl_status eq 'i' && list.report_pm_status eq 'i' || list.report_pl_status eq 'k' && list.report_pm_status eq 'i'}">
-												<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
+													<td><span class="label label-danger">&nbsp;&nbsp;&nbsp;승인중&nbsp;&nbsp;</span></td>
 												</c:if>
 												<c:if test="${list.report_pl_status eq 'k' && list.report_pm_status eq 'k' }">
-												<td><span class="label label-success">승인 완료</span></td>
+													<td><span class="label label-success">승인 완료</span></td>
 												</c:if>
 												<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
-												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
+													<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
 												</c:if>
-												<td>${list.report_title }</td>
+												<c:if test="${list.report_save_dev eq 'y'}">
+													<td>${list.report_title }<span class="label label-info">임시 저장</span></td>
+												</c:if>
+												<c:if test="${list.report_save_dev eq 'n'}">
+													<td>${list.report_title }</td>
+												</c:if>
 												<td>${list.emp_name }</td>
 												<td>${list.report_day }</td>
 												<td>3</td>

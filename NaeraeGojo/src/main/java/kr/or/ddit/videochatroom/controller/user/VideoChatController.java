@@ -295,6 +295,20 @@ public class VideoChatController {
 		return andView;
 	}
 	
+	@RequestMapping("pwdelete")
+	public ModelAndView pwdelete(ModelAndView andView, Map<String, String> params, 
+					String chat_pw_code, HttpSession session, String video_chat_room_code) throws Exception{
+		
+		service.chat_pwDelete(chat_pw_code);
+		
+		params.put("video_chat_room_code", video_chat_room_code);
+		List<ChatPwVO> chatPwList = service.getchatPwLsit(params);
+		
+		andView.addObject("chatPwList",chatPwList);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	
 	
 }
 

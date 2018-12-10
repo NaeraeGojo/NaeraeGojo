@@ -7,7 +7,6 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/fullcalendar.css" rel="stylesheet"/>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/moment.min.js"></script>
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script> --%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/fullcalendar.js"></script>    
 <script>
 $(document).ready(function() {
@@ -43,32 +42,32 @@ function setCalendar(data){
     navLinks: true, 
     selectable: true,
     selectHelper: true,
-    select: function(start, end) {
-      var title = prompt('Event Title:');
-      var eventData;
-      if (title) {
-        eventData = {
-          title: title,
-          start: start,
-          end: end
-        };
-        $('#calendar').fullCalendar('renderEvent', eventData, true);
-      }
-      $('#calendar').fullCalendar('unselect');
-    },
+//     select: function(start, end) {
+//       var title = prompt('Event Title:');
+//       var eventData;
+//       if (title) {
+//         eventData = {
+//           title: title,
+//           start: start,
+//           end: end
+//         };
+//         $('#calendar').fullCalendar('renderEvent', eventData, true);
+//       }
+//       $('#calendar').fullCalendar('unselect');
+//     },
     editable: true,
     eventLimit: true, 
     events: eval(data),
     
-    eventClick: function(event) {
-       // opens events in a popup window
-       window.open(event.url, 'gcalevent', 'width=700,height=600');
-       return false;
-     },
+//     eventClick: function(data) {
+//     	var aa = $(this).attr('id');
+//     	alert(aa);
+//     	$('#myModal').modal('show');
+//      },
 
-     loading: function(bool) {
-       $('#loading').toggle(bool);
-     }
+//      loading: function(bool) {
+//        $('#loading').toggle(bool);
+//      }
       
   });
 
@@ -490,3 +489,39 @@ p {
         <!-- right col -->
       </div>
       <!-- /.row (main row) -->  
+      
+      
+      
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div id="modal-container">
+  
+    <div class="modal-dialog dia" role="document">
+      <div class="modal-content Mcon" style="margin-top: 200px; width: 520px;">
+      
+<!--         <div class="modal-header"> -->
+<!--           <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--             <span aria-hidden="true">&times;</span> -->
+<!--           </button> -->
+<!--           <h3 class="modal-title" id="myModalLabel"> 프로젝트 </h3> -->
+<!--         </div> -->
+        
+        <div class="modal-body mb" style="margin-bottom:auto; height: 235px;" id="projectdiv">
+            <div class="col-md-12">
+              <div class="box box-solid box-primary">
+                <div class="box-header with-border" style="height:70px;">
+                   <h3 style="margin-left: 30px;">프로젝트 명</h3>
+                </div>
+                
+                <div class="box-body"  style="margin-left: 30px;">
+                <h4>프로젝트 기간 : 123 ~ 123</h4>
+                <h4>PM : 땡땡이</h4>
+		            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: right; margin-right: 1px;"><b>Close</b></button>
+                </div>
+              </div>
+            </div>
+        </div> 
+    </div>
+    </div>
+
+  </div>
+  </div>   

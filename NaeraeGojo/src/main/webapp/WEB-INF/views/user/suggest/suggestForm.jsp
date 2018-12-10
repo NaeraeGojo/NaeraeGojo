@@ -209,7 +209,6 @@ $(function(){
 		var suggest_cost = $('input[name=suggest_cost]').val();
 		var file1 = $('#file01').val();
 		
-		
 		if(suggest_title == '' || suggest_start_date == '' || suggest_end_date == ''||
 				suggest_cost == ''|| suggest_content == ''){
 			boalert("빈 항목이 존재합니다.");

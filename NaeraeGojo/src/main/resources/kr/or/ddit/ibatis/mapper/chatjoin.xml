@@ -54,6 +54,26 @@
 			where chatjoin_chatroom = #chatjoin_chatroom#
 					and chatjoin_emp = #chatjoin_emp#
 	</update>
+	
+	<select id="joinCount" parameterClass="map" resultClass="int">
+		select count(*)
+	        from chatjoin
+	        where chatjoin_chatroom = #chatjoin_chatroom#
+	        and chatjoin_join = 'y'
+	</select>
+
+	<select id="invList" parameterClass="map" resultClass="string">
+		select listagg(emp_name, ', ') within group(order by emp_code) as chatroom_invite
+		    from chatjoin , emp
+		    where chatjoin_chatroom = #chatjoin_chatroom#
+		        and chatjoin_emp = emp_code
+		        <dynamic>
+		        	<isNotEmpty property="part">
+		        		and chatjoin_join = 'y'
+		        	</isNotEmpty>
+		        </dynamic>
+		        group by chatjoin_chatroom
+	</select>
 
 </sqlMap>
 

@@ -23,7 +23,7 @@ $(function(){
 	
 	$('.infoBtn').click(function(){
 		scheduler_code = $(this).parent().parent().find('td:eq(0) input').val();
-
+		var emp_code = ${LOGIN_EMPINFO.emp_code}
 		$.ajax({
             type : 'post',
             url : '${pageContext.request.contextPath}/user/scheduler/schedulerInfo.do',
@@ -41,11 +41,16 @@ $(function(){
             	$('#info input[name=scheduler_time]').val(json.schedulerInfo.scheduler_time);
             	$('#info textarea[name=scheduler_explain]').text(json.schedulerInfo.scheduler_explain);
             	
-//             	var data = "";
-//             	data += '<button id="updateBtn" type="button" class="btn btn-warning btn_update">수정</button>'
-//             	data += '<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>'
-// 	            $('#dddd').append();
-            	            	
+            	var data = "";
+	            if(json.schedulerInfo.scheduler_writer == emp_code){
+	            	data +=	'<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>'
+	            	data += '<button id="updateBtn" type="button" class="btn btn-warning btn_update">수정</button>'
+	            	data += '<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>'
+	            	$('#btnForm').empty().append(data);
+	            } else {
+	            	data +=	'<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>'
+		           	$('#btnForm').empty().append(data);
+	            }
             }
         });
 	});
@@ -54,7 +59,24 @@ $(function(){
 		var scheduler_title = $('#insertForm input[name=scheduler_title]').val();
 		var scheduler_keyword = $('#insertForm input[name=scheduler_keyword]').val();
 		var scheduler_time = $('#insertForm input[name=scheduler_time]').val();
-		var scheduler_explain = $('#insertForm input[name=scheduler_explain]').text();
+		var scheduler_explain = $('#insertForm textarea[name=scheduler_explain]').val();
+		
+		if (scheduler_explain == '') {
+			boalert("스케줄러 설명을 입력해주세요.");
+			return false;
+		}
+		if (scheduler_title == '') {
+			boalert("제목을 입력해주세요.");
+			return false;
+		}
+		if (scheduler_keyword == '') {
+			boalert("키워드를 입력해주세요.");
+			return false;
+		}
+		if (scheduler_time == '') {
+			boalert("시간을 입력해주세요.");
+			return false;
+		}
 		
 		var formData = $('#insert').serialize();
 		
@@ -81,11 +103,28 @@ $(function(){
         });
 	});
 	
-	$('#updateBtn').click(function(){
+	$(document).on('click', '#updateBtn', function() {
 		var scheduler_title = $('#infoForm input[name=scheduler_title]').val();
 		var scheduler_keyword = $('#infoForm input[name=scheduler_keyword]').val();
 		var scheduler_time = $('#infoForm input[name=scheduler_time]').val();
-		var scheduler_explain = $('#infoForm input[name=scheduler_explain]').text();
+		var scheduler_explain = $('#infoForm textarea[name=scheduler_explain]').val();
+	
+		if (scheduler_explain == '') {
+			boalert("스케줄러 설명을 입력해주세요.");
+			return false;
+		}
+		if (scheduler_title == '') {
+			boalert("제목을 입력해주세요.");
+			return false;
+		}
+		if (scheduler_keyword == '') {
+			boalert("키워드를 입력해주세요.");
+			return false;
+		}
+		if (scheduler_time == '') {
+			boalert("시간을 입력해주세요.");
+			return false;
+		}
 		
 		var formData = $('#info').serialize();
 		
@@ -110,7 +149,7 @@ $(function(){
         });
 	});
 	
-	$('#deleteBtn').click(function(){
+	$(document).on('click', '#deleteBtn', function() {
 		scheduler_code = $('#info input[name=scheduler_code]').val();
 		$(location).attr('href', '${pageContext.request.contextPath}/user/scheduler/deleteScheduler.do?scheduler_code='+scheduler_code);
 	});
@@ -318,10 +357,10 @@ $(function(){
 						</td>
 					</tr>
 				</div>
-				<div class="modal-footer" id="dddd">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
-					<button id="updateBtn"type="button" class="btn btn-warning btn_update">수정</button>
-					<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>
+				<div class="modal-footer" id="btnForm">
+<!-- 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button> -->
+<!-- 					<button id="updateBtn"type="button" class="btn btn-warning btn_update">수정</button> -->
+<!-- 					<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button> -->
 				</div>
 			</form>
 			

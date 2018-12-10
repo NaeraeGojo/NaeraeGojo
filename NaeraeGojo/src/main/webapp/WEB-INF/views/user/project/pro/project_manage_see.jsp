@@ -60,23 +60,15 @@ $(function(){
         });
 	});
 	
-	$('#commitBtn').click(function(){
+	$(document).on('click', '#commitBtn', function() {
 		var project_name = $('#updateForm input[name=project_name]').val();
 		var project_start = $('#updateForm input[name=project_start]').val();
 		var project_end = $('#updateForm input[name=project_end]').val();
 		
-// 		if(project_name.val()==""){
-// 			boalert("프로젝트 제목을 입력해 주세요.")
-// 			return false;
-// 	    }
-// 		if(project_start.val()==""){
-// 			boalert("프로젝트 시작 일자를 선택해 주세요.")
-// 			return false;
-// 	    }
-// 		if(project_end.val()==""){
-// 			boalert("예상 종료일자를 입력해 주세요.")
-// 			return false;
-// 	    }
+		if(project_name == '' || project_start == '' || project_end == ''){
+			boalert("빈 항목이 존재합니다.");
+			return false;
+		}
 
 		var formData = $('#update').serialize();
 		
@@ -245,9 +237,11 @@ $(function () {
 						<dt>프로젝트 진척도</dt>      <dd>${projectInfo.pw_percent } %</dd>
 						<dt>프로젝트 예산</dt>        <dd>${projectInfo.suggest_cost }</dd>
 						<dt>프로젝트 수요기관</dt>     <dd>${projectInfo.rqpps_notice_agency}</dd>
+						<c:if test="${LOGIN_EMPINFO.emp_code == projectInfo.emp_code }">
 						<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<input value="수정" id="updateBtn" type="button" class="btn btn-sm btn-warning btn-flat pull-right"
 						data-toggle="modal" data-target="#updateForm">
+						</c:if>
 					</dl>
 				</div>
 			</div>

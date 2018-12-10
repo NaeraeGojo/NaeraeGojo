@@ -53,6 +53,12 @@
 	                , myroom2.chatroom_writer_name
 	</select>
 	
+	
+	<update id="closeRoom" parameterClass="map">
+		update chatroom
+			set chatroom_open = 'n'
+			where chatroom_code = #chatroom_code#
+	</update>
 
 </sqlMap>
 

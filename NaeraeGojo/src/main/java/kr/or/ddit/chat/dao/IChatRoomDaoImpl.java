@@ -26,6 +26,11 @@ public class IChatRoomDaoImpl implements IChatRoomDao{
 			throws Exception {
 		return client.queryForList("chatroom.getChatList",params);
 	}
+
+	@Override
+	public void closeRoom(Map<String, String> params) throws Exception {
+		client.update("chatroom.closeRoom",params);
+	}
 	
 
 }
