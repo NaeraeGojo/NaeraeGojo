@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="freeboardAns">
+	<typeAlias alias="freeboardAnsVO" type="kr.or.ddit.vo.FreeBoardAnsVO"/>
+	
+	<sql id="selectAll">
+		select to_char(answer_date,'yyyy-mm-dd') as answer_date
+				,a.answer_code
+				,a.answer_content
+				,a.freeboard_code
+				,a.emp_code
+				,b.emp_nick
+		  from free_answer a, emp b
+		 where a.emp_code = b.emp_code
+		 and a.freeboard_code = #freeboard_code#
+		 and a.answer_delete = 'n'
+	</sql>
+	
+	<select id="replyFreeList" resultClass="freeboardAnsVO"
+		parameterClass="map">
+		 select b.*
+        	from (select rownum rnum, a.*
+                from ( 
+                	<include refid = "selectAll"/> 
+                      order by a.answer_code asc) a ) b
+       			order by b.rnum desc
+	</select>
+	
+	<select id="replyFreeInfo" parameterClass="map" resultClass="freeboardAnsVO">
+		<include refid="selectAll"/>
+	</select>
+
+	<select id="replyFreeInfo2" parameterClass="map" resultClass="freeboardAnsVO">
+		SELECT *
+		  FROM FREE_ANSWER
+		 WHERE ANSWER_CODE = #answer_code#
+	</select>
+	
+	<insert id="insertFreeReply" parameterClass="freeboardAnsVO">
+		<selectKey keyProperty="answer_code" resultClass="string">
+			SELECT FREE_ANSWER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO FREE_ANSWER(ANSWER_CODE
+							   ,ANSWER_CONTENT
+							   ,FREEBOARD_CODE
+							   ,EMP_CODE)
+					VALUES(#answer_code#
+						  ,#answer_content#
+						  ,#freeboard_code#
+						  ,#emp_code#)
+	</insert>
+	
+	<update id="deleteFreeReply" parameterClass="map">
+		UPDATE FREE_ANSWER
+		   SET ANSWER_DELETE = 'y'
+		 WHERE ANSWER_CODE = #answer_code#
+	</update>
+	
+	<update id="updateFreeReply" parameterClass="freeboardAnsVO">
+		UPDATE FREE_ANSWER
+		   SET ANSWER_CONTENT    = #answer_content# 
+		 WHERE ANSWER_CODE = #answer_code#
+	</update>
+	
+	
+</sqlMap>
+
+

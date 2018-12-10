@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.vo.FreeBoardAnsVO;
 import kr.or.ddit.vo.FreeBoardVO;
 
 public interface IFreeboardService {
@@ -15,4 +16,11 @@ public interface IFreeboardService {
 	public void deleteFreeboardInfo(Map<String,String> params) throws SQLException;
 	public void updateFreeboardInfo(FreeBoardVO freeboardInfo, MultipartFile[] files) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
+	
+	public List<FreeBoardAnsVO> replyFreeList(Map<String, String> params) throws  Exception;
+	public void insertReply(FreeBoardAnsVO fri) throws Exception;
+	public void deleteReply(Map<String,String>params) throws Exception;
+	public void updateReply(FreeBoardAnsVO fri) throws Exception;
+	public FreeBoardAnsVO freeReplyInfo(Map<String, String> params) throws Exception;
+
 }

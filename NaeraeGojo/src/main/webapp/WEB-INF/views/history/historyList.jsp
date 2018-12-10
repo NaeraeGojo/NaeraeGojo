@@ -129,7 +129,8 @@
         	//이력 View (수정/삭제 창)
         	$('#projectTable tr:gt(0)').click(function(){
         		var history_code = $(this).find('td:eq(0) input').val();
-        		$(location).attr('href', '${pageContext.request.contextPath}/history/historyView.do?history_code=' + history_code);
+        		var emp_code = '${param.emp_code}';
+        		$(location).attr('href', '${pageContext.request.contextPath}/history/historyView.do?history_code=' + history_code +"&emp_code="+ emp_code);
         	});
 		});
          

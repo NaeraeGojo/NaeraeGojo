@@ -64,22 +64,22 @@ public class EmpController {
 		return andView;
 	}
 
-	@RequestMapping(value="passCheck", method = RequestMethod.POST)
-	public ModelAndView passCheck(String emp_code, String emp_email, String emp_pass,
-			Map<String, String> params, EmpVO empPass,
-			HttpServletRequest request, HttpServletResponse response,
-			Model model, ModelMap modelMap, ModelAndView andView) throws Exception{
-		params.put("emp_code", emp_code);
-		params.put("emp_email", emp_email);
-		
-		empPass = service.empPass(params); 
-		emp_pass = empPass.getEmp_pass();		
-		andView.addObject("empPass", empPass);
-		andView.addObject("emp_pass", emp_pass);
-		andView.setViewName("jsonConvertView");
-		
-		return andView;
-	}
+//	@RequestMapping(value="passCheck", method = RequestMethod.POST)
+//	public ModelAndView passCheck(String emp_code, String emp_email, String emp_pass,
+//			Map<String, String> params, EmpVO empPass,
+//			HttpServletRequest request, HttpServletResponse response,
+//			Model model, ModelMap modelMap, ModelAndView andView) throws Exception{
+//		params.put("emp_code", emp_code);
+//		params.put("emp_email", emp_email);
+//		
+//		empPass = service.empPass(params); 
+//		andView.addObject("empPass", empPass);
+//		andView.addObject("emp_pass", empPass.getEmp_pass());
+//		andView.addObject("emp_email", empPass.getEmp_email());
+//		andView.setViewName("jsonConvertView");
+//		
+//		return andView;
+//	}
 	
 	/**
 	 * 직원정보 수정창 

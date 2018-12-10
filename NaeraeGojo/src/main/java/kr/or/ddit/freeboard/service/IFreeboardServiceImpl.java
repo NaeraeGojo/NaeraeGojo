@@ -14,6 +14,7 @@ import kr.or.ddit.freeboard.dao.IFreeboardDao;
 import kr.or.ddit.projectallfile.dao.IProjectFileDao;
 import kr.or.ddit.utils.AttachFileMapper;
 import kr.or.ddit.utils.AttachPictureMapper;
+import kr.or.ddit.vo.FreeBoardAnsVO;
 import kr.or.ddit.vo.FreeBoardVO;
 import kr.or.ddit.vo.ProjectAllFileVO;
 
@@ -76,6 +77,34 @@ public class IFreeboardServiceImpl implements IFreeboardService{
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
 		return dao.totalCount(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public List<FreeBoardAnsVO> replyFreeList(Map<String, String> params)
+			throws Exception {
+		return dao.replyFreeList(params);
+	}
+
+	@Override
+	public void insertReply(FreeBoardAnsVO fri) throws Exception {
+		dao.insertReply(fri);
+	}
+
+	@Override
+	public void deleteReply(Map<String, String> params) throws Exception {
+		dao.deleteReply(params);
+	}
+
+	@Override
+	public void updateReply(FreeBoardAnsVO fri) throws Exception {
+		dao.updateReply(fri);
+	}
+
+	@Override
+	public FreeBoardAnsVO freeReplyInfo(Map<String, String> params)
+			throws Exception {
+		return dao.freeReplyInfo(params);
 	}
 
 }

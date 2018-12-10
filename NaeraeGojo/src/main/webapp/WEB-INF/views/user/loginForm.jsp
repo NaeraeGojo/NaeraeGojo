@@ -71,15 +71,15 @@ $(function(){
 	}
 	// 'true' or 'false' if('true'){} or if('false'){} 
 	if(eval('${!empty params.message}')){
-		alert("해당정보가 존재하지 않습니다.");
+		boalert("해당정보가 존재하지 않습니다.");
 	}
 	$('#login4').click(function(){
 		if(!$('input[name=emp_code]').val()){
-			alert('해당사원번호를 찾을 수 없습니다.');
+			boalert('해당사원번호를 찾을 수 없습니다.');
 			return false;
 		}
 		if(!$('input[name=emp_pass]').val().validationPASS()){
-			alert('비밀번호가 일치하지 않습니다.');
+			boalert('비밀번호가 일치하지 않습니다.');
 			return false;
 		}
 		
@@ -111,11 +111,11 @@ $(function(){
 	$('#sample').keydown(function(key){
 		if(key.keyCode == 13){
 			if(!$('input[name=emp_code]').val()){
-				alert('해당사원번호를 찾을 수 없습니다.');
+				boalert('해당사원번호를 찾을 수 없습니다.');
 				return false;
 			}
 			if(!$('input[name=emp_pass]').val().validationPASS()){
-				alert('비밀번호가 일치하지 않습니다.');
+				boalert('비밀번호가 일치하지 않습니다.');
 				return false;
 			}
 			// 평문을 암호문으로 변경
@@ -206,19 +206,25 @@ $(function(){
 			}
 			$('input[name=Email0]').val(email);
 			var code = $('input[name=numCode]').val();
-			var email = $('input[name=Email0]').val();
+// 			var emailID = $('input[name=Email0]').val();
+			var emailID = $('input[name=email11]').val();
 			
 			$.ajax({
 				type : 'POST',
-				 url : '${pageContext.request.contextPath}/user/emp/passCheck.do',
-				 data : { emp_code : code,
-						emp_email : email},
-				 dataType : 'json',
+// 				 url : '${pageContext.request.contextPath}/user/emp/passCheck.do',
+				 url : '${pageContext.request.contextPath}/mail/passCheck.do',
+				 dataType : 'json',		 
+				 data : { emailID : emailID, 
+					 	 emp_code : code
+// 						emp_email : email
+						},
 				 success : function(json) {
-					alert("사원 비밀번호는 "+ "["+  json.emp_pass + "] 입니다.");
+// 					alert("사원 비밀번호는 "+ "["+  json.emp_pass + "] 입니다.");
+					alert("비밀번호를 해당 이메일로 전송하였습니다.");
 				}
 				 ,
 				 error : function(result) {
+					 alert("해당회원정보가 없습니다.");
 				}
 			});
 			

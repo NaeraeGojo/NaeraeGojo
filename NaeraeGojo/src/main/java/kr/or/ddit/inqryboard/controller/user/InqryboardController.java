@@ -62,7 +62,7 @@ public class InqryboardController {
 	}
 	
 	@RequestMapping("inqryView")
-	public Model inqryView(String inqry_board_code, Model model, 
+	public ModelAndView inqryView(String inqry_board_code, ModelAndView model, 
 			Map<String, String> params) throws SQLException{
 		params.put("inqry_board_code", inqry_board_code);
 		InqryBoardVO ibv = service.inqryBoardInfo(params);
@@ -72,10 +72,9 @@ public class InqryboardController {
 		
 		ibv.setInqry_board_hit(String.valueOf(inqry_board_hit));
 		
-		MultipartFile[] files = {};
-		service.updateInqryInfo(ibv, files);
-		
-		model.addAttribute("ibv", ibv);
+//		service.updateInqryInfo(ibv, files);
+		model.addObject("ibv", ibv);
+		model.setViewName("user/inqryboard/inqryView");
 		
 		return model;
 	}

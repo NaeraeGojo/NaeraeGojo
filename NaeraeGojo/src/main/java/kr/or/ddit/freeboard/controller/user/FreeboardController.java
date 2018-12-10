@@ -12,6 +12,8 @@ import kr.or.ddit.freeboard.service.IFreeboardService;
 import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.SetContent;
+import kr.or.ddit.vo.EmpVO;
+import kr.or.ddit.vo.FreeBoardAnsVO;
 import kr.or.ddit.vo.FreeBoardVO;
 import kr.or.ddit.vo.ProjectVO;
 
@@ -20,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user/project/freeboard/")
@@ -67,8 +70,12 @@ public class FreeboardController {
 	}
 	
 	@RequestMapping("freeboardView")
-	public Model freeboardView(String freeboard_code, Model model, 
+	public ModelAndView freeboardView(String freeboard_code, String rnum, ModelAndView model, HttpServletRequest request,
 			Map<String, String> params) throws Exception{
+		HttpSession session = request.getSession();
+		EmpVO empInfo = (EmpVO) session.getAttribute("LOGIN_EMPINFO");
+		String emp_code = empInfo.getEmp_code();
+		
 		params.put("freeboard_code", freeboard_code);
 		FreeBoardVO fbv = service.freeboardInfo(params);
 		
@@ -77,10 +84,18 @@ public class FreeboardController {
 		
 		fbv.setFreeboard_hit(String.valueOf(freeboard_hit));
 		
+		params.put("rnum", rnum);
+		List<FreeBoardAnsVO> replyList = service.replyFreeList(params);
+		
 		MultipartFile[] files = {};
 		service.updateFreeboardInfo(fbv, files);
 				
-		model.addAttribute("fbv", fbv);
+		model.addObject("fbv", fbv);
+		model.addObject("replyList", replyList);
+		model.addObject("emp_code", emp_code);
+		model.addObject("rnum", rnum);
+		
+		model.setViewName("user/project/freeboard/freeboardView");
 		
 		return model;
 	}

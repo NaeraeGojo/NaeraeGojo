@@ -38,7 +38,7 @@
 				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
 						FREEBOARD_TITLE LIKE '%'||#search_keyword#||'%'
 					 OR FREEBOARD_CONTENT LIKE '%'||#search_keyword#||'%'
-					 OR EMP_CODE LIKE '%'||#search_keyword#||'%'
+					 OR b.EMP_NAME LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="TITLE">
 					FREEBOARD_TITLE LIKE '%'||#search_keyword#||'%'
@@ -47,7 +47,7 @@
 					FREEBOARD_CONTENT LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="WRITER">
-					EMP_CODE LIKE '%'||#search_keyword#||'%'
+					b.EMP_NAME LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 			</isNotEmpty>
 		</dynamic>
@@ -70,10 +70,11 @@
 	</select>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">
-		select count(*)
-		  from freeboard
-		 where freeboard_delete = 'n'
-		 and project_code = #project_code#
+		select count(a.freeboard_code)
+		  from freeboard a, emp b
+		  where a.emp_code = b.emp_code
+		  and a.freeboard_delete = 'n'
+		  and a.project_code = #project_code#
 		 <include refid="searchCondition"/> 
 	</select>
 	

@@ -45,14 +45,9 @@ public class HistoryController {
 	}
 	
 	@RequestMapping("updateHistory")
-	public ModelAndView updateHistory(HistoryVO historyInfo
-			,ModelAndView andView) throws Exception{
-		
+	public String updateHistory(HistoryVO historyInfo, String emp_code) throws Exception{
 		service.updateHistoryInfo(historyInfo);
-		andView.addObject("historyInfo", historyInfo);
-		andView.setViewName("jsonConvertView");
-		
-		return andView;
+		return "redirect:/history/historyList.do?emp_code="+emp_code;
 	}
 	
 	@RequestMapping("historyList")
@@ -76,22 +71,13 @@ public class HistoryController {
 	public String deleteHistory(String history_code,
 			String emp_code,
 			Map<String, String> params,
-			Map<String, String> params1,
-			ModelAndView andView) throws Exception{
+			Map<String, String> params1) throws Exception{
 		params.put("history_code", history_code);
 		params1.put("emp_code", emp_code);
 
 		service.deleteHistoryInfo(params);
 
-//		
-//		EmpVO empInfo = empService.empInfo(params1);
-//		List<HistoryVO> historyList = service.historyList(params1);
-		
-//		andView.addObject("historyList", historyList);
-//		andView.addObject("empInfo", empInfo);
-//		andView.setViewName("redirect:/user/emp/empList.do");
-		
-		return "redirect:/user/emp/empUpdate.do?emp_code="+emp_code;
+		return "redirect:/history/historyList.do";
 	}
 	
 	@RequestMapping("historyView")

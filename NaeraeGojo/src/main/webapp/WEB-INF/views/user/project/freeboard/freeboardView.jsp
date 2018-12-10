@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style>
-.perful {
-	width: 100%
-}
-
 .filestyle {
 	padding-top: 5px;
 }
@@ -350,10 +346,94 @@ $(function() {
 			              		<input id="btn_upForm" value="수정" type="button" class="btn btn-warning btn-flat pull-right view_form">
 			              	</c:if>
 			              	<input id="btn_back" value="목록" type="button"  class="btn btn-info btn-flat pull-right">
-			              	<input id="btn_reply" value="댓글" type="button"  class="btn bg-green btn-flat pull-right">
 						</div>
 					</form>
 				</div>
+				<div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="card">
+                	<div class="card-body">
+                        <!-- Tab panes -->
+                        <div class="tab-content tabcontent-border">
+                            <div class="tab-pane p-20 active" role="tabpanel">
+                            	<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                            		<table class="table" id="zero_config">
+	                               		<colgroup>
+			            				   <col style="width: 0%;"/>
+			            				   <col style="width: 0%;"/>
+			            				   <col style="width: 0%;"/>
+			            				   <col style="width: 3%;"/>
+			            				   <col style="width: 54%;"/>
+							               <col style="width: 10%;"/>
+							               <col style="width: 10%;"/>
+							               <col style="width: 3%;"/>
+							               <col style="width: 3%;"/>
+							               <col style="width: 3%;"/>
+							               <col style="width: 14%;"/>
+			         					</colgroup>
+		                                <tbody id="append" class="customtable">
+		                                	<c:forEach items="${replyList}" var="replyInfo">
+		                                    <tr>
+		                                        <td class="center"><input type="hidden" value="${bo_no}" name="bo_no"></td>
+		                                        <td><input type="hidden" value="${replyInfo.rpy_depth}" name="rpy_depth"></td>
+		                                        <td><input type="hidden" value="${replyInfo.rpy_seq}" name="rpy_seq"></td>
+		                                        <td>
+							                     <c:forEach begin="1" end="${replyInfo.rpy_depth }" varStatus="stat">
+												 	&nbsp;&nbsp;&nbsp;
+													<c:if test="${stat.last}">
+														<img alt="" src="${pageContext.request.contextPath }/images/ico_reply.gif" >				
+													</c:if>
+												 </c:forEach>
+							                     </td>
+		                                        <td><input type="hidden" value="${rpy_writer}" name="rpy_writer">${replyInfo.rpy_content}</td>
+		                                        <td><input type="hidden" value="${bo_no}" name="rpy_group">${replyInfo.rpy_writer}</td>
+		                                        <td><input type="hidden" value="${replyInfo.rpy_code}" name="rpy_code">${replyInfo.rpy_date}</td>
+		                                        <td><input type="hidden" value="${rnum}" name="rpy_rnum"></td>
+		                                        <td>
+													<input type="button" class="btn btn-success insReply" value="댓글"></button>
+		                                        </td>
+		                                        <td>
+		                                        <c:if test="${LOGIN_EMPINFO.emp_code == replyInfo.rpy_writer}">
+		                                      		<input type="button" class="btn btn-primary udpReply" data-toggle='modal' data-target='#modifyModal' value="수정"></button>
+		                                        </c:if>
+		                                        </td>
+		                                        <td>
+		                                        <c:if test="${LOGIN_EMPINFO.emp_code == replyInfo.rpy_writer}">
+		                                       		<input type="button" class="btn btn-danger delReply" id="delReply" value="삭제"></button>
+		                                        </c:if>
+		                                        </td>
+		                                    </tr>
+		                                    </c:forEach>
+		                                </tbody>
+		                            </table>
+									<hr />
+									<div class="form-group row">
+										<label for="fname" class="col-sm-1 control-label col-form-label">댓글입력</label>
+										<div class="col-lg-6">
+											<input type="hidden" class="form-control" id="rpy_code" name="rpy_code" />
+											<input type="hidden" class="form-control" id="rpy_date" name="rpy_date" />
+											<input type="hidden" class="form-control" id="rpy_group" name="rpy_group" value="${bo_no}" />
+											<input type="hidden" class="form-control" id="rpy_writer" name="rpy_writer" value="${rpy_writer}"/>
+											<input type="text" class="form-control" id="rpy_content" name="rpy_content" />
+										</div>
+										<div class="col-lg-3">
+											<button type="button" class="btn btn-success" id="insert">댓글등록</button>
+										</div>	
+									</div>
+								</form>
+							</div>
+                   		</div>
+	                </div>
+         		</div>
+                <!-- // End Page Content -->
+       		</div>
+            <!-- // End Container fluid  -->
+	                </div>
+         		</div>
+                <!-- // End Page Content -->
+       		</div>
+            <!-- // End Container fluid  -->
+            
 			</div>
 			<!-- /.box -->
 		</div>
@@ -386,3 +466,4 @@ $(function() {
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+ 

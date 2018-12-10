@@ -106,8 +106,6 @@
 	<script src="${pageContext.request.contextPath}/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/plugins/iCheck/minimal/_all.css"></script>
 	
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css"></script> -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 	<!-- 부트스트랩 다이얼로그 js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
@@ -122,10 +120,34 @@
     <script type="text/javascript">
     $(function(){
     	//이력수정
-        $('#update').click(function(){
-
+        $('#historyUpdate').submit(function(){
+         	var emp_code =  $('input[name=emp_code]').val();
+           	var history_project_name = $('input[name=history_project_name]').val();
+           	var history_notice_agency = $('input[name=history_notice_agency]').val();
+           	var history_demand_agency = $('input[name=history_demand_agency]').val();
+           	var history_project_start = $('input[name=history_project_start]').val();
+            var history_project_end = $('input[name=history_project_end]').val();
+           	var history_business = $('select[name=history_business]').val();
+           	var history_delete = $('input[name=history_delete]').val();
+           	
+           	if(history_project_name == ''){
+            	boalert("프로젝트 명을 입력해주세요");
+             	return false;
+            }
+            if(history_notice_agency == ''|| history_demand_agency == ''){
+            	boalert("해당 기관 명을 입력해주세요");
+            	return false;
+            }
+            if(history_project_start == '' || history_project_end == '' ){
+            	boalert("프로젝트 기간을 입력해주세요");
+            	return false;
+            }
+            boalert("이력수정이 완료되었습니다!!");
+           	return true;
         });
-          var emp_code = '${param.emp_code}';
+    	
+        var emp_code = '${param.emp_code}';
+        $('input[name=history_code]').val('${historyInfo.history_code}');
         $('input[name=history_notice_agency]').val('${historyInfo.history_notice_agency}');
         $('input[name=history_demand_agency]').val('${historyInfo.history_demand_agency}');
         $('input[name=history_project_start]').val('${historyInfo.history_project_start}');
@@ -133,7 +155,18 @@
         $('input[name=history_project_name]').val('${historyInfo.history_project_name}');
         $('select[name=history_business]').val('${historyInfo.history_business}');
         $('input[name=history_delete]').val('${historyInfo.history_delete}');
-          
+        
+        $('input[value=삭제]').click(function(){
+    		history_code = $('input[name=history_code]').val();
+    		emp_code = $('input[name=emp_code]').val();
+    		alert("이력이 삭제되었습니다.");
+    		$(location).attr('href', '${pageContext.request.contextPath}/history/deleteHistory.do?history_code=' + history_code+ '&emp_code='+emp_code);
+    	});
+        $('input[value=목록]').click(function(){
+        	emp_code = $('input[name=emp_code]').val();
+        	$(location).attr('href', '${pageContext.request.contextPath}/history/historyList.do?emp_code=' + emp_code);
+        });
+    });
       </script>
       <style>
           
@@ -148,12 +181,14 @@
                <br/><br/>
             </div>
             <!-- /.box-header -->
-            <form id="historyInsert" method="POST">
+            <form id="historyUpdate" method="POST" enctype="multipart/form-data"
+            action="${pageContext.request.contextPath }/history/updateHistory.do">
             <br/>
     			<div class="row">
                		<label class="col-sm-3 control-label">프로젝트 명</label>
                 	<div class="col-sm-7">
                 		<input type="text" name="history_project_name" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em; border: solid;">
+                		<input type="hidden" name="history_code" class="form-control" style="border-radius: 1em; border: solid;">
            			</div>                
            		</div>
     			<div class="row">
@@ -199,12 +234,13 @@
                 		</select>
            			</div> 
            			<input type="hidden" name="history_delete" class="form-control upForm" style="border-radius: 1em;" value="n">               
+           			<input type="hidden" name="emp_code" class="form-control upForm" style="border-radius: 1em;" value="${param.emp_code}">
            		</div>
            		<br/>
    				<br/>
-           		<button id="update" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">수정</button>
-           		<button id="list" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">목록</button>
-           		<button id="delete" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">삭제</button>
+           		<input type="submit" value="수정" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right" />
+           		<input type="button" value="목록" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right" />
+           		<input type="button" value="삭제" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right" />
    			</form>
       	</div>
       </div>

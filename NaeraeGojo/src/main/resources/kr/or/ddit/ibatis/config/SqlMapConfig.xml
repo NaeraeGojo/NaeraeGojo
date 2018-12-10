@@ -52,7 +52,7 @@
 <sqlMap resource="kr/or/ddit/ibatis/mapper/freeboard.xml" />
 <sqlMap resource="kr/or/ddit/ibatis/mapper/inqryboard.xml" />
 
-</sqlMapConfig>
+<sqlMap resource="kr/or/ddit/ibatis/mapper/freeboardAns.xml" /></sqlMapConfig>
 
 
 
