@@ -25,6 +25,7 @@
 		<result property="pw_function" column="pw_function"/>
 		<result property="project_name" column="project_name"/>
 		<result property="report_save_dev" column="report_save_dev"/>
+		<result property="report_save_pl" column="report_save_pl"/>
 		<result property="items" column="report_code" select="reportFile.reportFilexx" />
 	</resultMap>
 	
@@ -164,6 +165,45 @@
 		
 	</insert>
 	
+	<insert id="insertReportPLSave" parameterClass="reportVO">
+		<selectKey keyProperty="report_code" resultClass="string">
+			select report_seq.nextval from dual
+		</selectKey>
+		INSERT INTO REPORT (
+							REPORT_CODE,
+							REPORT_TITLE,
+							REPORT_DAY,
+							REPORT_CONTENT,
+							REPORT_RC,
+							REPORT_DATE,
+							REPORT_DELETE,
+							EMP_CODE,
+							PW_CODE,
+							REPORT_PL_STATUS,
+							REPORT_PM_STATUS,
+							EMP_CODE_PL,
+							EMP_CODE_PM,
+							REPORT_SAVE_PL
+							) 
+                    VALUES(
+		                    #report_code#,
+		                    #report_title#,
+		                    sysdate,
+		                    #report_content#,
+		                    default,
+		                    #report_date#,
+							default,
+							#emp_code#,
+							#pw_code#,
+							'k',
+							default,
+							#emp_code_pl#,
+							#emp_code_pm#,
+							'y'
+							)
+		
+	</insert>
+	
 	<select id="totalCountDEV" parameterClass="map" resultClass="int">
 		  SELECT COUNT(A.REPORT_CODE)
 			FROM REPORT A, EMP B
@@ -172,6 +212,7 @@
 			AND  A.REPORT_PL_STATUS in ('i','k','x' )
 			AND  A.REPORT_PM_STATUS in ('i','k','x' )
 			AND  A.REPORT_DELETE_DEV_SEND = 'n'
+			AND  A.REPORT_SAVE_DEV in ('n','y')
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -183,6 +224,7 @@
 			AND  A.REPORT_PL_STATUS = 'k'
 			AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
 			AND  A.REPORT_DELETE_PL_SEND = 'n'
+			AND  A.REPORT_SAVE_PL in ('n','y')
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -195,6 +237,7 @@
 			AND  A.REPORT_PL_STATUS IN ('i' ,'k','x')
 			AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
 			AND  A.REPORT_DELETE_PL_REC = 'n'
+			AND  A.REPORT_SAVE_DEV = 'n'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -206,6 +249,8 @@
             AND  A.REPORT_PL_STATUS IN ('k','x')
             AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
             AND  A.REPORT_DELETE_PM_REC = 'n'
+            AND  A.REPORT_SAVE_PL = 'n'
+            AND  A.REPORT_SAVE_DEV = 'n'
 		<include refid="searchCondition"/>
 	</select>
 	
@@ -219,6 +264,7 @@
 						AND  A.REPORT_PL_STATUS in ('i','k','x' )
 						AND  A.REPORT_PM_STATUS in ('i','k','x' )
 						AND  A.REPORT_DELETE_DEV_SEND = 'n'
+						AND  A.REPORT_SAVE_DEV in ('n','y')
 						<include refid="searchCondition"/>
 						order by report_code asc
 						) a ) b
@@ -240,6 +286,7 @@
 						AND  A.REPORT_PL_STATUS IN ( 'i','k','x')
 						AND  A.REPORT_PM_STATUS IN ( 'i','k','x')
 						AND  A.REPORT_DELETE_PL_REC = 'n'
+						AND  A.REPORT_SAVE_DEV = 'n'
 						<include refid="searchCondition"/>
 						order by report_code asc
 						) a ) b
@@ -260,6 +307,7 @@
 						AND  A.REPORT_PL_STATUS = 'k'
 						AND  A.REPORT_PM_STATUS IN ('k','i','x')
 						AND  A.REPORT_DELETE_PL_SEND  = 'n'
+						AND  A.REPORT_SAVE_PL in ('n','y')
 						<include refid="searchCondition"/>
 						order by report_code
 						) a ) b
@@ -280,6 +328,8 @@
 		                  AND  A.REPORT_PL_STATUS IN ('k','x')
 		                  AND  A.REPORT_PM_STATUS IN ('i' ,'k','x')
 		                  AND  A.REPORT_DELETE_PM_REC  = 'n'
+		                  AND  A.REPORT_SAVE_PL = 'n'
+                          AND  A.REPORT_SAVE_DEV = 'n'
 						<include refid="searchCondition"/>
 						order by report_code
 						) a ) b
@@ -291,7 +341,8 @@
 	</select>
 	
 	<select id="reportView" parameterClass="map" resultMap="reportMap">
-		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE,B.EMP_CODE,A.REPORT_SAVE_DEV
+		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,
+		D.PROJECT_NAME,A.REPORT_CODE,B.EMP_CODE,A.REPORT_SAVE_DEV,A.REPORT_SAVE_PL
 	     FROM REPORT A, EMP B, PW C, PROJECT D,JOIN E
 	     WHERE A.EMP_CODE = B.EMP_CODE
 	     AND   A.PW_CODE = C.PW_CODE
@@ -299,7 +350,7 @@
 	     AND   D.PROJECT_CODE = E.PROJECT_CODE
 	     AND   A.REPORT_CODE = #report_code#
 	     GROUP BY A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
-	     ,B.EMP_CODE,A.REPORT_SAVE_DEV
+	     ,B.EMP_CODE,A.REPORT_SAVE_DEV,A.REPORT_SAVE_PL
 	</select>
 	
 	<select id="reportStatus" parameterClass="map" resultClass="reportVO">
@@ -475,6 +526,17 @@
 	<update id="deleteReportPMRec" parameterClass="map">
 		 UPDATE REPORT 
 		 SET REPORT_DELETE_PM_REC = 'y' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	
+	<update id="saveDEV" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_SAVE_DEV = 'n' 
+		 WHERE REPORT_CODE = #report_code#
+	</update>
+	<update id="savePL" parameterClass="map">
+		 UPDATE REPORT 
+		 SET REPORT_SAVE_PL = 'n' 
 		 WHERE REPORT_CODE = #report_code#
 	</update>
 	

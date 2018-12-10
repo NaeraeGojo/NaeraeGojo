@@ -106,13 +106,13 @@ $(function(){
 	${pagingUtil}
 	
 	<div class="procont">
-		<form action="${pageContext.request.contextPath }/12/main.jsp" method="post" class="form-inline pull-right">
+		<form action="${pageContext.request.contextPath}/user/project/project_manage.do" method="post" class="form-inline pull-right">
 			<input id="search_keyword" name="search_keyword" type="text"placeholder="검색어 입력..." class="form-control" />
 			 <select class="form-control" name="search_keycode">
 				<option value="TOTAL">전체</option>
-				<option value="TITLE">프로젝트 명</option>
-				<option value="CONTENT">내용</option>
-				<option value="WRITER">진척률</option>
+				<option value="NAME">프로젝트 명</option>
+				<option value="START">시작일자</option>
+<!-- 				<option value="PERCENT">진척률</option> -->
 			</select>
 			<button type="submit" class="btn btn-primary form-control">검색</button>
 		</form>

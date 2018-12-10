@@ -64,6 +64,12 @@
 												<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
 												<td><span class="label label-warning">&nbsp;&emsp;반려&emsp;</span></td>
 												</c:if>
+												<c:if test="${list.report_save_pl eq 'y'}">
+													<td>${list.report_title }<span class="label label-info">임시 저장</span></td>
+												</c:if>
+												<c:if test="${list.report_save_pl eq 'n'}">
+													<td>${list.report_title }</td>
+												</c:if>
 												<td>${list.report_title }</td>
 												<td>${list.emp_name }</td>
 												<td>${list.report_day }</td>

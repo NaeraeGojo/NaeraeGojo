@@ -71,6 +71,7 @@ public class ProjectController {
 		List<ProjectVO> projectList = service.projectList(params);
 		andView.addObject("pagingUtil",pagingUtil.getPagingHtmls());
 		andView.addObject("projectList", projectList);
+		andView.setViewName("user/project/project_manage");
 		return andView;
 	}
 	

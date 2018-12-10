@@ -144,16 +144,17 @@
                             ,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
                             ,TO_CHAR(SUGGEST_COST,'L9,999,999,999,999') AS SUGGEST_COST
                             ,D.RQPPS_NOTICE_AGENCY
-                            ,B.EMP_CODE
                             ,B.JOIN_ALARM
                             ,D.RQPPS_NICKNAME
                             ,B.JOIN_CODE
                             ,D.RQPPS_CODE
-                        FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E
+                            ,D.EMP_CODE as emp_code_pm
+                        FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E, EMP C
                         WHERE A.PROJECT_DELETE = 'n'
                         AND B.PROJECT_CODE = A.PROJECT_CODE
                         AND A.SUGGEST_CODE = E.SUGGEST_CODE
                         AND D.RQPPS_CODE = E.RQPPS_CODE
+                        AND D.EMP_CODE = C.EMP_CODE
                         AND B.JOIN_ALARM = 'y'
                         AND B.EMP_CODE = #emp_code#
 						ORDER BY PROJECT_CODE) A ) B
