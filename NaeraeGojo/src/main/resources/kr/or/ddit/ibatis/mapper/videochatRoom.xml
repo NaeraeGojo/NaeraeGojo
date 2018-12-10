@@ -263,7 +263,7 @@
     </insert>
     
     <select id="getchatPwList" parameterClass="map" resultClass="chatpwVO">
-     select a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name, b.pw_content, z.pw_damdang
+     select a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name, b.pw_content, z.emp_name as PW_DAMDANG
         from chat_pw a, pw b, pwc c, emp d, video_chat_room e, (select emp.emp_name, pw.pw_damdang
                                                                 from emp, pw
                                                                 where pw.pw_damdang = emp.emp_code)z
@@ -271,10 +271,16 @@
         and a.pw_code = b.pw_code
         and d.emp_code = a.emp_code
         and a.chat_pw_delete = 'n'
-        and a.video_room_code = #video_room_code#
+        and a.video_room_code = #video_chat_room_code#
         and z.pw_damdang = b.pw_damdang
-        group by a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name, b.pw_content,z.pw_damdang;
+        group by a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name, b.pw_content, z.emp_name
     </select>
+    
+    <update id="chat_pwDelete" parameterClass="string">
+        update chat_pw
+        set chat_pw_delete = 'y'
+        where chat_pw_code = #chat_pw_code#
+    </update>
     
 </sqlMap>
 
