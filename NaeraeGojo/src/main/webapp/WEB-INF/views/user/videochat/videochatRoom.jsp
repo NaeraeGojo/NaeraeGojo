@@ -20,7 +20,7 @@ video {
 }
 
 #urlText {
-	width: 500px; 
+	width: 360px; 
 	height: 40px; 
 	margin-right: 30px; 
 	margin-top: 5px;
@@ -31,6 +31,7 @@ video {
 #scroll{
     overflow-y:scroll;
     height: 520px;
+    width: 90%
 }
 
 .bootstrap-dialog{
@@ -45,6 +46,10 @@ strong {
 }
 .text-muted{
     font-size: large;
+}
+
+ul {
+    margin-left: 20px;
 }
 </style>
 
@@ -198,21 +203,24 @@ $(function(){
 			
 			var pwc_code= $("#pwcSelect option:selected").val();
 			var pw_code= $("#pwSelect option:selected").val();
+			var video_chat_room_code = '${video_chat_room_code}';
 			$.ajax({
 				 type : "POST"
 				 , url : "${pageContext.request.contextPath}/user/video/pwAdd.do"
 				 , dataType : "json"
 				 , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
-				 , data : {pwc_code : pwc_code , pw_code : pw_code}
+				 , data : {pwc_code : pwc_code , pw_code : pw_code, video_chat_room_code : video_chat_room_code}
 				 , error : function(request, status, error) {
 					  alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				 } , success : function(result) {
 					 var data = '';
-					for (var i = 0; i < result.chatPwList.length; i++) {
-						data += ' <strong><i class="fa fa-book margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
-		                data += ' <label class="text-muted" >'; 
-                        data += result.chatPwList[i].pw_function + '</label><hr>';
-					}
+		               for (var i = 0; i < result.chatPwList.length; i++) {
+		                   data += '<ul  id="'+result.chatPwList[i].chat_pw_code+'"><a data-toggle="collapse" data-parent="#'+result.chatPwList[i].chat_pw_code+'" href="#'+result.chatPwList[i].pw_function+'"><li > <strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
+		                   data += ' <label class="text-muted" >'; 
+		                   data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right" style="cursor: pointer;"><i class="fa fa-remove"></div></i><hr></li></a></ul>';
+		                   data += '<div id="'+result.chatPwList[i].pw_function+'" class="collapse">';
+		                   data += 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.  </div>';
+		               }
 					$('#pwdiv').empty().append(data);
 					
 				 }
@@ -220,27 +228,41 @@ $(function(){
 		}
 
 	}) ;
-// 	setTimeout(function(){
-// 		$.ajax({
-//             type : "POST"
-//             , url : "${pageContext.request.contextPath}/user/video/getNewpwList.do"
-//             , dataType : "json"
-//             , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
-//             , error : function(request, status, error) {
-//                  alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-//             } , success : function(result) {
-//                 var data = '';
-//                for (var i = 0; i < result.chatPwList.length; i++) {
-//                    data += ' <strong><i class="fa fa-book margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br/>';
-//                    data += ' <label class="text-muted" >'; 
-//                    data += result.chatPwList[i].pw_function + '</label><i class="fa fa-remove"></i><hr>';
-//                }
-//                $('#pwdiv').empty().append(data);
+	
+	timer = setInterval(function(){
+	   var video_chat_room_code = '${video_chat_room_code}';
+		$.ajax({
+            type : "POST"
+            , url : "${pageContext.request.contextPath}/user/video/getNewpwList.do"
+            , dataType : "json"
+            , contentType : "application/x-www-form-urlencoded; charset=UTF-8" 
+            , data : {video_chat_room_code : video_chat_room_code}
+            , error : function(request, status, error) {
+                 alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+            } , success : function(result) {
+                var data = '';
+                data += '<ul class="nav nav-stacked" id="'+result.chatPwList[0].pw_function+'">';
+                for (var i = 0; i < result.chatPwList.length; i++) {
+                    data += '<li class="panel"> <a data-toggle="collapse" data-parent="#'+result.chatPwList[0].pw_function+'" href="#'+result.chatPwList[i].chat_pw_code+'"><strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br>'
+                    data += ' <label class="text-muted" >'; 
+                    data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right" style="cursor: pointer;"><i class="fa fa-remove"></div></i></a>'
+                    data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
+                    data += 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.  </div>'
+                    data +=  '</li>';
+                }
+                data +=  ' </ul>';
+//                 for (var i = 0; i < result.chatPwList.length; i++) {
+//                     data += '<ul  id="'+result.chatPwList[i].chat_pw_code+'"><a data-toggle="collapse" data-parent="#'+result.chatPwList[i].chat_pw_code+'" href="#'+result.chatPwList[i].pw_function+'"><li><strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong>';
+//                     data += ' <label class="text-muted" >'; 
+//                     data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right" style="cursor: pointer;"><i class="fa fa-remove"></div></i><hr></li></a></ul>';
+//                     data += '<div id="'+result.chatPwList[i].pw_function+'" class="collapse">';
+//                     data += 'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.  </div>';
+//                 }
+               $('#pwdiv').empty().append(data);
                
-//             }
-//        });
-		
-//     },1500);
+            }
+       });
+    },10000);
 	
 	
 	
@@ -282,7 +304,7 @@ $(function(){
 						
 					</div>
 				    <!--관련업무  div -->
-				    <div class="dd box box-primary" id="secondDiv" style="width: 38%; float: right;  height: 680px !important;" c>
+				    <div class="dd box box-primary" id="secondDiv" style="width: 30%; float: right;  height: 680px !important;" c>
 				        <div style="text-align: center;">  
 				             <label></label><br/>
 				            <b style="font-size: 1.8em;">관련 업무 확인하기</b>
@@ -296,7 +318,7 @@ $(function(){
 				                  <option value="${pwcInfo.pwc_code}">${pwcInfo.pwc_name}</option>
 			                  </c:forEach>
 			                </select>
-			                <select class="form-control select2" id="pwSelect" style="width: 48%; float: left; margin-right: 5px;  " >
+			                <select class="form-control select2" id="pwSelect" style="width: 40%; float: left; margin-right: 5px;  " >
 			                  <option selected="selected">관련 업무</option>
 			                </select>
 			                <button id="addPw" class="btn btn-block btn-primary btn-sm" style="width: 15%; height: 33px; font-size: 1.1em;">추가</button>

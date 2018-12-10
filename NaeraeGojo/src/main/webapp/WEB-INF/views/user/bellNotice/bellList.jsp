@@ -41,7 +41,7 @@ $(function(){
 		    	issue_code = $(this).find('td:eq(0) input').val();
 		        rnum = $(this).find('td:eq(0)').text();
     			
-		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
+		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code);
     		}
     	})
     });
