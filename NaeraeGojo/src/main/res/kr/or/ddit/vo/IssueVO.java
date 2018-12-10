@@ -27,4 +27,5 @@ public class IssueVO {
 	private String project_name;
 	private String rqpps_code;
 	private String emp_damdang;
+	private String emp_damdang_code;
 }

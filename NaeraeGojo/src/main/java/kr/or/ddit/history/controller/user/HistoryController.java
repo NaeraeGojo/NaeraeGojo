@@ -38,33 +38,10 @@ public class HistoryController {
 	public void historyForm(){}
 
 	@RequestMapping("insertHistory")
-	public ModelAndView insertHistory(HistoryVO historyInfo
-			,String emp_code
-//			,string history_notice_agency
-//			,string history_demand_agency
-//			,string history_project_start
-//			,string history_project_end
-//			,string history_project_name
-//			,string history_business
-//			,string history_delete
-			,Map<String, String> params
-			,ModelAndView andView) throws Exception{
-		
-		params.put("emp_code", emp_code);
-//		params.put("history_notice_agency", history_notice_agency);
-//		params.put("history_demand_agency", history_demand_agency);
-//		params.put("history_project_start", history_project_start);
-//		params.put("history_project_end", history_project_end);
-//		params.put("history_project_name", history_project_name);
-//		params.put("history_business", history_business);
-//		params.put("history_delete", history_delete);
-		
+	public String insertHistory(HistoryVO historyInfo
+			,String emp_code) throws Exception{
 		service.insertHistoryInfo(historyInfo);
-
-		andView.addObject("historyInfo", historyInfo);	
-		andView.setViewName("jsonConvertView");
-		
-		return andView;
+		return "redirect:/history/historyList.do?emp_code="+emp_code;
 	}
 	
 	@RequestMapping("updateHistory")
@@ -120,25 +97,15 @@ public class HistoryController {
 	@RequestMapping("historyView")
 	public ModelAndView historyView(String history_code,
 			ModelAndView andView, Map<String,String> params)throws Exception{
-		
 		params.put("history_code", history_code);
 		
 		HistoryVO historyInfo = service.historyInfo(params);
 		
 		andView.addObject("historyInfo", historyInfo);
-		andView.setViewName("jsonConvertView");
+		andView.setViewName("history/historyView");
 		
 		return andView;
 	}
-	
-	
-	
-	public ModelAndView updateHistroy(ModelAndView andView) throws Exception{
-		
-		return null;
-	}
-	
-	
 	
 	
 }

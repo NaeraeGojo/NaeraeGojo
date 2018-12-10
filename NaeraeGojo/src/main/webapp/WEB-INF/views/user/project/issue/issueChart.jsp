@@ -77,13 +77,13 @@
 </style>
  <div class="row">
     <div class="">
-	    <form action="${pageContext.request.contextPath}/user/project/issue/issueList.do" method="post" class="form-inline pull-right"
+	    <form method="post" class="form-inline pull-right"
 		   style="margin-right: 15px;">
 				<select class="form-control" name="search_keycode" >
-					<option value="total">전체</option>
-					<option value="function">업무명</option>
-					<option value="pwc">분류</option>
-					<option value="c_damdang">담당자</option>
+					<option value="TOTAL">전체</option>
+					<option value="ISSUE">제목</option>
+					<option value="NAME">작성자</option>
+					<option value="LEVEL">등급</option>
 				</select>
 				<input id="search_keyword"  name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 				<input type="button" class="btn btn-primary form-control" value="검색" id="btn_search_gantt">
