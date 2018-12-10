@@ -37,5 +37,6 @@ public interface IBellService {
 
 	public List<IssueVO> issueDamdangList(Map<String, String> params) throws SQLException;
 
+	public String issueDamdangCnt(Map<String, String> params) throws SQLException;
 
 }

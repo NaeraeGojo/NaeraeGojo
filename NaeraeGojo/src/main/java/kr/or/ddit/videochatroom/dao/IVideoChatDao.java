@@ -44,6 +44,8 @@ public interface IVideoChatDao {
 
 	public String insertChatPw(ChatPwVO cpv) throws SQLException;
 
-	public List<ChatPwVO> getchatPwLsit() throws SQLException;
+	public List<ChatPwVO> getchatPwLsit(Map<String, String> params) throws SQLException;
+
+	public void chat_pwDelete(String chat_pw_code) throws SQLException;
 	
 }

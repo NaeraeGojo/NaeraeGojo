@@ -245,9 +245,11 @@ $(function () {
 						<dt>프로젝트 진척도</dt>      <dd>${projectInfo.pw_percent } %</dd>
 						<dt>프로젝트 예산</dt>        <dd>${projectInfo.suggest_cost }</dd>
 						<dt>프로젝트 수요기관</dt>     <dd>${projectInfo.rqpps_notice_agency}</dd>
+						<c:if test="${LOGIN_EMPINFO.emp_code == projectInfo.emp_code }">
 						<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<input value="수정" id="updateBtn" type="button" class="btn btn-sm btn-warning btn-flat pull-right"
 						data-toggle="modal" data-target="#updateForm">
+						</c:if>
 					</dl>
 				</div>
 			</div>
@@ -288,9 +290,31 @@ $(function () {
 						</button>
 						<h4 class="modal-title">내용 수정</h4>
 					</div>
+					<div class="modal-body">
+						<form id="update" method="post">
+							<input type="hidden" name="project_code"> 
+							<tr>
+		              			<td style="width:60px;"><label class="control-label">프로젝트 명</label></td>
+		              			<td>
+		              				<input name="project_name" type="text" class="form-control" style="border-radius: 1em; width: 100%;">
+		              			</td>
+              				</tr>
+              				<tr>
+		              			<td style="width:60px;"><label class="control-label">프로젝트 시작일</label></td>
+		              			<td>
+		              				<input name="project_start" type="date" class="form-control" style="border-radius: 1em; width: 100%;">
+		              			</td>
+              				</tr>
+              				<tr>
+		              			<td style="width:60px;"><label class="control-label">프로젝트 예상종료일</label></td>
+		              			<td>
+		              				<input name="project_end" type="date" class="form-control" style="border-radius: 1em; width: 100%;">
+		              			</td>
+              				</tr>
+					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
-						<button id="commitBtn" type="button" class="btn btn-warning btn_Upda">삭제</button>
+						<button id="commitBtn" type="button" class="btn btn-warning btn_Upda">수정</button>
 					</div>
 				</div>
 			</div>

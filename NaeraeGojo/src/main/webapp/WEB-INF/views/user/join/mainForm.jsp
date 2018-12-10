@@ -7,7 +7,6 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/fullcalendar.css" rel="stylesheet"/>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/js/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/moment.min.js"></script>
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script> --%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/fullcalendar.js"></script>    
 <script>
 $(document).ready(function() {

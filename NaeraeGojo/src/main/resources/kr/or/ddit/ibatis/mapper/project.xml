@@ -16,6 +16,7 @@
 		<result property="suggest_cost" column="suggest_cost"/>
 		<result property="rqpps_notice_agency" column="rqpps_notice_agency"/>
 		<result property="pw_percent" column="pw_percent"/>
+		<result property="emp_code" column="emp_code"/>
 	</resultMap>
 	
 	<sql id="selectAll">
@@ -84,6 +85,7 @@
 			,NVL(TRUNC(AVG(PW_PERCENT)),0) AS PW_PERCENT
             ,TO_CHAR(SUGGEST_COST,'L9,999,999,999,999') AS SUGGEST_COST
             ,D.RQPPS_NOTICE_AGENCY
+            ,D.EMP_CODE
 		FROM PROJECT A, JOIN B, PW C, RQPPS D, SUGGEST E
 		WHERE A.PROJECT_DELETE = 'n'
 		AND C.PROJECT_CODE(+) = A.PROJECT_CODE
@@ -91,7 +93,7 @@
         AND A.SUGGEST_CODE = E.SUGGEST_CODE
         AND D.RQPPS_CODE = E.RQPPS_CODE
         and a.project_code = #project_code#
-		GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, E.SUGGEST_COST, D.RQPPS_NOTICE_AGENCY
+		GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, E.SUGGEST_COST, D.RQPPS_NOTICE_AGENCY, D.EMP_CODE
 	</select>
 	
 	<insert id="insertProject" parameterClass="projectVO">

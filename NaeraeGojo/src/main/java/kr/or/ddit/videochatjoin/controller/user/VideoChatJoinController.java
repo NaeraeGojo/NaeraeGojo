@@ -39,11 +39,12 @@ public class VideoChatJoinController {
 		
 		// 화상회의 url 가져오기
 		String tmpUrl = service.getUrlInfo(video_chat_room_code);
-		String[] urlInfo = tmpUrl.split("http://localhost");
+		String[] urlInfo = tmpUrl.split("/");
+		String realUrl = "/"+urlInfo[3] + "/"+ urlInfo[4]+"/" +urlInfo[5] +"/"+urlInfo[6];
+		System.out.println("asdfasfd  " + realUrl);
 		
-		System.out.println(urlInfo[1]);
 		
-		andView.addObject("urlInfo", urlInfo[1]);
+		andView.addObject("urlInfo", realUrl);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}

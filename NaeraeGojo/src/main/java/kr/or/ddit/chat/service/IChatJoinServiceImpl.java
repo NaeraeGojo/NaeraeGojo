@@ -2,6 +2,7 @@ package kr.or.ddit.chat.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.chat.dao.IChatJoinDao;
 import kr.or.ddit.vo.ChatJoinVO;
@@ -32,6 +33,11 @@ public class IChatJoinServiceImpl implements IChatJoinService{
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void deleteRoom(ChatJoinVO cjv) throws Exception {
 		dao.deleteRoom(cjv);
+	}
+
+	@Override
+	public int joinCount(Map<String, String> params) throws Exception {
+		return dao.joinCount(params);
 	}
 	
 }

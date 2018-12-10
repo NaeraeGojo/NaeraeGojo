@@ -124,9 +124,15 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 
 	
 	@Override
-	public List<ChatPwVO> getchatPwLsit()
+	public List<ChatPwVO> getchatPwLsit(Map<String, String> params)
 			throws SQLException {
-		return dao.getchatPwLsit();
+		return dao.getchatPwLsit(params);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void chat_pwDelete(String chat_pw_code) throws SQLException {
+		dao.chat_pwDelete(chat_pw_code);
 	}
 
 }

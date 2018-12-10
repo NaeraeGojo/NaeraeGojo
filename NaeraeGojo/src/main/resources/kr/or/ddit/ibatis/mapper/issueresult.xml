@@ -14,6 +14,7 @@
 		<result property="issue_result_day" column="issue_result_day"/>
 		<result property="issue_code" column="issue_code"/>
 		<result property="emp_code_ir" column="emp_code_ir"/>
+		<result property="emp_code" column="emp_code"/>
 		<result property="issue_result_status" column="issue_result_status"/>
 		<result property="issue_event_day" column="issue_event_day"/>
 		<result property="issue_name" column="issue_name"/>
@@ -73,6 +74,7 @@
 			   ,B.ISSUE_RESULT_STATUS
 			   ,A.ISSUE_LEVEL
 			   ,C.EMP_NAME AS EMP_CODE_IR
+			   ,C.EMP_CODE
 			   ,B.RISK_HIT
 		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
       	WHERE A.EMP_DAMDANG = C.EMP_CODE
@@ -92,6 +94,7 @@
 			   ,B.ISSUE_RESULT_STATUS
 			   ,A.ISSUE_LEVEL
 			   ,C.EMP_NAME AS EMP_CODE_IR
+			   ,C.EMP_CODE
 			   ,B.RISK_HIT
 		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
       	WHERE B.EMP_CODE_IR = C.EMP_CODE

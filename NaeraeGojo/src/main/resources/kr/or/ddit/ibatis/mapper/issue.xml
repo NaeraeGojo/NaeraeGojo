@@ -18,6 +18,9 @@
 		<result property="issue_status" column="issue_status"/>
 		<result property="pw_code" column="pw_code"/>
 		<result property="emp_damdang" column="emp_damdang"/>
+		<result property="emp_name" column="emp_name"/>
+		<result property="emp_damdang_code" column="emp_damdang_code"/>
+		<result property="emp_code_pm" column="emp_code_pm"/>
 	</resultMap>
 	
 	<sql id="selectAll">
@@ -109,16 +112,28 @@
 			,A.ISSUE_LEVEL
 			,A.ISLEV_CODE
 			,A.ISSUE_STATUS
-			,C.EMP_NAME AS EMP_CODE
+			,A.EMP_CODE
 			,A.ISSUE_ALARM
 			,A.PW_CODE
+            ,B.EMP_NAME
+            ,C.EMP_CODE as EMP_CODE_PM
+            ,C.RQPPS_NICKNAME
 			,(SELECT 
               	B.EMP_NAME
 	          FROM ISSUE A, EMP B
 	          WHERE A.EMP_DAMDANG = B.EMP_CODE
 	          AND A.ISSUE_CODE = #issue_code# ) as EMP_DAMDANG
-		FROM ISSUE A, EMP C
-      	WHERE A.EMP_CODE = C.EMP_CODE
+	        ,(SELECT 
+              	B.EMP_CODE
+	          FROM ISSUE A, EMP B
+	          WHERE A.EMP_DAMDANG = B.EMP_CODE
+	          AND A.ISSUE_CODE = #issue_code# ) as EMP_DAMDANG_CODE  
+		FROM ISSUE A, EMP B, RQPPS C, SUGGEST D, PROJECT E, PW F
+      	WHERE A.EMP_CODE = B.EMP_CODE
+        AND C.RQPPS_CODE = D.RQPPS_CODE
+        AND D.SUGGEST_CODE = E.SUGGEST_CODE
+		AND A.PW_CODE = F.PW_CODE
+        AND F.PROJECT_CODE = E.PROJECT_CODE
       	AND A.ISSUE_CODE = #issue_code#
 	</select>
 	

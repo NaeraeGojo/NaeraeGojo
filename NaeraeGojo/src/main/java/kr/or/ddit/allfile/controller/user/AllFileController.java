@@ -2,12 +2,14 @@ package kr.or.ddit.allfile.controller.user;
 
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.allfile.service.IAllFileService;
 import kr.or.ddit.global.GlobalConstant;
 import kr.or.ddit.utils.AllFileMapper;
 import kr.or.ddit.vo.AllFileVO;
+import kr.or.ddit.vo.ProjectAllFileVO;
 import kr.or.ddit.vo.SuggestFileVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,23 @@ public class AllFileController {
 		andView.addObject("all_file_name" , afv.getAll_file_name());
 		andView.setViewName("jsonConvertView");
 		return andView;
+	}
+	
+	@RequestMapping("allfileList")
+	public ModelAndView AllFileList(ModelAndView mav
+										,AllFileVO afv
+										, Map<String, String> params 
+									) throws Exception{
+//		params.put("project_code", afv.getProject_code());
+		params.put("doc_code", afv.getAll_file_code());
+		params.put("doc_class", afv.getAll_file_kind_code());
+		
+		List<AllFileVO> afl = service.getAllFileList(params);
+		
+		mav.addObject("afl",afl);
+		mav.setViewName("jsonConvertView");
+		
+		return mav;
 	}
 	
 }

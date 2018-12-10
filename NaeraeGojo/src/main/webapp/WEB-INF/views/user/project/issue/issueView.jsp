@@ -136,10 +136,10 @@ $(function(){
 						</div>
 
 						<div class="form-group">
-							<label for="emp_code1" class="col-sm-2 control-label">작성자</label>
+							<label for="emp_name" class="col-sm-2 control-label">작성자</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="작성자" 
-								id="emp_code1" name="emp_code1" value="${issueInfo.emp_code}" readonly="readonly">
+								id="emp_name" name="emp_name" value="${issueInfo.emp_name}" readonly="readonly">
 							</div>
 						</div>
 
@@ -183,9 +183,11 @@ $(function(){
 							<label for="emp_damdang" class="col-sm-2 control-label">담당자</label>
 							<div class="col-sm-8">
 								<select class="form-control" style="border-radius: 0em;" name="emp_damdang" id="emp_damdang">
+									<option value="n">담당자 미정</option>
 									<c:forEach items="${joinEmpList}" var="joinEmpList">
 										<option value="${joinEmpList.emp_code}"
-											<c:if test="${joinEmpList.emp_name eq issueInfo.emp_damdang}">selected</c:if> />${joinEmpList.emp_name}</option>
+											<c:if test="${joinEmpList.emp_name eq issueInfo.emp_damdang}">selected</c:if> />${joinEmpList.emp_name}
+										</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -193,11 +195,16 @@ $(function(){
 
 						<div class="box-footer clearfix">
 							<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
-<%-- 							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code }"> --%>
+							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code || LOGIN_EMPINFO.emp_code == issueInfo.emp_code_pm }">
 							<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button>
+							</c:if>
+<%-- 							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code_pm }"> --%>
+<!-- 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button> -->
 <%-- 							</c:if> --%>
+							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_damdang_code }">
 							<button type="button" id="insertBtn" class="btn btn-sm btn-primary btn-flat pull-right">이슈 처리</button>
+							</c:if>
 						</div>
 					</form>
 				</div>

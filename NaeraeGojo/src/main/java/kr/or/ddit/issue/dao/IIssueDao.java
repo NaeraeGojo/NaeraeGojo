@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.ddit.vo.IssueVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectWorkVO;
+import kr.or.ddit.vo.RqppsVO;
 
 public interface IIssueDao {
 	public IssueVO issueInfo(Map<String,String> params) throws SQLException;

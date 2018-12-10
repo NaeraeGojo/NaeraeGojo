@@ -64,10 +64,11 @@ public class BellController {
 		List<VideoChatRoomVO> videoChatList = service.getVideoChatList(params);
 		
 		//프로젝트 알람 리스트
-		List<ProjectVO> projectAlarmList = service.projectAlarmList(params);
 		String projectAlarmCnt = service.projectAlarmCnt(params);
+		List<ProjectVO> projectAlarmList = service.projectAlarmList(params);
 		
 		//이슈 등록자 알림 리스트
+		String issueDamdangCnt = service.issueDamdangCnt(params);
 		List<IssueVO> issueDamdangList = service.issueDamdangList(params);
 		
 		andview.addObject("issueList", issueList); // 이슈 리스트
@@ -86,6 +87,7 @@ public class BellController {
 		andview.addObject("projectAlarmCnt", projectAlarmCnt); // 프로젝트 알람 count
 		
 		andview.addObject("issueDamdangList", issueDamdangList); // 이슈 담당자 알람 리스트
+		andview.addObject("issueDamdangCnt", issueDamdangCnt); // 이슈 담당자 알람 리스트
 		
 		andview.setViewName("user/bellNotice/bellList");
 		return andview;

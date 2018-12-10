@@ -77,7 +77,7 @@
 </style>
  <div class="row">
     <div class="">
-	    <form action="${pageContext.request.contextPath}/user/project/pw/pwList.do" method="post" class="form-inline pull-right"
+	    <form method="post" class="form-inline pull-right"
 		   style="margin-right: 15px;">
 				<select class="form-control" name="search_keycode" >
 					<option value="total">전체</option>
