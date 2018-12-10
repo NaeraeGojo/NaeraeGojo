@@ -17,6 +17,7 @@ public class PblancBoardVO {
 	private String pblanc_board_end_proposal;
 	private String pblanc_board_hit;
 	private String emp_code;
+	private String emp_name;
 	private List<AllFileVO> items;
 
 }

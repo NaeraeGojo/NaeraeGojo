@@ -245,9 +245,11 @@ $(function () {
 						<dt>프로젝트 진척도</dt>      <dd>${projectInfo.pw_percent } %</dd>
 						<dt>프로젝트 예산</dt>        <dd>${projectInfo.suggest_cost }</dd>
 						<dt>프로젝트 수요기관</dt>     <dd>${projectInfo.rqpps_notice_agency}</dd>
+						<c:if test="${LOGIN_EMPINFO.emp_code == projectInfo.emp_code }">
 						<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<input value="수정" id="updateBtn" type="button" class="btn btn-sm btn-warning btn-flat pull-right"
 						data-toggle="modal" data-target="#updateForm">
+						</c:if>
 					</dl>
 				</div>
 			</div>
