@@ -37,4 +37,9 @@ public class IChatJoinDaoImpl implements IChatJoinDao{
 	public int joinCount(Map<String, String> params) throws Exception {
 		return (int) client.queryForObject("chatjoin.joinCount",params);
 	}
+
+	@Override
+	public String invList(Map<String, String> params) throws Exception {
+		return (String) client.queryForObject("chatjoin.invList",params);
+	}
 }
