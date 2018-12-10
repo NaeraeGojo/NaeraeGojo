@@ -20,6 +20,7 @@
         <result property="meeting_title" column="meeting_title"/>
         <result property="meeting_content" column="meeting_content"/>
         <result property="meeting_code" column="meeting_code"/>
+        <result property="emp_name" column="emp_name"/>
         <result property="pw_function" column="pw_function"/>
         <result property="project_code" column="project_code"/>
         <result property="pw_code" column="pw_code"/>
@@ -32,7 +33,7 @@
                 <isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
                         MEETING_TITLE LIKE '%' || #search_keyword# || '%'
                     OR MEETING_CONTENT LIKE '%' || #search_keyword# || '%'
-<!--                     OR EMP.EMP_NAME LIKE '%' || #search_keyword# || '%' -->
+                    OR EMP.EMP_NAME LIKE '%' || #search_keyword# || '%'
                 </isEqual>
                 <isEqual property="search_keycode" compareValue="TITLE" >  
                         MEETING_TITLE LIKE '%' || #search_keyword# || '%'
@@ -40,9 +41,9 @@
                 <isEqual property="search_keycode" compareValue="CONTENT" >  
                         MEETING_CONTENT LIKE '%' || #search_keyword# || '%'
                 </isEqual>
-<!--                 <isEqual property="search_keycode" compareValue="WRITER" >   -->
-<!--                         EMP.EMP_NAME LIKE '%' || #search_keyword# || '%' -->
-<!--                 </isEqual> -->
+                <isEqual property="search_keycode" compareValue="WRITER" >  
+                        EMP.EMP_NAME LIKE '%' || #search_keyword# || '%'
+                </isEqual>
             </isNotEmpty>
         
         </dynamic>

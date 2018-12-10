@@ -17,10 +17,11 @@
     height : 190px;
     margin: 7px; 
     border: 1px solid #dcdcdc;
+    float: right;
 }
 #remoteVideo {
-    width:80%; 
-    height : 500px;
+    width:68%; 
+    height : 450px;
     margin: 7px; 
     border: 1px solid #dcdcdc;
 }
@@ -56,6 +57,10 @@ strong {
 
 ul, .collapse {
     margin-left: 20px;
+}
+
+#firstDiv {
+    border-right: 1px solid gray;
 }
 </style>
 
@@ -278,7 +283,6 @@ $(function(){
 		 
 		 var video_chat_room_code = '${video_chat_room_code}';
 		 var chat_pw_code = $(this).attr('name');
-		 alert(chat_pw_code);
          $.ajax({
              type : "POST"
              , url : "${pageContext.request.contextPath}/user/video/pwdelete.do"
@@ -331,10 +335,10 @@ $(function(){
 				<div class="box-body">
 				
 				    <!--화상회의화면 div  -->
-				    <div class="dd" id="firstDiv" style="width: 60%; float: left; margin-right: 20px; height: 680px !important;">
+				    <div class="dd" id="firstDiv" style="width: 66%; float: left; margin-right: 20px; height: 680px !important;">
 					    <div>
-						   <video id="localVideo" autoplay mute></video><br/>   <!--  로컬 -->
 						   <video id="remoteVideo" autoplay></video>            <!--  원격카메ㅏ -->
+						   <video id="localVideo" autoplay></video><br/>   <!--  로컬 -->
 
 	<!-- 				       <video src="" ></video> -->
 	<!-- 				       <video src="" ></video> -->
@@ -343,7 +347,7 @@ $(function(){
 						
 					</div>
 				    <!--관련업무  div -->
-				    <div class="dd box box-primary" id="secondDiv" style="width: 30%; float: right;  height: 680px !important;" c>
+				    <div class="dd box box-primary" id="secondDiv" style="width: 28%; float: right;  height: 680px !important; " >
 				        <div style="text-align: center;">  
 				             <label></label><br/>
 				            <b style="font-size: 1.8em;">관련 업무 확인하기</b>
