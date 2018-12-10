@@ -32,5 +32,15 @@ public class IVideoFileDaoImpl implements IVideoFileDao{
 		return (VideoFileVO) client.queryForObject("videoFile.getVideoFile", params);
 	}
 
+	@Override
+	public String getfileCode(String video_chat_room_code) throws SQLException {
+		return (String) client.queryForObject("videoFile.getfileCode", video_chat_room_code);
+	}
+
+	@Override
+	public void updateVideoChatFile(VideoFileVO vhfile) throws SQLException {
+		client.update("videoFile.updateVideoChatFile", vhfile);
+	}
+
 
 }
