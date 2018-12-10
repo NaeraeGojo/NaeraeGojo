@@ -8,79 +8,152 @@
        <meta http-equiv="X-UA-Compatible" content="IE=edge">
        <meta name="viewport" content="width=device-width, initial-scale=1">
          <title>
-            이력관리
+           	이력관리
          </title>
-      
-      <!-- CSS -->
-      <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-       <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.min.css">
-       <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.min.css">
-      <link rel="stylesheet" href="${pageContext.request.contextPath }/bower_components/Ionicons/css/ionicons.min.css">
-      <link rel="stylesheet" href="${pageContext.request.contextPath }/css/form-elements.css">
-       <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
-       <link rel="stylesheet" href="${pageContext.request.contextPath }/dist/css/AdminLTE.css">
-       <link rel="stylesheet" href="${pageContext.request.contextPath }/dist/css/AdminLTE.min.css">
-       <link rel="stylesheet" href="${pageContext.request.contextPath }/plugins/iCheck/square/blue.css">
-   
-      <!-- Favicon and touch icons -->
-       <link rel="shortcut icon" href="${pageContext.request.contextPath }/ico/favicon.png">
-       <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath }/ico/apple-touch-icon-144-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath }/ico/apple-touch-icon-114-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath }/ico/apple-touch-icon-72-precomposed.png">
-       <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath }/ico/apple-touch-icon-57-precomposed.png">
-   
-      <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/cookieControl.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.11.1.min.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.backstretch.min.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/jsbn.js"></script> 
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/prng4.js"></script> 
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/rng.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/rsa.js"></script> 
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/scripts.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/js/validation.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/bootstrap/js/bootstrap.min.js"></script>
-      <script type="text/javascript" src="${pageContext.request.contextPath }/plugins/iCheck/icheck.min.js"></script>
-      
-      <!-- AdminLTE App -->
-      <script src="${pageContext.request.contextPath }/dist/js/adminlte.min.js"></script>
-      <script type="text/javascript">
-         $(function(){
-            //이력등록
-            $('#insert').click(function(){
-               if(eval('${!empty param.emp_code}')){
-                  var emp_code = '${param.emp_code}';
-                  var history_notice_agency = $('input[name=history_notice_agency]').val();
-                  var history_demand_agency = $('input[name=history_demand_agency]').val();
-                  var history_project_start = $('input[name=history_project_start]').val();
-                  var history_project_end = $('input[name=history_project_end]').val();
-                  var history_project_name = $('input[name=history_project_name]').val();
-                  var history_business = $('select[name=history_business]').val();
-                  var history_delete = $('input[name=history_delete]').val();
+    <!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/font-awesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/Ionicons/css/ionicons.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+		folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/dist/css/skins/_all-skins.min.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+	<!-- iCheck for checkboxes and radio inputs -->
+  	<link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/iCheck/all.css">
+	<!-- Bootstrap Color Picker -->
+  	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+	<!-- Bootstrap time Picker -->
+  	<link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/timepicker/bootstrap-timepicker.min.css">
+	
+	<!-- Daterange picker -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/dist/css/AdminLTE.min.css">
+	 <!-- Select2 -->
+  	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/select2/dist/css/select2.min.css">
+	  
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/fullcalendar/dist/fullcalendar.min.css">
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	
+	<!-- 부트스트랩 다이얼로그 -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+	
+	<!-- Google Font -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	
+	<!-- jQuery 3 -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="${pageContext.request.contextPath}/js/validation.js"></script>
+	<script src="${pageContext.request.contextPath}/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script src="${pageContext.request.contextPath}/bower_components/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+	  $.widget.bridge('uibutton', $.ui.button);
+	</script>
+	<!-- Bootstrap 3.3.7 -->
+	<script src="${pageContext.request.contextPath}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- Select2 -->
+	<script src="${pageContext.request.contextPath}/bower_components/select2/dist/js/select2.full.min.js"></script>
+	
+	<!-- Sparkline -->
+	<script src="${pageContext.request.contextPath}/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+	<!-- jvectormap -->
+	<script src="${pageContext.request.contextPath}/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="${pageContext.request.contextPath}/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	
+	<!-- InputMask -->
+	<script src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.js"></script>
+	<script src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+	<script src="${pageContext.request.contextPath}/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+	
+	<!-- daterangepicker -->
+	<script src="${pageContext.request.contextPath}/bower_components/moment/min/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- bootstrap color picker -->
+	<script src="${pageContext.request.contextPath}/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+	<!-- bootstrap time picker -->
+	<script src="${pageContext.request.contextPath}/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+	<!-- datepicker -->
+	<script src="${pageContext.request.contextPath}/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	
+	<!-- Bootstrap WYSIHTML5 -->
+<%-- 	<script src="${pageContext.request.contextPath}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script> --%>
+	
+	<!-- Slimscroll -->
+	<script src="${pageContext.request.contextPath}/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	
+	<!-- FastClick -->
+	<script src="${pageContext.request.contextPath}/bower_components/fastclick/lib/fastclick.js"></script>
+	
+	<!-- AdminLTE App -->
+	<script src="${pageContext.request.contextPath}/dist/js/adminlte.min.js"></script>
+	
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) 예시 보여주기용 || 실제로 쓸땐 없애야 됨-->
+	<%-- <script src="${pageContext.request.contextPath}/dist/js/pages/dashboard.js"></script> --%>
+	
+	<!-- AdminLTE for demo purposes -->
+	<script src="${pageContext.request.contextPath}/dist/js/demo.js"></script>
+	<!-- iCheck 1.0.1 -->
+	<script src="${pageContext.request.contextPath}/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/plugins/iCheck/minimal/_all.css"></script>
+	
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css"></script> -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+	<!-- 부트스트랩 다이얼로그 js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<!-- jQuery UI CSS파일  -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+	<!-- jQuery 기본 js파일 -->
+<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>   -->
+	<!-- jQuery UI 라이브러리 js파일 -->
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+    <script type="text/javascript">
+		$(function(){
+			boalert = function(mes) {
+				BootstrapDialog.show({
+					title : '알림',
+					message : mes
+				});
+			};
+    	  	//이력등록
+			$('#historyInsert').submit(function(){
+               	var emp_code =  $('input[name=emp_code]').val();
+               	var history_project_name = $('input[name=history_project_name]').val();
+               	var history_notice_agency = $('input[name=history_notice_agency]').val();
+               	var history_demand_agency = $('input[name=history_demand_agency]').val();
+               	var history_project_start = $('input[name=history_project_start]').val();
+                var history_project_end = $('input[name=history_project_end]').val();
+               	var history_business = $('select[name=history_business]').val();
+               	var history_delete = $('input[name=history_delete]').val();
                   
-                  var allData = { "emp_code" : emp_code , "history_notice_agency" : history_notice_agency , "history_demand_agency" : history_demand_agency,
-                        "history_project_start" : history_project_start, "history_project_end" : history_project_end, 
-                        "history_project_name" : history_project_name, "history_business" : history_business, "history_delete" : history_delete};
-                  if(history_project_name == ""||history_project_start == ""||history_project_end==""||history_notice_agency == "" || history_demand_agency== "" ||history_business==""){
-                        alert("누락된 정보가 있습니다. 다시 입력해주세요.");
-                        return false;
-                   }else{
-                  $.ajax({
-                     type : 'POST',
-                      url : '${pageContext.request.contextPath}/history/insertHistory.do',
-                      data : allData,
-                      dataType : 'json',
-                      success : function(json) {
-                        alert("이력이 등록되었습니다.");
-                     }
-                      ,
-                      error : function(json) {
-                        alert("이력등록이 완료되었습니다.");
-                     }
-                  });
-                  }
-               }
+                if(history_project_name == ''){
+                	boalert("프로젝트 명을 입력해주세요");
+                 	return false;
+                }
+                if(history_notice_agency == ''|| history_demand_agency == ''){
+                	boalert("해당 기관 명을 입력해주세요");
+                	return false;
+                }
+                if(history_project_start == '' || history_project_end == '' ){
+                	boalert("프로젝트 기간을 입력해주세요");
+                	return false;
+                }
+                boalert("이력등록이 완료되었습니다!!");
+               	return true;
+                 	
             });
+    	  	$('input[name=history_project_name]').focus();
          });
       </script>
       <style>
@@ -96,7 +169,8 @@
                <br/><br/>
             </div>
             <!-- /.box-header -->
-            <form id="historyInsert" method="POST">
+            <form id="historyInsert" method="POST" enctype="multipart/form-data"
+            action="${pageContext.request.contextPath }/history/insertHistory.do">
             <br/>
     			<div class="row">
                		<label class="col-sm-3 control-label">프로젝트 명</label>
@@ -107,18 +181,18 @@
     			<div class="row">
                		<label class="col-sm-3 control-label">공고기관</label>
                 	<div class="col-sm-7">
-                		<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
+                		<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em; border: solid;">
            			</div>                
            		</div>
     			<div class="row">
                		<label class="col-sm-3 control-label">수요기관</label>
                 	<div class="col-sm-7">
-                		<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
+                		<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em; border: solid;">
            			</div>                
            		</div>
     			<div class="row">
 					<div class="form-group">
-					    <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
+					    <label for="date" class="col-sm-3 control-label">프로젝트 기간</label>
 					    <div class="col-md-10" style="margin-left: 100px;">
 						    <table class="date_table">
 							   	<tr>
@@ -147,10 +221,11 @@
                 		</select>
            			</div> 
            			<input type="hidden" name="history_delete" class="form-control upForm" style="border-radius: 1em;" value="n">               
+           			<input type="hidden" name="emp_code" class="form-control upForm" style="border-radius: 1em;" value="${param.emp_code}">               
            		</div>
            		<br/>
    				<br/>
-           		<button id="insert" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">등록</button>
+           		<button type="submit" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">등록</button>
    			</form>
       	</div>
       </div>

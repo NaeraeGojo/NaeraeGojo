@@ -97,6 +97,12 @@ public class IBellServiceImpl implements IBellService {
 		return dao.issueDamdangList(params);
 	}
 
+	@Override
+	public String issueDamdangCnt(Map<String, String> params)
+			throws SQLException {
+		return dao.issueDamdangCnt(params);
+	}
+
 	
 
 	

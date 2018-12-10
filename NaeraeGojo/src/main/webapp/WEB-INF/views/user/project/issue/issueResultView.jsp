@@ -173,9 +173,10 @@ $(function(){
 
 						<div class="box-footer clearfix">
 							<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_damdang_code }">
 							<input value="결과 삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">결과 수정</button>
-							<input value="이슈 차트" id="issueChart" type="button" class="btn btn-sm btn-success btn-flat pull-right">
+							</c:if>
 						</div>
 					</form>
 				</div>

@@ -8,8 +8,9 @@
        <meta http-equiv="X-UA-Compatible" content="IE=edge">
        <meta name="viewport" content="width=device-width, initial-scale=1">
          <title>
-            이력관리
+         	이력관리 상세보기
          </title>
+      
     <!-- Bootstrap 3.3.7 -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<!-- Font Awesome -->
@@ -118,21 +119,21 @@
 <!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>   -->
 	<!-- jQuery UI 라이브러리 js파일 -->
 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+    <script type="text/javascript">
+    $(function(){
+    	//이력수정
+        $('#update').click(function(){
 
-      <script type="text/javascript">
-         $(function(){
-        	 $('#historyForm').click(function(){
-        		 var emp_code = '${param.emp_code}';
-        		 $(location).attr('href', '${pageContext.request.contextPath}/history/historyForm.do?emp_code='+emp_code);
-        	 });
-        	 
-        	//이력 View (수정/삭제 창)
-        	$('#projectTable tr:gt(0)').click(function(){
-        		var history_code = $(this).find('td:eq(0) input').val();
-        		$(location).attr('href', '${pageContext.request.contextPath}/history/historyView.do?history_code=' + history_code);
-        	});
-		});
-         
+        });
+          var emp_code = '${param.emp_code}';
+        $('input[name=history_notice_agency]').val('${historyInfo.history_notice_agency}');
+        $('input[name=history_demand_agency]').val('${historyInfo.history_demand_agency}');
+        $('input[name=history_project_start]').val('${historyInfo.history_project_start}');
+        $('input[name=history_project_end]').val('${historyInfo.history_project_end}');
+        $('input[name=history_project_name]').val('${historyInfo.history_project_name}');
+        $('select[name=history_business]').val('${historyInfo.history_business}');
+        $('input[name=history_delete]').val('${historyInfo.history_delete}');
+          
       </script>
       <style>
           
@@ -143,45 +144,69 @@
       <div class="row">
          <div class="box box-warning">
             <div class="box-header with-border">
-                 <h2 class="box-title"><b>이력관리 조회</b></h2>
+                 <h2 class="box-title"><b>이력수정</b></h2>
                <br/><br/>
-               </div>
-            <!-- /.box-header -->
-                <div class="box-body col-md-10">
-               <div class="table-responsive">   <!-- 테이블 기본 설정 (기본설정)-->
-                   <table class="table no-margin table-hover" id="projectTable">
-                        <thead>   
-                           <br/>
-                         <button style="border-radius: 1em; width: 100px; margin-right: 10px; height: " id="historyForm" class="form-control bg-yellow color-palette pull-right">+이력등록</button>
-                         <br/>            
-                         <tr>
-                             <th scope="col" width="10%">No.</th>
-                             <th scope="col" width="20%">프로젝트명</th>
-                             <th scope="col" width="15%">공고기관</th>
-                             <th scope="col" width="15%">수요기관</th>
-                             <th scope="col" width="25%">프로젝트기간</th>
-                             <th scope="col" width="15%">맡은업무</th>
-                     </tr>
-                  </thead>
-                     <tbody>
-                     <c:forEach items="${historyList}" var="list">
-                        <tr>
-                              <td><input type="hidden" value="${list.history_code}">${list.rnum }</td>
-                               <td>${list.history_project_name }</td>
-                               <td>${list.history_notice_agency }</td>
-                               <td>${list.history_demand_agency }</td>
-                               <td>${list.history_project_start }- ${list.history_project_end}</td>
-                               <td>${list.history_business }</td>
-                        </tr>
-                         </c:forEach>
-                  </tbody>
-               </table>
-                     <c:if test="${empty historyList }">
-                        등록된 이력이 존재하지 않습니다.
-                     </c:if>
             </div>
-         </div>
-      </div>
+            <!-- /.box-header -->
+            <form id="historyInsert" method="POST">
+            <br/>
+    			<div class="row">
+               		<label class="col-sm-3 control-label">프로젝트 명</label>
+                	<div class="col-sm-7">
+                		<input type="text" name="history_project_name" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em; border: solid;">
+           			</div>                
+           		</div>
+    			<div class="row">
+               		<label class="col-sm-3 control-label">공고기관</label>
+                	<div class="col-sm-7">
+                		<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
+           			</div>                
+           		</div>
+    			<div class="row">
+               		<label class="col-sm-3 control-label">수요기관</label>
+                	<div class="col-sm-7">
+                		<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
+           			</div>                
+           		</div>
+    			<div class="row">
+					<div class="form-group">
+					    <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
+					    <div class="col-md-10" style="margin-left: 100px;">
+						    <table class="date_table">
+							   	<tr>
+						        	<td>
+						           		<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
+						           	</td>
+						            <td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
+						            <td>
+						            	<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
+						            </td>
+						        </tr>
+						    </table>
+						</div> 
+					</div>
+				</div>
+    			<div class="row">
+               		<label class="col-sm-3 control-label">맡은업무</label>
+                	<div class="col-sm-4">
+                		<select class="form-control" name="history_business" style="border-radius: 1em;">
+                			<option value="PM">PM</option>
+                			<option value="PL">PL</option>
+                			<option value="TA">TA</option>
+                			<option value="DA">DA</option>
+                			<option value="AA">AA</option>
+                			<option value="UA">UA</option>
+                		</select>
+           			</div> 
+           			<input type="hidden" name="history_delete" class="form-control upForm" style="border-radius: 1em;" value="n">               
+           		</div>
+           		<br/>
+   				<br/>
+           		<button id="update" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">수정</button>
+           		<button id="list" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">목록</button>
+           		<button id="delete" style="border-radius: 1em; width: 100px; margin: 20px;" class="form-control btn-danger btn-flat pull-right">삭제</button>
+   			</form>
+      	</div>
       </div>
     </body>
 </html>
