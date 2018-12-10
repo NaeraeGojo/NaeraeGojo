@@ -135,7 +135,7 @@ $(function(){
 						<label for="inputEmail3" class="col-sm-2 control-label">작성자</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="작성자"
-							id="emp_code" name="emp_code" value="${pblancboardInfo.emp_code}">
+							id="emp_code" name="emp_code" value="${pblancboardInfo.emp_name}">
 						</div>
 					</div>
 
@@ -193,8 +193,10 @@ $(function(){
 
 					<div class="box-footer clearfix">
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
+						<c:if test="${LOGIN_EMPINFO.emp_code == pblancboardInfo.emp_code }">
 						<input value="수정" id="btn_upForm" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
 						<button type="submit" id="deleteBtn" class="btn btn-sm btn-danger btn-flat pull-right">삭제</button>
+						</c:if>						
 						<input id="btn_update" value="등록" type="submit" class="btn btn-sm btn-warning btn-flat pull-right"
 						type="submit" href="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" style="display:none;">
 					</div>

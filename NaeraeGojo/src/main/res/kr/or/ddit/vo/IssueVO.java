@@ -28,4 +28,5 @@ public class IssueVO {
 	private String rqpps_code;
 	private String emp_damdang;
 	private String emp_damdang_code;
+	private String emp_code_pm;
 }

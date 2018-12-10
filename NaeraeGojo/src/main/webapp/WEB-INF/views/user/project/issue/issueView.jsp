@@ -195,10 +195,13 @@ $(function(){
 
 						<div class="box-footer clearfix">
 							<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
-							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code }">
+							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code || LOGIN_EMPINFO.emp_code == issueInfo.emp_code_pm }">
 							<input value="삭제" id="deleteBtn" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button>
 							</c:if>
+<%-- 							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_code_pm }"> --%>
+<!-- 							<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">수정</button> -->
+<%-- 							</c:if> --%>
 							<c:if test="${LOGIN_EMPINFO.emp_code == issueInfo.emp_damdang_code }">
 							<button type="button" id="insertBtn" class="btn btn-sm btn-primary btn-flat pull-right">이슈 처리</button>
 							</c:if>

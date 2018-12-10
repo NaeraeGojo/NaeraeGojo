@@ -14,6 +14,7 @@
 		<result property="pblanc_board_budget" column="pblanc_board_budget"/>
 		<result property="pblanc_board_end_proposal" column="pblanc_board_end_proposal"/>
 		<result property="emp_code" column="emp_code"/>
+		<result property="emp_name" column="emp_name"/>
 		<result property="items" column="pblanc_board_code" select="allFile.allFilesPblanc" />
 	</resultMap>
 	
@@ -72,7 +73,7 @@
    	           ,A.PBLANC_BOARD_BUDGET
 			   ,TO_CHAR(PBLANC_BOARD_END_PROPOSAL, 'YYYY-MM-DD') AS PBLANC_BOARD_END_PROPOSAL
 			   ,A.PBLANC_BOARD_END_PROPOSAL
-               ,B.EMP_NAME AS EMP_CODE
+               ,B.EMP_CODE
                ,B.EMP_NAME
 		FROM PBLANC_BOARD A, EMP B
         WHERE A.EMP_CODE = B.EMP_CODE
