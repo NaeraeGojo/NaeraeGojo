@@ -17,4 +17,6 @@ public interface IChatJoinDao {
 	int joinCount(Map<String, String> params) throws Exception;
 
 	String invList(Map<String, String> params) throws Exception;
+
+	String lastNum(Map<String, String> params) throws Exception;
 }

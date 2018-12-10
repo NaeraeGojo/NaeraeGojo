@@ -42,4 +42,9 @@ public class IChatJoinDaoImpl implements IChatJoinDao{
 	public String invList(Map<String, String> params) throws Exception {
 		return (String) client.queryForObject("chatjoin.invList",params);
 	}
+
+	@Override
+	public String lastNum(Map<String, String> params) throws Exception {
+		return (String) client.queryForObject("chatjoin.lastNum",params);
+	}
 }

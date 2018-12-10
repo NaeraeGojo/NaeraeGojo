@@ -203,7 +203,7 @@
           				<li class="dropdown notifications-menu">
           					<a id="a_chat_emp" data-toggle="modal" data-target="#modal-chat">
               					<i class="fa  fa-comments"></i>
-              					<span class="label label-danger">N</span>
+<!--               					<span class="label label-danger">N</span> -->
            					</a>
 						</li>
           				<li class="dropdown notifications-menu">
@@ -407,6 +407,43 @@ $(function(){
 		});
 	};
 
+	var lastNum = '';
+	
+	var timer = setInterval(function() {
+		var emp_code = '${LOGIN_EMPINFO.emp_code}'; 
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/chat/lastNum.do'
+			, type : 'post'
+			, data : {chatjoin_emp : emp_code}
+			, dataType : 'json'
+			, error : function(xhr, status, error){
+				boalert(error);
+			}
+			,success: function(json){
+				var ln = json.lastNum;
+				
+				// 가지고온 lastNum이 원래 가지고있던 lastNum과 다른경우
+				// 알림이 있어야한다.
+				if(lastNum != ln){
+					var atag = $('#a_chat_emp')
+					var leng = atag.find('span').length;
+					
+					if(leng == 0){
+						var ntag = '<span class="label label-danger">N</span>'
+						atag.append(ntag);
+					}
+					
+					boalert("새로운 채팅 초대가 있땅!");
+					lastNum = ln;
+				}
+			}
+		});
+		
+		//일단 테스트용이라서 처음 한번만 실행되도록
+		clearInterval(timer);
+	}, 10000);
+
+	
 	
 	$('#btn_show_emp').click(function(){
 		$('.container_chat_emp').animate({
@@ -460,7 +497,7 @@ $(function(){
 		var url = "${pageContext.request.contextPath}/user/chat/chatRoom.do";
 		var query = "?chatroom_code="+chatroom_code;
 		
-		var options = "width = 500, height = 450, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
+		var options = "width = 500, height = 600, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 	
 		window.open(url+query, "대화창"+query, options);
 		
@@ -468,6 +505,8 @@ $(function(){
 	
 	// 채팅버튼 눌렀을때
 	$('#a_chat_emp').click(function(){
+		$('#a_chat_emp span').remove();
+		
 		ea= new Array();
 		
 		// 여기서 일단 uncheck
@@ -486,7 +525,7 @@ $(function(){
 		var url = '${pageContext.request.contextPath}/user/chat/chatRoom.do';
 		var query = '?chatroom_code=' + chatroom_code;
 		
-		var options = "width = 500, height = 500, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
+		var options = "width = 500, height = 600, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 		
 		$('#modal-chat').modal('hide');
 		

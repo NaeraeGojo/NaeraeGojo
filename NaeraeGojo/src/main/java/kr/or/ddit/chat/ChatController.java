@@ -45,7 +45,24 @@ public class ChatController {
 		return model;
 	}
 	
-
+	@RequestMapping("lastNum")
+	public ModelAndView lastNum(ModelAndView mav
+								, Map<String, String> params
+								, String chatjoin_emp)throws Exception{
+		
+		params.put("chatjoin_emp", chatjoin_emp);
+		String lastNum = cjservice.lastNum(params);
+		
+		if(lastNum==null){
+			lastNum = "";
+		}
+		
+		// 삭제되지 않았고, 내가 참여하고있지 않은 chatjoin의 마지막 코드번호를 가지고온다.
+		mav.addObject("lastNum",lastNum);
+		mav.setViewName("jsonConvertView");
+		return mav;
+	}
+	
 	@RequestMapping("partList")
 	public ModelAndView partList(String chatjoin_chatroom
 								, ModelAndView mav

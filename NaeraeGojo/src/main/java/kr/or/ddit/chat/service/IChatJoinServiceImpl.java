@@ -44,5 +44,10 @@ public class IChatJoinServiceImpl implements IChatJoinService{
 	public String invList(Map<String, String> params) throws Exception {
 		return dao.invList(params);
 	}
+
+	@Override
+	public String lastNum(Map<String, String> params) throws Exception {
+		return dao.lastNum(params);
+	}
 	
 }

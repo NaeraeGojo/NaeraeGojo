@@ -18,5 +18,7 @@ public interface IChatJoinService {
 
 	String invList(Map<String, String> params) throws Exception;
 
+	String lastNum(Map<String, String> params) throws Exception;
+
 
 }

@@ -75,6 +75,16 @@
 		        group by chatjoin_chatroom
 	</select>
 
+	 <select id="lastNum" parameterClass="map" resultClass="string">
+	 	select max(chatjoin_code)
+	        from chatjoin , chatroom
+	        where chatjoin_emp = #chatjoin_emp#
+	        and chatjoin_join = 'n'
+	        and chatjoin_delete = 'n'
+	        and chatjoin_chatroom = chatroom_code
+	        and chatroom_open = 'y'
+	 </select>
+
 </sqlMap>
 
 
