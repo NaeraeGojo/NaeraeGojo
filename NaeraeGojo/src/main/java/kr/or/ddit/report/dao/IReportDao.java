@@ -10,6 +10,7 @@ import kr.or.ddit.vo.ReportVO;
 
 public interface IReportDao {
 	public String insertReport(ReportVO rvo) throws SQLException;
+	public String insertReportSave(ReportVO rvo) throws SQLException;
 	public String insertReportPL(ReportVO rvo) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;

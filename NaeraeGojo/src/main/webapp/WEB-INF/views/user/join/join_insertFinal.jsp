@@ -103,7 +103,6 @@ label {
                     <input value="등록" name="특급" id="vaseSpec" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
                     </th>
                     <th scope="col" width="10%">
-                    <input value="수정" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-info btn-flat pull-right">
                     </th>
                   </tr>
                   
@@ -115,7 +114,6 @@ label {
 <!--                     <button value="고급" onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
-                    <input value="수정" type="button" style="width : 150px; height : 50px;" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
                     </th>
                   </tr>
                   
@@ -127,7 +125,6 @@ label {
 <!--                     <button value="중급"  onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
-                    <input value="수정" type="button" style="width : 150px; height : 50px;" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
                     <input type="hidden" value="" id="bb">
                     <input type="hidden" id="return">
 <!--                     <input type="hidden" value="" id="bc"> -->
@@ -142,7 +139,6 @@ label {
 <!--                     <button value="초급" onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
-                    <input value="수정" type="button" style="width : 150px; height : 50px;" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">
                     </th>
                   </tr>
                   
@@ -357,6 +353,9 @@ $(function () {
 					}
 					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' ){
 						$('#lastCheck').attr("disabled", false);
+						$('#lastCheck').click(function(){
+							$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
+						});
 					}
 					
 					

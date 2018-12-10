@@ -100,6 +100,8 @@ select{
 							</c:if>
 			                    <option  value="PL">PL</option>
 				            </select></td>
+				            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td>
+<%-- 				            <td><input type="hidden" value="${ list.join_code}" name="join_code" /></td> --%>
 	                    </c:if>
 	                    <c:if test="${list.emp_level  eq '중급' || list.emp_level  eq '고급'}">
 	                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
@@ -116,6 +118,7 @@ select{
 		                    <option  value="UA">UA</option>
 		                    <option  value="AA">AA</option>
 			            </select></td>
+			            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td>
 	                    </c:if>
 	                    <c:if test="${list.emp_level  eq '초급' }">
 	                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
@@ -130,6 +133,7 @@ select{
 		                    <option  value="UA">UA</option>
 		                    <option  value="AA">AA</option>
 			            </select></td>
+			            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td>
 	                    </c:if>
 	                 </tr>
 	                </c:forEach>
@@ -244,6 +248,31 @@ $(function(){
 		                }
 		    });
 		});
+		
+		$('#delete').click(function(){
+	    	var  join_code = $('input[name=join_code]').val();
+	    	var rqpps_code = $('input[name=rqpps_code]').val();
+	    	$.ajax({
+	            
+	            type : "POST"
+	                , url : "${pageContext.request.contextPath}/user/join/deleteAddList.do"
+	                , dataType : "json"
+	                , data: { join_code:join_code,
+	                		  rqpps_code:rqpps_code}
+	                		
+	                , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+	                , error : function(request, status, error) {
+	                    boalert("error : " + request.status );
+	                }
+	                , success : function(list) {
+	                	alert("삭제되었습니다.");
+// 	                	$(this).parent().parent().remove();
+	                	$(location).attr('href','${pageContext.request.contextPath}/user/join/join_view.do?rqpps_code='+rqpps_code);
+	                	
+	                }
+	    });
+// 	    	$(location).attr('href','${pageContext.request.contextPath}/user/join/deleteAddList/'+join_code+'.do');
+	    });
 	});
 
 

@@ -13,6 +13,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import kr.or.ddit.vo.IssueVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectWorkVO;
+import kr.or.ddit.vo.RqppsVO;
 
 @Repository
 public class IIssueDaoImpl implements IIssueDao {
@@ -75,4 +76,5 @@ public class IIssueDaoImpl implements IIssueDao {
 	public int totalCountIssueResult(Map<String, String> params) throws SQLException {
 		return (int) client.queryForObject("issue.totalCountIssueResult", params);
 	}
+
 }

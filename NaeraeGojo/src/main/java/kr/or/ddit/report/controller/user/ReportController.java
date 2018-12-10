@@ -332,6 +332,24 @@ public class ReportController {
 		
 		return "redirect:/user/report/report_listDev.do";
 	}
+	//임시저장
+	@RequestMapping("report_FinalInsertSave")
+	public String report_FinalInsertSave(
+			ReportVO rvo,
+			HttpSession session,
+			Map<String, String> params,
+			@RequestParam("files") MultipartFile[] files) throws SQLException{
+		
+		String[] fullEmpCode = rvo.getEmp_code().split(",");
+		rvo.setEmp_code_pm(fullEmpCode[0]);
+		rvo.setEmp_code_pl(fullEmpCode[1]);
+		String emp_code = null;
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		rvo.setEmp_code(emp_code);
+		service.insertReportSave(rvo, files);
+		
+		return "redirect:/user/report/report_listDev.do";
+	}
 	//프로젝트코드를 받아서 관련업무를 뽑아옴
 	@RequestMapping("report_pw_people")
 	public ModelAndView report_pw_people(
@@ -390,16 +408,6 @@ public class ReportController {
 			ReportVO vo,
 			@PathVariable String report_code, Map<String, String> params ,Map<String, String> params1
 			)throws Exception{
-//		params.put("report_code", report_code);
-//		vo = service.reportView(params);
-//		String project_code = vo.getProject_code();
-//		params1.put("project_code", project_code);
-//		List<ReportVO> stList = service.reportStatus(params1);
-////		vo = service.noticeAllInfo(params);
-////		service.updateHit(params);
-//		andView.addObject("vo",vo);
-//		andView.addObject("stList",stList);
-//		andView.setViewName("user/report/report_sendDeleteDev");
 		
 		params.put("report_code", report_code);
 		vo = service.reportView(params);

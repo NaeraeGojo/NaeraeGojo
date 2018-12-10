@@ -23,7 +23,7 @@ $(function(){
 	
 	$('.infoBtn').click(function(){
 		scheduler_code = $(this).parent().parent().find('td:eq(0) input').val();
-
+		var emp_code = ${LOGIN_EMPINFO.emp_code}
 		$.ajax({
             type : 'post',
             url : '${pageContext.request.contextPath}/user/scheduler/schedulerInfo.do',
@@ -41,11 +41,16 @@ $(function(){
             	$('#info input[name=scheduler_time]').val(json.schedulerInfo.scheduler_time);
             	$('#info textarea[name=scheduler_explain]').text(json.schedulerInfo.scheduler_explain);
             	
-//             	var data = "";
-//             	data += '<button id="updateBtn" type="button" class="btn btn-warning btn_update">수정</button>'
-//             	data += '<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>'
-// 	            $('#dddd').append();
-            	            	
+            	var data = "";
+	            if(json.schedulerInfo.scheduler_writer == emp_code){
+	            	data +=	'<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>'
+	            	data += '<button id="updateBtn" type="button" class="btn btn-warning btn_update">수정</button>'
+	            	data += '<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>'
+	            	$('#btnForm').empty().append(data);
+	            } else {
+	            	data +=	'<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>'
+		           	$('#btnForm').empty().append(data);
+	            }
             }
         });
 	});
@@ -318,10 +323,10 @@ $(function(){
 						</td>
 					</tr>
 				</div>
-				<div class="modal-footer" id="dddd">
+				<div class="modal-footer" id="btnForm">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
-					<button id="updateBtn"type="button" class="btn btn-warning btn_update">수정</button>
-					<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button>
+<!-- 					<button id="updateBtn"type="button" class="btn btn-warning btn_update">수정</button> -->
+<!-- 					<button id="deleteBtn" type="button" class="btn btn-danger">삭제</button> -->
 				</div>
 			</form>
 			

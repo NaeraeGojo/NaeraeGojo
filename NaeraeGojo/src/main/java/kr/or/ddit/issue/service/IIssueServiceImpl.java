@@ -13,6 +13,7 @@ import kr.or.ddit.issue.dao.IIssueDao;
 import kr.or.ddit.vo.IssueVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.ProjectWorkVO;
+import kr.or.ddit.vo.RqppsVO;
 
 @Service
 public class IIssueServiceImpl implements IIssueService{
@@ -98,7 +99,5 @@ public class IIssueServiceImpl implements IIssueService{
 		}
 		return totalCount;
 	}
-
-
 
 }
