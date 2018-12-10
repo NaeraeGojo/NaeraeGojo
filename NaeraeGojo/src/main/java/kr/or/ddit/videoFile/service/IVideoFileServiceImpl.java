@@ -43,4 +43,16 @@ public class IVideoFileServiceImpl implements IVideoFileService{
 		return dao.getVideoFile(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public void updateMeetingFile(MultipartFile files,
+			String video_chat_room_code) throws SQLException {
+		VideoFileVO vhfile = fileMapper.mapping2(files, video_chat_room_code);
+		
+		String filesCode = dao.getfileCode(video_chat_room_code);
+		vhfile.setVideo_file_code(filesCode);
+		dao.updateVideoChatFile(vhfile);
+		
+	}
+
 }
