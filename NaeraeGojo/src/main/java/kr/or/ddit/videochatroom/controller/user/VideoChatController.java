@@ -208,6 +208,7 @@ public class VideoChatController {
 		ProjectVO projectInfo = service.getProjectNM(video_chat_room_code);
 		
 		params.put("video_chat_room_code", video_chat_room_code);
+		
 		List<ProjectWorkClassVO> pwcList = service.getPwcList(params);
 		
 		
@@ -258,6 +259,7 @@ public class VideoChatController {
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
+	
 	@RequestMapping("pwAdd")
 	public ModelAndView pwAdd(ModelAndView andView, Map<String, String> params, String pw_code, HttpSession session,
 			String pwc_code, ChatPwVO cpv) throws Exception{
@@ -277,17 +279,17 @@ public class VideoChatController {
 		return andView;
 	}
 	 
-	@RequestMapping("getNewpwList")
-	public ModelAndView getNewpwList(ModelAndView andView, Map<String, String> params, String pw_code, HttpSession session,
-			String pwc_code, ChatPwVO cpv) throws Exception{
-		
-		
-		List<ChatPwVO> chatPwList = service.getchatPwLsit();
-		
-		andView.addObject("chatPwList",chatPwList);
-		andView.setViewName("jsonConvertView");
-		return andView;
-	}
+//	@RequestMapping("getNewpwList")
+//	public ModelAndView getNewpwList(ModelAndView andView, Map<String, String> params, String pw_code, HttpSession session,
+//			String pwc_code, ChatPwVO cpv) throws Exception{
+//		
+//		
+//		List<ChatPwVO> chatPwList = service.getchatPwLsit();
+//		
+//		andView.addObject("chatPwList",chatPwList);
+//		andView.setViewName("jsonConvertView");
+//		return andView;
+//	}
 	
 	
 }

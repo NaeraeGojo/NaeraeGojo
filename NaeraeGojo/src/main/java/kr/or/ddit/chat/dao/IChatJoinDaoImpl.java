@@ -21,4 +21,14 @@ public class IChatJoinDaoImpl implements IChatJoinDao{
 			client.insert("chatjoin.insertChatJoin",cjv);
 		}
 	}
+
+	@Override
+	public void joinRoom(ChatJoinVO cjv) throws Exception {
+		client.update("chatjoin.joinRoom",cjv);
+	}
+
+	@Override
+	public void deleteRoom(ChatJoinVO cjv) throws Exception {
+		client.update("chatjoin.deleteRoom",cjv);
+	}
 }

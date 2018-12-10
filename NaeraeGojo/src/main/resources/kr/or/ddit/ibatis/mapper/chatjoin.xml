@@ -20,9 +20,6 @@
 						, chatjoin_chatroom
 						, chatjoin_emp
 						<dynamic>
-							<isNotEmpty property="chatjoin_check">
-							, chatjoin_check
-							</isNotEmpty>
 							<isNotEmpty property="chatjoin_join">
 							, chatjoin_join
 							</isNotEmpty>
@@ -34,9 +31,6 @@
 						, #chatjoin_chatroom#
 						, #chatjoin_emp#
 						<dynamic>
-							<isNotEmpty property="chatjoin_check">
-							, #chatjoin_check#
-							</isNotEmpty>
 							<isNotEmpty property="chatjoin_join">
 							, #chatjoin_join#
 							</isNotEmpty>
@@ -44,6 +38,22 @@
 					)
 	</insert>
 	
+
+	<update id="joinRoom" parameterClass="chatjoinVO">
+		update chatjoin
+			set chatjoin_join = 'y'
+			where chatjoin_chatroom = #chatjoin_chatroom#
+					and chatjoin_emp = #chatjoin_emp#
+	</update>
+
+
+	<update id="deleteRoom" parameterClass="chatjoinVO">
+		update chatjoin
+			set chatjoin_join = 'n'
+				, chatjoin_delete ='y'
+			where chatjoin_chatroom = #chatjoin_chatroom#
+					and chatjoin_emp = #chatjoin_emp#
+	</update>
 
 </sqlMap>
 

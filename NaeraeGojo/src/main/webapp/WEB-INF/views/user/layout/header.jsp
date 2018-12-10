@@ -407,7 +407,6 @@ $(function(){
 		});
 	};
 
-	var table;
 	
 	$('#btn_show_emp').click(function(){
 		$('.container_chat_emp').animate({
@@ -421,15 +420,12 @@ $(function(){
     	 }, 500);
 	});
 	
+	// 체크된 emp가 저장될 배열
+	var ea = new Array();
+	
 	// emp체크 하고 시작 누르는 부분
 	$('#btn_check_emp').click(function(){
-		var ea = new Array();
-		$('input[name=check_emp]:checked').each(function(){
-			var test = $(this).val();
-			ea.push(test);
-			
-			$(this).iCheck('uncheck');
-		});
+		
 		
 		var ealen = ea.length;
 
@@ -470,23 +466,14 @@ $(function(){
 		
 	});
 	
-	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-		checkboxClass: 'icheckbox_flat-green',
-	  	radioClass   : 'iradio_flat-green'
-	})
-	
-	$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-	  	checkboxClass: 'icheckbox_minimal-red',
-	  	radioClass   : 'iradio_minimal-red'
-	})
-	
-	
+	// 채팅버튼 눌렀을때
 	$('#a_chat_emp').click(function(){
 		
 		getChatList();
 		
 	});
 	
+	// 채팅방 참여 눌렀을 때
 	$(document).delegate('.btn_join_chat','click',function(){
 		var chatroom_code = $(this).attr('code');
 		
@@ -526,7 +513,7 @@ $(function(){
 				$('#table_chat_list tbody tr').remove();
 	        	$('#table_chat_list tbody').append(tdtag);
 	        	
-	        	var table = $('#table_chat_list').DataTable();
+	        	var table_chat = $('#table_chat_list').DataTable();
 	        	
 			}
 		});
@@ -551,26 +538,48 @@ $(function(){
 	        		tdtag += '<td>' + v.emp_name + '</td>' 
 	        		tdtag += '</tr>'
 	        	})
-	        	$('#table_chat_emp tbody').clear();
+	        	$('#table_chat_emp tbody tr').remove();
 	        	$('#table_chat_emp tbody').append(tdtag);
 	        	
-	        	table = $('#table_chat_emp').DataTable();
+	        	var table_emp = $('#table_chat_emp').DataTable();
 	        	
-	        	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-	        		checkboxClass: 'icheckbox_flat-green',
-	        	  	radioClass   : 'iradio_flat-green'
-	        	})
-				
-				table.on( 'draw', function () {
-					$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+				table_emp.on('draw', function () {
+					$('input[name=check_emp].flat-red, input[type="radio"].flat-red').iCheck({
 		        		checkboxClass: 'icheckbox_flat-green',
 		        	  	radioClass   : 'iradio_flat-green'
 		        	})
+		        	
+		        	$('input[name=check_emp]').on('ifChecked',function(event){
+		        		var emp_code = $(this).val();
+		        		ea.push(emp_code);
+					});
+
+					$('input[name=check_emp]').on('ifUnchecked',function(event){
+		        		var emp_code = $(this).val();
+		        		ea.splice(emp_code, 1);
+		        		
+					});
 				} );
+				
+				$('input[name=check_emp].flat-red, input[type="radio"].flat-red').iCheck({
+					checkboxClass: 'icheckbox_flat-green',
+				  	radioClass   : 'iradio_flat-green'
+				})
+
+				$('input[name=check_emp]').on('ifUnchecked',function(event){
+					var emp_code = $(this).val();
+					ea.splice(emp_code, 1);
+					
+					
+				});
+				
 	        	
 			}
 		})
 	}
+	getEmpList();
+	
+	
 	
 });
 

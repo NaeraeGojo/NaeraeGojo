@@ -177,12 +177,42 @@ var ws;
 
 var today = new Date();
 $(function(){
+	boalert = function(mes){
+		BootstrapDialog.show({
+	 	    title: '알림',
+	 	    message: mes
+		});
+	};
+	
+	$(window).on("beforeunload", function() { 
+		closeConnection();
+	})
+	
 	// WebSocket EndPoint 접속 , 얘가 성공하면 onOpen 이벤트 발생
 // 	ws = new WebSocket("ws://192.168.204.154/SpringToddler/wschat");
 	ws = new WebSocket("ws://localhost/ng/wschat");
 	
 	ws.onopen = function(){
-// 		alert("WebSocket EndPoint에 정상적으로 접속되어ㄸ");
+		var emp_code = '${LOGIN_EMPINFO.emp_code}';
+		var chatroom_code = '${param.chatroom_code}';
+		// 여기서 emp_code, chatroom_code 들고가서 chatjoin_join ='y' 로 업데이트
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/chat/joinRoom.do'
+			, data : { chatjoin_emp : emp_code
+						, chatjoin_chatroom :chatroom_code}
+			, type : 'post'
+			, dataType : 'json'
+			, async : false
+			, error : function(xhr,status, error){
+				boalert(error);
+			}
+			, success : function(json){
+				
+			}
+		});
+		
+		
+		
 	};
 	
 	ws.onmessage = function(message){
@@ -256,6 +286,28 @@ function postToServer(){
 }
 
 function closeConnection(){
+	// 여기서 chatjoin 에 emp_code, chatroom_code 들고감
+	// chatjoin_delete ='y'로 업데이트
+	// chatjoin_join = 'n'로 업데이트
+	
+	var emp_code = '${LOGIN_EMPINFO.emp_code}';
+	var chatroom_code = '${param.chatroom_code}';
+	$.ajax({
+		url : '${pageContext.request.contextPath}/user/chat/deleteRoom.do'
+		, data : { chatjoin_emp : emp_code
+					, chatjoin_chatroom :chatroom_code}
+		, type : 'post'
+		, dataType : 'json'
+		, async : false
+		, error : function(xhr,status, error){
+			boalert(error);
+		}
+		, success : function(json){
+			
+		}
+	});
+	
+	
 	// onclose 이벤트 전파
 	ws.close();
 }
@@ -295,59 +347,6 @@ function closeConnection(){
 			<div class="direct-chat-messages" id="div_chat">
 			
 			
-				<!-- Message. Default to the left -->
-				<div class="direct-chat-msg">
-					<div class="direct-chat-info clearfix">
-						<span class="direct-chat-name pull-left">Alexander Pierce</span>
-						<span class="direct-chat-timestamp pull-right">23 Jan 2:00
-							pm</span>
-					</div>
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg"
-						alt="alt">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">Is this template really for
-						free? That's unbelievable!</div>
-					<!-- /.direct-chat-text -->
-				</div>
-				<!-- /.direct-chat-msg -->
-
-
-				<!-- Message to the right -->
-				<div class="direct-chat-msg right">
-					<div class="direct-chat-info clearfix">
-						<span class="direct-chat-name pull-right">Sarah Bullock</span> <span
-							class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-					</div>
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img" src="../dist/img/user3-128x128.jpg"
-						alt="alt">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">You better believe it!</div>
-					<!-- /.direct-chat-text -->
-				</div>
-				<!-- /.direct-chat-msg -->
-				
-				<!-- Message. Default to the left -->
-				<div class="direct-chat-msg">
-					<div class="direct-chat-info clearfix">
-						<span class="direct-chat-name pull-left">Alexander Pierce</span>
-						<span class="direct-chat-timestamp pull-right">23 Jan 2:00
-							pm</span>
-					</div>
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg"
-						alt="Message User Image">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">Is this template really for
-						free? That's unbelievable!</div>
-					<!-- /.direct-chat-text -->
-				</div>
-				<!-- /.direct-chat-msg -->
-			
-				<div class="direct-chat-msg">
-					<div class="direct-chat-text">test</div>
-				</div>
 			
 			
 			</div>
@@ -376,7 +375,6 @@ function closeConnection(){
 		</div>
 		<!-- /.box-body -->
 		<div class="box-footer">
-			<form method="post">
 				<div class="input-group">
 					<input type="text" id="msg" name="msg" placeholder="Type Message ..."
 						class="form-control"> <span class="input-group-btn">
@@ -384,7 +382,6 @@ function closeConnection(){
 						class="btn btn-success btn-flat" value="전송">
 					</span>
 				</div>
-			</form>
 		</div>
 		<!-- /.box-footer-->
 	</div>

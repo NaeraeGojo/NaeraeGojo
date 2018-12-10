@@ -51,7 +51,6 @@ public class ChatController {
 		ChatJoinVO cjv = new ChatJoinVO();
 		cjv.setChatjoin_chatroom(chatroom_code);
 		cjv.setChatjoin_emp(crv.getChatroom_writer());
-		cjv.setChatjoin_check("y");
 		cjv.setChatjoin_join("y");
 		
 		// chatjoinVO가 담긴 리스트에 개설자를 추가
@@ -81,6 +80,25 @@ public class ChatController {
 		List<ChatRoomVO> crl = crservice.getChatList(params);
 		
 		mav.addObject("crl", crl);
+		mav.setViewName("jsonConvertView");
+		return mav;
+	}
+	
+	@RequestMapping("joinRoom")
+	public ModelAndView joinRoom(ModelAndView mav
+								, ChatJoinVO cjv) throws Exception{
+		cjservice.joinRoom(cjv);
+		
+		mav.setViewName("jsonConvertView");
+		return mav;
+	}
+	
+	@RequestMapping("deleteRoom")
+	public ModelAndView deleteRoom(ModelAndView mav
+			, ChatJoinVO cjv) throws Exception{
+		cjservice.deleteRoom(cjv);
+		
+		
 		mav.setViewName("jsonConvertView");
 		return mav;
 	}

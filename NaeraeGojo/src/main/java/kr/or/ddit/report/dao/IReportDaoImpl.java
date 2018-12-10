@@ -165,4 +165,29 @@ public class IReportDaoImpl implements IReportDao{
 		return (ReportVO) client.queryForObject("report.feedViewDev",params);
 	}
 
+	@Override
+	public void deleteReportPLRec(Map<String, String> params)
+			throws SQLException {
+		client.update("report.deleteReportPLRec",params);
+		
+	}
+
+	@Override
+	public void deleteReportPLSend(Map<String, String> params)
+			throws SQLException {
+		client.update("report.deleteReportPLSend",params);
+	}
+
+	@Override
+	public void deleteReportPMRec(Map<String, String> params)
+			throws SQLException {
+		client.update("report.deleteReportPMRec",params);
+	}
+
+	@Override
+	public void deleteReportDEVSend(Map<String, String> params)
+			throws SQLException {
+		client.update("report.deleteReportDEVSend",params);
+	}
+
 }
