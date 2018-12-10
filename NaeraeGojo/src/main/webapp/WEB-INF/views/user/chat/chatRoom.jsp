@@ -321,23 +321,43 @@ function closeConnection(){
 	<div class="box box-success direct-chat direct-chat-success">
 		<div class="box-header with-border">
 			<h3 class="box-title">Direct Chat</h3>
-
-			<div class="box-tools pull-right">
-				<span data-toggle="tooltip" title="3 New Messages"
-					class="badge bg-green">3</span>
-				<button type="button" class="btn btn-box-tool"
-					data-widget="collapse">
-					<i class="fa fa-minus"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool"
-					data-toggle="tooltip" title="Contacts"
-					data-widget="chat-pane-toggle">
-					<i class="fa fa-comments"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove">
-					<i class="fa fa-times"></i>
-				</button>
+			<div>
+				<table>
+					<tr>
+						<td>초대 목록</td>
+					</tr>
+					<tr>
+						<td>[누구눅누군구]</td>
+					</tr>
+					<tr>
+						<td>현재 참여 목록</td>
+					</tr>
+					<tr>
+						<td>[누구, 누구, 누구눅,ㄴㅇㅁ]</td>
+					</tr>
+				
+				</table>
 			</div>
+			
+				
+
+
+<!-- 			<div class="box-tools pull-right"> -->
+<!-- 				<span data-toggle="tooltip" title="3 New Messages" -->
+<!-- 					class="badge bg-green">3</span> -->
+<!-- 				<button type="button" class="btn btn-box-tool" -->
+<!-- 					data-widget="collapse"> -->
+<!-- 					<i class="fa fa-minus"></i> -->
+<!-- 				</button> -->
+<!-- 				<button type="button" class="btn btn-box-tool" -->
+<!-- 					data-toggle="tooltip" title="Contacts" -->
+<!-- 					data-widget="chat-pane-toggle"> -->
+<!-- 					<i class="fa fa-comments"></i> -->
+<!-- 				</button> -->
+<!-- 				<button type="button" class="btn btn-box-tool" data-widget="remove"> -->
+<!-- 					<i class="fa fa-times"></i> -->
+<!-- 				</button> -->
+<!-- 			</div> -->
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
