@@ -35,6 +35,20 @@
         where video_file_code = #video_file_code#
     </select>
     
+    <select id="getfileCode" parameterClass="string" resultClass="string">
+    	select video_file_code
+    	from video_file
+    	where video_chat_room_code = #video_chat_room_code#
+    </select>
+    
+    <update id="updateVideoChatFile" parameterClass="videoFileVO">
+    	update video_file
+        set video_file_name = #video_file_name#
+			, video_file_save_name = #video_file_save_name#
+			, video_file_volume = #video_file_volume#
+		where video_file_code = #video_file_code#
+    </update>
+    
 </sqlMap>
 
 

@@ -31,6 +31,12 @@ $(function(){
 	    	var video_chat_room_code =  $('input[name=video_chat_room_code]').val();
 	    	$(location).attr('href', '${pageContext.request.contextPath}/user/video/deleteVideoChat/'+video_chat_room_code+'.do');
 		});
+	    
+		
+		$('#filebtn').click(function(){
+			$('#filediv').empty();
+			$('#filediv').append('<input type="file" name="files">');
+		});	    
 	
 });
 
@@ -68,7 +74,7 @@ label {
     <section class="content">
     <br/><br/>
      <form class="form-horizontal"   action="${pageContext.request.contextPath}/user/video/videochatUpdate.do" 
-                            method="post"> 
+                            method="post" enctype="multipart/form-data" > 
       <div class="row" >
       <div class="col-md-12">
   		<!-- TABLE: LATEST ORDERS -->
@@ -150,7 +156,7 @@ label {
 	                    <c:forEach items="${chatInfo[0].items}" var="videoFileInfo">
 	                      <a id="${videoFileInfo.video_file_name}" href="${pageContext.request.contextPath }/user/videoFile/videochatFileDown.do?video_file_code=${videoFileInfo.video_file_code}">${videoFileInfo.video_file_name}</a>
 	                    </c:forEach>
-	                      <input type="button" value="파일수정" id="filebtn">
+	                      <input type="button" name="files" value="파일수정" id="filebtn">
 	                 </div>
                   
                  </div>

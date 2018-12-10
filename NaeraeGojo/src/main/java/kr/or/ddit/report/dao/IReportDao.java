@@ -12,6 +12,7 @@ public interface IReportDao {
 	public String insertReport(ReportVO rvo) throws SQLException;
 	public String insertReportSave(ReportVO rvo) throws SQLException;
 	public String insertReportPL(ReportVO rvo) throws SQLException;
+	public String insertReportPLSave(ReportVO rvo) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;
 	public List<ReportVO> getReportList(Map<String, String> params) throws SQLException;
@@ -60,5 +61,8 @@ public interface IReportDao {
 	public void deleteReportPLSend(Map<String,String> params) throws SQLException;
 	public void deleteReportPMRec(Map<String,String> params) throws SQLException;
 	public void deleteReportDEVSend(Map<String,String> params) throws SQLException;
+	
+	public void saveDEV(Map<String,String> params) throws SQLException;
+	public void savePL(Map<String,String> params) throws SQLException;
 	
 }

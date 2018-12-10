@@ -14,6 +14,7 @@ public interface IReportService {
 	public void insertReport(ReportVO rvo, MultipartFile[] files) throws SQLException;
 	public void insertReportSave(ReportVO rvo, MultipartFile[] files) throws SQLException;
 	public void insertReportPL(ReportVO rvo, MultipartFile[] files) throws SQLException;
+	public void insertReportPLSave(ReportVO rvo, MultipartFile[] files) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;
 	public List<ReportVO> getReportList(Map<String, String> params) throws SQLException;
@@ -64,4 +65,7 @@ public interface IReportService {
 	public void deleteReportPLSend(Map<String,String> params) throws SQLException;
 	public void deleteReportPMRec(Map<String,String> params) throws SQLException;
 	public void deleteReportDEVSend(Map<String,String> params) throws SQLException;
+	
+	public void saveDEV(Map<String,String> params) throws SQLException;
+	public void savePL(Map<String,String> params) throws SQLException;
 }

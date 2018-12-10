@@ -107,8 +107,12 @@ public class VideoChatController {
 		
 		String video_chat_room_code = vcv.getVideo_chat_room_code();
 		
-		if(!files.isEmpty()){
+		if(files==null){
 			Fileservice.insertChatFile(video_chat_room_code, files);
+		}
+		
+		if (files != null) {
+			Fileservice.updateMeetingFile(files, video_chat_room_code);
 		}
 		
 		return "redirect:/user/video/chatList.do";
