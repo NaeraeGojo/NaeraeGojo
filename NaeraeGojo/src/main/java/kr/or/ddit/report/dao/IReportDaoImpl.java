@@ -195,4 +195,20 @@ public class IReportDaoImpl implements IReportDao{
 		return (String) client.insert("report.insertReportSave",rvo);
 	}
 
+	@Override
+	public void saveDEV(Map<String, String> params) throws SQLException {
+		client.update("report.saveDEV",params);
+		
+	}
+
+	@Override
+	public String insertReportPLSave(ReportVO rvo) throws SQLException {
+		return (String) client.insert("report.insertReportPLSave",rvo);
+	}
+
+	@Override
+	public void savePL(Map<String, String> params) throws SQLException {
+		client.update("report.savePL",params);
+	}
+
 }

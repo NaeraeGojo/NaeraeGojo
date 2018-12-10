@@ -143,6 +143,24 @@ public class ReportController {
 			
 			return "redirect:/user/report/report_listPL.do";
 		}
+		
+		//PL INSERT SAVE
+		@RequestMapping("report_FinalInsertPLSave")
+		public String report_FinalInsertPLSave(
+				ReportVO rvo,
+				HttpSession session,
+				Map<String, String> params,@RequestParam("files") MultipartFile[] files) throws SQLException{
+			
+			String fullEmpCode = rvo.getEmp_code();
+			rvo.setEmp_code_pm(fullEmpCode);
+			
+			String emp_code = null;
+			emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+			rvo.setEmp_code(emp_code);
+			service.insertReportPLSave(rvo, files);
+			
+			return "redirect:/user/report/report_listPL.do";
+		}
 	
 	
 	//PL 보낸보고서함 뷰
@@ -576,6 +594,19 @@ public class ReportController {
 		params.put("report_code", report_code);
 		service.deleteReportDEVSend(params);
 		return "redirect:/user/report/report_listDev.do";
+	}
+	
+	@RequestMapping("saveDEV/{report_code}")
+	public String saveDEV(@PathVariable String report_code, Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		service.saveDEV(params);
+		return "redirect:/user/report/report_listDev.do";
+	}
+	@RequestMapping("savePL/{report_code}")
+	public String savePL(@PathVariable String report_code, Map<String, String> params) throws SQLException{
+		params.put("report_code", report_code);
+		service.savePL(params);
+		return "redirect:/user/report/report_listPL.do";
 	}
 	
 	

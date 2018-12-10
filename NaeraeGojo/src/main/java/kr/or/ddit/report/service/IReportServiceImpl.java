@@ -269,4 +269,31 @@ public class IReportServiceImpl implements IReportService{
 		}
 		
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void saveDEV(Map<String, String> params) throws SQLException {
+		dao.saveDEV(params);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void insertReportPLSave(ReportVO rvo, MultipartFile[] files)
+			throws SQLException {
+		String report_code = dao.insertReportPLSave(rvo);
+		List<ReportFileVO> rfvo = new ArrayList<ReportFileVO>();
+		ReportFileVO rfvo1 = reportFileMapper.mapping(files[0], report_code);
+		rfvo.add(rfvo1);
+		for(ReportFileVO rfv : rfvo){
+			reportFiledao.insertReportFile(rfv);
+		}
+		
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void savePL(Map<String, String> params) throws SQLException {
+		dao.savePL(params);
+		
+	}
 }

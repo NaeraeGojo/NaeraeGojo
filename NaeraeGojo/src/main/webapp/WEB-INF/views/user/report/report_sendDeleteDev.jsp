@@ -208,7 +208,7 @@ label {
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
 						<input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:if test="${vo.report_save_dev eq 'y' }" >
-							<input value="임시저장" type="button" id="saveInsert" class="btn btn-sm btn-info btn-flat pull-right"> 
+							<input value="등록" type="button" id="saveInsert" class="btn btn-sm btn-primary btn-flat pull-right"> 
 						</c:if>
 						<c:forEach items="${stList }" var="list">
 							<c:if test="${list.report_pl_status eq 'x' || list.report_pm_status eq 'x' }">
@@ -353,6 +353,11 @@ label {
 		 $('#delete').click(function(){
 		    	var  report_code = $('input[name=report_code]').val();
 		    	$(location).attr('href','${pageContext.request.contextPath}/user/report/deleteReportDEVSend/'+report_code+'.do');
+		 });
+	    
+		 $('#saveInsert').click(function(){
+		    	var  report_code = $('input[name=report_code]').val();
+		    	$(location).attr('href','${pageContext.request.contextPath}/user/report/saveDEV/'+report_code+'.do');
 		 });
 	})
 </script>
