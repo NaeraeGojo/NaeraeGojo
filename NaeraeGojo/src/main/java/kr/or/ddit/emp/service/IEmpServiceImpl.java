@@ -57,11 +57,12 @@ public class IEmpServiceImpl implements IEmpService {
 	public void deleteEmpInfo(Map<String, String> params) throws SQLException {
 		dao.deleteEmpInfo(params);
 	}
+	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void updateEmpInfo(EmpVO empInfo, MultipartFile[] files) throws SQLException {
 		dao.updateEmpInfo(empInfo);
-		if(empInfo.getFilesFileName() == null){
+		if(empInfo.getFiles() == null){
 			List<UserFileVO> ufv = fileMapper.picture_mapping(empInfo.getFiles(), empInfo.getEmp_code());
 			dao.insertUserFile(ufv);
 		}else{

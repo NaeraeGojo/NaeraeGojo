@@ -27,7 +27,7 @@ $(function(){
 	});
     
     $('#issueDamdangTable tr:gt(0)').click(function(){
-    		var issue_code = $(this).find('td:eq(0) input').val()
+    		var issue_code = $(this).find('td:eq(0) input').val();
     	
     	$.ajax({
     		type : 'POST'
@@ -41,13 +41,13 @@ $(function(){
 		    	issue_code = $(this).find('td:eq(0) input').val();
 		        rnum = $(this).find('td:eq(0)').text();
     			
-		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
+		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code);
     		}
     	})
     });
     
     $('#issuetable tr:gt(0)').click(function(){
-    	
+    	var issue_code = $(this).find('td:eq(0) input').val();
     	$.ajax({
     		type :"POST"
     		, url : "${pageContext.request.contextPath}/user/bell/issueAlarm.do"
@@ -58,9 +58,9 @@ $(function(){
               }
     		, success : function(dd){
     			
-		    	var issue_code = $(this).find('td:eq(0) input').val();
+		    	
 		        var rnum = $(this).find('td:eq(0)').text();
-		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code+'&rnum='+rnum);
+		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code);
     		}
     	})
     	

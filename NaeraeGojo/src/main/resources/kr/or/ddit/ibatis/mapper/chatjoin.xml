@@ -54,6 +54,13 @@
 			where chatjoin_chatroom = #chatjoin_chatroom#
 					and chatjoin_emp = #chatjoin_emp#
 	</update>
+	
+	<select id="joinCount" parameterClass="map" resultClass="int">
+		select count(*)
+	        from chatjoin
+	        where chatjoin_chatroom = #chatjoin_chatroom#
+	        and chatjoin_join = 'y'
+	</select>
 
 </sqlMap>
 

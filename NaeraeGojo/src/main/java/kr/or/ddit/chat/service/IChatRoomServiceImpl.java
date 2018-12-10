@@ -28,6 +28,12 @@ public class IChatRoomServiceImpl implements IChatRoomService{
 			throws Exception {
 		return dao.getChatList(params);
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void closeRoom(Map<String, String> params) throws Exception {
+		dao.closeRoom(params);
+	}
 	
 	
 

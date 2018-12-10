@@ -11,4 +11,6 @@ public interface IChatRoomDao {
 	String insertChatRoom(ChatRoomVO crv) throws Exception;
 
 	List<ChatRoomVO> getChatList(Map<String, String> params) throws Exception;
+
+	void closeRoom(Map<String, String> params) throws Exception;
 }

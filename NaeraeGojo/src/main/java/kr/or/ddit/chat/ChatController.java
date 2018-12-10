@@ -95,9 +95,21 @@ public class ChatController {
 	
 	@RequestMapping("deleteRoom")
 	public ModelAndView deleteRoom(ModelAndView mav
-			, ChatJoinVO cjv) throws Exception{
+									, Map<String, String> params
+									, ChatJoinVO cjv) throws Exception{
 		cjservice.deleteRoom(cjv);
 		
+		params.put("chatjoin_chatroom", cjv.getChatjoin_chatroom());
+		
+		// 여기서 해당 채팅방에 join이 몇인지 확인
+		int join_cnt = cjservice.joinCount(params);
+		
+		if(join_cnt == 0){
+			// 해당 채팅방에 참여하고 있는 사람이 0인경우, 해당 채팅방의 open 을 'n'으로 변경
+			params.clear();
+			params.put("chatroom_code", cjv.getChatjoin_chatroom());
+			crservice.closeRoom(params);
+		}
 		
 		mav.setViewName("jsonConvertView");
 		return mav;

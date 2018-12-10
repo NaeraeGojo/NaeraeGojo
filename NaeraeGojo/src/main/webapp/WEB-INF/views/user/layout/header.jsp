@@ -462,7 +462,7 @@ $(function(){
 		
 		var options = "width = 500, height = 400, scrollbars = no, toolbar = no, menubar=no,titlebar=no";
 	
-		window.open(url+query, "대화창", options);
+		window.open(url+query, "대화창"+query, options);
 		
 	});
 	
@@ -485,7 +485,7 @@ $(function(){
 		
 		$('#modal-chat').modal('hide');
 		
-		window.open(url+query, "대화창", options);
+		window.open(url+query, "대화창"+query, options);
 	})
 	
 	

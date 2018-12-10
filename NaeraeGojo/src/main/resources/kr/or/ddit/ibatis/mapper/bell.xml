@@ -10,33 +10,34 @@
 
     
     <select id="getIssueList" resultClass="issueVO" parameterClass="map">
-		 select z.*
-		 from (select rownum rnum, y.*
-		  from (select a.issue_code, a.issue_name, a.issue_event_day, b.islev_name, c.emp_name, d.project_name, a.emp_damdang
-                     from issue a, islev b, emp c, project d, join e
+         select z.*
+         from (select rownum rnum, y.*
+          from (select a.issue_code, a.issue_name, a.issue_event_day, b.islev_name, c.emp_name, d.project_name, a.emp_damdang
+                     from issue a, islev b, emp c, project d, pw e
                      where a.issue_level= b.islev_code
                      and a.emp_code = c.emp_code
-                     and e.emp_code = #emp_code#
-                    and e.rqpps_code = d.project_code
-                    and to_char(add_months(sysdate,-1),'yyyy-mm-dd')&lt;=a.issue_event_day
+                     and a.PW_CODE = e.PW_CODE
+                     and e.PROJECT_CODE = d.project_code
+                     and to_char(add_months(sysdate,-1),'yyyy-mm-dd')&lt;=a.issue_event_day
                       and a.issue_alarm = 'n'
                       and a.emp_damdang = #emp_code#
                      group by  a.issue_code, a.issue_name, a.issue_event_day, b.islev_name, c.emp_name, d.project_name, a.emp_damdang
                      order by a.issue_event_day
-		            ) y ) z
-		 order by z.rnum desc
+                    ) y ) z
+         order by z.rnum desc
     </select>
     
     <select id="getCount" resultClass="string" parameterClass="map">
-        select count( a.issue_code)
-            from issue a, islev b, emp c, project d, join e
-             where a.issue_level= b.islev_code
-             and a.emp_code = c.emp_code
-             and e.emp_code = #emp_code#
-            and e.rqpps_code = d.project_code
-            and a.emp_damdang= #emp_code#
-            and to_char(add_months(sysdate,-1),'yyyy-mm-dd')&lt;=a.issue_event_day
-            and a.issue_alarm = 'n'
+        select count(a.issue_code)
+                     from issue a, islev b, emp c, project d, pw e
+                     where a.issue_level= b.islev_code
+                     and a.emp_code = c.emp_code
+                     and a.PW_CODE = e.PW_CODE
+                     and e.PROJECT_CODE = d.project_code
+                     and to_char(add_months(sysdate,-1),'yyyy-mm-dd')&lt;=a.issue_event_day
+                      and a.issue_alarm = 'n'
+                      and a.emp_damdang = #emp_code#
+                    
     </select>
     
     <update id="issueAlarm" parameterClass="map">
