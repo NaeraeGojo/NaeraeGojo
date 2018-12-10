@@ -2,6 +2,7 @@ package kr.or.ddit.join.controller.user;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import kr.or.ddit.vo.UserFileVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -357,6 +359,17 @@ public class JoinController {
 		return andView;
 	}
 	
+	//개발자보낸보고서함 삭제
+	@RequestMapping("deleteAddList")
+	public ModelAndView deleteAddList(ModelAndView andView, String join_code
+			,Map<String, String> params
+			,String rqpps_code) throws SQLException{
+		params.put("join_code", join_code);
+		service.deleteAdd(params);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+		
 	
 	
 }

@@ -101,4 +101,10 @@ public class IJoinServiceImpl implements IJoinService{
 		joinDao.insertAdd(jvo);
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void deleteAdd(Map<String, String> params) throws SQLException {
+		joinDao.deleteAdd(params);
+	}
+
 }

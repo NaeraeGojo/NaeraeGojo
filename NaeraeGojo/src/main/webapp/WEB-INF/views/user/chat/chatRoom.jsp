@@ -171,9 +171,20 @@
 		margin-right: 30px;
 	}
 	
+	.div_list{
+		margin-top: 6px;
+		margin-left: 10px;
+	}
+	
+	.direct-chat-messages{
+		height: 400px;
+	}
+	
 	</style>
 <script type="text/javascript">
 var ws;
+
+var isRefresh = false;
 
 var today = new Date();
 $(function(){
@@ -184,9 +195,42 @@ $(function(){
 		});
 	};
 	
+	$(document).on("keydown", function(e) {
+	    if(e.which === 116){
+	    	isRefresh = true;
+	    }
+	});
+	
+	//참여자 목록 불러오는 아작스콜
+	refreshPart = function(){
+		var chatjoin_chatroom = '${param.chatroom_code}';
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/user/chat/partList.do'
+			, type : 'post'
+			, data : {chatjoin_chatroom : chatjoin_chatroom}
+			, dataType : 'json'
+			, async : false
+			, error : function(xhr, status, error){
+				boalert(error);
+			}
+			, success: function(json){
+				var cpl = json.cpl;
+				var text = '['+cpl+']'
+				$('#td_cpl').text(text);
+			}
+		});
+	}
+	
+	// 나가기 감지
 	$(window).on("beforeunload", function() { 
-		closeConnection();
+		if(!isRefresh){
+			closeConnection();
+			return null;
+		}
+		return false;
 	})
+	
 	
 	// WebSocket EndPoint 접속 , 얘가 성공하면 onOpen 이벤트 발생
 // 	ws = new WebSocket("ws://192.168.204.154/SpringToddler/wschat");
@@ -218,38 +262,43 @@ $(function(){
 	ws.onmessage = function(message){
 		var obj = JSON.parse(message.data);
 
-		var direc = '';
-		var name_direc = 'pull-left';
-		if(obj.emp_code == '${LOGIN_EMPINFO.emp_code}'){
-			direc = 'right';
-			name_direc = 'pull-right';
+		var ref = obj.ref_cpl; 
+		if(ref == 'true'){
+			refreshPart();
+		}else{
+			var direc = '';
+			var name_direc = 'pull-left';
+			if(obj.emp_code == '${LOGIN_EMPINFO.emp_code}'){
+				direc = 'right';
+				name_direc = 'pull-right';
+			}
+			
+			var emp_name = obj.emp_name;
+			var now_time = obj.time;
+			var msg = obj.msg;
+			
+			var id_msg = obj.id;
+			
+			var text = 	'<div class="direct-chat-msg '+direc+'">'				
+						+ '<div class="direct-chat-info clearfix">'
+						+ '<span class="direct-chat-name '+name_direc+'">'+emp_name+'</span>'
+						+ '</div>'	
+						+ '<img class="direct-chat-img" src="${pageContext.request.contextPath}/images/icons/person2.jpeg"'		
+						+ 'alt="alt">'
+						+ '<div class="direct-chat-text '+name_direc+'">'+msg +'</div>'
+//	 					+ '<span class="direct-chat-timestamp">'+now_time+'</span></div>'
+						
+						
+			$('.direct-chat-messages').append(text);
+						
+			var div_chat = $('#div_chat');
+
+			var hei = $('#div_chat').prop('scrollHeight');
+			$("#div_chat").scrollTop(hei);
 		}
-		
-		var emp_name = obj.emp_name;
-		var now_time = obj.time;
-		var msg = obj.msg;
-		
-		var id_msg = obj.id;
-		
-		var text = 	'<div class="direct-chat-msg '+direc+'">'				
-					+ '<div class="direct-chat-info clearfix">'
-					+ '<span class="direct-chat-name '+name_direc+'">'+emp_name+'</span>'
-					+ '</div>'	
-					+ '<img class="direct-chat-img" src="${pageContext.request.contextPath}/images/icons/person2.jpeg"'		
-					+ 'alt="alt">'
-					+ '<div class="direct-chat-text '+name_direc+'">'+msg +'</div>'
-					+ '<span class="direct-chat-timestamp">'+now_time+'</span></div>'
-					
-					
-		$('.direct-chat-messages').append(text);
-					
-		var div_chat = $('#div_chat');
-
-		var hei = $('#div_chat').prop('scrollHeight');
-		$("#div_chat").scrollTop(hei);
-
-		
 	}
+	
+	refreshPart();
 });
 
 function postToServer(){
@@ -310,6 +359,7 @@ function closeConnection(){
 	
 	// onclose 이벤트 전파
 	ws.close();
+	
 }
 
 	
@@ -321,21 +371,26 @@ function closeConnection(){
 	<div class="box box-success direct-chat direct-chat-success">
 		<div class="box-header with-border">
 			<h3 class="box-title">Direct Chat</h3>
-			<div>
+			
+			<div class="div_list">
 				<table>
 					<tr>
-						<td>초대 목록</td>
+						<th>초대 목록</th>
 					</tr>
 					<tr>
-						<td>[누구눅누군구]</td>
+						<td>[${ivl }]</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="div_list">
+				<table id="table_cpl">
+					<tr>
+						<th>참여 목록</th>
 					</tr>
 					<tr>
-						<td>현재 참여 목록</td>
+						<td id="td_cpl"></td>
 					</tr>
-					<tr>
-						<td>[누구, 누구, 누구눅,ㄴㅇㅁ]</td>
-					</tr>
-				
 				</table>
 			</div>
 			
@@ -365,14 +420,8 @@ function closeConnection(){
 			
 			
 			<div class="direct-chat-messages" id="div_chat">
-			
-			
-			
-			
 			</div>
 			<!--/.direct-chat-messages-->
-
-
 
 			<!-- Contacts are loaded here -->
 			<div class="direct-chat-contacts">

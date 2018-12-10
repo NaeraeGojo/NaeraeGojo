@@ -255,4 +255,18 @@ public class IReportServiceImpl implements IReportService{
 			throws SQLException {
 		dao.deleteReportDEVSend(params);
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void insertReportSave(ReportVO rvo, MultipartFile[] files)
+			throws SQLException {
+		String report_code = dao.insertReportSave(rvo);
+		List<ReportFileVO> rfvo = new ArrayList<ReportFileVO>();
+		ReportFileVO rfvo1 = reportFileMapper.mapping(files[0], report_code);
+		rfvo.add(rfvo1);
+		for(ReportFileVO rfv : rfvo){
+			reportFiledao.insertReportFile(rfv);
+		}
+		
+	}
 }

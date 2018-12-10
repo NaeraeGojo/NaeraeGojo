@@ -24,6 +24,7 @@
 		<result property="emp_name" column="emp_name"/>
 		<result property="pw_function" column="pw_function"/>
 		<result property="project_name" column="project_name"/>
+		<result property="report_save_dev" column="report_save_dev"/>
 		<result property="items" column="report_code" select="reportFile.reportFilexx" />
 	</resultMap>
 	
@@ -83,6 +84,45 @@
 							default,
 							#emp_code_pl#,
 							#emp_code_pm#
+							)
+		
+	</insert>
+	
+	<insert id="insertReportSave" parameterClass="reportVO">
+		<selectKey keyProperty="report_code" resultClass="string">
+			select report_seq.nextval from dual
+		</selectKey>
+		INSERT INTO REPORT (
+							REPORT_CODE,
+							REPORT_TITLE,
+							REPORT_DAY,
+							REPORT_CONTENT,
+							REPORT_RC,
+							REPORT_DATE,
+							REPORT_DELETE,
+							EMP_CODE,
+							PW_CODE,
+							REPORT_PL_STATUS,
+							REPORT_PM_STATUS,
+							EMP_CODE_PL,
+							EMP_CODE_PM,
+							REPORT_SAVE_DEV
+							) 
+                    VALUES(
+		                    #report_code#,
+		                    #report_title#,
+		                    sysdate,
+		                    #report_content#,
+		                    default,
+		                    #report_date#,
+							default,
+							#emp_code#,
+							#pw_code#,
+							default,
+							default,
+							#emp_code_pl#,
+							#emp_code_pm#,
+							'y'
 							)
 		
 	</insert>
@@ -172,7 +212,7 @@
 	<select id="reportList" parameterClass="map" resultClass="reportVO">
 		select b.*
 		from (select rownum rnum, a.*
-				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS,A.REPORT_SAVE_DEV
 						FROM REPORT A, EMP B
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE = #emp_code#
@@ -251,7 +291,7 @@
 	</select>
 	
 	<select id="reportView" parameterClass="map" resultMap="reportMap">
-		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE,B.EMP_CODE
+		SELECT A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE,B.EMP_CODE,A.REPORT_SAVE_DEV
 	     FROM REPORT A, EMP B, PW C, PROJECT D,JOIN E
 	     WHERE A.EMP_CODE = B.EMP_CODE
 	     AND   A.PW_CODE = C.PW_CODE
@@ -259,7 +299,7 @@
 	     AND   D.PROJECT_CODE = E.PROJECT_CODE
 	     AND   A.REPORT_CODE = #report_code#
 	     GROUP BY A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
-	     ,B.EMP_CODE
+	     ,B.EMP_CODE,A.REPORT_SAVE_DEV
 	</select>
 	
 	<select id="reportStatus" parameterClass="map" resultClass="reportVO">

@@ -39,5 +39,10 @@ public class IChatJoinServiceImpl implements IChatJoinService{
 	public int joinCount(Map<String, String> params) throws Exception {
 		return dao.joinCount(params);
 	}
+
+	@Override
+	public String invList(Map<String, String> params) throws Exception {
+		return dao.invList(params);
+	}
 	
 }

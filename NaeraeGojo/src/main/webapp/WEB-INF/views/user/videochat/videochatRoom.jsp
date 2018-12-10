@@ -276,7 +276,7 @@ $(function(){
                
             }
        });
-    },100000);
+    },10000);
 	
 	
 	 $(document).on('click', '.delete', function() {

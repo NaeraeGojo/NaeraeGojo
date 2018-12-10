@@ -54,6 +54,29 @@ $(function(){
             }
         });
 	});
+	
+	$('#projectForm').submit(function(){
+		var suggest_code = $('select[name=rqpps_code]').val();
+		var project_name = $('input[name=project_name]').val();
+		var project_start = $('input[name=project_start]').val();
+		var project_end = $('input[name=project_end]').val();
+		var suggest_start_date = $('input[name=suggest_start_date]').val();
+		var suggest_end_date = $('input[name=suggest_end_date]').val();
+		var rqpps_notice_agency = $('input[name=rqpps_notice_agency]').val();
+		var suggest_cost = $('input[name=suggest_cost]').val();
+		var suggest_content = $('textarea[name=suggest_content]').val();
+		
+		
+		if(suggest_code == '' || project_name == '' || project_start == ''||
+		    suggest_code == '' || suggest_start_date == '' || suggest_end_date == ''||
+		    rqpps_notice_agency == '' || suggest_cost == '' || suggest_content == ''){
+			boalert("빈 항목이 존재합니다.");
+			return false;
+		}
+		
+		return true;
+	});
+	
 });
 </script>
 <section class="content">
@@ -149,9 +172,8 @@ $(function(){
 				</div>
 
 				<div class="box-footer clearfix">
-					<input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right"> 
-					<input value="목록" type="button" href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right"> 
-					<input value="등록" type="submit" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
+					<input value="목록" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
+					<button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">등록</button>
 				</div>
 				</form>
 			</div>

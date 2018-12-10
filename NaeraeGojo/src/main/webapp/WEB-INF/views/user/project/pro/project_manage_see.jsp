@@ -60,23 +60,15 @@ $(function(){
         });
 	});
 	
-	$('#commitBtn').click(function(){
+	$(document).on('click', '#commitBtn', function() {
 		var project_name = $('#updateForm input[name=project_name]').val();
 		var project_start = $('#updateForm input[name=project_start]').val();
 		var project_end = $('#updateForm input[name=project_end]').val();
 		
-// 		if(project_name.val()==""){
-// 			boalert("프로젝트 제목을 입력해 주세요.")
-// 			return false;
-// 	    }
-// 		if(project_start.val()==""){
-// 			boalert("프로젝트 시작 일자를 선택해 주세요.")
-// 			return false;
-// 	    }
-// 		if(project_end.val()==""){
-// 			boalert("예상 종료일자를 입력해 주세요.")
-// 			return false;
-// 	    }
+		if(project_name == '' || project_start == '' || project_end == ''){
+			boalert("빈 항목이 존재합니다.");
+			return false;
+		}
 
 		var formData = $('#update').serialize();
 		

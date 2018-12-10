@@ -15,4 +15,6 @@ public interface IChatJoinDao {
 	void deleteRoom(ChatJoinVO cjv) throws Exception;
 
 	int joinCount(Map<String, String> params) throws Exception;
+
+	String invList(Map<String, String> params) throws Exception;
 }
