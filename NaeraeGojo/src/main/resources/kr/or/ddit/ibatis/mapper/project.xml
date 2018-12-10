@@ -59,6 +59,9 @@
 	 			<isEqual property="search_keycode" compareValue="NAME" >  
 	 					PROJECT_NAME LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
+	 			<isEqual property="search_keycode" compareValue="START" >  
+	 					PROJECT_START LIKE '%' || #search_keyword# || '%'
+	 			</isEqual>
 	 		</isNotEmpty>
 	 	</dynamic>
 	</sql>

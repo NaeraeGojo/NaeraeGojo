@@ -11,6 +11,9 @@
 	width : 80px;
 	margin-right:5px; 
 }
+.form-control[readonly]{
+   background-color: white;
+}
 /* label { */
 /* 	font-size: 20px !important; */
 /* } */
@@ -110,6 +113,22 @@ $(function(){
 		monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
 	});
 	
+	$('#pblancForm').submit(function(){
+		var pblanc_board_title = $('input[name=pblanc_board_title]').val();
+		var pblanc_board_com = $('input[name=pblanc_board_com]').val();
+		var pblanc_board_com_date = $('input[name=pblanc_board_com_date]').val();
+		var pblanc_board_link = $('input[name=pblanc_board_link]').val();
+		var pblanc_board_budget = $('input[name=pblanc_board_budget]').val();
+		var pblanc_board_end_proposal = $('input[name=pblanc_board_end_proposal]').val();
+		
+		if(pblanc_board_title == '' || pblanc_board_com == '' || pblanc_board_com_date == '' ||
+			pblanc_board_link == '' || pblanc_board_budget == '' || pblanc_board_end_proposal == ''){
+			boalert("빈 항목이 존재합니다.");
+			return false;
+		}
+		
+		return true;
+	});
 });
 </script>
 
@@ -122,7 +141,7 @@ $(function(){
 			</div>
 			<div class="box-body">
 				<form role="form" class="form-horizontal" enctype="multipart/form-data"  method="post"
-				action="${pageContext.request.contextPath}/user/pblancboard/updatePblancboard.do">
+				action="${pageContext.request.contextPath}/user/pblancboard/updatePblancboard.do" id="pblancForm">
 					<input type="hidden" name="pblanc_board_code" value="${pblancboardInfo.pblanc_board_code}" />
 					<div class="form-group">
 						<label for="pblanc_board_title" class="col-sm-2 control-label">공고제목</label>
@@ -136,7 +155,7 @@ $(function(){
 						<label for="inputEmail3" class="col-sm-2 control-label">작성자</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="작성자"
-							id="emp_code" name="emp_code" value="${pblancboardInfo.emp_name}">
+							id="emp_code" name="emp_code" value="${pblancboardInfo.emp_name}" readonly="readonly">
 						</div>
 					</div>
 
@@ -176,7 +195,7 @@ $(function(){
 						<label for="pblanc_board_end_proposal" class="col-sm-2 control-label">제안서 마감일자</label>
 						<div class="col-sm-8">
 							<input type="date" class="form-control" style="border-radius: 1em;" placeholder="제안서 마감일자"
-							id="pblanc_board_com" name="pblanc_board_end_proposal" value="${pblancboardInfo.pblanc_board_end_proposal}">
+							id="pblanc_board_end_proposal" name="pblanc_board_end_proposal" value="${pblancboardInfo.pblanc_board_end_proposal}">
 						</div>
 					</div>
 
@@ -196,10 +215,10 @@ $(function(){
 						<input value="목록" id="listBtn" type="button" class="btn btn-sm btn-info btn-flat pull-right">
 						<c:if test="${LOGIN_EMPINFO.emp_code == pblancboardInfo.emp_code }">
 						<input value="수정" id="btn_upForm" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
-						<button type="submit" id="deleteBtn" class="btn btn-sm btn-danger btn-flat pull-right">삭제</button>
+						<button type="button" id="deleteBtn" class="btn btn-sm btn-danger btn-flat pull-right">삭제</button>
 						</c:if>						
 						<input id="btn_update" value="등록" type="submit" class="btn btn-sm btn-warning btn-flat pull-right"
-						type="submit" href="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" style="display:none;">
+						href="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do" style="display:none;">
 					</div>
 				</form>
 			</div>

@@ -313,6 +313,7 @@ table th,td{
         </div>
     
 <!-- 이슈 알림(PM용 이슈 담당자 등록) -->
+<%-- <c:if test="${LOGIN_EMPINFO.emp_code == projectAlarmList.emp_code_pm}"> --%>
 <div class="row">
 	<div class="col-md-12">
 		<div class="box box-2team">
@@ -366,6 +367,7 @@ table th,td{
 		</div>
 	</div>
 </div>
+<%-- </c:if> --%>
 
 <!-- 피드백 알림 -->
       <div class="row">
