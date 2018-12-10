@@ -96,6 +96,12 @@ public class IBellDaoImpl implements IBellDao{
 		return client.queryForList("bellList.issueDamdangList", params);
 	}
 
+	@Override
+	public String issueDamdangCnt(Map<String, String> params)
+			throws SQLException {
+		return (String) client.queryForObject("bellList.issueDamdangCnt", params);
+	}
+
 	
 
 

@@ -18,6 +18,8 @@
 		<result property="issue_status" column="issue_status"/>
 		<result property="pw_code" column="pw_code"/>
 		<result property="emp_damdang" column="emp_damdang"/>
+		<result property="emp_name" column="emp_name"/>
+		<result property="emp_damdang_code" column="emp_damdang_code"/>
 	</resultMap>
 	
 	<sql id="selectAll">
@@ -109,7 +111,8 @@
 			,A.ISSUE_LEVEL
 			,A.ISLEV_CODE
 			,A.ISSUE_STATUS
-			,C.EMP_NAME AS EMP_CODE
+			,A.EMP_CODE
+			,C.EMP_NAME
 			,A.ISSUE_ALARM
 			,A.PW_CODE
 			,(SELECT 
@@ -117,6 +120,11 @@
 	          FROM ISSUE A, EMP B
 	          WHERE A.EMP_DAMDANG = B.EMP_CODE
 	          AND A.ISSUE_CODE = #issue_code# ) as EMP_DAMDANG
+	        ,(SELECT 
+              	B.EMP_CODE
+	          FROM ISSUE A, EMP B
+	          WHERE A.EMP_DAMDANG = B.EMP_CODE
+	          AND A.ISSUE_CODE = #issue_code# ) as EMP_DAMDANG_CODE  
 		FROM ISSUE A, EMP C
       	WHERE A.EMP_CODE = C.EMP_CODE
       	AND A.ISSUE_CODE = #issue_code#

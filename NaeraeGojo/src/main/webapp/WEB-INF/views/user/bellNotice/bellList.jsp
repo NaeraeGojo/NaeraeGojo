@@ -320,7 +320,7 @@ table th,td{
 		<div class="box box-2team">
 			<div class="box-header with-border">
 				<h3 class="box-title">
-					이슈 담당자 등록 <span class="label label-warning pull-right">${listCnt }</span>
+					이슈 담당자 등록 <span class="label label-warning pull-right">${issueDamdangCnt }</span>
 				</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse">
