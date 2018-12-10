@@ -12,6 +12,7 @@ import kr.or.ddit.vo.ReportVO;
 
 public interface IReportService {
 	public void insertReport(ReportVO rvo, MultipartFile[] files) throws SQLException;
+	public void insertReportSave(ReportVO rvo, MultipartFile[] files) throws SQLException;
 	public void insertReportPL(ReportVO rvo, MultipartFile[] files) throws SQLException;
 	public void updateReport(ReportVO pv) throws SQLException;
 	public void deleteReport(Map<String, String> params) throws SQLException;

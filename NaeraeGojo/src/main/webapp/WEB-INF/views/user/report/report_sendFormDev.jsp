@@ -81,7 +81,7 @@ label {
 				<!--             form start -->
 			<div class="box-body">
 				<form role="form" id="reportForm" class="form-horizontal" 
-         			method="post" action="${pageContext.request.contextPath }/user/report/report_FinalInsert.do" enctype="multipart/form-data">
+         			method="post" action="" enctype="multipart/form-data">
 
 						<!--                 <div class="form-group"> -->
 						<!--                   <label for="inputEmail3" class="col-sm-2 control-label" >보고서 분류</label> -->
@@ -177,8 +177,8 @@ label {
 					</div>
 					<div class="box-footer clearfix">
 						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
-						<input value="임시저장" type="button" class="btn btn-sm btn-info btn-flat pull-right"> 
-						<input value="등록" type="submit"  class="btn btn-sm btn-danger btn-flat pull-right">
+						<input value="임시저장" type="button" id="saveInsert" class="btn btn-sm btn-info btn-flat pull-right"> 
+						<input value="등록" type="button" id="insertAll" class="btn btn-sm btn-danger btn-flat pull-right">
 					</div>
 				</form>
 			</div>
@@ -209,7 +209,7 @@ label {
 					radioClass : 'iradio_flat-red'
 				})
 				
-		$('#reportForm').submit(function(){
+		$('#insertAll').click(function(){
 			var report_title = $('input[name=report_title]').val();
 			var report_content = $('#contents').val();
 // 			var file1 = $('#file01').val();
@@ -224,8 +224,6 @@ label {
 	    	   var str = $('#bodytable tr:eq('+i+')').find('input[name=test]').val();//<f로 준이유
                insertNm += str+"/";
             }
-	    	
-			
 // 			if(report_content == '' || report_title == '' || report_content ){ 
 // 				boalert("빈 항목이 존재합니다.");
 // 				return false;
@@ -239,6 +237,43 @@ label {
 // 				boalert("제안요청서 첨부파일을 등록해 주세요.")
 // 				return false;
 // 			}
+
+			$('#reportForm').attr('action','${pageContext.request.contextPath }/user/report/report_FinalInsert.do');
+			$('#reportForm').submit();
+			return true;
+		});
+		
+		$('#saveInsert').click(function(){
+			var report_title = $('input[name=report_title]').val();
+			var report_content = $('#contents').val();
+// 			var file1 = $('#file01').val();
+// 			var pw_code = $("#pwList1 option:selected").val();
+			var report_date = $("input:radio[name=raReport]:checked").val();
+			$('input[name=report_date]').val(report_date);
+			
+			var len = $('#bodytable tr').length;
+	    	var insertNm=""; 
+	    	
+	    	for(var i=0; i< len; i++){ 
+	    	   var str = $('#bodytable tr:eq('+i+')').find('input[name=test]').val();//<f로 준이유
+               insertNm += str+"/";
+            }
+// 			if(report_content == '' || report_title == '' || report_content ){ 
+// 				boalert("빈 항목이 존재합니다.");
+// 				return false;
+// 			}
+			
+// 			if(pw_code == null || pw_code == ''){
+// 				boalert("인력비었다");
+// 				return false;
+// 			}
+// 			if(file1 == ''){
+// 				boalert("제안요청서 첨부파일을 등록해 주세요.")
+// 				return false;
+// 			}
+
+			$('#reportForm').attr('action','${pageContext.request.contextPath }/user/report/report_FinalInsertSave.do');
+			$('#reportForm').submit();
 			return true;
 		});
 
