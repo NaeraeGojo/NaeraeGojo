@@ -50,7 +50,7 @@ $(function(){
 	$('input[value=이력관리]').click(function(){
 		var emp_code= $('input[name=emp_code]').val();
 		var url =  "${pageContext.request.contextPath}/history/historyList.do?emp_code="+emp_code;
-		var options = "width = 800, height = 400, scrollbars = yes";
+		var options = "width = 900, height = 500, scrollbars = yes";
 
 		window.open(url, "이력관리", options );
 	});
@@ -65,45 +65,10 @@ $(function(){
 	$('input[name=emp_email1]').val('${empInfo.emp_email.split('@')[0]}');
 	$('input[name=emp_email2]').val('${empInfo.emp_email.split('@')[1]}');
 	
-	//이력등록
-	$('#insert').click(function(){
-		if(eval('${!empty param.emp_code}')){
-			var emp_code = '${param.emp_code}';
-			var history_notice_agency = $('input[name=history_notice_agency]').val();
-			var history_demand_agency = $('input[name=history_demand_agency]').val();
-			var history_project_start = $('input[name=history_project_start]').val();
-			var history_project_end = $('input[name=history_project_end]').val();
-			var history_project_name = $('input[name=history_project_name]').val();
-			var history_business = $('select[name=history_business]').val();
-			var history_delete = $('input[name=history_delete]').val();
-			
-			var allData = { "emp_code" : emp_code , "history_notice_agency" : history_notice_agency , "history_demand_agency" : history_demand_agency,
-					"history_project_start" : history_project_start, "history_project_end" : history_project_end, 
-					"history_project_name" : history_project_name, "history_business" : history_business, "history_delete" : history_delete};
-			if(history_project_name == ""||history_project_start == ""||history_project_end==""||history_notice_agency == "" || history_demand_agency== "" ||history_business==""){
-					alert("누락된 정보가 있습니다. 다시 입력해주세요.");
-					return false;
-			 }else{
-			$.ajax({
-				type : 'POST',
-				 url : '${pageContext.request.contextPath}/history/insertHistory.do',
-				 data : allData,
-				 dataType : 'json',
-				 success : function(json) {
-					alert("이력이 등록되었습니다.");
-				}
-				 ,
-				 error : function(json) {
-					alert("이력등록이 완료되었습니다.");
-				}
-			});
-			}
-		}
-	});
-	
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
 	});
+	
 	$('#delete').click(function(){
 		var history_code = $('input[name=history_code]').val();
 		
@@ -120,6 +85,7 @@ $(function(){
 			}
 		});
 	});
+	
 	//이력 View (수정/삭제 창)
 	$('#projectTable tr:gt(0)').click(function(){
 		var history_code = $(this).find('td:eq(0) input').val();
