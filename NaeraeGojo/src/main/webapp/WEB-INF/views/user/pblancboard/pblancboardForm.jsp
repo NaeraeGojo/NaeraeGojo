@@ -81,6 +81,11 @@ $(function(){
 			boalert("제안서 마감 일자를 선택해 주세요.")
 			return false;
 	    }
+		var file1 = $('#file01').val();
+		if(file1 == ''){
+			boalert("파일을 등록 선택해 주세요.")
+			return false;
+	    }
 		return true;
 	});
 });

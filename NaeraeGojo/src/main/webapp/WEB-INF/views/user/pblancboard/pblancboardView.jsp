@@ -75,8 +75,9 @@ $(function(){
 		$('#btn_upForm').hide();
 		$('#btn_update').attr('style','display:inline-block');
 		$('.upForm').show();
+		
 	});
-
+	
 	$('#deleteBtn').click(function(){
 	  	$(location).attr('href', '${pageContext.request.contextPath}/user/pblancboard/deletePblancboard/${pblancboardInfo.pblanc_board_code}.do')
     });

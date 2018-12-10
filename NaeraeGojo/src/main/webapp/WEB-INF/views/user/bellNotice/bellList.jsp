@@ -1,6 +1,5 @@
 
-<%@ page language="JAVA" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="JAVA" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
 
@@ -27,20 +26,19 @@ $(function(){
 	});
     
     $('#issueDamdangTable tr:gt(0)').click(function(){
-    		var issue_code = $(this).find('td:eq(0) input').val();
-    	
+    	var issue_code = $(this).find('td:eq(0) input').val();
     	$.ajax({
-    		type : 'POST'
-    		, url : '${pageContext.request.contextPath}/user/bell/issueAlarm.do'
-    		, data : {'issue_code' : issue_code}
-    		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    		type :"POST"
+    		, url : "${pageContext.request.contextPath}/user/bell/issueAlarm.do"
+    		, data : {issue_code : $(this).find('td:eq(0) input').val()}
+    		, contentType: "application/x-www-form-urlencoded; charset=UTF-8"
     		, error : function(request, status, error) {
-                     alert('error : ' + request.status );
+                     alert("error : " + request.status );
               }
     		, success : function(dd){
-		    	issue_code = $(this).find('td:eq(0) input').val();
-		        rnum = $(this).find('td:eq(0)').text();
     			
+		    	
+		        var rnum = $(this).find('td:eq(0)').text();
 		        $(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueView.do?issue_code='+issue_code);
     		}
     	})
@@ -344,7 +342,7 @@ table th,td{
 						<tbody data-toggle="modal" data-target="#issueDamdangForm">
 							<c:if test="${empty issueDamdangList}">
 								<tr>
-									<td onclick='event.cancelBubble=true;' colspan="6">등록된 이슈가 없슈</td>
+									<td onclick='event.cancelBubble=true;' colspan="6">등록된 이슈가 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:if test="${!empty issueDamdangList}">
