@@ -58,9 +58,9 @@
                 	<include refid = "searchCondition"/> 
                     order by inqry_board_code asc) a ) b
         <![CDATA[                
-<!--         where b.rnum <= #startNo# -->
-<!--          and  b.rnum >= #endNo# -->
-<!--         ]]> -->
+      		where b.rnum <= #startNo#
+        	and  b.rnum >= #endNo# 
+     	]]> 
         order by b.rnum desc
     </select> 
        
