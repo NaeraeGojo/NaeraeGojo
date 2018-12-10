@@ -12,6 +12,7 @@ public class IssueResultVO {
 	private String issue_result_day;
 	private String issue_code;
 	private String emp_code_ir;
+	private String emp_code;
 	private String issue_result_status;
 	private String issue_event_day;
 	private String issue_name;

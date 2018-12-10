@@ -163,7 +163,7 @@ public class ProjectController {
 		params.put("project_code", project_code);
 		
 		service.updateProjectInfo(projectInfo);
-		andView.addObject("projectInfo",projectInfo);
+		andView.addObject("projectInfo", projectInfo);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}

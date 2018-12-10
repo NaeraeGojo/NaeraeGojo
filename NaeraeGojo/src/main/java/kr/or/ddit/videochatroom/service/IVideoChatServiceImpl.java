@@ -124,9 +124,9 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 
 	
 	@Override
-	public List<ChatPwVO> getchatPwLsit()
+	public List<ChatPwVO> getchatPwLsit(Map<String, String> params)
 			throws SQLException {
-		return dao.getchatPwLsit();
+		return dao.getchatPwLsit(params);
 	}
 
 }

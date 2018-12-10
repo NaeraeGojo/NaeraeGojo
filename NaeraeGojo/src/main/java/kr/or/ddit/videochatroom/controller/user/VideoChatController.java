@@ -262,34 +262,38 @@ public class VideoChatController {
 	
 	@RequestMapping("pwAdd")
 	public ModelAndView pwAdd(ModelAndView andView, Map<String, String> params, String pw_code, HttpSession session,
-			String pwc_code, ChatPwVO cpv) throws Exception{
+			String pwc_code, ChatPwVO cpv, String video_chat_room_code) throws Exception{
 		
 		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		
 		
 		cpv.setEmp_code(emp_code);
 		cpv.setPwc_code(pwc_code);
 		cpv.setPw_code(pw_code);
+		cpv.setVideo_room_code(video_chat_room_code);
+		
 		String chat_pw_code= service.insertChatPw(cpv);
 		
-		params.put("chat_pw_code", chat_pw_code);
-		List<ChatPwVO> chatPwList = service.getchatPwLsit();
+		params.put("video_chat_room_code", video_chat_room_code);
+		List<ChatPwVO> chatPwList = service.getchatPwLsit(params);
 		
 		andView.addObject("chatPwList",chatPwList);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
 	 
-//	@RequestMapping("getNewpwList")
-//	public ModelAndView getNewpwList(ModelAndView andView, Map<String, String> params, String pw_code, HttpSession session,
-//			String pwc_code, ChatPwVO cpv) throws Exception{
-//		
-//		
-//		List<ChatPwVO> chatPwList = service.getchatPwLsit();
-//		
-//		andView.addObject("chatPwList",chatPwList);
-//		andView.setViewName("jsonConvertView");
-//		return andView;
-//	}
+	@RequestMapping("getNewpwList")
+	public ModelAndView getNewpwList(ModelAndView andView, Map<String, String> params, String pw_code, HttpSession session,
+			String pwc_code, ChatPwVO cpv, String video_chat_room_code) throws Exception{
+	
+		
+		params.put("video_chat_room_code", video_chat_room_code);
+		List<ChatPwVO> chatPwList = service.getchatPwLsit(params);
+		
+		andView.addObject("chatPwList",chatPwList);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
 	
 	
 }

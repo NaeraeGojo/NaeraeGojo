@@ -11,10 +11,13 @@ public class ChatPwVO {
 	private String chat_pw_date;
 	private String chat_pw_delete;
 	private String emp_code;
+	private String video_room_code;
 	
 	private String emp_name;
 	private String pw_function;
 	private String pwc_name;
+	private String pw_damdang;
+	private String pw_content;
 	
 
 }

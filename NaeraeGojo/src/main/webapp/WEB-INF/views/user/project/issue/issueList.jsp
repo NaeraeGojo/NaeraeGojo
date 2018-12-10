@@ -27,11 +27,11 @@ $(function(){
 	
 	$('#issue tr:gt(0)').click(function(){
 		var issue_code = $(this).find('td:eq(0) input').val();
-		var rnum = $(this).find('td:eq(0)').text();
+// 		var rnum = $(this).find('td:eq(0)').text();
 		
 		var currentPage = '${param.currentPage}';
 		
-		var query = '?issue_code='+issue_code+'&rnum='+rnum;
+		var query = '?issue_code='+issue_code;
 		
 		if(currentPage != null && currentPage != ''){
 			query += '&currentPage=' + currentPage;
@@ -50,8 +50,8 @@ $(function(){
 	
 	$('#issueResult tr:gt(0)').click(function(){
 		var issue_code = $(this).find('td:eq(0) input').val();
-		var rnum = $(this).find('td:eq(0)').text();
-		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueResultView.do?issue_code='+issue_code+'&rnum='+rnum);
+// 		var rnum = $(this).find('td:eq(0)').text();
+		$(location).attr('href', '${pageContext.request.contextPath}/user/project/issue/issueResultView.do?issue_code='+issue_code);
 	})
 	
 	$('#tab2').click(function(){
