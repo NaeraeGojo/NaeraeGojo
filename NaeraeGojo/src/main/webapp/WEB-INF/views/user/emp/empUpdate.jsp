@@ -344,7 +344,9 @@ $(function(){
                			</div>
                 		<div class="box-footer clearfix">
 			              <input value="취소" type="reset" class="btn btn-sm btn-warning btn-flat pull-right">
-			              <input name="list" type="button" value="목록" class="btn btn-sm btn-info btn-flat pull-right">
+			              <c:if test="${LOGIN_EMPINFO.emp_role eq 'MANAGER'}"> 
+			              	<input name="list" type="button" value="목록" class="btn btn-sm btn-info btn-flat pull-right">
+			              </c:if>
 			              <input value="확인" type="submit" class="btn btn-sm btn-danger btn-flat pull-right">
 			          	</div>
 						</form>
