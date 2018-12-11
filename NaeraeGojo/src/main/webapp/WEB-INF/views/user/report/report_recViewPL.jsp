@@ -183,14 +183,14 @@ label {
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="exampleInputFile" class="col-sm-2 control-label"><font
-								style="vertical-align: inherit;"><font
-									style="vertical-align: inherit;">파일 첨부</font></font></label>
-							<div class="col-sm-10 control-label">
-								<input type="file" id="exampleInputFile">
-							</div>
-						</div>
+<!-- 						<div class="form-group"> -->
+<!-- 							<label for="exampleInputFile" class="col-sm-2 control-label"><font -->
+<!-- 								style="vertical-align: inherit;"><font -->
+<!-- 									style="vertical-align: inherit;">파일 첨부</font></font></label> -->
+<!-- 							<div class="col-sm-10 control-label"> -->
+<!-- 								<input type="file" id="exampleInputFile"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 						
 						<c:forEach items="${vo.items }" var="reportFileItem" varStatus="stat">
 			                <div class="form-group">

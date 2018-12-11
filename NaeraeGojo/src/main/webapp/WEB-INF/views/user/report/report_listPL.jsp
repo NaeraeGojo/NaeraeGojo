@@ -70,7 +70,7 @@
 												<c:if test="${list.report_save_pl eq 'n'}">
 													<td>${list.report_title }</td>
 												</c:if>
-												<td>${list.report_title }</td>
+<%-- 												<td>${list.report_title }</td> --%>
 												<td>${list.emp_name }</td>
 												<td>${list.report_day }</td>
 												<td>3</td>
