@@ -38,7 +38,7 @@ label {
             </div>
 <!--             /.box-header -->
 <!--             form start -->
-		<form role="form" class="form-horizontal" action="${pageContext.request.contextPath}/user/noticeAll/insertNoticeAll.do" method="post" enctype="multipart/form-data">
+		<form role="form" class="form-horizontal" id="notice_form" action="${pageContext.request.contextPath}/user/noticeAll/insertNoticeAll.do" method="post" enctype="multipart/form-data">
               <div class="box-body">
                 
                 <div class="form-group">
@@ -83,7 +83,7 @@ label {
               </div>
               <div class="box-footer clearfix">
               <input value="취소" type="reset" href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat pull-right">
-              <input value="등록" type="submit" id="insert" href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
+              <input value="등록" type="submit"  href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">
           </div>
             </form>
           </div>
@@ -92,7 +92,7 @@ label {
           </section>
 <script type="text/javascript">
 $(function(){
-	    $('#insert').click(function(){
+	    $('#notice_form').submit(function(){
 	    	if($('input[name=notice_all_title]').val()==''){
 	    		alert('입력해봐라');
 	    		return false;
@@ -105,6 +105,17 @@ $(function(){
 	    		alert('입력해봐라');
 	    		return false;
 	    	}
+	    	var file1 = $('#file01').val();
+			if(file1 == ''){
+				alert("파일을 등록 선택해 주세요.");
+				return false;
+		    }
+	    	var file1 = $('#file02').val();
+			if(file2 == ''){
+				alert("파일을 등록 선택해 주세요.");
+				return false;
+		    }
+	    	
 	    	return true;
 	    })
 })

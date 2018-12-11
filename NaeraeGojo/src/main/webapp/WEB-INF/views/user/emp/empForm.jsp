@@ -144,7 +144,7 @@ $(function () {
 									        	<div style="width: 100%" align="center">
 									        	<br/>
 									            	<label class="btn btn-primary btn-file">
-									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" style="display: none;" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);">
+									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" style="display: none;" accept="image/gif, image/jpg, image/jpeg, image/png" onchange="readURL(this);">
 									             	</label>
 									            	size : 235x315 이하
 									         	</div>
