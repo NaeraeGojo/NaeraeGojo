@@ -205,7 +205,7 @@ public class ProjectController {
 		
 		params.put("emp_code", emp_code);
 		
-//		service.deleteEmp(params);
+		joinService.deleteAdd(params);
 		
 		andView.setViewName("jsonConvertView");
 		return andView;
