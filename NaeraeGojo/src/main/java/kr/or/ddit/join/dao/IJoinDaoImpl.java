@@ -107,4 +107,9 @@ public class IJoinDaoImpl implements IJoinDao{
 		
 	}
 
+	@Override
+	public void updateStatus(Map<String, String> params) throws SQLException {
+		client.update("join.updateStatus",params);
+	}
+
 }
