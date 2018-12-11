@@ -223,7 +223,15 @@ public class EmpController {
 	 */
 	@RequestMapping("updateEmp")
 	public ModelAndView updateEmp(EmpVO empInfo, ModelAndView andView, @RequestParam("files") MultipartFile[] files)throws Exception{
-		service.updateEmpInfo(empInfo, files);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("emp_code", empInfo.getEmp_code());
+		UserFileVO ufv = userServ.userFileInfo(params);
+		if(ufv!=null){
+			service.updateEmpInfo(empInfo, files);
+		}
+		else{
+			service.updateEmpInfo2(empInfo, files);
+		}
 		String message = URLEncoder.encode("수정이 완료되었습니다.", "UTF-8");
 		RedirectView rv = new RedirectView("empView.do?message="+message+ "&emp_code="+empInfo.getEmp_code());
 		rv.setExposeModelAttributes(false);
