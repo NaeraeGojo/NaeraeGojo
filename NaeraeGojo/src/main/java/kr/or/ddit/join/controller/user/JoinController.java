@@ -92,13 +92,13 @@ public class JoinController {
 		EmpVO empInfo = empServ.empInfo(params);
 
 		if (empInfo == null) {
-			String message = "";
+			String message = "정보가 일치하는 직원이 존재하지 않습니다.";
 			try {
 				message = URLEncoder.encode(message, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			return "redirect:/user/join/loginForm.do?message" + message;
+			return "redirect:/user/join/loginForm.do?message=" + message;
 		} else {
 			session.setAttribute("LOGIN_EMPINFO", empInfo);
 			Map<String, String> param1 = new HashMap<String, String>();
@@ -236,7 +236,13 @@ public class JoinController {
 
 		params.put("rqpps_code", rqpps_code);
 		List<JoinVO> joList = service.clickList(params);
-		String project_code = joList.get(0).getProject_code();
+		
+		String project_code = "";
+		if(joList.get(0).getProject_code()==null){
+			project_code = "";
+		}else{
+			project_code = joList.get(0).getProject_code();
+		}
 		List<JoinVO> addList = service.addList(params);
 		model.addAttribute("joList", joList);
 		model.addAttribute("rqpps_code",rqpps_code);
