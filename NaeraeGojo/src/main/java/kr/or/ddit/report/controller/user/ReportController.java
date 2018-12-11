@@ -139,6 +139,7 @@ public class ReportController {
 			String emp_code = null;
 			emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 			rvo.setEmp_code(emp_code);
+			rvo.setEmp_code_pl(emp_code);
 			service.insertReportPL(rvo,files);
 			
 			return "redirect:/user/report/report_listPL.do";
@@ -157,6 +158,7 @@ public class ReportController {
 			String emp_code = null;
 			emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 			rvo.setEmp_code(emp_code);
+			rvo.setEmp_code_pl(emp_code);
 			service.insertReportPLSave(rvo, files);
 			
 			return "redirect:/user/report/report_listPL.do";
@@ -451,16 +453,6 @@ public class ReportController {
 			ReportVO vo,
 			@PathVariable String report_code, Map<String, String> params ,Map<String, String> params1
 			)throws Exception{
-//		params.put("report_code", report_code);
-//		vo = service.reportView(params);
-//		String project_code = vo.getProject_code();
-//		params1.put("project_code", project_code);
-//		List<ReportVO> stList = service.reportStatus(params1);
-////		vo = service.noticeAllInfo(params);
-////		service.updateHit(params);
-//		andView.addObject("vo",vo);
-//		andView.addObject("stList",stList);
-//		andView.setViewName("user/report/report_sendDeleteDev");
 		
 		params.put("report_code", report_code);
 		vo = service.reportView(params);

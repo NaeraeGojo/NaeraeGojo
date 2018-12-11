@@ -225,16 +225,16 @@ label {
                insertNm += str+"/";
             }
 // 			if(report_content == '' || report_title == '' || report_content ){ 
-// 				boalert("빈 항목이 존재합니다.");
+// 				alert("빈 항목이 존재합니다.");
 // 				return false;
 // 			}
 			
 // 			if(pw_code == null || pw_code == ''){
-// 				boalert("인력비었다");
+// 				alert("인력비었다");
 // 				return false;
 // 			}
 // 			if(file1 == ''){
-// 				boalert("제안요청서 첨부파일을 등록해 주세요.")
+// 				alert("제안요청서 첨부파일을 등록해 주세요.")
 // 				return false;
 // 			}
 
