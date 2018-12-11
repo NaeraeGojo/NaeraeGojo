@@ -85,6 +85,7 @@ public class IJoinServiceImpl implements IJoinService{
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void updateRole(JoinVO jvo) throws SQLException {
 		joinDao.updateRole(jvo);
 		

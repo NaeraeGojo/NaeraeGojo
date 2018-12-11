@@ -17,6 +17,7 @@ import kr.or.ddit.join.service.IJoinService;
 import kr.or.ddit.userfile.service.IUserFileService;
 import kr.or.ddit.utils.CryptoGenerator;
 import kr.or.ddit.utils.RolePagingUtil;
+import kr.or.ddit.utils.SetContent;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
@@ -30,6 +31,7 @@ import kr.or.ddit.vo.UserFileVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -158,18 +160,28 @@ public class JoinController {
 	@RequestMapping("join_list")
 	public ModelAndView join_list(HttpServletRequest request,
 			ModelAndView andView, HttpSession session, String search_keyword,
-			String search_keycode, String currentPage, String emp_code)
+			String search_keycode, String currentPage, String emp_code, Map<String,String> params)
 			throws Exception {
+		
+		
+		
 		if (currentPage == null) {
 			currentPage = "1";
 		}
+		
+		params.put("search_keyword", search_keyword);
+		params.put("search_keycode", search_keycode);
+		
 		List<JoinVO> joinLast = service.joinFinalList();
+		int totalCount = service.totalCount(params);
+		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage), totalCount, request,6);
+		params.put("startCount",  String.valueOf(paging.getStartCount()));
+		params.put("endCount", String.valueOf(paging.getEndCount()));
+		andView.addObject("page", paging.getPagingHtmls());
 		andView.addObject("joinLast", joinLast);
 		andView.setViewName("user/join/join_list");
 		// Map<String, String> params = new HashMap<String, String>();
 		//
-		// params.put("search_keyword", search_keyword);
-		// params.put("search_keycode", search_keycode);
 		//
 		// emp_code = ((EmpVO)
 		// session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
@@ -189,7 +201,7 @@ public class JoinController {
 		// params.put("endCount", String.valueOf(paginUtil.getEndCount()));
 		// List<NotEmpVO> noticeAllList = service.noticeAllList(params);
 		// andView.addObject("noticeAllList",noticeAllList);
-		// andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
+//		 andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
 		// andView.setViewName("user/noticeAll/notice_allList");
 		return andView;
 	}
