@@ -116,4 +116,10 @@ public class IJoinServiceImpl implements IJoinService{
 		
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void updateStatus(Map<String, String> params) throws SQLException {
+		joinDao.updateStatus(params);
+	}
+
 }

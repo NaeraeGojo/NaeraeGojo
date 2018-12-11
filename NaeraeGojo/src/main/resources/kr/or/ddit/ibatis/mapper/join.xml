@@ -226,6 +226,12 @@
 		SET JOIN_DELETE = 'y'
 		WHERE JOIN_CODE = #join_code#
 	</update>
+	
+	<update id="updateStatus" parameterClass="map">
+		UPDATE JOIN
+		SET JOIN_STATUS = 'n'
+		WHERE RQPPS_CODE = #rqpps_code#
+	</update>
 
 <!-- 	<select id="joinInfo" parameterClass="map" resultClass="joinVO"> -->
 <!-- 		<include refid="selectAll"/> -->

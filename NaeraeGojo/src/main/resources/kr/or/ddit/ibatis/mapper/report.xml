@@ -272,7 +272,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum asc
+		order by b.rnum desc
 	</select>
 	
 	<select id="reportListPLRec" parameterClass="map" resultClass="reportVO">
@@ -294,7 +294,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum asc
+		order by b.rnum desc
 	</select>
 	
 	<select id="reportListPL" parameterClass="map" resultClass="reportVO">
@@ -315,7 +315,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum asc
+		order by b.rnum desc
 	</select>
 	
 	<select id="reportListPM" parameterClass="map" resultClass="reportVO">
@@ -337,7 +337,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum asc
+		order by b.rnum desc
 	</select>
 	
 	<select id="reportView" parameterClass="map" resultMap="reportMap">

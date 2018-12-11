@@ -292,6 +292,10 @@ public class JoinController {
 			service.insertJoinInfo(params);
 			params.clear();
 		}
+		// join에서 join_status 를 y => n
+		params.clear();
+		params.put("rqpps_code", select);
+		service.updateStatus(params);
 		
 		
 		// 제안요청서 상태 바꿔주는 곳
