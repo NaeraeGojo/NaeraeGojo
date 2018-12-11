@@ -239,8 +239,10 @@ $(function () {
                				</div>
                			</div>
                 		<div class="box-footer clearfix">
+			            <c:if test="${LOGIN_EMPINFO.emp_role eq 'MANAGER'}"> 
 			              <input value="탈퇴" type="button" class="btn btn-sm btn-warning btn-flat pull-right">
 			              <input name="list" type="button" value="목록" class="btn btn-sm btn-info btn-flat pull-right">
+			            </c:if>  
 			              <input value="수정" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 			          	</div>
 						</form>

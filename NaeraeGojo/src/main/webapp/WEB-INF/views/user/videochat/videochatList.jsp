@@ -240,7 +240,6 @@ function ptclick(project_code) {
 
     <!-- Main content -->
     <section class="content"> 
-    <br/>
     <div class="col-md-2"  style="float:right;">
       <input id="modal1" value="+ 화상회의 개설" type="button" class="btn btn-block btn-warning btn-lg "   style="float:right;  border:1px outset;">
     </div>

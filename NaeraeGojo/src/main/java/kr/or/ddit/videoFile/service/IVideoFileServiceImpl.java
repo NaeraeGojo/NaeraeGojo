@@ -55,4 +55,10 @@ public class IVideoFileServiceImpl implements IVideoFileService{
 		
 	}
 
+	@Override
+	public String getVideoFileCode(String video_chat_room_code)
+			throws SQLException {
+		return dao.getVideoFileCode(video_chat_room_code);
+	}
+
 }
