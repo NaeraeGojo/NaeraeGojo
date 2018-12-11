@@ -137,8 +137,8 @@ $(function () {
 	
 })
 
-function deleteEmp(emp_code) {
-    alert(emp_code);
+function deleteEmp(join_code) {
+    alert(join_code);
     
 //     $.ajax({
 //     	type : 'POST',
@@ -284,7 +284,7 @@ function deleteEmp(emp_code) {
 						<li>
 							<span class="handle"> <i class="fa fa-user"></i></span>
 							<span class="text"><input type="hidden" name="emp_code" value="${joinList.emp_code }">${joinList.emp_name }</span> 
-							<div class="tools"><i class="fa fa-remove" id="${joinList.emp_code }" onclick="deleteEmp(${joinList.emp_code })"></i></div>
+							<div class="tools"><i class="fa fa-remove"  onclick="deleteEmp(${joinList.join_code })"></i></div>
 						</li>
 						</c:forEach>
 					</ul>
