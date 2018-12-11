@@ -25,6 +25,13 @@
 #empList{
    overflow-y: scroll; 
 }
+
+.modal-content{
+	width : 800px;
+}
+.modal-body{
+	height : 600px;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script type="text/javascript">
@@ -137,21 +144,34 @@ $(function () {
 	
 })
 
-function deleteEmp(join_code) {
-    alert(join_code);
-    
-//     $.ajax({
-//     	type : 'POST',
-//         url : '${pageContext.request.contextPath}/user/project/deleteEmp.do',
-//         data : {emp_code :emp_code},
-//         dataType : 'json',
-//         error: function(xhr, status, error){
-//             alert(error);
-//         },
-//         success : function(data){
-        	
-//         }
-//     })
+function deleteEmp(join_code, emp_code) {
+    if(${LOGIN_EMPINFO.emp_code} == emp_code){
+    	alert('본인은 삭제할 수 없습니다.');
+    	return false;
+    }else if(${LOGIN_EMPINFO.emp_code} != emp_code){
+    	
+	    $.ajax({
+	    	type : 'POST',
+	        url : '${pageContext.request.contextPath}/user/project/deleteEmp.do',
+	        data : {join_code : join_code},
+	        dataType : 'json',
+	        error: function(xhr, status, error){
+	            alert(error);
+	        },
+	        success : function(data){
+	        	var text = '';
+	        	for (var i = 0; i < data.joinList.length; i++) {
+	        		text +='<li>'
+	        		text +='<span class="handle"> <i class="fa fa-user"></i></span>'
+	        		text +='<span class="text"><input type="hidden" name="emp_code" value="'+data.joinList[i].emp_code+'">'+data.joinList[i].emp_name+'</span> '
+	        		text +='<div class="tools"><i class="fa fa-remove"  onclick="deleteEmp('+data.joinList[i].join_code +','+data.joinList[i].emp_code+')"></i></div>'
+	        		text +='</li>'
+				}
+	        	
+	        	$('#empUL').empty().append(text);
+	        }
+	    })
+    }
 }
 
 
@@ -279,18 +299,18 @@ function deleteEmp(join_code) {
 					<h3 class="box-title">참여 인원</h3>
 				</div>
 				<div class="box-body" style="height: 607px" id="empList">
-					<ul class="todo-list">
+					<ul class="todo-list" id="empUL">
 						<c:forEach items="${joinList}" var="joinList">
 						<li>
 							<span class="handle"> <i class="fa fa-user"></i></span>
 							<span class="text"><input type="hidden" name="emp_code" value="${joinList.emp_code }">${joinList.emp_name }</span> 
-							<div class="tools"><i class="fa fa-remove"  onclick="deleteEmp(${joinList.join_code })"></i></div>
+							<div class="tools"><i class="fa fa-remove"  onclick="deleteEmp(${joinList.join_code },${joinList.emp_code })"></i></div>
 						</li>
 						</c:forEach>
 					</ul>
 				</div>
 				<div class="box-footer clearfix no-border">
-					<button type="button" class="btn btn-default pull-right">
+					<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#modal1">
 						<i class="fa fa-plus"></i> 인원 추가
 					</button>
 				</div>
@@ -339,4 +359,61 @@ function deleteEmp(join_code) {
 	</div>
 </section>
 
+ <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="container">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"   >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="exampleModalLabel">인력 추가</h3>
+      </div>
+      <div class="modal-body" style=" border-top:1px solid orange; height:680px; ">
+      <form class="form-horizontal" id="sdfd" role="form"  action="${pageContext.request.contextPath}/user/join/join_add_insert.do" 
+                            method="post" >
+            <div  class="row" style="padding:30px; overflow:scroll; width:775px; height:600px;">
+                <div class="form-group">
+                    <div id="ff"></div>
+              </div>      
+                        
+              <table class="table no-margin" id="mView" >
+                  <thead>
+                  <tr>
+                    <th scope="col" width="20%">NO.</th>
+                    <th scope="col" width="20%">소속부서</th>
+                    <th scope="col" width="20%">레벨</th>
+                    <th scope="col" width="20%">이름</th>
+                    <th scope="col" width="20%">체크여부</th>
+                  </tr>
+                  </thead>
+                  <tbody id="bodytable"  >
+                  		<input type="hidden" value="" name="rqpps_code" />
+	                  	<input type="hidden" value="" name="project_code" />
+                  
+<%--                		<c:forEach items="${addList }" var="alist"> --%>
+	                  <tr>
+<%-- 	                  	<input type="hidden" value="${ alist.emp_code}" name="emp_code" /> --%>
+<%-- 		                  	<td>${ alist.rnum}</td> --%>
+<%-- 		                    <td>${alist.part_name}</td> --%>
+<%-- 		                    <td>${alist.emp_level}</td> --%>
+<%-- 		                    <td>${alist.emp_name}</td> --%>
+		                    <td><input type="checkbox" value="" name="micro" class="flat-red" ></td>
+		                    <input type="hidden" name ="myArray">
+	                 </tr>
+<%-- 	                </c:forEach> --%>
+
+                 </tbody>
+               </table>
+             </div>
+      <div class="modal-footer">
+      		<input type="button" id="modalAdd" class="btn btn-primary" value="등록">
+<!--            <button type="submit" id="modalAdd" class="btn btn-primary" data-dismiss="modal">등록</button> -->
+      </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
 
