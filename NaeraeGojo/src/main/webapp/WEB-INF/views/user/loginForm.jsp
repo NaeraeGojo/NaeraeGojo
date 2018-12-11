@@ -75,11 +75,11 @@ $(function(){
 	}
 	$('#login4').click(function(){
 		if(!$('input[name=emp_code]').val()){
-			boalert('해당사원번호를 찾을 수 없습니다.');
+			boalert('해당사원번호를 입력해주세요.');
 			return false;
 		}
 		if(!$('input[name=emp_pass]').val().validationPASS()){
-			boalert('비밀번호가 일치하지 않습니다.');
+			boalert('비밀번호를 입력해주세요.');
 			return false;
 		}
 		

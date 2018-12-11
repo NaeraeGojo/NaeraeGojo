@@ -89,10 +89,12 @@ p {
     <div class="row">
     
     <div class="suggestcont">
-    	<div class="col-md-1"  style="float:right;">
-	      <input id="suggestForm" value="+ 제안서 등록" type="button" class="btn btn-block bg-yellow btn-lg "  
-	      style="float:right; background-color:#c8c8c8; border:1px outset; width:200px; margin-bottom:14px;">
-	    </div>
+    	<c:if test="${LOGIN_EMPINFO.emp_level == '특급' }">
+	    	<div class="col-md-1"  style="float:right;">
+		      <input id="suggestForm" value="+ 제안서 등록" type="button" class="btn btn-block bg-yellow btn-lg "  
+		      style="float:right; background-color:#c8c8c8; border:1px outset; width:200px; margin-bottom:14px;">
+		    </div>
+	    </c:if>
     </div>
     
     <div class="suggestcont">

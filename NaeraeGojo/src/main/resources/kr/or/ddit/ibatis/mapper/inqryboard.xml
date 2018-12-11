@@ -38,12 +38,16 @@
 				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
 						INQRY_BOARD_TITLE LIKE '%'||#search_keyword#||'%'
 					 OR INQRY_BOARD_CONTENT LIKE '%'||#search_keyword#||'%'
+					 OR b.EMP_NICK LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="TITLE">
 					INQRY_BOARD_TITLE LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="CONTENT">
 					INQRY_BOARD_CONTENT LIKE '%'||#search_keyword#||'%'
+				</isEqual>
+				<isEqual property="search_keycode" compareValue="WRITER">
+					b.EMP_NICK LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 			</isNotEmpty>
 		</dynamic>
@@ -65,9 +69,10 @@
     </select> 
        
     <select id="totalCount" parameterClass="map" resultClass="int">
-		select count(*)
-		  from inqry_board
-		 where inqry_board_delete = 'n'
+		select count(a.inqry_board_code)
+		  from inqry_board a, emp b
+		 where a.emp_code = b.emp_code
+		 and a.inqry_board_delete = 'n'
 		 <include refid="searchCondition"/> 
 	</select>
     

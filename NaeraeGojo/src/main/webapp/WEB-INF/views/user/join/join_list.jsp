@@ -88,10 +88,10 @@ p {
          
          
 		</div>
-<%-- 		${page } --%>
+		${page }
 		
 		
-		<form action="${pageContext.request.contextPath }/user/rfp/rfpList.do" method="post" class="form-inline pull-right">
+		<form action="${pageContext.request.contextPath }/user/join/join_list.do" method="post" class="form-inline pull-right">
 		
 		<select class="form-control" name="search_keycode">
 <!-- 			<option>검색조건</option> -->
