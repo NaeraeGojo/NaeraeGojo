@@ -107,11 +107,11 @@ public class VideoChatController {
 		
 		String video_chat_room_code = vcv.getVideo_chat_room_code();
 		
-//		if(files==null){
-//			Fileservice.insertChatFile(video_chat_room_code, files);
-//		}
+		if(files==null){
+			return "redirect:/user/video/chatList.do";
+		}
 		
-		if (files != null) {
+		if (files!=null) {
 			String filecode = Fileservice.getVideoFileCode(video_chat_room_code);
 			if(filecode!=null){
 				Fileservice.updateMeetingFile(files, video_chat_room_code);
@@ -124,11 +124,22 @@ public class VideoChatController {
 		return "redirect:/user/video/chatList.do";
 	}
 	
-	
+	@RequestMapping("insertVideoChat")
 	public String insertVideoChat(VideoChatRoomVO vcv
-									,  MultipartFile[] files) throws Exception{
+									,  MultipartFile files) throws Exception{
 		
-		return "";
+		service.updateVideoChat(vcv);
+		
+//		if(files.isEmpty()){
+//			return "redirect:/user/video/chatList.do";
+//		}
+		
+		String video_chat_room_code = vcv.getVideo_chat_room_code();
+		if (!files.isEmpty()) {
+			Fileservice.insertChatFile(video_chat_room_code, files);
+		}
+		
+		return "redirect:/user/video/chatList.do";
 	}
 	
 	

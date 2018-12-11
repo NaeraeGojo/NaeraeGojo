@@ -153,10 +153,17 @@ label {
                  <div class="form-group">
                      <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">첨부 파일</font></font></label>
 	                 <div class="col-sm-10 control-label" id="filediv">
-	                    <c:forEach items="${chatInfo[0].items}" var="videoFileInfo">
-	                      <a id="${videoFileInfo.video_file_name}" href="${pageContext.request.contextPath }/user/videoFile/videochatFileDown.do?video_file_code=${videoFileInfo.video_file_code}">${videoFileInfo.video_file_name}</a>
-	                    </c:forEach>
-	                      <input type="button" name="files" value="파일수정" id="filebtn">
+	                    <c:if test="${empty chatInfo[0].items }">
+	                           <input type="file" name="files">
+	                    </c:if>
+	                    
+	                    <c:if test="${!empty chatInfo[0].items }">   
+		                    <c:forEach items="${chatInfo[0].items}" var="videoFileInfo">
+		                      <a id="${videoFileInfo.video_file_name}" href="${pageContext.request.contextPath }/user/videoFile/videochatFileDown.do?video_file_code=${videoFileInfo.video_file_code}">${videoFileInfo.video_file_name}</a>
+	                        <input type="button" name="files" value="파일수정" id="filebtn">
+		                    </c:forEach>
+	                    
+	                    </c:if>
 	                 </div>
                   
                  </div>

@@ -15,4 +15,5 @@ public interface IMeetingFileDao{
 	public void updateMeetingFile(MeetFileVO mfile) throws SQLException;
 
 	public String getfileCode(String meeting_code) throws SQLException;
+
 }

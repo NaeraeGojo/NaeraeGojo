@@ -70,7 +70,7 @@ label {
     <!-- Main content -->
     <section class="content">
     <br/><br/>
-     <form class="form-horizontal"   action="${pageContext.request.contextPath}/user/video/videochatUpdate.do" 
+     <form class="form-horizontal"   action="${pageContext.request.contextPath}/user/video/insertVideoChat.do" 
                             method="post" enctype="multipart/form-data"> 
       <div class="row" >
       <div class="col-md-12">
