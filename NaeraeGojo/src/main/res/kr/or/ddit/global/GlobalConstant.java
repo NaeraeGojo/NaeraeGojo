@@ -7,5 +7,5 @@ public interface GlobalConstant {
 	public String MEETING_SAVE_PATH = "D:\\temp\\files"; // 회의록
 	public String PRO_SAVE_PATH = "D:\\temp\\allPro"; // 프로젝트별 자료,자유,공지
 	public String SAVE_NOTICE = "D:\\temp\\notice";
-	public String SAVE_REPORT = "D:\\temp\\report";
+	public String SAVE_REPORT = "C:\\Programmer\\temp\\report";
 }

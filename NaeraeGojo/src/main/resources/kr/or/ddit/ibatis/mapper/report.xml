@@ -300,7 +300,8 @@
 	<select id="reportListPL" parameterClass="map" resultClass="reportVO">
 		select b.*
 		from (select rownum rnum, a.*
-				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS,
+				A.REPORT_SAVE_PL
 						FROM REPORT A, EMP B
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE = #emp_code#

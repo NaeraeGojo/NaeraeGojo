@@ -3,228 +3,226 @@
     PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="project">
-	<typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
-	<typeAlias alias="joinVO" type="kr.or.ddit.vo.JoinVO"/>
-	<typeAlias alias="suggestVO" type="kr.or.ddit.vo.SuggestVO"/>
-	<typeAlias alias="projectworkVO" type="kr.or.ddit.vo.ProjectWorkVO"/>
-	
-	<resultMap id="projectMap" class="projectVO">
-		<result property="project_code" column="project_code"/>
-		<result property="project_start" column="project_start"/>
-		<result property="project_end" column="project_end"/>
-		<result property="project_name" column="project_name"/>
-		<result property="suggest_cost" column="suggest_cost"/>
-		<result property="rqpps_notice_agency" column="rqpps_notice_agency"/>
-		<result property="pw_percent" column="pw_percent"/>
-		<result property="emp_code" column="emp_code"/>
-	</resultMap>
-	
-	<sql id="selectAll">
-		SELECT 
-			A.PROJECT_CODE
-			,A.PROJECT_NAME
-			,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
-			,TO_CHAR(A.PROJECT_END, 'YYYY-MM-DD') AS PROJECT_END
-			,C.EMP_CODE
-			,B.JOIN_CODE
-			,NVL(TRUNC(AVG(PW_PERCENT)),0) AS PW_PERCENT
-		FROM PROJECT A, JOIN B, EMP C , PW
-		WHERE B.EMP_CODE = #emp_code#
-		AND PW.PROJECT_CODE(+) = A.PROJECT_CODE
-		AND B.EMP_CODE = C.EMP_CODE
-		AND B.PROJECT_CODE = A.PROJECT_CODE
-		AND A.PROJECT_DELETE = 'n'
-		GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, C.EMP_CODE
-	</sql>
-	
-	<sql id="selectJoinAll">
-		SELECT 
-		    A.EMP_CODE
-		    ,B.EMP_NAME
-		    ,A.JOIN_CODE
-		FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
+   <typeAlias alias="projectVO" type="kr.or.ddit.vo.ProjectVO"/>
+   <typeAlias alias="joinVO" type="kr.or.ddit.vo.JoinVO"/>
+   <typeAlias alias="suggestVO" type="kr.or.ddit.vo.SuggestVO"/>
+   <typeAlias alias="projectworkVO" type="kr.or.ddit.vo.ProjectWorkVO"/>
+   
+   <resultMap id="projectMap" class="projectVO">
+      <result property="project_code" column="project_code"/>
+      <result property="project_start" column="project_start"/>
+      <result property="project_end" column="project_end"/>
+      <result property="project_name" column="project_name"/>
+      <result property="suggest_cost" column="suggest_cost"/>
+      <result property="rqpps_notice_agency" column="rqpps_notice_agency"/>
+      <result property="pw_percent" column="pw_percent"/>
+      <result property="emp_code" column="emp_code"/>
+   </resultMap>
+   
+   <sql id="selectAll">
+      SELECT 
+         A.PROJECT_CODE
+         ,A.PROJECT_NAME
+         ,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
+         ,TO_CHAR(A.PROJECT_END, 'YYYY-MM-DD') AS PROJECT_END
+         ,C.EMP_CODE
+         ,NVL(TRUNC(AVG(PW_PERCENT)),0) AS PW_PERCENT
+      FROM PROJECT A, JOIN B, EMP C , PW
+      WHERE B.EMP_CODE = #emp_code#
+      AND PW.PROJECT_CODE(+) = A.PROJECT_CODE
+      AND B.EMP_CODE = C.EMP_CODE
+      AND B.PROJECT_CODE = A.PROJECT_CODE
+      AND A.PROJECT_DELETE = 'n'
+      GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, C.EMP_CODE
+   </sql>
+   
+   <sql id="selectJoinAll">
+      SELECT 
+          A.EMP_CODE
+          ,B.EMP_NAME
+          ,A.JOIN_CODE
+      FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
         WHERE A.EMP_CODE = B.EMP_CODE
         AND A.RQPPS_CODE = C.RQPPS_CODE
         AND C.RQPPS_CODE = D.RQPPS_CODE
         AND D.SUGGEST_CODE = E.SUGGEST_CODE
         AND A.PROJECT_CODE = E.PROJECT_CODE
         AND A.PROJECT_CODE = #project_code#
-	</sql>
-	
-	<sql id="searchCondition">
-		<dynamic>
-	 		<isNotEmpty property="search_keyword" prepend="and">
-	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
-	 				   PROJECT_NAME   LIKE '%' || #search_keyword# || '%'
-	 				OR PROJECT_START   LIKE '%' || #search_keyword# || '%'
-	 			</isEqual>
-	 			<isEqual property="search_keycode" compareValue="NAME" >  
-	 					PROJECT_NAME LIKE '%' || #search_keyword# || '%'
-	 			</isEqual>
-	 			<isEqual property="search_keycode" compareValue="START" >  
-	 					PROJECT_START LIKE '%' || #search_keyword# || '%'
-	 			</isEqual>
-	 		</isNotEmpty>
-	 	</dynamic>
-	</sql>
-	
-	<select id="projectList" resultClass="projectVO" parameterClass="map">
-		SELECT B.*
-		FROM  (SELECT ROWNUM RNUM, A.*
-				FROM ( <include refid="selectAll"/> 
-						<include refid="searchCondition"/> 
-						ORDER BY PROJECT_CODE) A ) B
- 		<![CDATA[				
-		WHERE B.RNUM <= #startCount#
-		 AND  B.RNUM >= #endCount#
-		]]>
-		ORDER BY B.RNUM DESC
-	</select>	
-	
-	<select id="projectInfo" parameterClass="map" resultMap="projectMap">
-		SELECT 
-			A.PROJECT_CODE
-			,A.PROJECT_NAME
-			,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
-			,TO_CHAR(A.PROJECT_END, 'YYYY-MM-DD') AS PROJECT_END
-			,NVL(TRUNC(AVG(PW_PERCENT)),0) AS PW_PERCENT
+   </sql>
+   
+   <sql id="searchCondition">
+      <dynamic>
+          <isNotEmpty property="search_keyword" prepend="and">
+             <isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
+                   PROJECT_NAME   LIKE '%' || #search_keyword# || '%'
+                OR PROJECT_START   LIKE '%' || #search_keyword# || '%'
+             </isEqual>
+             <isEqual property="search_keycode" compareValue="NAME" >  
+                   PROJECT_NAME LIKE '%' || #search_keyword# || '%'
+             </isEqual>
+             <isEqual property="search_keycode" compareValue="START" >  
+                   PROJECT_START LIKE '%' || #search_keyword# || '%'
+             </isEqual>
+          </isNotEmpty>
+       </dynamic>
+   </sql>
+   
+   <select id="projectList" resultClass="projectVO" parameterClass="map">
+      SELECT B.*
+      FROM  (SELECT ROWNUM RNUM, A.*
+            FROM ( <include refid="selectAll"/> 
+                  <include refid="searchCondition"/> 
+                  ORDER BY PROJECT_CODE) A ) B
+       <![CDATA[            
+      WHERE B.RNUM <= #startCount#
+       AND  B.RNUM >= #endCount#
+      ]]>
+      ORDER BY B.RNUM DESC
+   </select>   
+   
+   <select id="projectInfo" parameterClass="map" resultMap="projectMap">
+      SELECT 
+         A.PROJECT_CODE
+         ,A.PROJECT_NAME
+         ,TO_CHAR(A.PROJECT_START, 'YYYY-MM-DD') AS PROJECT_START
+         ,TO_CHAR(A.PROJECT_END, 'YYYY-MM-DD') AS PROJECT_END
+         ,NVL(TRUNC(AVG(PW_PERCENT)),0) AS PW_PERCENT
             ,TO_CHAR(SUGGEST_COST,'L9,999,999,999,999') AS SUGGEST_COST
             ,D.RQPPS_NOTICE_AGENCY
             ,D.EMP_CODE
-		FROM PROJECT A, JOIN B, PW C, RQPPS D, SUGGEST E
-		WHERE A.PROJECT_DELETE = 'n'
-		AND C.PROJECT_CODE(+) = A.PROJECT_CODE
-		AND B.PROJECT_CODE = A.PROJECT_CODE
+      FROM PROJECT A, JOIN B, PW C, RQPPS D, SUGGEST E
+      WHERE A.PROJECT_DELETE = 'n'
+      AND C.PROJECT_CODE(+) = A.PROJECT_CODE
+      AND B.PROJECT_CODE = A.PROJECT_CODE
         AND A.SUGGEST_CODE = E.SUGGEST_CODE
         AND D.RQPPS_CODE = E.RQPPS_CODE
         and a.project_code = #project_code#
-		GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, E.SUGGEST_COST, D.RQPPS_NOTICE_AGENCY, D.EMP_CODE
-	</select>
-	
-	<insert id="insertProject" parameterClass="projectVO">
-		<selectKey keyProperty="project_code" resultClass="string">
-			SELECT PROJECT_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO PROJECT(
-				          PROJECT_CODE
-						  ,PROJECT_START
-						  ,PROJECT_END
-						  ,PROJECT_NAME
-						  ,SUGGEST_CODE
-						  )
-					VALUES(
-					      #project_code#
-						  ,#project_start#
-						  ,#project_end#
-						  ,#project_name#
-						  ,#suggest_code#
-						  )
-	</insert>
-	
-	<update id="updateProject" parameterClass="projectVO">
-		UPDATE PROJECT
-		   SET
-		       PROJECT_NAME = #project_name#
-		   	  ,PROJECT_START = #project_start# 
- 			  ,PROJECT_END  = #project_end#
-		 WHERE PROJECT_CODE = #project_code#
-	</update>
-	
-	<update id="deleteProject" parameterClass="map">
-		UPDATE PROJECT
-		   SET PROJECT_DELETE = 'y'
-		 WHERE PROJECT_CODE   = #project_code#
-	</update>
-	
-	<select id="totalCountPL" parameterClass="map" resultClass="int">
-		SELECT COUNT(EMP_CODE)
-		FROM JOIN A, PROJECT B
-		WHERE A.PROJECT_CODE = B.PROJECT_CODE
-		AND EMP_CODE = #emp_code#
-	</select>
-	
-	
-	
-	<select id="joinList" resultClass="JoinVO" parameterClass="map">
-		SELECT B.*
-		FROM  (SELECT ROWNUM RNUM, A.*
-				FROM ( <include refid="selectJoinAll"/> 
-						ORDER BY EMP_CODE) A ) B
- 		<![CDATA[				
- 		WHERE B.RNUM <= #startCount# 
- 		 AND  B.RNUM >= #endCount# 
- 		]]> 
-		ORDER BY B.RNUM ASC
-	</select>
-	
-	<select id="suggestList" resultClass="suggestVO" parameterClass="map">
-		SELECT 
-		    SUGGEST_CODE
-		    ,SUGGEST_TITLE
-		FROM SUGGEST
-	</select>
-	
-	<select id="totalComplete" resultClass="int" parameterClass="map">
-		SELECT 
-		   TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 90 AND 100 THEN '완료' END )),0))
-		FROM PW
-		WHERE PROJECT_CODE = #project_code#
-		GROUP BY PW_PERCENT   
-	</select>
-	
-	<select id="totalIng" resultClass="int" parameterClass="map">
-		SELECT 
-		    TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 1 AND 89 THEN '진행중' END)),0))
-		FROM PW
-		WHERE PROJECT_CODE = #project_code#
-		GROUP BY PW_PERCENT   
-	</select>
-	
-	<select id="totalNew" resultClass="int" parameterClass="map">
-		SELECT 
-		    TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 0 AND 0 THEN '신규' END)),0))
-		FROM PW
-		WHERE PROJECT_CODE = #project_code#
-		GROUP BY PW_PERCENT   
-	</select>
-	
-	<select id="suggestInfo" parameterClass="map" resultClass="suggestVO">
-		SELECT 
-		     A.SUGGEST_CODE
-			,A.SUGGEST_TITLE
-			,A.SUGGEST_CONTENT
-			,A.SUGGEST_RESULT
-			,TO_CHAR(A.SUGGEST_START_DATE, 'YYYY-MM-DD') AS SUGGEST_START_DATE
-			,TO_CHAR(A.SUGGEST_END_DATE, 'YYYY-MM-DD') AS SUGGEST_END_DATE
-			,LTRIM(TO_CHAR(SUGGEST_COST,'L999,999,999,999,999')) AS SUGGEST_COST
-		    ,B.RQPPS_NOTICE_AGENCY
-		    ,A.RQPPS_CODE
-		FROM SUGGEST A, RQPPS B
-		WHERE A.RQPPS_CODE = B.RQPPS_CODE
-		AND A.SUGGEST_CODE = #suggest_code#
-	</select>
-	
-	<select id="totalCount" parameterClass="map" resultClass="int">
-		SELECT 
-		    COUNT(A.EMP_CODE)
-		FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
+      GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, E.SUGGEST_COST, D.RQPPS_NOTICE_AGENCY, D.EMP_CODE
+   </select>
+   
+   <insert id="insertProject" parameterClass="projectVO">
+      <selectKey keyProperty="project_code" resultClass="string">
+         SELECT PROJECT_SEQ.NEXTVAL FROM DUAL
+      </selectKey>
+      INSERT INTO PROJECT(
+                      PROJECT_CODE
+                    ,PROJECT_START
+                    ,PROJECT_END
+                    ,PROJECT_NAME
+                    ,SUGGEST_CODE
+                    )
+               VALUES(
+                     #project_code#
+                    ,#project_start#
+                    ,#project_end#
+                    ,#project_name#
+                    ,#suggest_code#
+                    )
+   </insert>
+   
+   <update id="updateProject" parameterClass="projectVO">
+      UPDATE PROJECT
+         SET
+             PROJECT_NAME = #project_name#
+              ,PROJECT_START = #project_start# 
+            ,PROJECT_END  = #project_end#
+       WHERE PROJECT_CODE = #project_code#
+   </update>
+   
+   <update id="deleteProject" parameterClass="map">
+      UPDATE PROJECT
+         SET PROJECT_DELETE = 'y'
+       WHERE PROJECT_CODE   = #project_code#
+   </update>
+   
+   <select id="totalCountPL" parameterClass="map" resultClass="int">
+      SELECT COUNT(EMP_CODE)
+      FROM JOIN A, PROJECT B
+      WHERE A.PROJECT_CODE = B.PROJECT_CODE
+      AND EMP_CODE = #emp_code#
+   </select>
+   
+   
+   
+   <select id="joinList" resultClass="JoinVO" parameterClass="map">
+      SELECT B.*
+      FROM  (SELECT ROWNUM RNUM, A.*
+            FROM ( <include refid="selectJoinAll"/> 
+                  ORDER BY EMP_CODE) A ) B
+       <![CDATA[            
+       WHERE B.RNUM <= #startCount# 
+        AND  B.RNUM >= #endCount# 
+       ]]> 
+      ORDER BY B.RNUM ASC
+   </select>
+   
+   <select id="suggestList" resultClass="suggestVO" parameterClass="map">
+      SELECT 
+          SUGGEST_CODE
+          ,SUGGEST_TITLE
+      FROM SUGGEST
+   </select>
+   
+   <select id="totalComplete" resultClass="int" parameterClass="map">
+      SELECT 
+         TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 90 AND 100 THEN '완료' END )),0))
+      FROM PW
+      WHERE PROJECT_CODE = #project_code#
+      GROUP BY PW_PERCENT   
+   </select>
+   
+   <select id="totalIng" resultClass="int" parameterClass="map">
+      SELECT 
+          TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 1 AND 89 THEN '진행중' END)),0))
+      FROM PW
+      WHERE PROJECT_CODE = #project_code#
+      GROUP BY PW_PERCENT   
+   </select>
+   
+   <select id="totalNew" resultClass="int" parameterClass="map">
+      SELECT 
+          TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 0 AND 0 THEN '신규' END)),0))
+      FROM PW
+      WHERE PROJECT_CODE = #project_code#
+      GROUP BY PW_PERCENT   
+   </select>
+   
+   <select id="suggestInfo" parameterClass="map" resultClass="suggestVO">
+      SELECT 
+           A.SUGGEST_CODE
+         ,A.SUGGEST_TITLE
+         ,A.SUGGEST_CONTENT
+         ,A.SUGGEST_RESULT
+         ,TO_CHAR(A.SUGGEST_START_DATE, 'YYYY-MM-DD') AS SUGGEST_START_DATE
+         ,TO_CHAR(A.SUGGEST_END_DATE, 'YYYY-MM-DD') AS SUGGEST_END_DATE
+         ,LTRIM(TO_CHAR(SUGGEST_COST,'L999,999,999,999,999')) AS SUGGEST_COST
+          ,B.RQPPS_NOTICE_AGENCY
+          ,A.RQPPS_CODE
+      FROM SUGGEST A, RQPPS B
+      WHERE A.RQPPS_CODE = B.RQPPS_CODE
+      AND A.SUGGEST_CODE = #suggest_code#
+   </select>
+   
+   <select id="totalCount" parameterClass="map" resultClass="int">
+      SELECT 
+          COUNT(A.EMP_CODE)
+      FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
         WHERE A.EMP_CODE = B.EMP_CODE
         AND A.RQPPS_CODE = C.RQPPS_CODE
         AND C.RQPPS_CODE = D.RQPPS_CODE
         AND D.SUGGEST_CODE = E.SUGGEST_CODE
         AND E.PROJECT_CODE = #project_code#
-	</select>
-	
-	<update id="updateJoinProjectCode" parameterClass="projectVO">
-		UPDATE 
-		    JOIN 
-		SET 
-			PROJECT_CODE = #project_code#
-			,JOIN_ALARM = 'y'  
-		WHERE RQPPS_CODE = #rqpps_code#
-	</update>
-	
-	
+   </select>
+   
+   <update id="updateJoinProjectCode" parameterClass="projectVO">
+      UPDATE 
+          JOIN 
+      SET 
+         PROJECT_CODE = #project_code#
+         ,JOIN_ALARM = 'y'  
+      WHERE RQPPS_CODE = #rqpps_code#
+   </update>
+   
+   
 </sqlMap>
-
 

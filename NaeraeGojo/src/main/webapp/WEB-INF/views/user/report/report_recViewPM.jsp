@@ -191,6 +191,16 @@ label {
 								<input type="file" id="exampleInputFile">
 							</div>
 						</div>
+						
+						<c:forEach items="${vo.items }" var="reportFileItem" varStatus="stat">
+			                <div class="form-group">
+			                  <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력</font></font></label>
+			                  <div class="col-sm-10 control-label">
+			                  	  <a id="${reportFileItem.report_file_code }" href="${pageContext.request.contextPath }/user/reportfile/reportFileDownload.do?report_file_code=${reportFileItem.report_file_code }">
+											${reportFileItem.report_file_name}</a>
+			                  </div>
+			                </div>
+                		</c:forEach>
 
 
 					</div>
@@ -335,6 +345,33 @@ label {
 		    	var  report_code = $('input[name=report_code]').val();
 		    	$(location).attr('href','${pageContext.request.contextPath}/user/report/deleteReportPMRec/'+report_code+'.do');
 		 });
+	    
+	    $('#checkFeed').click(function(){
+			  var emp_code = $('input[name=emp_code]').val();
+			  var report_code = $('input[name=report_code]').val();
+//			  $(location).attr('href','${pageContext.request.contextPath}/user/report/feedDEV/'+report_code+'/'+emp_code+'.do');
+			  
+			  $.ajax({
+					url : '${pageContext.request.contextPath}/user/report/feedDEV.do',
+					dataType: 'json',
+					data : {
+						
+							emp_code:emp_code,
+							report_code :report_code
+							
+							},
+					success : function(data){
+						console.log(data);
+						alert(data.rpo.report_feed_title);
+						$('input[name=report_feed_title]').val(data.rpo.report_feed_title);
+						$('input[name=report_feed_content]').val(data.rpo.report_feed_content);
+						$('input[name=pm_name]').val(data.rpo.pm_name);
+					},
+					error : function(res){
+						alert(res.status);
+					}
+				});
+		 })
 
 	})
 </script>
