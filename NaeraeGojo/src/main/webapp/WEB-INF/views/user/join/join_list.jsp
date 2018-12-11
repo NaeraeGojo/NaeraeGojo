@@ -67,7 +67,7 @@ p {
     </div>
     
     <div class="joincont">
-    	
+    	 <c:if test="${!empty joinLast}">
        <c:forEach items="${joinLast }" var="itemS">
          <div class="col-md-6 ">
           <div class="box box-solid callout callout-warning rfps">
@@ -82,6 +82,7 @@ p {
        </div>
          
          </c:forEach>
+         </c:if>
          <c:if test="${empty joinLast}">
        	  등록된 제안요청서가 존재하지 않습니다.
          </c:if>

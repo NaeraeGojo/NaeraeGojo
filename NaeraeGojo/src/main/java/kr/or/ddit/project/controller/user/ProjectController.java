@@ -201,12 +201,17 @@ public class ProjectController {
 	
 	@RequestMapping("deleteEmp")
 	public ModelAndView deleteEmp(Map<String, String> params, ModelAndView andView,
-			String emp_code, HttpSession session) throws SQLException{
+			String join_code, HttpSession session) throws SQLException{
 		
-		params.put("emp_code", emp_code);
+		params.put("join_code", join_code);
 		
 		joinService.deleteAdd(params);
+		params.clear();
 		
+		String project_code = (String) session.getAttribute("project_code");
+		params.put("project_code", project_code);
+		List<JoinVO> joinList = service.joinList(params);
+		andView.addObject("joinList",joinList);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}

@@ -98,7 +98,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin table-hover">
+                <table id="tableID" class="table no-margin table-hover">
                   <thead>
                   <tr>
                     <th scope="col" width="10%">No.</th>
@@ -127,23 +127,11 @@
               <!-- /.table-responsive -->
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-<!--               <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
-<!--               <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
-            </div>
             <!-- /.box-footer -->
             
           </div>
         <form action="${pageContext.request.contextPath }/user/noticeAll/notice_allList.do" method="post" class="form-inline pull-right">
 	    
-	    <a href="#" class="button small orange" style="width : 300px; height : 150px;">Button</a>
 	    
 		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 		<select class="form-control" name="search_keycode" >
@@ -174,7 +162,7 @@ $(function(){
 	})
 
 	
-    $('#noticeV tr:gt(0)').click(function(){
+    $('#tableID tr:gt(0)').click(function(){
 //     	var rnum = $(this).find('td:eq(0)').text();
     	var notice_all_code = $(this).find('td:eq(0) input').val();
 		$(location).attr('href','${pageContext.request.contextPath}/user/noticeAll/notice_allView/'+notice_all_code+'.do');

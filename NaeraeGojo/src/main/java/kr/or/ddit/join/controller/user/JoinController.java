@@ -336,7 +336,7 @@ public class JoinController {
 	
 	
 	@RequestMapping("join_updateRole")
-	public ModelAndView join_updateRole(JoinVO vo, String select,
+	public String join_updateRole(JoinVO vo, String select,
 			String listHigh, String selectHigh, Map<String, String> params,
 			ModelAndView andView) throws Exception {
 
@@ -350,10 +350,10 @@ public class JoinController {
 			service.updateRole(joinInfo);
 		}
 		
-		andView.addObject("vo",vo);
-		andView.setViewName("user/join/join_list");
+//		andView.addObject("vo",vo);
+//		andView.setViewName("user/join/join_list");
 		
-		return andView;
+		return "redirect:/user/join/join_list.do";
 	}
 	
 	

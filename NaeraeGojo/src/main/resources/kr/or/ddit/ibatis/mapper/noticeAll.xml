@@ -78,20 +78,6 @@
 						WHERE C.EMP_CODE = D.EMP_CODE
 						AND C.NOTICE_ALL_DELETE = 'n'
 						<include refid="searchCondition"/>
-<!-- 						<dynamic> -->
-<!-- 					 		<isNotEmpty property="search_keyword" prepend="and"> -->
-<!-- 					 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">   -->
-<!-- 					 				   (C.NOTICE_ALL_TITLE LIKE '%' || #search_keyword# || '%' -->
-<!-- 					 				OR C.NOTICE_ALL_CONTENT   LIKE '%' || #search_keyword# || '%') -->
-<!-- 					 			</isEqual> -->
-<!-- 					 			<isEqual property="search_keycode" compareValue="TITLE" >   -->
-<!-- 					 					C.NOTICE_ALL_TITLE LIKE '%' || #search_keyword# || '%' -->
-<!-- 					 			</isEqual> -->
-<!-- 					 			<isEqual property="search_keycode" compareValue="CONTENT" >   -->
-<!-- 					 					C.NOTICE_ALL_CONTENT LIKE '%' || #search_keyword# || '%' -->
-<!-- 					 			</isEqual> -->
-<!-- 					 		</isNotEmpty> -->
-<!-- 						</dynamic>  -->
 						ORDER BY NOTICE_ALL_CODE) A ) B
 		<![CDATA[				
  		WHERE RNUM <= #startCount# 
@@ -136,10 +122,11 @@
     </update>
 	
 	<select id="totalCount" parameterClass="map" resultClass="int">
-		SELECT COUNT(NOTICE_ALL_CODE)
-			FROM NOTICE_ALL
-		WHERE 1=1<!-- BO_STATUS = 'y' -->
-		<include refid="searchCondition"/>
+		SELECT count(c.notice_all_code)
+						FROM NOTICE_ALL C, EMP D
+						WHERE C.EMP_CODE = D.EMP_CODE
+						AND C.NOTICE_ALL_DELETE = 'n'
+						<include refid="searchCondition"/>
 	</select>
 	
 	

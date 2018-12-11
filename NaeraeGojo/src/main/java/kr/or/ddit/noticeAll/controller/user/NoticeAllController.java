@@ -127,6 +127,14 @@ public class NoticeAllController {
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		System.out.println("불러와야해 그래야 살아"+emp_code);
 		service.insertNoticeAllInfo(nav, files);
+		
+		if(files ==null){
+			return "redirect:/user/noticeAll/notice_allList.do";
+		}
+		
+		
+		
+		
 		return "redirect:/user/noticeAll/notice_allList.do";
 	}
 	
