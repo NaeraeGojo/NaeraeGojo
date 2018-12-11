@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.join.service.IJoinService;
+import kr.or.ddit.rqpps.service.IRqppsService;
 import kr.or.ddit.userfile.service.IUserFileService;
 import kr.or.ddit.utils.CryptoGenerator;
 import kr.or.ddit.utils.RolePagingUtil;
@@ -28,6 +29,7 @@ import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 import kr.or.ddit.vo.UserFileVO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -46,6 +48,10 @@ public class JoinController {
 	private IJoinService service;
 	@Resource
 	private IEmpService empServ;
+	
+	@Autowired
+	private IRqppsService rfpService;
+	
 	@Resource
 	private IUserFileService userServ;
 	@Resource
@@ -86,13 +92,13 @@ public class JoinController {
 		EmpVO empInfo = empServ.empInfo(params);
 
 		if (empInfo == null) {
-			String message = "";
+			String message = "정보가 일치하는 직원이 존재하지 않습니다.";
 			try {
 				message = URLEncoder.encode(message, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			return "redirect:/user/join/loginForm.do?message" + message;
+			return "redirect:/user/join/loginForm.do?message=" + message;
 		} else {
 			session.setAttribute("LOGIN_EMPINFO", empInfo);
 			Map<String, String> param1 = new HashMap<String, String>();
@@ -286,6 +292,14 @@ public class JoinController {
 			service.insertJoinInfo(params);
 			params.clear();
 		}
+		
+		
+		// 제안요청서 상태 바꿔주는 곳
+		params.clear();
+		params.put("rqpps_code", select);
+		params.put("rqpps_now_condition", "2");
+		rfpService.updateRfpCondition(params);
+		
 		andView.setViewName("jsonConvertView");
 
 		return andView;

@@ -306,20 +306,29 @@ $(function(){
                   </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${pwl }" var="pwv">
-		                 <tr code="${pwv.PW_CODE }">
-       						<td>${pwv.RNUM }</td>
-		                   	<td>${pwv.PWC_NAME }</td>
-		                   	<td>${pwv.PW_FUNCTION }</td>
-		                   	<td>${pwv.EMP_NAME }</td>
-		                   	<td>${pwv.PW_EST }</td>
-		                   	<td>${pwv.PW_EET }</td>
-		                   	<td>${pwv.PW_PERCENT} %</td>
-		                 </tr>
-		          </c:forEach>
-			                 
+                  <c:if test="${pwl.size() >0 }">
+	                  <c:forEach items="${pwl }" var="pwv">
+			                 <tr code="${pwv.PW_CODE }">
+	       						<td>${pwv.RNUM }</td>
+			                   	<td>${pwv.PWC_NAME }</td>
+			                   	<td>${pwv.PW_FUNCTION }</td>
+			                   	<td>${pwv.EMP_NAME }</td>
+			                   	<td>${pwv.PW_EST }</td>
+			                   	<td>${pwv.PW_EET }</td>
+			                   	<td>${pwv.PW_PERCENT} %</td>
+			                 </tr>
+			          </c:forEach>
+			      </c:if>
                   </tbody>
+                  
+                  
                 </table>
+                
+                
+                <c:if test="${pwl.size() == 0 }">
+                	<br>
+			      	<h4 style="text-align: center">데이터가 존재하지 않습니다.</h4>
+			    </c:if>
               </div>
               
             </div>

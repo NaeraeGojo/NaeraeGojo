@@ -159,6 +159,10 @@ public class MeetingController {
 			params.clear();
 		}
 		
+		if(files ==null){
+			return "redirect:/user/meetingFile/meetingFileList.do";
+		}
+		
 		if(!files.isEmpty()){
 			fileService.insertMeetingFile(files, meeting_code );
 		}
@@ -182,10 +186,6 @@ public class MeetingController {
 		
 		params.put("meeting_code", meeting_code);
 		
-		if (files != null) {
-			fileService.updateMeetingFile(files, meeting_code);
-		}
-		
 //		//리셋 작업
 		service.deleteMeetPw(params);
 		params.clear();
@@ -196,6 +196,21 @@ public class MeetingController {
 			service.insertmeetPw(params);
 			params.clear();
 		}
+		
+		if(files == null){
+			return "redirect:/user/meetingFile/meetingFileList.do";
+		}
+		
+		if (files!=null) {
+			String filecode = fileService.getfileCode(meeting_code);
+			if(filecode != null){
+				fileService.updateMeetingFile(files, meeting_code);
+			} else if(filecode == null){
+				fileService.insertMeetingFile(files, meeting_code);
+			}
+		}
+		
+		
 		
 		return "redirect:/user/meetingFile/meetingFileList.do";
 	}
