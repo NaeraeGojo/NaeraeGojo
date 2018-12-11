@@ -52,6 +52,12 @@ public class IMeetingFileServiceImpl implements IMeetingFileService{
 		
 		dao.insertMeetingFile(mfile);
 	}
+
+	@Override
+	public String getfileCode(String meeting_code) throws SQLException {
+		return dao.getfileCode(meeting_code);
+	}
+
 	
 	
 

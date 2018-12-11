@@ -77,6 +77,11 @@ public class IIssueResultDaoImpl implements IIssueResultDao{
 		return client.queryForList("issueResult.issueChartInfo",params);
 	}
 
+	@Override
+	public int totalCountRisk(Map<String, String> params) throws SQLException {
+		return (int) client.queryForObject("issueResult.totalCountRisk", params);
+	}
+
 	
 
 }

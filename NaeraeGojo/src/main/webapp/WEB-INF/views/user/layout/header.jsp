@@ -178,6 +178,10 @@
 	   overflow: hidden;
 	 } 
 	
+	.drop_chat {
+		display: block;
+	}
+	
 	</style>
 	
 		<body class="hold-transition skin-blue sidebar-mini">
@@ -205,11 +209,22 @@
               					<i class="fa  fa-comments"></i>
 <!--               					<span class="label label-danger">N</span> -->
            					</a>
+           					
+           					<ul class="dropdown-menu drop_chat" style="padding: 10px; display: none;
+           						border: 2px solid #f59e9e; margin-top: 8px;">
+					              <li class="header">
+					              	<h5 style="text-align: center;">
+					              	<i class="fa fa-commenting-o" style="margin-right: 10px;"></i>
+					              	새로운 채팅 도착</h5>
+					              </li>
+            				</ul>
+           					
+           					
 						</li>
           				<li class="dropdown notifications-menu">
-            				<a href="${pageContext.request.contextPath}/user/bell/bellList.do">
+            				<a href="${pageContext.request.contextPath}/user/bell/bellList.do" id="tCount">
               					<i class="fa fa-bell-o"></i>
-             					<span class="label label-warning">10</span>
+<!--              					<span class="label label-warning">10</span> -->
            					</a>
 						</li>
 	<!-- User Account: style can be found in dropdown.less -->
@@ -407,6 +422,14 @@ $(function(){
 		});
 	};
 
+	chatNew = function(){
+		$(".drop_chat").slideDown(1000);
+		
+		setTimeout(function(){
+			$(".drop_chat").slideUp(1000);
+		},2000);
+	}
+	
 	var lastNum = '';
 	
 	var timer = setInterval(function() {
@@ -424,7 +447,7 @@ $(function(){
 				
 				// 가지고온 lastNum이 원래 가지고있던 lastNum과 다른경우
 				// 알림이 있어야한다.
-				if(lastNum != ln){
+				if(lastNum != ln && ln !=''){
 					var atag = $('#a_chat_emp')
 					var leng = atag.find('span').length;
 					
@@ -433,14 +456,12 @@ $(function(){
 						atag.append(ntag);
 					}
 					
-					boalert("새로운 채팅 초대가 있땅!");
+					chatNew();
 					lastNum = ln;
 				}
 			}
 		});
 		
-		//일단 테스트용이라서 처음 한번만 실행되도록
-		clearInterval(timer);
 	}, 10000);
 
 	
@@ -606,28 +627,42 @@ $(function(){
 				} );
 				
 				table_emp.draw();
-// 				$('input[name=check_emp].flat-red, input[type="radio"].flat-red').iCheck({
-// 					checkboxClass: 'icheckbox_flat-green',
-// 				  	radioClass   : 'iradio_flat-green'
-// 				})
-
-// 				$('input[name=check_emp]').on('ifChecked',function(event){
-// 		        		var emp_code = $(this).val();
-// 		        		ea.push(emp_code);
-// 				});
-				
-// 				$('input[name=check_emp]').on('ifUnchecked',function(event){
-// 					var emp_code = $(this).val();
-// 					ea.splice(emp_code, 1);
-// 				});
-				
-	        	
 			}
 		})
 	}
 	
-	
-	
+	toCnt = function(){
+		
+		var emp_code = '${LOGIN_EMPINFO.emp_code}'
+		
+// 		var listCnt	= '${listCnt}'
+// 		var receivefeedCnt = '${receivefeedCnt}'
+// 		var sendfeedCnt = '${sendfeedCnt}'
+// 		var videoChatCnt = '${videoChatCnt}'
+// 		var issueDamdangCnt = '${issueDamdangCnt}'
+// 		var projectAlarmCnt = '${projectAlarmCnt}'
+		
+		$.ajax({
+            type : 'post',
+            url : '${pageContext.request.contextPath}/user/bell/totCnt.do',
+            data : {'emp_code' : emp_code},
+            dataType : 'json',
+            error: function(xhr, status, error){
+                alert(error);
+            },
+            success : function(json){
+            
+            	var data = "";
+// 	            if(json.issueDamdangCnt > 0){
+	            if(json.listCnt + json.receivefeedCnt + json.sendfeedCnt + 
+	               json.videoChatCnt + json.issueDamdangCnt + json.projectAlarmCnt > 0){
+	            	data +=	'<span class="label label-warning">N</span>'
+	            	$('#tCount').append(data);
+	            }
+            }
+        });
+	}
+	toCnt();
 	
 });
 

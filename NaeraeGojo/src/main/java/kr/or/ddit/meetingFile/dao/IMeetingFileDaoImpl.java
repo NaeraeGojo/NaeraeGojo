@@ -42,6 +42,6 @@ public class IMeetingFileDaoImpl implements IMeetingFileDao{
 	public String getfileCode(String meeting_code) throws SQLException {
 		return (String) client.queryForObject("meetingFile.getfileCode", meeting_code);
 	}
-	
+
 
 }

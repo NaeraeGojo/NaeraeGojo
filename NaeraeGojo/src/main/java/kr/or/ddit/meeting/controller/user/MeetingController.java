@@ -55,8 +55,10 @@ public class MeetingController {
 			currentPage="1";
 		}
 		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();	
 		params.put("search_keycode", search_keycode);
 		params.put("search_keyword", search_keyword);
+		params.put("emp_code", emp_code);
 		
 		int totalCount = service.totalCount(params);
 		
@@ -93,7 +95,10 @@ public class MeetingController {
    @RequestMapping(value="/meetingFileForm")
    public ModelAndView meetingForm(HttpServletRequest request, HttpSession session, ModelAndView andView) throws Exception{
 	 
-	   List<ProjectVO> projectInfo =service.getProjectNM();
+	   String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();	
+	   
+	   List<ProjectVO> projectInfo =service.getProjectNM(emp_code);
+	   
 	   
 	   andView.addObject("projectInfo", projectInfo);
 	   andView.setViewName("user/meeting/meetingFileForm");
@@ -159,6 +164,10 @@ public class MeetingController {
 			params.clear();
 		}
 		
+		if(files ==null){
+			return "redirect:/user/meetingFile/meetingFileList.do";
+		}
+		
 		if(!files.isEmpty()){
 			fileService.insertMeetingFile(files, meeting_code );
 		}
@@ -182,10 +191,6 @@ public class MeetingController {
 		
 		params.put("meeting_code", meeting_code);
 		
-		if (files != null) {
-			fileService.updateMeetingFile(files, meeting_code);
-		}
-		
 //		//리셋 작업
 		service.deleteMeetPw(params);
 		params.clear();
@@ -196,6 +201,21 @@ public class MeetingController {
 			service.insertmeetPw(params);
 			params.clear();
 		}
+		
+		if(files == null){
+			return "redirect:/user/meetingFile/meetingFileList.do";
+		}
+		
+		if (files!=null) {
+			String filecode = fileService.getfileCode(meeting_code);
+			if(filecode != null){
+				fileService.updateMeetingFile(files, meeting_code);
+			} else if(filecode == null){
+				fileService.insertMeetingFile(files, meeting_code);
+			}
+		}
+		
+		
 		
 		return "redirect:/user/meetingFile/meetingFileList.do";
 	}

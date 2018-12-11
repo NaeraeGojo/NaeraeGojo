@@ -74,8 +74,8 @@ public class IJoinServiceImpl implements IJoinService{
 	}
 
 	@Override
-	public List<JoinVO> joinFinalList() throws SQLException {
-		return joinDao.joinFinalList();
+	public List<JoinVO> joinFinalList(Map<String, String> params) throws SQLException {
+		return joinDao.joinFinalList(params);
 	}
 
 	@Override
@@ -106,6 +106,20 @@ public class IJoinServiceImpl implements IJoinService{
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void deleteAdd(Map<String, String> params) throws SQLException {
 		joinDao.deleteAdd(params);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void insertJoinInfoRqpps(Map<String, String> params)
+			throws SQLException {
+		joinDao.insertJoinInfoRqpps(params);
+		
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void updateStatus(Map<String, String> params) throws SQLException {
+		joinDao.updateStatus(params);
 	}
 
 }

@@ -21,6 +21,10 @@
 	height: 100%;
 
 }
+
+#empList{
+   overflow-y: scroll; 
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script type="text/javascript">
@@ -89,7 +93,7 @@ $(function(){
             	
             	
                 $('#updateForm').modal('hide');
-                $(location).attr('href', '${pageContext.request.contextPath}/user/project/pro/project_manage_see.do?project_code='+${projectInfo.project_code });
+                $(location).attr('href', '${pageContext.request.contextPath}/user/project/pro/project_manage_see.do?project_code='+'${projectInfo.project_code }');
             }
         });
 	});
@@ -112,7 +116,6 @@ $(function () {
 		animation:true,
 		type: 'doughnut',
 		data: {
-// 			labels: ["진행", "완료", "신규"],
 			labels: ["완료", "진행", "신규"],
 				datasets: [
 				{
@@ -128,15 +131,28 @@ $(function () {
 	                fontSize: 16,
 	                padding: 25
 	          }
-		    },
-// 		    title: {
-// 		        display: true,
-// 		        text: 'ㅠㅠ'
-// 		    }
+		    }
 		}
 	});
 	
 })
+
+function deleteEmp(emp_code) {
+    alert(emp_code);
+    
+//     $.ajax({
+//     	type : 'POST',
+//         url : '${pageContext.request.contextPath}/user/project/deleteEmp.do',
+//         data : {emp_code :emp_code},
+//         dataType : 'json',
+//         error: function(xhr, status, error){
+//             alert(error);
+//         },
+//         success : function(data){
+        	
+//         }
+//     })
+}
 
 
 </script>
@@ -168,11 +184,6 @@ $(function () {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>업무</td>
-													<td>업무</td>
-													<td>업무</td>
-												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -186,30 +197,44 @@ $(function () {
 											</div>
 										</div>
 									</div>
-
 									<div class="box-footer no-padding" >
 										<ul class="nav nav-pills nav-stacked">
 											<li>
 												<a href="#"> 완료
 													<span class="pull-right text-red">
-														<fmt:formatNumber value="${totalComplete/(totalComplete+totalIng+totalNew)*100}"
- 														pattern=".0"/> % 
+														<c:if test="${totalComplete > 0}">
+															<fmt:formatNumber value="${totalComplete/(totalComplete+totalIng+totalNew)*100}"
+ 															pattern=".0"/> %
+ 														</c:if> 
+														<c:if test="${totalComplete == 0}">
+															0 %
+														</c:if>
 													</span>
 												</a>
 											</li>
 											<li>
 												<a href="#"> 진행중 
 													<span class="pull-right text-green">
-														<fmt:formatNumber value="${totalIng/(totalComplete+totalIng+totalNew)*100}"
- 														pattern=".0"/> % 
+														<c:if test="${totalIng > 0}">
+															<fmt:formatNumber value="${totalIng/(totalComplete+totalIng+totalNew)*100}" 
+															pattern=".0"/> % 
+														</c:if>
+														<c:if test="${totalIng == 0}">
+															0 %
+														</c:if>
 													</span>
 												</a>
 											</li>
 											<li>
 												<a href="#"> 신규
 													<span class="pull-right text-yellow">
-														<fmt:formatNumber value="${totalNew/(totalComplete+totalIng+totalNew)*100}"
-														pattern=".0"/> %
+														<c:if test="${totalNew > 0}">
+															<fmt:formatNumber value="${totalNew/(totalComplete+totalIng+totalNew)*100}"
+															pattern=".0"/> %
+														</c:if>
+														<c:if test="${totalNew == 0}">
+															0 %
+														</c:if>
 													</span>
 												</a>
 											</li>
@@ -252,15 +277,14 @@ $(function () {
 				<div class="box-header">
 					<i class="fa fa-users"></i>
 					<h3 class="box-title">참여 인원</h3>
-					${pagingUtil}
 				</div>
-				<div class="box-body" style="height: 607px">
+				<div class="box-body" style="height: 607px" id="empList">
 					<ul class="todo-list">
 						<c:forEach items="${joinList}" var="joinList">
 						<li>
 							<span class="handle"> <i class="fa fa-user"></i></span>
-							<span class="text">${joinList.emp_name }</span> 
-							<div class="tools"><i class="fa fa-remove"></i></div>
+							<span class="text"><input type="hidden" name="emp_code" value="${joinList.emp_code }">${joinList.emp_name }</span> 
+							<div class="tools"><i class="fa fa-remove" id="${joinList.emp_code }" onclick="deleteEmp(${joinList.emp_code })"></i></div>
 						</li>
 						</c:forEach>
 					</ul>

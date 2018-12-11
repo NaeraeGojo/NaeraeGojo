@@ -20,7 +20,6 @@
         <result property="meeting_title" column="meeting_title"/>
         <result property="meeting_content" column="meeting_content"/>
         <result property="meeting_code" column="meeting_code"/>
-<!--         <result property="emp_name" column="emp_name"/> -->
         <result property="pw_function" column="pw_function"/>
         <result property="project_code" column="project_code"/>
         <result property="pw_code" column="pw_code"/>
@@ -50,27 +49,29 @@
     </sql>
 
     <select id="totalCount" parameterClass="map" resultClass="int">
-         select count(meeting_code)
-        from meeting a,  emp b
-        where a.meeting_delete = 'n'
-        and a.emp_code = b.emp_code
+		select  count(a.meeting_code)
+		from meeting a, project b, join c, emp d
+		where a.project_code = c.project_code
+		and c.project_code = b.project_code
+		and c.emp_code = #emp_code#
+		and a.emp_code = d.emp_code
         <include refid="searchCondition"/>
     </select>
     
     <select id="getMeetingList" parameterClass="map" resultClass="TempMeetingVO">
          select z.*
           from (select rownum rnum, y.*
-                from(select d.project_name, emp.emp_name, a.meeting_title, a.meeting_hit, a.meeting_date, a.meeting_code
-                        from meeting a, pw b, emp, project d, meet_pw e, join f
-                        where b.project_code = d.project_code
-                            and a.meeting_delete = 'n'
-                            and a.emp_code = emp.emp_code
-                             and e.pw_code = b.pw_code
-                              and f.project_code = d.project_code
-                    <include refid = "searchCondition"/>
-                       group by d.project_name, emp.emp_name,  a.meeting_title, a.meeting_content, a.meeting_hit, 
-                           a.meeting_date, a.meeting_code
-                       order by a.meeting_date 
+                from(select b.project_name, b.project_code, a.meeting_code, a.meeting_title, 
+                            a.meeting_hit, a.meeting_date, d.emp_name
+                        from meeting a, project b, join c, emp d
+                        where a.project_code = c.project_code
+                        and c.project_code = b.project_code
+                        and c.emp_code = #emp_code#
+                        and a.emp_code = d.emp_code
+                         <include refid = "searchCondition"/>
+                       group by b.project_name, b.project_code, a.meeting_code, a.meeting_title, 
+                       a.meeting_hit, a.meeting_date, d.emp_name
+                        order by a.meeting_date
                     ) y ) z
          <![CDATA[
          where z.rnum <= #startCount#
@@ -111,10 +112,12 @@
         where video_chat_room_code = #video_chat_room_code#
     </update>
     
-    <select id="getProjectNM" resultClass="proVO">
-        select project_name, project_code
-        from project
-        where project_delete = 'n'
+    <select id="getProjectNM" parameterClass="string" resultClass="proVO">
+        select b.project_name, b.project_code
+        from  project b, join c, emp d
+        where c.project_code = b.project_code
+        and c.emp_code = #emp_code#
+        group by b.project_name, b.project_code
     </select>
     
     <select id="getProjectModal" parameterClass="map" resultClass="tempMeetingVO">
@@ -124,7 +127,6 @@
 		and b.project_code = a.project_code
 		group by b.pw_function, b.pw_code
     </select>
-    
     
     <select id="getProjectname" parameterClass="map" resultClass="string">
         select pw_function
@@ -141,13 +143,16 @@
 							,meeting_title
 							,meeting_content
 							,meeting_date
-							,emp_code)
+							,emp_code
+							,project_code
+							)
 							
 					values ( #meeting_code#
                             ,#meeting_title#
                             ,#meeting_content#
                             ,sysdate
-                            ,#emp_code#)
+                            ,#emp_code#
+                            ,#project_code#)
     </insert>
     
     <insert id="insertmeetPw" parameterClass="map">

@@ -201,6 +201,18 @@ $(function(){
 	    }
 	});
 	
+	$('#msg').keydown(function(key) {
+		
+		// 엔터키로 메시지를 보내기 위한 키다운 이벤트
+		if (key.keyCode == 13) {
+			// 메시지 전송
+			postToServer();
+		}
+	});
+
+
+
+	
 	//참여자 목록 불러오는 아작스콜
 	refreshPart = function(){
 		var chatjoin_chatroom = '${param.chatroom_code}';
@@ -234,7 +246,7 @@ $(function(){
 	
 	// WebSocket EndPoint 접속 , 얘가 성공하면 onOpen 이벤트 발생
 // 	ws = new WebSocket("ws://192.168.204.154/SpringToddler/wschat");
-	ws = new WebSocket("ws://192.168.0.60/ng/wschat");
+	ws = new WebSocket("ws://192.168.0.60/wschat");
 	
 	ws.onopen = function(){
 		var emp_code = '${LOGIN_EMPINFO.emp_code}';
@@ -330,8 +342,14 @@ function postToServer(){
 		, chatroom_code : '${param.chatroom_code}'
 	});
 	
+	// 웹소켓에 메시지를 보내는 메서드
 	ws.send(j_msg);
+	
+	// input을 비운다.
 	$('#msg').val('');
+	
+	// input에 다시 포커스를 준다.
+	$('#msg').focus();
 }
 
 function closeConnection(){

@@ -95,8 +95,8 @@ public class IMeetingServiceImpl implements IMeetingService{
 	}
 
 	@Override
-	public List<ProjectVO> getProjectNM() throws SQLException {
-		return dao.getProjectNM();
+	public List<ProjectVO> getProjectNM(String emp_code) throws SQLException {
+		return dao.getProjectNM(emp_code);
 	}
 
 	@Override

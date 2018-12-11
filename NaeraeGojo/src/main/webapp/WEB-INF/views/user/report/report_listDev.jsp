@@ -32,7 +32,7 @@
             </div>
 							<div class="box-body">
 								<div class="table-responsive">
-									<table class="table no-margin table-hover" >
+									<table id="reportTable" class="table no-margin table-hover" >
 										<thead>
 											<tr>
 												<th scope="col" width="10%">No.</th>
@@ -104,7 +104,7 @@ $(function() {
 // 		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeleteDev.do');
 // 	});
 	
-	$('table tr:gt(0)').click(function(){
+	$('#reportTable tr:gt(0)').click(function(){
 //     	var rnum = $(this).find('td:eq(0)').text();
     	var report_code = $(this).find('td:eq(0) input').val();
 		$(location).attr('href','${pageContext.request.contextPath}/user/report/report_sendDeleteDev/'+report_code+'.do');
