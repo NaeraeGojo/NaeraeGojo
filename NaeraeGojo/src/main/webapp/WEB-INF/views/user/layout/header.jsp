@@ -207,9 +207,9 @@
            					</a>
 						</li>
           				<li class="dropdown notifications-menu">
-            				<a href="${pageContext.request.contextPath}/user/bell/bellList.do">
+            				<a href="${pageContext.request.contextPath}/user/bell/bellList.do" id="tCount">
               					<i class="fa fa-bell-o"></i>
-             					<span class="label label-warning">10</span>
+<!--              					<span class="label label-warning">10</span> -->
            					</a>
 						</li>
 	<!-- User Account: style can be found in dropdown.less -->
@@ -626,8 +626,38 @@ $(function(){
 		})
 	}
 	
-	
-	
+	toCnt = function(){
+		
+		var emp_code = '${LOGIN_EMPINFO.emp_code}'
+		
+// 		var listCnt	= '${listCnt}'
+// 		var receivefeedCnt = '${receivefeedCnt}'
+// 		var sendfeedCnt = '${sendfeedCnt}'
+// 		var videoChatCnt = '${videoChatCnt}'
+// 		var issueDamdangCnt = '${issueDamdangCnt}'
+// 		var projectAlarmCnt = '${projectAlarmCnt}'
+		
+		$.ajax({
+            type : 'post',
+            url : '${pageContext.request.contextPath}/user/bell/totCnt.do',
+            data : {'emp_code' : emp_code},
+            dataType : 'json',
+            error: function(xhr, status, error){
+                alert(error);
+            },
+            success : function(json){
+            
+            	var data = "";
+// 	            if(json.issueDamdangCnt > 0){
+	            if(json.listCnt + json.receivefeedCnt + json.sendfeedCnt + 
+	               json.videoChatCnt + json.issueDamdangCnt + json.projectAlarmCnt > 0){
+	            	data +=	'<span class="label label-warning">N</span>'
+	            	$('#tCount').append(data);
+	            }
+            }
+        });
+	}
+	toCnt();
 	
 });
 

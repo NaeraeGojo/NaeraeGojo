@@ -85,6 +85,7 @@ public class IBellServiceImpl implements IBellService {
 		return dao.projectAlarmCnt(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void deleteProjectAlarm(Map<String, String> params)
 			throws SQLException {

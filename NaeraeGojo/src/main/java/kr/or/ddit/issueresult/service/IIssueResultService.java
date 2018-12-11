@@ -19,5 +19,6 @@ public interface IIssueResultService {
 	public void updateRiskHit(Map<String, String> params) throws SQLException;
 	public int totalCountIssueResult(Map<String, String> params) throws SQLException;
 	public List<Map<String, String>> issueChartInfo(Map<String, String> params) throws SQLException;
-	
+	public int totalCountRisk(Map<String, String> params) throws SQLException;
+
 }
