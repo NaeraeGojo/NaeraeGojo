@@ -174,41 +174,21 @@ public class JoinController {
 		if (currentPage == null) {
 			currentPage = "1";
 		}
-		
 		params.put("search_keyword", search_keyword);
 		params.put("search_keycode", search_keycode);
 		
-		List<JoinVO> joinLast = service.joinFinalList();
+		emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		
 		int totalCount = service.totalCount(params);
-		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage), totalCount, request,6);
+		RolePagingUtil paging = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
 		params.put("startCount",  String.valueOf(paging.getStartCount()));
 		params.put("endCount", String.valueOf(paging.getEndCount()));
+
+		List<JoinVO> joinLast = service.joinFinalList(params);
 		andView.addObject("page", paging.getPagingHtmls());
 		andView.addObject("joinLast", joinLast);
 		andView.setViewName("user/join/join_list");
-		// Map<String, String> params = new HashMap<String, String>();
-		//
-		//
-		// emp_code = ((EmpVO)
-		// session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
-		// System.out.println("아디아디아디아디"+emp_code);
-		// params.put("emp_code", emp_code);
-		//
-		// if(params != null){
-		// String message = (String) params.get("message");
-		// System.out.println("RedirectAttribute post 전송 파람 : " + message);
-		// }
-		//
-		//
-		// int totalCount = service.totalCount(params);
-		// RolePagingUtil paginUtil = new
-		// RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
-		// params.put("startCount", String.valueOf(paginUtil.getStartCount()));
-		// params.put("endCount", String.valueOf(paginUtil.getEndCount()));
-		// List<NotEmpVO> noticeAllList = service.noticeAllList(params);
-		// andView.addObject("noticeAllList",noticeAllList);
-//		 andView.addObject("pagingHtmls",paginUtil.getPagingHtmls());
-		// andView.setViewName("user/noticeAll/notice_allList");
 		return andView;
 	}
 
@@ -237,12 +217,13 @@ public class JoinController {
 		params.put("rqpps_code", rqpps_code);
 		List<JoinVO> joList = service.clickList(params);
 		
-		String project_code = "";
-		if(joList.get(0).getProject_code()==null){
-			project_code = "";
-		}else{
-			project_code = joList.get(0).getProject_code();
-		}
+//		String project_code = "";
+//		if(joList.get(0).getProject_code()==null){
+//			project_code = "";
+//		}else{
+//			project_code = joList.get(0).getProject_code();
+//		}
+		String project_code = joList.get(0).getProject_code();
 		List<JoinVO> addList = service.addList(params);
 		model.addAttribute("joList", joList);
 		model.addAttribute("rqpps_code",rqpps_code);
@@ -311,6 +292,10 @@ public class JoinController {
 			service.insertJoinInfo(params);
 			params.clear();
 		}
+		// join에서 join_status 를 y => n
+		params.clear();
+		params.put("rqpps_code", select);
+		service.updateStatus(params);
 		
 		
 		// 제안요청서 상태 바꿔주는 곳

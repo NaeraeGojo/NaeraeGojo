@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
 import kr.or.ddit.bell.service.IBellService;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.FeedbackVO;
@@ -104,7 +106,6 @@ public class BellController {
 		return andView;
 	}
 	
-	
 	@RequestMapping("deleteProjectAlarm")
 	public String deleteProjectAlarm(String join_code, Map<String, String> params) throws Exception{
 		
@@ -115,19 +116,31 @@ public class BellController {
 		return "redirect:/user/bell/bellList.do";
 	}
 	
-	public ModelAndView updateComputation(ModelAndView andView) throws Exception{
+	@RequestMapping("totCnt")
+	public ModelAndView changeScheduler(ModelAndView andView, Map<String, String> params, HttpSession session) throws Exception{
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
 		
-		return null;
+		String listCnt = service.getIssueCount(params);  
+		String receivefeedCnt = service.getFeedbackCnt(params);  
+		String sendfeedCnt = service.getsenFeedCnt(params);
+		String videoChatCnt = service.getvideoChatCnt(params);
+		String projectAlarmCnt = service.projectAlarmCnt(params);
+		String issueDamdangCnt = service.issueDamdangCnt(params);
+		
+		andView.addObject("listCnt", listCnt); 
+		andView.addObject("receivefeedCnt", receivefeedCnt); 
+		andView.addObject("sendfeedCnt", sendfeedCnt); 
+		andView.addObject("videoChatCnt", videoChatCnt); 
+		andView.addObject("projectAlarmCnt", projectAlarmCnt);
+		andView.addObject("issueDamdangCnt", issueDamdangCnt);
+		
+		System.out.println(listCnt);
+
+		andView.setViewName("jsonConvertView");
+		return andView;
 	}
+
 	
-	public String insertComputation() throws Exception{
-		
-		return null;
-	}
-	
-	public String deleteComputation() throws Exception{
-		
-		return null;
-	}
 }
 

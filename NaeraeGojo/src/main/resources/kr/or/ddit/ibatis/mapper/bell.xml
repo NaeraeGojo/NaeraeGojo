@@ -103,15 +103,16 @@
     </select>
     
     <select id="getvideoChatCnt" parameterClass="map" resultClass="string">
-        select  count(a.video_chat_room_code)
+		select  count(a.video_chat_room_code)
 		from video_chat_room a, video_chat_join b, emp c, project d
 		where a.video_chat_room_code = b.video_chat_room_code
 		and a.emp_code = c.emp_code
 		and a.project_code = d.project_code
 		and b.emp_code = #emp_code#
 		and b.video_chat_join_sign ='n'
-		and to_char(a.video_chat_room_date, 'yyyymmdd hh24:mi:ss') > to_char(sysdate-2/24, 'yyyymmdd hh24:mi:ss')
+		and to_char(a.video_chat_room_date, 'yyyymmdd hh24:mi:ss') &gt; to_char(sysdate-2/24, 'yyyymmdd hh24:mi:ss')
 		and a.emp_code != b.emp_code
+		and a.video_chat_level_code != 'level4'
     </select>
     
     <select id="getVideoChatList" parameterClass="map" resultClass="videoChatVO">
@@ -125,7 +126,7 @@
 						and a.project_code = d.project_code
 						and b.emp_code = #emp_code#
 						and b.video_chat_join_sign ='n'
-						and to_char(a.video_chat_room_date, 'yyyymmdd hh24:mi:ss') > to_char(sysdate-2/24, 'yyyymmdd hh24:mi:ss')
+						and to_char(a.video_chat_room_date, 'yyyymmdd hh24:mi:ss')&gt; to_char(sysdate-2/24, 'yyyymmdd hh24:mi:ss')
 						and a.emp_code != b.emp_code
 						and a.video_chat_level_code != 'level4'
 						group by d.project_name, c.emp_name, a.video_chat_room_date, a.video_chat_room_code, a.video_chat_room_url, 

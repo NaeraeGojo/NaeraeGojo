@@ -18,5 +18,8 @@ public interface IMeetingFileService {
 
 	public void updateMeetingFile(MultipartFile files, String meeting_code) throws SQLException;
 
-	public void insertMeetingFile(MultipartFile files, String meeting_code) throws SQLException; 
+	public void insertMeetingFile(MultipartFile files, String meeting_code) throws SQLException;
+
+	
+	public String getfileCode(String meeting_code) throws SQLException;
 }

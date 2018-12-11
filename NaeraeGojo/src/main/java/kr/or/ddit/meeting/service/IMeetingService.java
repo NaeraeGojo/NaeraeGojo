@@ -18,7 +18,7 @@ public interface IMeetingService {
 	public void updateMeetingInfo(MeetingVO mv) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
 	public void updateHit(Map<String, String> params) throws SQLException;
-	public List<ProjectVO> getProjectNM() throws SQLException;
+	public List<ProjectVO> getProjectNM(String emp_code) throws SQLException;
 	public List<TempMeetingVO> getProjectModal(Map<String, String> params) throws SQLException;
 	public String getProjectname(Map<String, String> params) throws SQLException;
 	public void insertmeetPw(Map<String, String> params) throws SQLException;
