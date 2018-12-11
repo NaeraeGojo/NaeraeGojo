@@ -116,7 +116,6 @@ $(function () {
 		animation:true,
 		type: 'doughnut',
 		data: {
-// 			labels: ["진행", "완료", "신규"],
 			labels: ["완료", "진행", "신규"],
 				datasets: [
 				{
@@ -203,30 +202,44 @@ function deleteEmp(emp_code) {
 											</div>
 										</div>
 									</div>
-
 									<div class="box-footer no-padding" >
 										<ul class="nav nav-pills nav-stacked">
 											<li>
 												<a href="#"> 완료
 													<span class="pull-right text-red">
-														<fmt:formatNumber value="${totalComplete/(totalComplete+totalIng+totalNew)*100}"
- 														pattern=".0"/> % 
+														<c:if test="${totalComplete > 0}">
+															<fmt:formatNumber value="${totalComplete/(totalComplete+totalIng+totalNew)*100}"
+ 															pattern=".0"/> %
+ 														</c:if> 
+														<c:if test="${totalComplete == 0}">
+															0 %
+														</c:if>
 													</span>
 												</a>
 											</li>
 											<li>
 												<a href="#"> 진행중 
 													<span class="pull-right text-green">
-														<fmt:formatNumber value="${totalIng/(totalComplete+totalIng+totalNew)*100}"
- 														pattern=".0"/> % 
+														<c:if test="${totalIng > 0}">
+															<fmt:formatNumber value="${totalIng/(totalComplete+totalIng+totalNew)*100}" 
+															pattern=".0"/> % 
+														</c:if>
+														<c:if test="${totalIng == 0}">
+															0 %
+														</c:if>
 													</span>
 												</a>
 											</li>
 											<li>
 												<a href="#"> 신규
 													<span class="pull-right text-yellow">
-														<fmt:formatNumber value="${totalNew/(totalComplete+totalIng+totalNew)*100}"
-														pattern=".0"/> %
+														<c:if test="${totalNew > 0}">
+															<fmt:formatNumber value="${totalNew/(totalComplete+totalIng+totalNew)*100}"
+															pattern=".0"/> %
+														</c:if>
+														<c:if test="${totalNew == 0}">
+															0 %
+														</c:if>
 													</span>
 												</a>
 											</li>

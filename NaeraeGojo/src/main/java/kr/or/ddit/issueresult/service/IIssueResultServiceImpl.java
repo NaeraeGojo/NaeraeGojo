@@ -91,4 +91,16 @@ public class IIssueResultServiceImpl implements IIssueResultService {
 		return issueResultDao.issueChartInfo(params);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
+	@Override
+	public int totalCountRisk(Map<String, String> params) throws SQLException {
+		int totalCount = 0;
+		try {
+			totalCount = issueResultDao.totalCountRisk(params);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+
 }

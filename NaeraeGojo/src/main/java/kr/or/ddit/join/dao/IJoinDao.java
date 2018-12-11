@@ -16,17 +16,19 @@ public interface IJoinDao {
 	public JoinVO joinInfo(Map<String,String> params) throws SQLException;
 	public List<JoinVO> joinList(Map<String, String> params) throws SQLException;
 	public void insertJoinInfo(Map<String, String> params) throws SQLException;
+	public void insertJoinInfoRqpps(Map<String, String> params) throws SQLException;
 	public void deleteJoinInfo(Map<String,String> params) throws SQLException;
 	public void updateJoinInfo(JoinVO joinInfo) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
 	public List<RqppsVO> rqppsNm() throws SQLException;
 	public MpJoinVO mpList(Map<String, String> params) throws SQLException;
 	public List<EmpVO> empList1(Map<String, String> params) throws SQLException;
-	public List<JoinVO> joinFinalList() throws SQLException;
+	public List<JoinVO> joinFinalList(Map<String, String> params) throws SQLException;
 	public List<JoinVO> clickList(Map<String, String> params) throws SQLException;
 	public void updateRole(JoinVO jvo) throws SQLException;
 	public List<JoinVO> addList(Map<String, String> params) throws SQLException;
 	public String insertAdd(JoinVO jvo) throws SQLException;
 	public void deleteAdd(Map<String, String> params) throws SQLException;
+	public void updateStatus(Map<String, String> params) throws SQLException;
 	
 }

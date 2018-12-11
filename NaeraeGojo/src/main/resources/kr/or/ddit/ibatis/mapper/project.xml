@@ -164,7 +164,7 @@
 	
 	<select id="totalComplete" resultClass="int" parameterClass="map">
 		SELECT 
-		    NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 90 AND 100 THEN '완료' END )),0)
+		   TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 90 AND 100 THEN '완료' END )),0))
 		FROM PW
 		WHERE PROJECT_CODE = #project_code#
 		GROUP BY PW_PERCENT   
@@ -172,7 +172,7 @@
 	
 	<select id="totalIng" resultClass="int" parameterClass="map">
 		SELECT 
-		    NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 1 AND 89 THEN '진행중' END)),0)
+		    TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 1 AND 89 THEN '진행중' END)),0))
 		FROM PW
 		WHERE PROJECT_CODE = #project_code#
 		GROUP BY PW_PERCENT   
@@ -180,7 +180,7 @@
 	
 	<select id="totalNew" resultClass="int" parameterClass="map">
 		SELECT 
-		    NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 0 AND 0 THEN '신규' END)),0)
+		    TO_NUMBER(NVL(SUM(COUNT(CASE WHEN PW_PERCENT BETWEEN 0 AND 0 THEN '신규' END)),0))
 		FROM PW
 		WHERE PROJECT_CODE = #project_code#
 		GROUP BY PW_PERCENT   

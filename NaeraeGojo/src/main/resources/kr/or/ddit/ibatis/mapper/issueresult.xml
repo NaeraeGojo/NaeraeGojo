@@ -195,12 +195,22 @@
 				FROM ( <include refid="selectAll2"/> 
 						<include refid="searchCondition"/> 
 						ORDER BY ISSUE_RESULT_CODE) A ) B
-<!--  		<![CDATA[				 -->
-<!-- 		WHERE B.RNUM <= #startCount# -->
-<!-- 		 AND  B.RNUM >= #endCount# -->
-<!-- 		]]> -->
+		<![CDATA[				
+		WHERE B.RNUM <= #startCount#
+		 AND  B.RNUM >= #endCount#
+		]]>
 		ORDER BY B.RNUM DESC
 	</select>	
+	
+	<select id="totalCountRisk" parameterClass="map" resultClass="int">
+		SELECT 
+            COUNT(ISSUE_RESULT_CODE)
+		FROM ISSUE A, ISSUE_RESULT B, EMP C, ISLEV D
+      	WHERE A.EMP_DAMDANG = C.EMP_CODE
+        AND A.ISSUE_CODE = B.ISSUE_CODE
+        AND A.ISSUE_LEVEL = D.ISLEV_CODE
+		<include refid="searchCondition"/> 
+	</select>
 	
 	<update id="updateRiskHIT" parameterClass="map">
 		UPDATE ISSUE_RESULT
