@@ -230,7 +230,13 @@ public class JoinController {
 
 		params.put("rqpps_code", rqpps_code);
 		List<JoinVO> joList = service.clickList(params);
-		String project_code = joList.get(0).getProject_code();
+		
+		String project_code = "";
+		if(joList.get(0).getProject_code()==null){
+			project_code = "";
+		}else{
+			project_code = joList.get(0).getProject_code();
+		}
 		List<JoinVO> addList = service.addList(params);
 		model.addAttribute("joList", joList);
 		model.addAttribute("rqpps_code",rqpps_code);
