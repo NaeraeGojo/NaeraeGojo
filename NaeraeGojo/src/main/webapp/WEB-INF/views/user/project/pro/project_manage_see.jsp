@@ -168,11 +168,6 @@ $(function () {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>업무</td>
-													<td>업무</td>
-													<td>업무</td>
-												</tr>
 											</tbody>
 										</table>
 									</div>
