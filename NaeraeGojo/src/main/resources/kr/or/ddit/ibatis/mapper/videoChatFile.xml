@@ -49,6 +49,12 @@
 		where video_file_code = #video_file_code#
     </update>
     
+    <select id="getVideoFileCode" parameterClass="string" resultClass="string">
+        select video_file_code
+        from video_file
+        where video_chat_room_code =#video_chat_room_code#
+    </select>
+    
 </sqlMap>
 
 

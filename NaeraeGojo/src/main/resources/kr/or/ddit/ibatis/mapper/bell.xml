@@ -37,7 +37,6 @@
                      and to_char(add_months(sysdate,-1),'yyyy-mm-dd')&lt;=a.issue_event_day
                       and a.issue_alarm = 'n'
                       and a.emp_damdang = #emp_code#
-                    
     </select>
     
     <update id="issueAlarm" parameterClass="map">
@@ -148,7 +147,7 @@
                             ,D.RQPPS_NICKNAME
                             ,B.JOIN_CODE
                             ,D.RQPPS_CODE
-                            ,D.EMP_CODE as emp_code_pm
+                            ,D.EMP_CODE
                         FROM PROJECT A, JOIN B, RQPPS D, SUGGEST E, EMP C
                         WHERE A.PROJECT_DELETE = 'n'
                         AND B.PROJECT_CODE = A.PROJECT_CODE
