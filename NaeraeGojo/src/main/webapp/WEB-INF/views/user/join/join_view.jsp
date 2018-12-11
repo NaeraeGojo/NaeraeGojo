@@ -100,7 +100,7 @@ select{
 							</c:if>
 			                    <option  value="PL">PL</option>
 				            </select></td>
-				            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td>
+<!-- 				            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td> -->
 <%-- 				            <td><input type="hidden" value="${ list.join_code}" name="join_code" /></td> --%>
 	                    </c:if>
 	                    <c:if test="${list.emp_level  eq '중급' || list.emp_level  eq '고급'}">
@@ -118,7 +118,7 @@ select{
 		                    <option  value="UA">UA</option>
 		                    <option  value="AA">AA</option>
 			            </select></td>
-			            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td>
+<!-- 			            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td> -->
 	                    </c:if>
 	                    <c:if test="${list.emp_level  eq '초급' }">
 	                    <td><select  name="position_name" id="test123" class="selbox form-control perfect"  onchange="select(this.value);">
@@ -133,7 +133,7 @@ select{
 		                    <option  value="UA">UA</option>
 		                    <option  value="AA">AA</option>
 			            </select></td>
-			            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td>
+<!-- 			            <td><input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right"></td> -->
 	                    </c:if>
 	                 </tr>
 	                </c:forEach>
@@ -143,7 +143,7 @@ select{
               </div>
               </div>
               <div class="box-footer clearfix">
-              <input value="추가" type="button" id="listAdd" data-toggle="modal" data-target="#modal1"  class="btn btn-sm btn-danger btn-flat pull-right level">
+<!--               <input value="추가" type="button" id="listAdd" data-toggle="modal" data-target="#modal1"  class="btn btn-sm btn-danger btn-flat pull-right level"> -->
               <input value="목록" type="button" id="returnList" class="btn btn-sm btn-warning btn-flat pull-right">
               <input value="수정" type="submit"  class="btn btn-sm btn-info btn-flat pull-right">
 <!--               <button type="button" class="btn btn-sm btn-info btn-flat pull-right" data-toggle="modal" data-target="#exampleModal">피드백</button> -->

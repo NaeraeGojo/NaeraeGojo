@@ -141,13 +141,16 @@
 							,meeting_title
 							,meeting_content
 							,meeting_date
-							,emp_code)
+							,emp_code
+							,project_code
+							)
 							
 					values ( #meeting_code#
                             ,#meeting_title#
                             ,#meeting_content#
                             ,sysdate
-                            ,#emp_code#)
+                            ,#emp_code#
+                            ,#project_code#)
     </insert>
     
     <insert id="insertmeetPw" parameterClass="map">

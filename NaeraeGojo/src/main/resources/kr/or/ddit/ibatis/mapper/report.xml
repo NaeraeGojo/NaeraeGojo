@@ -272,7 +272,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum desc
+		order by b.rnum asc
 	</select>
 	
 	<select id="reportListPLRec" parameterClass="map" resultClass="reportVO">
@@ -294,7 +294,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum desc
+		order by b.rnum asc
 	</select>
 	
 	<select id="reportListPL" parameterClass="map" resultClass="reportVO">
@@ -315,7 +315,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum desc
+		order by b.rnum asc
 	</select>
 	
 	<select id="reportListPM" parameterClass="map" resultClass="reportVO">
@@ -337,7 +337,7 @@
 		where b.rnum <= #startCount#
 		and b.rnum >= #endCount#
 		]]>		
-		order by b.rnum desc
+		order by b.rnum asc
 	</select>
 	
 	<select id="reportView" parameterClass="map" resultMap="reportMap">
@@ -347,6 +347,7 @@
 	     WHERE A.EMP_CODE = B.EMP_CODE
 	     AND   A.PW_CODE = C.PW_CODE
 	     AND   C.PROJECT_CODE = D.PROJECT_CODE
+	     AND   D.PROJECT_CODE = E.PROJECT_CODE
 	     AND   A.REPORT_CODE = #report_code#
 	     GROUP BY A.REPORT_TITLE,A.REPORT_CONTENT,A.REPORT_DATE,B.EMP_NAME,C.PW_FUNCTION,D.PROJECT_NAME,A.REPORT_CODE
 	     ,B.EMP_CODE,A.REPORT_SAVE_DEV,A.REPORT_SAVE_PL

@@ -76,103 +76,83 @@ tr {
 
 		var today = new Date();
 
-		$('#btn_back')
-				.click(
-						function() {
-							$(location)
-									.attr('href',
-											'${pageContext.request.contextPath}/user/rfp/rfpList.do');
-						});
+		$('#btn_back').click(function() {
+			$(location).attr('href','${pageContext.request.contextPath}/user/rfp/rfpList.do');
+		});
 
-		$('#rfpForm')
-				.submit(
-						function() {
-							var mp_code = $('#rfpForm input[name=mp_code]')
-									.val();
-							var rqpps_notice_agency = $(
-									'input[name=rqpps_notice_agency]').val();
-							var rqpps_name = $('input[name=rqpps_name]').val();
-							var rqpps_contents = $('#contents').val();
-							var rqpps_end_date = $('input[name=rqpps_end_date]')
-									.val();
-							var rqpps_budget = $('input[name=rqpps_budget]')
-									.val();
-							var rqpps_qualification = $(
-									'input[name=rqpps_qualification]').val();
-							var file1 = $('#file01').val();
-							var file2 = $('#file02').val();
+		$('#rfpForm').submit(function() {
+			var mp_code = $('#rfpForm input[name=mp_code]').val();
+			var rqpps_notice_agency = $('input[name=rqpps_notice_agency]').val();
+			var rqpps_name = $('input[name=rqpps_name]').val();
+			var rqpps_contents = $('#contents').val();
+			var rqpps_end_date = $('input[name=rqpps_end_date]').val();
+			var rqpps_budget = $('input[name=rqpps_budget]').val();
+			var rqpps_qualification = $('input[name=rqpps_qualification]').val();
+			var file1 = $('#file01').val();
+			var file2 = $('#file02').val();
 
-							if (rqpps_notice_agency == '' || rqpps_name == ''
-									|| rqpps_contents == ''
-									|| rqpps_end_date == ''
-									|| rqpps_budget == ''
-									|| rqpps_qualification == '') {
-								boalert("빈 항목이 존재합니다.");
-								return false;
-							}
+			if (rqpps_notice_agency == '' || rqpps_name == ''
+				|| rqpps_contents == ''
+				|| rqpps_end_date == ''
+				|| rqpps_budget == ''
+				|| rqpps_qualification == ''){
+				boalert("빈 항목이 존재합니다.");
+				return false;
+			}
 
-							if (mp_code == null || mp_code == '') {
-								boalert("인력비었다");
-								return false;
-							}
+			
+			if(mp_code == null || mp_code == '') {
+				boalert("요구인력을 등록해주세요.");
+				return false;
+			}
 
-							if (file1 == '') {
-								boalert("제안요청서 첨부파일을 등록해 주세요.")
-								return false;
-							}
+			if(rqpps_budget<=0){
+				boalert("예산은 음수가 될 수 없습니다.");
+				return false;
+			}
+			
+			if (file1 == '') {
+				boalert("제안요청서 첨부파일을 등록해 주세요.")
+				return false;
+			}
 
-							if (file2 == '') {
-								boalert("공고서 첨부파일을 등록해 주세요.")
-								return false;
-							}
-							var dateArr = rqpps_end_date.split('-');
+			if (file2 == '') {
+				boalert("공고서 첨부파일을 등록해 주세요.")
+				return false;
+			}
+			var dateArr = rqpps_end_date.split('-');
 
-							var rq_date = new Date(dateArr[0], dateArr[1] - 1,
-									dateArr[2]);
+			var rq_date = new Date(dateArr[0], dateArr[1] - 1,
+					dateArr[2]);
 
-							if (rq_date.getTime() < today.getTime()) {
-								boalert("이미 지난날짜는 제안서의 마감기한으로 설정할 수 없습니다.")
-								return false;
-							}
+			if (rq_date.getTime() < today.getTime()) {
+				boalert("이미 지난날짜는 제안서의 마감기한으로 설정할 수 없습니다.")
+				return false;
+			}
 
-							return true;
-						});
+			return true;
+		});
 
-		$('#btn_rpre')
-				.click(
-						function() {
-							var mp_code = $('input[name=mp_code]').val();
-
-							$
-									.ajax({
-										type : 'post',
-										url : '${pageContext.request.contextPath}/user/mp/getMp.do',
-										data : {
-											'mp_code' : mp_code
-										},
-										dataType : 'json',
-										error : function(xhr, status, error) {
-											alert(error);
-										},
-										success : function(json) {
-											$('input[name=mp_code]').val(
-													json.mp.mp_code);
-
-											$(
-													'#modal-update input[name=mp_begin]')
-													.val(json.mp.mp_begin);
-											$(
-													'#modal-update input[name=mp_inter]')
-													.val(json.mp.mp_inter);
-											$(
-													'#modal-update input[name=mp_high]')
-													.val(json.mp.mp_high);
-											$(
-													'#modal-update input[name=mp_spec]')
-													.val(json.mp.mp_spec);
-										}
-									});
-						});
+		$('#btn_rpre').click(function() {
+		
+			var mp_code = $('input[name=mp_code]').val();
+			$.ajax({
+				type : 'post'
+				, url : '${pageContext.request.contextPath}/user/mp/getMp.do'
+				, data : {'mp_code' : mp_code}
+				, dataType : 'json'
+				, error : function(xhr, status, error) {
+					alert(error);
+				}
+				, success : function(json) {
+					$('input[name=mp_code]').val(json.mp.mp_code);
+					$('#modal-update input[name=mp_begin]').val(json.mp.mp_begin);
+					$('#modal-update input[name=mp_inter]').val(json.mp.mp_inter);
+					$('#modal-update input[name=mp_high]').val(json.mp.mp_high);
+					$('#modal-update input[name=mp_spec]').val(json.mp.mp_spec);
+				}
+			});
+		});
 
 		$('#btn_ppre').click(function() {
 			var begin = $('#modal-update input[name=mp_begin]').val();
@@ -209,71 +189,60 @@ tr {
 
 		});
 
-		$('#btn_pp')
-				.click(
-						function() {
-							var begin = $('#modal-default input[name=mp_begin]')
-									.val();
-							var inter = $('#modal-default input[name=mp_inter]')
-									.val();
-							var high = $('#modal-default input[name=mp_high]')
-									.val();
-							var spec = $('#modal-default input[name=mp_spec]')
-									.val();
+		$('#btn_pp').click(function() {
+			var begin = $('#modal-default input[name=mp_begin]').val();
+			var inter = $('#modal-default input[name=mp_inter]').val();
+			var high = $('#modal-default input[name=mp_high]').val();
+			var spec = $('#modal-default input[name=mp_spec]').val();
+			
+			if (begin < 0 || inter < 0 || high < 0 || spec < 0) {
+				alert("요구인력은 음수가 될 수 없습니다.");
+				return false;
+			}
+			var formData = $('#ppForm').serialize();
+			
+			$.ajax({
+				type : 'post'
+				, url : '${pageContext.request.contextPath}/user/mp/insertMp.do'
+				, data : formData
+				, dataType : 'json'
+				, error : function(xhr, status, error) {
+					alert(error);
+				}
+				, success : function(json) {
+					$('input[name=mp_code]').val(json.mp.mp_code);
+					var ptag = $('<div class="box"><table class="table_rp table">'
+									+ '<tr>'
+									+ '<th>초급</th>'
+									+ '<th>중급</th>'
+									+ '<th>고급</th>'
+									+ '<th>특급</th>'
+									+ '</tr>'
+									+ '<tr>'
+									+ '<td>'
+									+ json.mp.mp_begin
+									+ '명</td>'
+									+ '<td>'
+									+ json.mp.mp_inter
+									+ '명</td>'
+									+ '<td>'
+									+ json.mp.mp_high
+									+ '명</td>'
+									+ '<td>'
+									+ json.mp.mp_spec
+									+ '명</td>'
+									+ '</tr></table></div>');
 
-							if (begin < 0 || inter < 0 || high < 0 || spec < 0) {
-								alert("0보다 크게")
-								return false;
-							}
+					$('#dres').append(ptag);
+					$('#dres').removeAttr('hidden');
+					$('#dres').attr('style','display:inline-block');
+					$('#btn_rp').hide();
+					$('#btn_rpre').show();
+					$('#modal-default').modal('hide');
+				}
+			});
 
-							var formData = $('#ppForm').serialize();
-
-							$
-									.ajax({
-										type : 'post',
-										url : '${pageContext.request.contextPath}/user/mp/insertMp.do',
-										data : formData,
-										dataType : 'json',
-										error : function(xhr, status, error) {
-											alert(error);
-										},
-										success : function(json) {
-											$('input[name=mp_code]').val(
-													json.mp.mp_code);
-
-											var ptag = $('<div class="box"><table class="table_rp table">'
-													+ '<tr>'
-													+ '<th>초급</th>'
-													+ '<th>중급</th>'
-													+ '<th>고급</th>'
-													+ '<th>특급</th>'
-													+ '</tr>'
-													+ '<tr>'
-													+ '<td>'
-													+ json.mp.mp_begin
-													+ '명</td>'
-													+ '<td>'
-													+ json.mp.mp_inter
-													+ '명</td>'
-													+ '<td>'
-													+ json.mp.mp_high
-													+ '명</td>'
-													+ '<td>'
-													+ json.mp.mp_spec
-													+ '명</td>'
-													+ '</tr></table></div>');
-
-											$('#dres').append(ptag);
-											$('#dres').removeAttr('hidden');
-											$('#dres').attr('style',
-													'display:inline-block');
-											$('#btn_rp').hide();
-											$('#btn_rpre').show();
-											$('#modal-default').modal('hide');
-										}
-									});
-
-						});
+		});
 	});
 </script>
 

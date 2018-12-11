@@ -70,8 +70,8 @@ public class IJoinDaoImpl implements IJoinDao{
 	}
 
 	@Override
-	public List<JoinVO> joinFinalList() throws SQLException {
-		return client.queryForList("join.joinFinalList");
+	public List<JoinVO> joinFinalList(Map<String, String> params) throws SQLException {
+		return client.queryForList("join.joinFinalList",params);
 	}
 
 	@Override
@@ -98,6 +98,13 @@ public class IJoinDaoImpl implements IJoinDao{
 	@Override
 	public void deleteAdd(Map<String, String> params) throws SQLException {
 		client.update("join.deleteAdd",params);
+	}
+
+	@Override
+	public void insertJoinInfoRqpps(Map<String, String> params)
+			throws SQLException {
+		client.insert("join.insertJoinRqpps",params);
+		
 	}
 
 }
