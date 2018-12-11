@@ -126,6 +126,8 @@
 					message : mes
 				});
 			};
+			var today = new Date();
+			
     	  	//이력등록
 			$('#historyInsert').submit(function(){
                	var emp_code =  $('input[name=emp_code]').val();
@@ -149,8 +151,23 @@
                 	boalert("프로젝트 기간을 입력해주세요");
                 	return false;
                 }
-                boalert("이력등록이 완료되었습니다!!");
+                var dateArr = history_project_start.split('-');
+                var dateArr1 = history_project_end.split('-');
+
+				var history_start = new Date(dateArr[0], dateArr[1] - 1,
+						dateArr[2]);
+				var history_end = new Date(dateArr1[0], dateArr1[1] - 1,
+						dateArr1[2]);
+                
+                if(history_start.getTime() > history_end.getTime()){
+        			boalert("프로젝트 기간 설정이 잘못되었습니다.");
+        			return false;
+        		}else if(history_end.getTime() > today.getTime()) {
+					boalert("아직 끝나지 않은 프로젝트는 이력에 적을 수 없습니다.");
+					return false;
+				}
                	return true;
+                boalert("이력등록이 완료되었습니다!!");
                  	
             });
     	  	$('input[name=history_project_name]').focus();

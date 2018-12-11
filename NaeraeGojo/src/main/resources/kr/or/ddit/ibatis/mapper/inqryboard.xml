@@ -60,7 +60,7 @@
                 from ( 
                 	<include refid="selectAll"/>
                 	<include refid = "searchCondition"/> 
-                    order by inqry_board_code asc) a ) b
+                    order by to_number(inqry_board_code) asc) a ) b
         <![CDATA[                
       		where b.rnum <= #startNo#
         	and  b.rnum >= #endNo# 

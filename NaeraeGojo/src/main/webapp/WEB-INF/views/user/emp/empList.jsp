@@ -20,7 +20,7 @@
             <div class="dataTables_wrapper form-inline dt-bootstrap" id="example1_wrapper">
               	<div class="row">
               		<div class="col-sm-12">
-              			<table id="example1" class="table table-bordered table-striped dataTable table-hover"
+              			<table id="emp_list" class="table table-bordered table-striped dataTable table-hover"
               			role="grid" aria-describedby="example1_info">
 		                	<thead>
 		               			<tr role="row">
@@ -44,7 +44,7 @@
 		                	</thead>
 		                	<tbody>
 		                		<c:forEach items="${empList}" var="empList">
-				                  <tr class="babo odd" role="row">
+				                  <tr class="odd" role="row">
 				                  	<td><input type="hidden" value="${empList.emp_code}">${empList.rnum}</td>
 				                    <td>${empList.emp_code }</td>
 				                    <td>${empList.part_name }</td>
@@ -73,7 +73,7 @@
               					</div>
               					</div>
               					<div class="modal-footer">
-                					<button type="button" id="emailCom" class="btn-outline">이메일 인증 전송</button>
+                					<button type="button" id="emailCom" class="btn-outline" data-dismiss="modal">이메일 인증 전송</button>
               					</div>
             				</div>
             				<!-- /.modal-content -->
@@ -90,7 +90,7 @@
     <!-- /.content -->
 <script>
 $(function () {
-	$('#example1').DataTable();
+	$('#emp_list').DataTable();
 // 	$('#example2').DataTable({
 // 		'paging'      : true,
 //     	'lengthChange': true,
@@ -136,7 +136,7 @@ $(function () {
 	$('#empForm').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empForm.do');
 	});
-	$(document).on('click', 'table tr:gt(0)', function(){
+	$(document).on('click', '#emp_list tr:gt(0)', function(){
 		var emp_code = $(this).find('td:eq(0) input').val();
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empView.do?emp_code=' + emp_code);
 	});

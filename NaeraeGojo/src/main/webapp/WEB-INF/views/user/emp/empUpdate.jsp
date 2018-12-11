@@ -25,7 +25,6 @@ $(function(){
 			alert("비밀번호와 동일하게 입력해주세요.");
 			return false;
 		}
-
 		phone = $('select[name=emp_ph1]').val() + '-' + $('input[name=emp_ph2]').val() + '-' + $('input[name=emp_ph3]').val(); 
 		if (!phone.validationPHONE()) {
 			alert("전화번호를 바르게 입력해주세요.");
@@ -64,6 +63,8 @@ $(function(){
 	$('input[name=emp_email]').val('${empInfo.emp_email}');
 	$('input[name=emp_email1]').val('${empInfo.emp_email.split('@')[0]}');
 	$('input[name=emp_email2]').val('${empInfo.emp_email.split('@')[1]}');
+	$('input[name=emp_pass]').val('${empInfo.emp_pass}');
+	$('input[name=emp_pass_confirm]').val('${empInfo.emp_pass}');
 	
 	$('input[name=list]').click(function(){
 		$(location).attr('href', '${pageContext.request.contextPath}/user/emp/empList.do');
@@ -128,7 +129,7 @@ $(function(){
                						<table>
 										<tr><td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 400px; text-align: center;">
 									    	<div align="center" style="margin-left: 50px;">
-									    		<img id="ShowImage" src="/img/${ufv.user_file_save_name}" style="border-radius: 50%;" width="400" height="400" alt="pic1"/>
+									    		<img id="ShowImage" src="/sora/${ufv.user_file_save_name}" style="border-radius: 50%;" width="400" height="400" alt="pic1"/>
 									    	</div>
 									    	<br/>
 									    	<div style="width: 100%" align="center">
@@ -157,6 +158,7 @@ $(function(){
 		                  					<label name="emp_name">${empInfo.emp_name}</label>
                							</div>                
                						</div>
+               						<c:if test="${LOGIN_EMPINFO.emp_code eq empInfo.emp_code}"> 
                						<div class="row">
 			                			<label class="col-sm-3 control-label">비밀번호</label>
 		                  				<div class="col-sm-6">
@@ -169,6 +171,11 @@ $(function(){
 		                  					<input type="password" name="emp_pass_confirm" class="form-control" placeholder="비밀번호를 다시 입력해주세요" style="border-radius: 1em;">
                							</div>                
                						</div>
+               						</c:if>
+               						<c:if test="${LOGIN_EMPINFO.emp_code != empInfo.emp_code}"> 
+		                  					<input type="hidden" name="emp_pass" class="form-control" style="border-radius: 1em;">
+		                  					<input type="hidden" name="emp_pass_confirm" class="form-control" style="border-radius: 1em;">
+               						</c:if>
 			                		<div class="row">
 		                				<label class="col-sm-3 control-label">성별</label>
 		                  				<div class="col-sm-6">
@@ -312,8 +319,8 @@ $(function(){
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
-											<label name="emp_encpn">${empInfo.emp_encpn}</label>
-											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn}" />
+											<label name="emp_encpn">${empInfo.emp_encpn.split(' ')[0]}</label>
+											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn.split(' ')[0]}" />
 			              				</div>
 			              			</div>
 <!-- 			              			<input type="hidden" name="emp_delete" value="n" /> -->

@@ -28,6 +28,7 @@ public class EmpVO {
 	private String part_code;	// 직원부서
 	private String part_name;	// 직원부서
 	private String emp_nick;
+	private String user_file_code;
 	private String rnum;
 	private List<UserFileVO> fileitem;
 	private List<String> filesContentType;

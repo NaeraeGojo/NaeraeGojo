@@ -98,7 +98,7 @@ $(function () {
                						 <table>
 										<tr><td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 400px; text-align: center;">
 									    	<div align="center" style="margin-left: 50px;">
-									    		<img id="ShowImage" src="/img/${ufv.user_file_save_name}" style="border-radius: 50%;" width="350" height="350" alt="pic1"/>
+									    		<img id="ShowImage" src="/sora/${ufv.user_file_save_name}" style="border-radius: 50%;" width="350" height="350" alt="pic1"/>
 									    	</div>
 										</tr>
 									</table>
@@ -174,15 +174,6 @@ $(function () {
 		                  					<label name="emp_major">${empInfo.emp_major}</label>
                							</div>                
                						</div>
-			                		<div class="row">
-				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 이력</label>
-				                  		<div class="col-sm-6">
-			                  				<input type="text" class="form-control" placeholder="프로젝트 이력을 입력해주세요" style="border-radius: 1em;">
-		               					</div>                
-		               					<div class="col-sm-2" style="margin-left: -15px !important;">
-		               						<input type="button" class="form-control bg-light-blue color-palette" value="프로젝트 이력" style="border-radius: 1em;">
-		               					</div>
-                					</div>
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
@@ -212,6 +203,13 @@ $(function () {
 				                  			<label name="emp_level">${empInfo.emp_level}</label>
 		               					</div>
                 					</div>
+                					<div class="row">
+				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
+				                  		<div class="col-sm-5">
+											<label name="emp_encpn">${empInfo.emp_encpn.split(' ')[0]}</label>
+											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn.split(' ')[0]}" />
+			              				</div>
+			              			</div>
 <!-- 			              			<div class="row"> -->
 <!-- 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label> -->
 <!-- 				                  		<div class="col-sm-5"> -->

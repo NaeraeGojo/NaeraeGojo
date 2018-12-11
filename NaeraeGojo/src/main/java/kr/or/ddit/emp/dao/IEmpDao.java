@@ -11,6 +11,7 @@ import kr.or.ddit.vo.UserFileVO;
 public interface IEmpDao {
 	public EmpVO empInfo(Map<String,String> params) throws SQLException;
 	public void empInfoW(Map<String,String> params) throws SQLException;
+//	public List<EmpVO> empPhotoList(Map<String,String> params) throws SQLException;
 	public List<EmpVO> empList(Map<String, String> params) throws SQLException;
 	public String insertEmpInfo(EmpVO empInfo) throws SQLException;
 	public void insertUserFile(List<UserFileVO> ufv) throws SQLException;

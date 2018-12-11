@@ -47,10 +47,10 @@ $(function() {
 		$('input[name=emp_email]').val(email);
 		$('input[name=emailId]').val($('input[name=emp_email1]').val());
 		
-		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
-			alert("입사일을 입력해주세요.");
-			return false;
-		}
+// 		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
+// 			alert("입사일을 입력해주세요.");
+// 			return false;
+// 		}
 		$('select[name=part_code]').val();
 		$('input[name=emp_major]').val();
 		
@@ -137,11 +137,14 @@ $(function () {
 										<tr><td class="tLine" colspan="2"></td></tr>
 										<tr>
 											<td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 150px; text-align: center;">
-									        	<div align="center"><img id="ShowImage" src=""/></div>
+									        	<div align="center">
+<!-- 									        	<img id="ShowImage" src="../../img"/> -->
+									        	<img id="ShowImage" src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+									        	</div>
 									        	<div style="width: 100%" align="center">
 									        	<br/>
 									            	<label class="btn btn-primary btn-file">
-									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" style="display: none;" onchange="readURL(this);">
+									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" style="display: none;" accept="image/gif, image/jpeg, image/png" onchange="readURL(this);">
 									             	</label>
 									            	size : 235x315 이하
 									         	</div>
@@ -292,7 +295,7 @@ $(function () {
                 					<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
-											<input type="date" name="emp_encpn" class="form-control" value="" style="border-radius: 1em;"/>
+											<input type="date" name="emp_encpn" value="todate.getTime()" class="form-control" style="border-radius: 1em;"/>
 			              				</div>
 			              			</div>
 			              				<input type="hidden" name="emp_delete" value="w" />

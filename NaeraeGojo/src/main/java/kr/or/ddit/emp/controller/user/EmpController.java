@@ -56,12 +56,18 @@ public class EmpController {
 		params.put("emp_email", emp_email);
 		
 		empNum = service.empNum(params); 
-		emp_code = empNum.getEmp_code();		
-		andView.addObject("empNum", empNum);
-		andView.addObject("emp_code", emp_code);
-		andView.setViewName("jsonConvertView");
-		
-		return andView;
+		if(empNum == null){
+			andView.setViewName("redirect:/user/join/loginForm.do");
+			return andView;
+		}
+		else {
+			emp_code = empNum.getEmp_code();		
+			andView.addObject("empNum", empNum);
+			andView.addObject("emp_code", emp_code);
+			andView.setViewName("jsonConvertView");
+			
+			return andView;
+		}
 	}
 
 //	@RequestMapping(value="passCheck", method = RequestMethod.POST)
@@ -219,7 +225,7 @@ public class EmpController {
 	public ModelAndView updateEmp(EmpVO empInfo, ModelAndView andView, @RequestParam("files") MultipartFile[] files)throws Exception{
 		service.updateEmpInfo(empInfo, files);
 		String message = URLEncoder.encode("수정이 완료되었습니다.", "UTF-8");
-		RedirectView rv = new RedirectView("empList.do?message="+message);
+		RedirectView rv = new RedirectView("empView.do?message="+message+ "&emp_code="+empInfo.getEmp_code());
 		rv.setExposeModelAttributes(false);
 		andView.setView(rv);
 		return andView;

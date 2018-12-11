@@ -140,7 +140,7 @@ $(function(){
 
 	
 	// 이메일 인증 이후 링크로 직원등록 완료창 
-	if (eval('${!empty param.emp_code}')) {
+	if (eval('${!empty param.emailNick}')) {
 // 		$('#modal-primary').modal();
 			var emp_code = '${param.emp_code}';
 			$.ajax({
@@ -154,13 +154,14 @@ $(function(){
 					// boolean type false : undefined, null
 					// "1" + 1 = '11'
 					// eval("1" + 1) = 2
-						alert("직원등록 완료!!!!!!");
+						boalert("직원등록 완료!!!!!!");
 				}
 // 			    error : function(request, status, error) {
 // 					alert("code : " + request.status );
 // 							+ "\r\nmessage : " + request.reponseText);
 // 				}
 			});
+			boalert('직원등록이 완료되었습니다.');
 // 		return ture;
 		}
 	
@@ -177,18 +178,17 @@ $(function(){
 			$('input[name=empEmail]').val(email);
 			var name = $('input[name=empName]').val();
 			var email = $('input[name=empEmail]').val();
-			
 			$.ajax({
 				 url : '${pageContext.request.contextPath}/user/emp/idCheck.do',
 				 data : { emp_name : name,
 						emp_email : email},
 				 dataType : 'json',
 				 success : function(json) {
-					alert("사원 번호는 "+ "["+  json.emp_code + "] 입니다.");
+					 boalert("사원 번호는 "+ "["+  json.emp_code + "] 입니다.");
 				}
 				 ,
 				 error : function(result) {
-					 alert("에러");
+					 boalert("해당 회원정보가 없습니다.");
 				}
 			});
 			
@@ -220,11 +220,11 @@ $(function(){
 						},
 				 success : function(json) {
 // 					alert("사원 비밀번호는 "+ "["+  json.emp_pass + "] 입니다.");
-					alert("비밀번호를 해당 이메일로 전송하였습니다.");
+					boalert("비밀번호를 해당 이메일로 전송하였습니다.");
 				}
 				 ,
 				 error : function(result) {
-					 alert("해당회원정보가 없습니다.");
+					 boalert("해당회원정보가 없습니다.");
 				}
 			});
 			
@@ -325,7 +325,7 @@ $(function(){
               					</div>
               					<div class="modal-footer">
                 					<button type="button" class="btn-outline pull-left" data-dismiss="modal">Close</button>
-                					<button type="button" id="empNum" class="btn-outline">사원번호 찾기</button>
+                					<button type="button" id="empNum" class="btn-outline" data-dismiss="modal">사원번호 찾기</button>
               					</div>
             				</div>
             				</form>
@@ -356,7 +356,7 @@ $(function(){
               					</div>
               					<div class="modal-footer">
                 					<button type="button" class="btn-outline pull-left" data-dismiss="modal">Close</button>
-                					<button type="button" id="empPass" class="btn-outline">비밀번호 찾기</button>
+                					<button type="button" id="empPass" class="btn-outline" data-dismiss="modal">비밀번호 찾기</button>
               					</div>
             				</div>
             				<!-- /.modal-content -->

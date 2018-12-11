@@ -82,7 +82,7 @@ public class MailController {
          
          // 메일 보낸 내용
          message.setText("회원가입을 하려면 해당 링크를 클릭해주세요~ \r\n"
-        		 +"인증코드 : http://localhost/NaeraeGojo/user/join/loginForm.do?emp_code="+codeNum
+        		 +"인증코드 : http://localhost/NaeraeGojo/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick
         		 +"\r\n 사원번호 : "+codeNum);
          
          System.out.println(code);

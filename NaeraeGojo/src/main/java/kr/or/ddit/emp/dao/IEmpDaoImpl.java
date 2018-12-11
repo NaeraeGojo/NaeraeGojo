@@ -23,6 +23,11 @@ public class IEmpDaoImpl implements IEmpDao{
 	public EmpVO empInfo(Map<String, String> params) throws SQLException {
 		return (EmpVO) client.queryForObject("emp.empInfo", params);
 	}
+	
+//	@Override
+//	public List<EmpVO> empPhotoList(Map<String, String> params) throws SQLException {
+//		return client.queryForList("emp.empPhotoList", params);
+//	}
 
 	@Override
 	public void empInfoW(Map<String, String> params) throws SQLException {
@@ -86,6 +91,7 @@ public class IEmpDaoImpl implements IEmpDao{
 			client.endTransaction();
 		}
 	}
+
 
 //	@Override
 //	public int totalCount(Map<String, String> params) throws SQLException {

@@ -27,8 +27,7 @@
 	<select id="empNum" parameterClass="map" resultClass="empVO">
 		SELECT *
 		  FROM EMP
-		  WHERE EMP_DELETE = 'n'
-		  AND EMP_NAME= #emp_name#
+		  WHERE EMP_NAME= #emp_name#
 		  AND EMP_EMAIL = #emp_email#
 	</select>
 	
@@ -135,12 +134,21 @@
         ORDER BY B.RNUM DESC
     </select>    
 	
-	<!-- 휴먼상태의 회원을 임시로그인 시켜줌 -->
+	<!-- 휴먼상태의 회원을 로그인 시켜줌 -->
 	<update id="empInfoW" parameterClass="map">
 		UPDATE EMP
 		   SET EMP_DELETE = 'n'
 		 WHERE EMP_CODE = #emp_code#
 	</update>
+
+	<!-- 프로필 사진 있는 직원Info -->
+<!-- 	<select id="empPhotoList" parameterClass="map" resultClass="empVO"> -->
+<!-- 			SELECT A.* -->
+<!-- 			  ,B. USER_FILE_CODE -->
+<!-- 		  	FROM EMP A, USER_FILE B -->
+<!-- 		 	WHERE A.EMP_CODE = B.EMP_CODE -->
+<!-- 		 	AND A.EMP_DELETE = 'n' -->
+<!-- 	</select> -->
 
 	<!-- 직원Info(객체 받아오기) -->
 	<select id="empInfo" parameterClass="map" resultClass="empVO">

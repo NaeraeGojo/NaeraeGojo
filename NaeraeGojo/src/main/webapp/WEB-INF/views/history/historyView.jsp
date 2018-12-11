@@ -119,9 +119,16 @@
 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
     <script type="text/javascript">
     $(function(){
+    	boalert = function(mes) {
+			BootstrapDialog.show({
+				title : '알림',
+				message : mes
+			});
+		};
+    	var today = new Date();
+    	
     	//이력수정
         $('#historyUpdate').submit(function(){
-         	var emp_code =  $('input[name=emp_code]').val();
            	var history_project_name = $('input[name=history_project_name]').val();
            	var history_notice_agency = $('input[name=history_notice_agency]').val();
            	var history_demand_agency = $('input[name=history_demand_agency]').val();
@@ -131,17 +138,32 @@
            	var history_delete = $('input[name=history_delete]').val();
            	
            	if(history_project_name == ''){
-            	boalert("프로젝트 명을 입력해주세요");
+            	alert("프로젝트 명을 입력해주세요");
              	return false;
             }
-            if(history_notice_agency == ''|| history_demand_agency == ''){
-            	boalert("해당 기관 명을 입력해주세요");
+            if(history_notice_agency == ''){
+            	boalert("해당 기관 명을 입력해주세요")
             	return false;
             }
             if(history_project_start == '' || history_project_end == '' ){
-            	boalert("프로젝트 기간을 입력해주세요");
+            	boalert("프로젝트 기간을 입력해주세요")
             	return false;
             }
+            var dateArr = history_project_start.split('-');
+            var dateArr1 = history_project_end.split('-');
+
+			var history_start = new Date(dateArr[0], dateArr[1] - 1,
+					dateArr[2]);
+			var history_end = new Date(dateArr1[0], dateArr1[1] - 1,
+					dateArr1[2]);
+            
+            if(history_start.getTime() > history_end.getTime()){
+    			boalert("프로젝트 기간 설정이 잘못되었습니다.");
+    			return false;
+    		}else if(history_end.getTime() > today.getTime()) {
+				boalert("아직 끝나지 않은 프로젝트는 이력에 적을 수 없습니다.");
+				return false;
+			}
             boalert("이력수정이 완료되었습니다!!");
            	return true;
         });
@@ -150,8 +172,8 @@
         $('input[name=history_code]').val('${historyInfo.history_code}');
         $('input[name=history_notice_agency]').val('${historyInfo.history_notice_agency}');
         $('input[name=history_demand_agency]').val('${historyInfo.history_demand_agency}');
-        $('input[name=history_project_start]').val('${historyInfo.history_project_start}');
-        $('input[name=history_project_end]').val('${historyInfo.history_project_end}');
+        $('input[name=history_project_start]').val('${historyInfo.history_project_start.split(' ')[0]}');
+        $('input[name=history_project_end]').val('${historyInfo.history_project_end.split(' ')[0]}');
         $('input[name=history_project_name]').val('${historyInfo.history_project_name}');
         $('select[name=history_business]').val('${historyInfo.history_business}');
         $('input[name=history_delete]').val('${historyInfo.history_delete}');
@@ -210,11 +232,11 @@
 						    <table class="date_table">
 							   	<tr>
 						        	<td>
-						           		<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
+						           		<input type="date" name="history_project_start" class="form-control upForm" value="" style="border-radius: 1em;">
 						           	</td>
 						            <td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
 						            <td>
-						            	<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
+						            	<input type="date" name="history_project_end" class="form-control upForm" value="" style="border-radius: 1em;"/>
 						            </td>
 						        </tr>
 						    </table>

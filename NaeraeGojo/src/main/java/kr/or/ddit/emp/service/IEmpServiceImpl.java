@@ -31,6 +31,13 @@ public class IEmpServiceImpl implements IEmpService {
 		return dao.empInfo(params);
 	}
 
+//	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, rollbackFor={RuntimeException.class, SQLException.class, })
+//	@Override
+//	public List<EmpVO> empPhotoList(Map<String, String> params)
+//			throws SQLException {
+//		return dao.empPhotoList(params);
+//	}
+
 	@Transactional(readOnly=true)
 	@Override
 	public void empInfoW(Map<String, String> params) throws SQLException {
@@ -62,13 +69,9 @@ public class IEmpServiceImpl implements IEmpService {
 	@Override
 	public void updateEmpInfo(EmpVO empInfo, MultipartFile[] files) throws SQLException {
 		dao.updateEmpInfo(empInfo);
-		if(empInfo.getFiles() == null){
-			List<UserFileVO> ufv = fileMapper.picture_mapping(empInfo.getFiles(), empInfo.getEmp_code());
-			dao.insertUserFile(ufv);
-		}else{
-			List<UserFileVO> ufv = fileMapper.picture_mapping(files, empInfo.getEmp_code());
-			dao.updateUserFile(ufv);
-		}
+		
+		List<UserFileVO> ufv = fileMapper.picture_mapping(files, empInfo.getEmp_code());
+		dao.updateUserFile(ufv);
 	}
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
