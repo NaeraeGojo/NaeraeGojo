@@ -18,7 +18,8 @@ public interface IVideoFileService {
 
 	public VideoFileVO getVideoFile(Map<String, String> params) throws SQLException;
 
-	public void updateMeetingFile(MultipartFile files,
-			String video_chat_room_code) throws SQLException;
+	public void updateMeetingFile(MultipartFile files, String video_chat_room_code) throws SQLException;
+
+	public String getVideoFileCode(String video_chat_room_code) throws SQLException;
 	
 }

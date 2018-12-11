@@ -53,7 +53,7 @@
 		<dynamic>
 	 		<isNotEmpty property="search_keyword" prepend="and">
 	 			<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">  
-	 				   PROJECT_NAME LIKE '%' || #search_keyword# || '%'
+	 				   PROJECT_NAME   LIKE '%' || #search_keyword# || '%'
 	 				OR PROJECT_START   LIKE '%' || #search_keyword# || '%'
 	 			</isEqual>
 	 			<isEqual property="search_keycode" compareValue="NAME" >  
@@ -73,9 +73,9 @@
 						<include refid="searchCondition"/> 
 						ORDER BY PROJECT_CODE) A ) B
  		<![CDATA[				
-   		WHERE B.RNUM <= #startCount#   
-   		 AND  B.RNUM >= #endCount#   
-   		]]>   
+		WHERE B.RNUM <= #startCount#
+		 AND  B.RNUM >= #endCount#
+		]]>
 		ORDER BY B.RNUM DESC
 	</select>	
 	

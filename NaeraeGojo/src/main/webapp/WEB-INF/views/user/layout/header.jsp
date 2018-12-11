@@ -244,7 +244,7 @@
 											<c:if test="${!empty LOGIN_EMPINFO.emp_encpn}">
           										입사 : ${LOGIN_EMPINFO.emp_encpn.split(' ')[0]}
           										<br/>
-          										권한 : ${LOGIN_EMPINFO.emp_role}
+<%--           										권한 : ${LOGIN_EMPINFO.emp_role} --%>
           									</c:if>
 										</small>
 									</p>
@@ -252,7 +252,7 @@
 	<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<a href="#" class="btn btn-default btn-flat">Profile</a>
+										<a href="${pageContext.request.contextPath}/user/emp/empView.do?emp_code=${LOGIN_EMPINFO.emp_code}" class="btn btn-default btn-flat">Profile</a>
                 					</div>
                 					<div class="pull-right">
                   						<a href="${pageContext.request.contextPath}/user/join/logout.do" class="btn btn-default btn-flat">Sign out</a>
