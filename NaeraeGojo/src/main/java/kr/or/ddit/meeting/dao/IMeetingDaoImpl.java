@@ -62,8 +62,8 @@ public class IMeetingDaoImpl implements IMeetingDao{
 	}
 
 	@Override
-	public List<ProjectVO> getProjectNM() throws SQLException {
-		return client.queryForList("meeting.getProjectNM");
+	public List<ProjectVO> getProjectNM(String emp_code) throws SQLException {
+		return client.queryForList("meeting.getProjectNM", emp_code);
 	}
 
 	@Override

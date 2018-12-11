@@ -55,8 +55,10 @@ public class MeetingController {
 			currentPage="1";
 		}
 		
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();	
 		params.put("search_keycode", search_keycode);
 		params.put("search_keyword", search_keyword);
+		params.put("emp_code", emp_code);
 		
 		int totalCount = service.totalCount(params);
 		
@@ -93,7 +95,10 @@ public class MeetingController {
    @RequestMapping(value="/meetingFileForm")
    public ModelAndView meetingForm(HttpServletRequest request, HttpSession session, ModelAndView andView) throws Exception{
 	 
-	   List<ProjectVO> projectInfo =service.getProjectNM();
+	   String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();	
+	   
+	   List<ProjectVO> projectInfo =service.getProjectNM(emp_code);
+	   
 	   
 	   andView.addObject("projectInfo", projectInfo);
 	   andView.setViewName("user/meeting/meetingFileForm");

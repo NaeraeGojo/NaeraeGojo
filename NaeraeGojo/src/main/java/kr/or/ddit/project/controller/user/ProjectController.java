@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.join.service.IJoinService;
 import kr.or.ddit.project.service.IProjectService;
 import kr.or.ddit.rqpps.service.IRqppsService;
 import kr.or.ddit.suggest.service.ISuggestService;
@@ -36,6 +37,9 @@ public class ProjectController {
 	
 	@Autowired
 	private IRqppsService rfpService;
+	
+	@Autowired
+	private IJoinService joinService;
 	
 	@RequestMapping("mainForm")
 	public void mainForm(){}
@@ -191,6 +195,18 @@ public class ProjectController {
 		suggestInfo = service.suggestInfo(params);
 		
 		andView.addObject("suggestInfo", suggestInfo);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	
+	@RequestMapping("deleteEmp")
+	public ModelAndView deleteEmp(Map<String, String> params, ModelAndView andView,
+			String emp_code, HttpSession session) throws SQLException{
+		
+		params.put("emp_code", emp_code);
+		
+//		service.deleteEmp(params);
+		
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}

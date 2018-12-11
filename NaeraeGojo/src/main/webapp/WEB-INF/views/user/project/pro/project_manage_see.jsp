@@ -21,6 +21,10 @@
 	height: 100%;
 
 }
+
+#empList{
+   overflow-y: scroll; 
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script type="text/javascript">
@@ -89,7 +93,7 @@ $(function(){
             	
             	
                 $('#updateForm').modal('hide');
-                $(location).attr('href', '${pageContext.request.contextPath}/user/project/pro/project_manage_see.do?project_code='+${projectInfo.project_code });
+                $(location).attr('href', '${pageContext.request.contextPath}/user/project/pro/project_manage_see.do?project_code='+'${projectInfo.project_code }');
             }
         });
 	});
@@ -128,15 +132,28 @@ $(function () {
 	                fontSize: 16,
 	                padding: 25
 	          }
-		    },
-// 		    title: {
-// 		        display: true,
-// 		        text: 'ㅠㅠ'
-// 		    }
+		    }
 		}
 	});
 	
 })
+
+function deleteEmp(emp_code) {
+    alert(emp_code);
+    
+//     $.ajax({
+//     	type : 'POST',
+//         url : '${pageContext.request.contextPath}/user/project/deleteEmp.do',
+//         data : {emp_code :emp_code},
+//         dataType : 'json',
+//         error: function(xhr, status, error){
+//             alert(error);
+//         },
+//         success : function(data){
+        	
+//         }
+//     })
+}
 
 
 </script>
@@ -252,15 +269,14 @@ $(function () {
 				<div class="box-header">
 					<i class="fa fa-users"></i>
 					<h3 class="box-title">참여 인원</h3>
-					${pagingUtil}
 				</div>
-				<div class="box-body" style="height: 607px">
+				<div class="box-body" style="height: 607px" id="empList">
 					<ul class="todo-list">
 						<c:forEach items="${joinList}" var="joinList">
 						<li>
 							<span class="handle"> <i class="fa fa-user"></i></span>
-							<span class="text">${joinList.emp_name }</span> 
-							<div class="tools"><i class="fa fa-remove"></i></div>
+							<span class="text"><input type="hidden" name="emp_code" value="${joinList.emp_code }">${joinList.emp_name }</span> 
+							<div class="tools"><i class="fa fa-remove" id="${joinList.emp_code }" onclick="deleteEmp(${joinList.emp_code })"></i></div>
 						</li>
 						</c:forEach>
 					</ul>
