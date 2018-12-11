@@ -172,8 +172,8 @@
         $('input[name=history_code]').val('${historyInfo.history_code}');
         $('input[name=history_notice_agency]').val('${historyInfo.history_notice_agency}');
         $('input[name=history_demand_agency]').val('${historyInfo.history_demand_agency}');
-        $('input[name=history_project_start]').val('${historyInfo.history_project_start.split(' ')[0]}');
-        $('input[name=history_project_end]').val('${historyInfo.history_project_end.split(' ')[0]}');
+        $('input[name=history_project_start]').val("${historyInfo.history_project_start.split(' ')[0]}");
+        $('input[name=history_project_end]').val("${historyInfo.history_project_end.split(' ')[0]}");
         $('input[name=history_project_name]').val('${historyInfo.history_project_name}');
         $('select[name=history_business]').val('${historyInfo.history_business}');
         $('input[name=history_delete]').val('${historyInfo.history_delete}');
@@ -196,7 +196,7 @@
    </head>
    
    <body>
-      <div class="row">
+      <div class="row" style="margin: 40px;">
          <div class="box box-warning">
             <div class="box-header with-border">
                  <h2 class="box-title"><b>이력수정</b></h2>

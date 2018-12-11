@@ -18,6 +18,10 @@ function readURL(input) {
 }
 
 $(function() {
+	var today = new Date();
+	
+	String curTime = new SimpleDateFormat("yyyy-MM-dd").format(today);
+	
 	$('#form_emp').submit(function() {
 		if (!$('input[name=emp_name]').val().validationNM()) {
 			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
@@ -53,6 +57,7 @@ $(function() {
 // 		}
 		$('select[name=part_code]').val();
 		$('input[name=emp_major]').val();
+		$('input[name=emp_encpn]').val();
 		
 		return true;
 	});	
@@ -295,7 +300,7 @@ $(function () {
                 					<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
-											<input type="date" name="emp_encpn" value="todate.getTime()" class="form-control" style="border-radius: 1em;"/>
+											<input type="date" name="emp_encpn" value="curTime" class="form-control" style="border-radius: 1em;"/>
 			              				</div>
 			              			</div>
 			              				<input type="hidden" name="emp_delete" value="w" />

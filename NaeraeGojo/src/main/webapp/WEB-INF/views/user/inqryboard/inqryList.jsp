@@ -21,6 +21,12 @@
 <section class="content">	<!-- content 기본 큰 창 (기본설정)-->
 	<br/><br/>
 	<div class="row">
+		<div class="inqrycont">
+			<div class="col-md-4 pull-right" style="width: auto;">
+				<input id="btn_inqryForm" value="+게시물 등록" type="button" class="btn btn-lg btn_free_upper">    	
+      		</div>
+		</div>
+		
 	<div class="inqrycont">
 			<!-- 행을 나누는 기준의 큰 div(기본 설정) -->
 		<div class="col-md-12">	<!-- 원하는 width 비율로 class를 수정 -->
@@ -82,7 +88,6 @@
 			</select>
 			<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 	    	<button type="submit" class="btn btn-primary form-control">검색</button>
-	    	<button type="button" id="btn_inqryForm" class="btn btn-info form-control">등록</button>
 		</form>
 	</div>
 	</div>
