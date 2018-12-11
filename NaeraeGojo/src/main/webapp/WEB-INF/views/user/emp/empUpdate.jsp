@@ -135,9 +135,9 @@ $(function(){
 												<label class="btn btn-primary btn-file">
 											     	사진수정 <input type="file" class="form-control" name="files" style="display: none;" onchange="readURL(this);">
 											    </label>
-												<label class="btn btn-primary btn-file">
-											     	사진삭제 <input type="button" class="form-control" name="PhotoDelete" style="display: none;">
-											    </label>
+<!-- 												<label class="btn btn-primary btn-file"> -->
+<!-- 											     	사진삭제 <input type="button" class="form-control" name="PhotoDelete" style="display: none;"> -->
+<!-- 											    </label> -->
 											</div>
 										</tr>
 									</table>
