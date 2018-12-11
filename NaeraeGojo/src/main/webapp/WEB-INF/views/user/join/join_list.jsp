@@ -97,7 +97,6 @@ p {
 <!-- 			<option>검색조건</option> -->
 			<option value="TOTAL">전체</option>
 			<option value="TITLE">프로젝트 명</option>
-			<option value="CONTENT">내용</option>
 			<option value="WRITER">작성자</option>
 		</select>
 		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control">

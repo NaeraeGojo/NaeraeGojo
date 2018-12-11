@@ -114,7 +114,7 @@ public class RqppsController {
 		params.put("emp_code", emp_code);
 		params.put("rqpps_code", rqpps_code);
 		params.put("position_name", position_name);
-		joinService.insertJoinInfo(params);
+		joinService.insertJoinInfoRqpps(params);
 		
 		
 		// 여기에 pm 인서트가 들어가면 될것같아여
