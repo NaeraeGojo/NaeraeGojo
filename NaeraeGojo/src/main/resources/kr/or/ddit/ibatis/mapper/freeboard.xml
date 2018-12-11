@@ -38,7 +38,7 @@
 				<isEqual property="search_keycode" compareValue="TOTAL" open="(" close=")">
 						FREEBOARD_TITLE LIKE '%'||#search_keyword#||'%'
 					 OR FREEBOARD_CONTENT LIKE '%'||#search_keyword#||'%'
-					 OR b.EMP_NAME LIKE '%'||#search_keyword#||'%'
+					 OR b.EMP_NICK LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="TITLE">
 					FREEBOARD_TITLE LIKE '%'||#search_keyword#||'%'
@@ -47,7 +47,7 @@
 					FREEBOARD_CONTENT LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 				<isEqual property="search_keycode" compareValue="WRITER">
-					b.EMP_NAME LIKE '%'||#search_keyword#||'%'
+					b.EMP_NICK LIKE '%'||#search_keyword#||'%'
 				</isEqual>
 			</isNotEmpty>
 		</dynamic>

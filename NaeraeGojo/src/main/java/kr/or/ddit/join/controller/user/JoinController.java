@@ -86,13 +86,13 @@ public class JoinController {
 		EmpVO empInfo = empServ.empInfo(params);
 
 		if (empInfo == null) {
-			String message = "";
+			String message = "정보가 일치하는 직원이 존재하지 않습니다.";
 			try {
 				message = URLEncoder.encode(message, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			return "redirect:/user/join/loginForm.do?message" + message;
+			return "redirect:/user/join/loginForm.do?message=" + message;
 		} else {
 			session.setAttribute("LOGIN_EMPINFO", empInfo);
 			Map<String, String> param1 = new HashMap<String, String>();
