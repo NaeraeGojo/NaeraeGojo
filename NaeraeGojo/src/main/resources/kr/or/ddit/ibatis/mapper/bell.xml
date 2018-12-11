@@ -37,7 +37,6 @@
                      and to_char(add_months(sysdate,-1),'yyyy-mm-dd')&lt;=a.issue_event_day
                       and a.issue_alarm = 'n'
                       and a.emp_damdang = #emp_code#
-                    
     </select>
     
     <update id="issueAlarm" parameterClass="map">

@@ -14,5 +14,7 @@ public interface IVideoFileDao {
 	public String getfileCode(String video_chat_room_code) throws SQLException;
 
 	public void updateVideoChatFile(VideoFileVO vhfile) throws SQLException;
+
+	public String getVideoFileCode(String video_chat_room_code) throws SQLException;
 	
 }
