@@ -64,7 +64,6 @@ $(function() {
 		});
 	};
 	refresh = function(){
-// 		var project_code = '${fbv.project_code}';
 		var doc_code = '${ibv.inqry_board_code}';
 		var doc_class = '3';
 		
@@ -226,25 +225,13 @@ $(function() {
                 </div>
                 <div class="form-group">
 							<label for="file01" class="col-sm-2 control-label">파일 첨부</label>
-							<div class="col-sm-10">
-								<div>
-									<div style="display: inline-block;">
-										<table id="table_files" style="border-collapse:separate; border-spacing:10px;">
-										</table>
-									</div>
-								</div>
-								
-								<div class="up_form" style="width: 50%; border: 1px solid lightgray; border-radius: 8px; padding: 10px;">
-									<div id="div_files" style="display: inline-block;">
-										<input type="file"name="files" style="display: none;">
-									</div>
-									
-									<div style="width: 10%; display: inline-block;">
-										<input id="btn_plus_file" type="button" class="bg-teal btn form-control btn-sm" value="추가"
-											style="border-radius: 1em; width: 60px;">
-									</div>
-								</div>
-							</div>
+							 <c:forEach items="${vo.items }" var="allFileItem" varStatus="stat">
+                  <div class="col-sm-10 control-label">
+<%--                   <a id="${allFileItem.meeting_file_name}" href="${pageContext.request.contextPath }/user/meetingFile2/meetFileDownload.do?meeting_file_code=${meetFileInfo.meeting_file_code}">${meetFileInfo.meeting_file_name}</a> --%>
+	                  <a>${allFileItem.all_file_name}</a>
+<%-- 	                  <input type="file" id="file01" name="files" value="/ALL_FILE_SAVE_NAME/${allFileItem.all_file_save_name}"> --%>
+                  </div>
+                </c:forEach>
 						</div>
 						<div class="box-footer clearfix">
 							<input value="등록" type="submit" style="width:80px;" class="btn btn-warning btn-flat pull-right up_form ">

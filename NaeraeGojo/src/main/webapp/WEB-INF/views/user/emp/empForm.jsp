@@ -6,15 +6,24 @@
 <script type="text/javascript">
 //화면에 파일 띄우기
 function readURL(input) {
-   if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-         $('#ShowImage').attr('src', e.target.result).width(235).height(315);
-      };
-
-      reader.readAsDataURL(input.files[0]);
-   }
+   	pathpoint = input.value.lastIndexOf('.');
+   	filepoint = input.value.substring(pathpoint+1, input.length);
+   	filetype = filepoint.toLowerCase();
+   	if(filetype=='jpg'||filetype=='gif'||filetype=='png'||filetype=='jpeg'){
+		if (input.files && input.files[0]) {
+	      var reader = new FileReader();
+	      reader.onload = function(e) {
+	         $('#ShowImage').attr('src', e.target.result).width(235).height(315);
+	      };
+	      reader.readAsDataURL(input.files[0]);
+	   }
+   	}
+   	else{
+   		alert('이미지 파일만 선택할 수 있습니다.');
+   		parentObj = input.parentNode;
+   		node = parentObj.replaceChild(input.cloneNode(true), input);
+   		return false;
+   	}
 }
 
 $(function() {
@@ -24,15 +33,6 @@ $(function() {
 			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
 			return false;
 		}
-		if (!$('input[name=emp_pass]').val().validationPASS()) {
-			alert("비밀번호를 바르게 입력해주세요.");
-			return false;
-		}
-// 		if (($('input[name=emp_pass]').val()) != ($('input[name=emp_pass_confirm]').val())) {
-// 			alert("비밀번호와 동일하게 입력해주세요.");
-// 			return false;
-// 		}
-
 		phone = $('select[name=emp_phone1]').val() + '-' + $('input[name=emp_phone2]').val() + '-' + $('input[name=emp_phone3]').val(); 
 		if (!phone.validationPHONE()) {
 			alert("전화번호를 바르게 입력해주세요.");
@@ -52,8 +52,15 @@ $(function() {
 			alert("입사일을 입력해주세요.");
 			return false;
 		}
+		if ($('input[name=emp_major]').val() == ""){
+			alert("전공을 입력해주세요.");
+			return false;
+		}
 		$('select[name=part_code]').val();
-		$('input[name=emp_major]').val();
+		
+		var nick =$('#part option:selected').text()+"_"+$('input[name=emp_name]').val();
+		var nickname = nick.replace(/\s/gi, "");
+		$('input[name=emp_nick]').val(nickname);
 		
 		return true;
 	});	
@@ -136,7 +143,7 @@ $(function () {
 									        	<div style="width: 100%" align="center">
 									        	<br/>
 									            	<label class="btn btn-primary btn-file">
-									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" accept="*.jpg, *.png" style="display: none;" onchange="readURL(this);">
+									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" accept="image/gif, image/jpeg, image/png" style="display: none;" onchange="readURL(this);">
 									             	</label>
 									            	size : 235x315 이하
 									         	</div>
@@ -151,12 +158,8 @@ $(function () {
 		                  					<input type="text" name="emp_name" class="form-control" placeholder="이름을 입력해주세요" style="border-radius: 1em;">
                							</div>                
                						</div>
-			                		<div class="row">
-			                			<label class="col-sm-3 control-label">비밀번호</label>
-		                  				<div class="col-sm-6">
-		                  					<input type="password" name="emp_pass" class="form-control" value="${password }" style="border-radius: 1em;">
-               							</div>                
-               						</div>
+		                  					<input type="hidden" name="emp_nick" class="form-control" placeholder="닉네임을 입력해주세요.   ex)부서명_이름" style="border-radius: 1em;">
+		                  					<input type="hidden" name="emp_pass" class="form-control" value="${password }" style="border-radius: 1em;">
 <!-- 			                		<div class="row"> -->
 <!-- 			                			<label class="col-sm-3 control-label">비밀번호 확인</label> -->
 <!-- 		                  				<div class="col-sm-6"> -->
@@ -252,7 +255,7 @@ $(function () {
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
-				                  			<select name="part_code" class="form-control" style="border-radius: 1em;">
+				                  			<select name="part_code" id="part" class="form-control" style="border-radius: 1em;">
 				                  				<c:forEach items="${partList }" var="list">
 				                  					<option value="${list.part_code}">
 				                  					${list.part_name }

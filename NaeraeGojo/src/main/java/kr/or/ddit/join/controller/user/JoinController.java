@@ -105,15 +105,8 @@ public class JoinController {
 			param1.put("emp_code", empInfo.getEmp_code());
 			UserFileVO ufv = userServ.userFileInfo(param1);
 			session.setAttribute("PHOTO", ufv);
-			if (empInfo.getEmp_role().equals("DEP")) { // 개발자 권한 로그인
-				return "forward:/user/join/mainForm.do";
-			} else if (empInfo.getEmp_role().equals("MANAGER")) { // 관리자 권한 로그인
-				return "forward:/user/emp/empList.do";
-			} else if (empInfo.getEmp_role().equals("PL")) { // PL 권한 로그인
-				return "forward:/user/report/report_listPL.do";
-			} else {
-				return "forward:/user/emp/empForm.do";
-			}
+			
+			return "forward:/user/join/mainForm.do";
 		}
 	}
 

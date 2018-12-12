@@ -118,4 +118,10 @@ public class IEmpServiceImpl implements IEmpService {
 		dao.updateUserFile(ufv);
 	}
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+	@Override
+	public List<EmpVO> empMail(Map<String, String> params) throws SQLException {
+		return dao.empMail(params);
+	}
+
 }

@@ -5,15 +5,25 @@
 <script type="text/javascript">
 //화면에 파일 띄우기
 function readURL(input) {
-   if (input.files && input.files[0]) {
-      var reader = new FileReader();
+	pathpoint = input.value.lastIndexOf('.');
+   	filepoint = input.value.substring(pathpoint+1, input.length);
+   	filetype = filepoint.toLowerCase();
+   	if(filetype=='jpg'||filetype=='gif'||filetype=='png'||filetype=='jpeg'){
+   		if (input.files && input.files[0]) {
+     		var reader = new FileReader();
 
-      reader.onload = function(e) {
-         $('#ShowImage').attr('src', e.target.result).width(350).height(350);
-      };
-
-      reader.readAsDataURL(input.files[0]);
-   }
+      		reader.onload = function(e) {
+         		$('#ShowImage').attr('src', e.target.result).width(350).height(350);
+      		};
+      		reader.readAsDataURL(input.files[0]);
+   		}
+   	}
+   	else{
+		alert('이미지 파일만 선택할 수 있습니다.');
+		parentObj = input.parentNode;
+   		node = parentObj.replaceChild(input.cloneNode(true), input);
+   		return false;
+   	}
 }	
 $(function(){
 	$('#form').submit(function(){
@@ -23,6 +33,10 @@ $(function(){
 		}
 		if (($('input[name=emp_pass]').val()) != ($('input[name=emp_pass_confirm]').val())) {
 			alert("비밀번호와 동일하게 입력해주세요.");
+			return false;
+		}
+		if ($('input[name=emp_nick]').val() == ""){
+			alert("닉네임을 바르게 입력해주세요.");
 			return false;
 		}
 		phone = $('select[name=emp_ph1]').val() + '-' + $('input[name=emp_ph2]').val() + '-' + $('input[name=emp_ph3]').val(); 
@@ -158,16 +172,22 @@ $(function(){
 		                  					<label name="emp_name">${empInfo.emp_name}</label>
                							</div>                
                						</div>
+			                		<div class="row">
+			                			<label class="col-sm-3 control-label">닉네임</label>
+		                  				<div class="col-sm-4">
+		                  					<input type="text" name="emp_nick" value="${empInfo.emp_nick}" class="form-control" style="border-radius: 1em;"/>
+               							</div>                
+               						</div>
                						<c:if test="${LOGIN_EMPINFO.emp_code eq empInfo.emp_code}"> 
                						<div class="row">
 			                			<label class="col-sm-3 control-label">비밀번호</label>
-		                  				<div class="col-sm-6">
+		                  				<div class="col-sm-5">
 		                  					<input type="password" name="emp_pass" class="form-control" placeholder="비밀번호를 입력해주세요" style="border-radius: 1em;">
                							</div>                
                						</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">비밀번호 확인</label>
-		                  				<div class="col-sm-6">
+		                  				<div class="col-sm-5">
 		                  					<input type="password" name="emp_pass_confirm" class="form-control" placeholder="비밀번호를 다시 입력해주세요" style="border-radius: 1em;">
                							</div>                
                						</div>
@@ -277,9 +297,8 @@ $(function(){
 			                		</div>
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">전공</label>
-		                  				<div class="col-sm-6">
-		                  					<label name="emp_major">${empInfo.emp_major}</label>
-		                  					<input type="hidden" name="emp_major" value="${empInfo.emp_major}" />
+		                  				<div class="col-sm-4">
+		                  					<input type="type" name="emp_major" value="${empInfo.emp_major}" class="form-control" style="border-radius: 1em;"/>
                							</div>                
                						</div>
 		                			<div class="row">
@@ -323,25 +342,8 @@ $(function(){
 											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn.split(' ')[0]}" />
 			              				</div>
 			              			</div>
-<!-- 			              			<input type="hidden" name="emp_delete" value="n" /> -->
-<!-- 			              			<div class="row"> -->
-<!-- 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">자격증</label> -->
-<!-- 				                  		<div class="col-sm-5"> -->
-<!-- 				                  			<input type="text" class="form-control" style="font-size:20px; border-radius: 1em;"> -->
-<!-- 		               					</div>                 -->
-<!-- 			              				<div class="col-sm-3" style="margin-left: -15px !important;"> -->
-<!-- 											<input type="button" data-toggle="modal"  data-target="#modal-primary2" class="form-control bg-yellow color-palette" value="자격증내역" style="border-radius: 1em;"> -->
-<!-- 										</div> -->
-<!-- 			              			</div> -->
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">프로젝트 이력</label>
-				                  		<div class="col-sm-4">
-				                  			<select class="form-control" name="projectCode" style="border-radius: 1em;">
-				                  				<c:forEach items="${historyList }" var="list">
-						                  			<option value="${list.history_code}">${list.history_project_name }</option>
-				                  				</c:forEach>
-				                  			</select>
-		               					</div>                
 			              				<div class="col-sm-3" style="margin-left: -15px !important;">
 											<input type="button" class="form-control bg-yellow color-palette" value="이력관리" style="border-radius: 1em;">
 										</div>

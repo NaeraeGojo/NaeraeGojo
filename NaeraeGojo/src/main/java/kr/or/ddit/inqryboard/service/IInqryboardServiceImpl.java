@@ -65,11 +65,11 @@ public class IInqryboardServiceImpl implements IInqryboardService {
 	public void updateInqryInfo(InqryBoardVO inqryBoardInfo, MultipartFile[] files) throws SQLException {
 		dao.updateInqryInfo(inqryBoardInfo);
 		
-		List<AllFileVO> afl = allFileMapper.mapping(files, inqryBoardInfo.getInqry_board_code(), "3");
-		
-		for(AllFileVO afv : afl){
-			afdao.insertAllFile(afv);
-		}
+//		List<AllFileVO> afl = allFileMapper.mapping(files, inqryBoardInfo.getInqry_board_code(), "3");
+//		
+//		for(AllFileVO afv : afl){
+//			afdao.insertAllFile(afv);
+//		}
 	}
 
 	@Override

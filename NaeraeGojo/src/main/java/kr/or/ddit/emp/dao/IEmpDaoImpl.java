@@ -92,6 +92,11 @@ public class IEmpDaoImpl implements IEmpDao{
 		}
 	}
 
+	@Override
+	public List<EmpVO> empMail(Map<String, String> params) throws SQLException {
+		return client.queryForList("emp.empMail", params);
+	}
+
 
 //	@Override
 //	public int totalCount(Map<String, String> params) throws SQLException {

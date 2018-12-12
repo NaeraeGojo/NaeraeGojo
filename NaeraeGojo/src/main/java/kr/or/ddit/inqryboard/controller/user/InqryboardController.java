@@ -13,6 +13,7 @@ import kr.or.ddit.inqryboard.service.IInqryboardService;
 import kr.or.ddit.utils.AllFileMapper;
 import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.SetContent;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.InqryBoardVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class InqryboardController {
 	
 	@Resource
 	IInqryboardService service;
+	
+	@Autowired
+	private AllFileMapper allFileMapper;
 	
 	
 	@RequestMapping("inqryForm")
@@ -65,6 +69,7 @@ public class InqryboardController {
 	public ModelAndView inqryView(String inqry_board_code, ModelAndView model, 
 			Map<String, String> params) throws SQLException{
 		params.put("inqry_board_code", inqry_board_code);
+		
 		InqryBoardVO ibv = service.inqryBoardInfo(params);
 		
 		int inqry_board_hit = Integer.parseInt(ibv.getInqry_board_hit());
@@ -75,24 +80,26 @@ public class InqryboardController {
 		MultipartFile[] files = {};
 		service.updateInqryInfo(ibv, files);
 		
-		model.addObject("ibv", ibv);
-		model.setViewName("user/inqryboard/inqryView");
+		model.addObject("ibv", ibv );
 		
 		return model;
 	}
 	
+	@RequestMapping("inqryInsert")
+	public String inqryInsert(InqryBoardVO inqryInfo, HttpSession session, String emp_code,
+			@RequestParam("files") MultipartFile[] files) throws Exception {
+		
+		inqryInfo.setEmp_code(((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code());
+		service.insertInqryInfo(inqryInfo, files);
+		return "redirect:/user/inqryboard/inqryList.do";
+	}	
+
 	@RequestMapping("inqryUpdate")
 	public String inqryUpdate(InqryBoardVO inqryInfo, @RequestParam("files") MultipartFile[] files) throws Exception {
 		service.updateInqryInfo(inqryInfo, files);
 		return "redirect:/user/inqryboard/inqryList.do";
 	}
 
-	@RequestMapping("inqryInsert")
-	public String inqryInsert(InqryBoardVO inqryInfo, @RequestParam("files") MultipartFile[] files) throws Exception {
-		service.insertInqryInfo(inqryInfo, files);
-		
-		return "redirect:/user/inqryboard/inqryList.do";
-	}	
 	
 	@RequestMapping("inqryDelete")
 	public String inqryDelete(String inqry_board_code, Map<String, String> params) throws Exception {

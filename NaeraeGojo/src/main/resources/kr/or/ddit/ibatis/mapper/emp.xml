@@ -23,6 +23,13 @@
 		  AND EMP_CODE= #emp_code#
 	</sql>
 	
+	<!-- 중복 이메일 찾기 -->
+	<select id="empEmail" parameterClass="map" resultClass="empVO">
+		SELECT emp_email
+		  FROM EMP
+		  WHERE EMP_EMAIL = #emp_email#
+	</select>
+	
 	<!-- 사원번호 찾기 -->
 	<select id="empNum" parameterClass="map" resultClass="empVO">
 		SELECT *
@@ -141,15 +148,6 @@
 		 WHERE EMP_CODE = #emp_code#
 	</update>
 
-	<!-- 프로필 사진 있는 직원Info -->
-<!-- 	<select id="empPhotoList" parameterClass="map" resultClass="empVO"> -->
-<!-- 			SELECT A.* -->
-<!-- 			  ,B. USER_FILE_CODE -->
-<!-- 		  	FROM EMP A, USER_FILE B -->
-<!-- 		 	WHERE A.EMP_CODE = B.EMP_CODE -->
-<!-- 		 	AND A.EMP_DELETE = 'n' -->
-<!-- 	</select> -->
-
 	<!-- 직원Info(객체 받아오기) -->
 	<select id="empInfo" parameterClass="map" resultClass="empVO">
 		<include refid="selectAll"/>
@@ -169,6 +167,7 @@
 		INSERT INTO EMP(EMP_CODE
 						,EMP_PASS
 						,EMP_NAME
+						,EMP_NICK
 						,EMP_EMAIL
 						,EMP_ENCPN
 						,EMP_GENDER
@@ -182,6 +181,7 @@
 		  	     VALUES(#emp_code#
 						,#emp_pass#
 						,#emp_name#
+						,#emp_nick#
 						,#emp_email#
 						,#emp_encpn#
 						,#emp_gender#
@@ -198,6 +198,7 @@
 		UPDATE EMP
 		   SET EMP_PASS			=	#emp_pass#
 		   	  ,EMP_MARRIAGE		=	#emp_marriage# 
+		      ,EMP_NICK			=	#emp_nick#
 		      ,EMP_ARMY			=	#emp_army#
 		      ,EMP_PHONE     	=	#emp_phone#
 		      ,EMP_EMAIL     	=	#emp_email#

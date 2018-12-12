@@ -117,6 +117,12 @@ $(function () {
                							</div>                
                						</div>
 			                		<div class="row">
+			                			<label class="col-sm-3 control-label">닉네임</label>
+		                  				<div class="col-sm-6">
+		                  					<label name="emp_nick">${empInfo.emp_nick}</label>
+               							</div>                
+               						</div>
+			                		<div class="row">
 		                				<label class="col-sm-3 control-label">성별</label>
 		                  				<div class="col-sm-6">
 		                  					<c:if test="${empInfo.emp_gender eq 'm'}">
@@ -221,13 +227,6 @@ $(function () {
 <!-- 			              			</div> -->
 			              			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">프로젝트 이력</label>
-				                  		<div class="col-sm-5">
-				                  			<select class="form-control" style="border-radius: 1em;">
-				                  				<c:forEach items="${historyList }" var="list">
-						                  			<option>${list.history_project_name }</option>
-				                  				</c:forEach>
-				                  			</select>
-		               					</div>                
 			              				<div class="col-sm-3" style="margin-left: -15px !important;">
 											<input type="button" data-toggle="modal"  data-target="#modal-primary" class="form-control bg-yellow color-palette" value="프로젝트 이력" style="border-radius: 1em;">
 										</div>
