@@ -55,7 +55,7 @@
 		FROM  (SELECT ROWNUM RNUM, A.*
 				FROM ( <include refid="selectAll"/> 
 						<include refid="searchCondition"/> 
-						ORDER BY scheduler_code) A ) B
+						ORDER BY to_number(scheduler_code) ASC ) A ) B
  		<![CDATA[				
 		WHERE B.RNUM <= #startCount#
 		 AND  B.RNUM >= #endCount#

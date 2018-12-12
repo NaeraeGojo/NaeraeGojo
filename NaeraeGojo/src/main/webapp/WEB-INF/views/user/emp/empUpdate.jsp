@@ -143,7 +143,7 @@ $(function(){
                						<table>
 										<tr><td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 400px; text-align: center;">
 									    	<div align="center" style="margin-left: 50px;">
-									    		<img id="ShowImage" src="/sora/${ufv.user_file_save_name}" style="border-radius: 50%;" width="400" height="400" alt="pic1"/>
+									    		<img id="ShowImage" src="/img_user/${ufv.user_file_save_name}" style="border-radius: 50%;" width="400" height="400" alt="pic1"/>
 									    	</div>
 									    	<br/>
 									    	<div style="width: 100%" align="center">

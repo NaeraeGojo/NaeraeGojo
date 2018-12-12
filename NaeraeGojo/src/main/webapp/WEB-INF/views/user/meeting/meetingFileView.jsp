@@ -44,7 +44,7 @@ $(function(){
 	                     
 	                     for (var i = 0; i < modalPro.modalPro.length; i++) {
 	                         
-	                         $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label>');
+	                         $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">&ensp;&ensp;'+ modalPro.modalPro[i].pw_function +'</label><br>');
 	                         $('input[type="checkbox"].flat-red').iCheck({
 	                             checkboxClass: 'icheckbox_flat-blue'
 	                         });
@@ -160,6 +160,12 @@ label {
 /*     margin-right:50px;  */
 /*     margin-left:50px;  */
 /*  } */
+
+
+.form-control[readonly]{
+   background-color: white;
+}
+
 </style>
 
 
@@ -203,10 +209,10 @@ label {
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">관련 업무</label>
                   <div class="col-sm-8" >
-                    <button type="button" id="modalBtn"  class="btn btn-block btn-info pull-right" >관련 업무수정</button>
+                    <button type="button" id="modalBtn"  class="btn btn-info pull-right" >관련 업무수정</button>
                     <div id="pwdiv">
                     <c:forEach items="${meetingInfo}" var="meetingList" >
-                  		<input type="text" class="form-control" name="pw_function" value="${meetingList.pw_function }"  style="border-radius: 1em;" >
+                  		<input type="text" class="form-control" name="pw_function" value="${meetingList.pw_function }"  style="border-radius: 1em; width: auto;" readonly="readonly">
                   		<input type="hidden" class="form-control" name="pw_code" value="${meetingList.pw_code }"  style="border-radius: 1em;" >
                     </c:forEach>
                     </div>
@@ -233,9 +239,11 @@ label {
                  </div>
                 
 				<div class="box-footer clearfix">
-              	<input value="삭제"  type="button" id="deletebtn"  style="width:80px;" class="btn btn-warning btn-flat pull-right">
               	<input value="목록" id="btn2" type="button" style="width:80px;"  class="btn btn-info btn-flat pull-right">
+              	<c:if test="${LOGIN_EMPINFO.emp_code==meetingInfo[0].emp_code}">
+              	<input value="삭제"  type="button" id="deletebtn"  style="width:80px;" class="btn btn-warning btn-flat pull-right">
               	<button  type="submit"    style="width:80px;" class="btn btn-danger btn-flat pull-right">수정</button>
+              	</c:if>
             	</div>
           <!-- /.box -->
              </div>
@@ -249,7 +257,7 @@ label {
 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="container">
   <div class="modal-dialog" role="document">
-    <div class="modal-content"   >
+    <div class="modal-content"   style="width: 450px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

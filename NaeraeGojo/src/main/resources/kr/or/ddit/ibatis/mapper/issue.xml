@@ -48,7 +48,7 @@
 	
 	<sql id="selectAll2">
 		SELECT 
-		    TO_NUMBER(A.ISSUE_CODE) AS ISSUE_CODE
+		    ISSUE_CODE
 			,A.ISSUE_ALARM
 			,A.ISSUE_EVENT_DAY
 			,A.ISSUE_NAME 
@@ -96,7 +96,7 @@
 		FROM  (SELECT ROWNUM RNUM, A.*
 				FROM ( <include refid="selectAll"/> 
 						<include refid="searchCondition"/> 
-						ORDER BY ISSUE_CODE) A ) B
+						ORDER BY to_number(ISSUE_CODE) asc) A ) B
  		<![CDATA[				
 		WHERE B.RNUM <= #startCount#
 		 AND  B.RNUM >= #endCount#
@@ -223,7 +223,8 @@
 		    ,B.EMP_NAME
 		FROM JOIN A, EMP B
 		WHERE A.EMP_CODE = B.EMP_CODE
-		AND RQPPS_CODE = #project_code#
+        AND A.JOIN_DELETE = 'n'
+		AND project_code = #project_code#
 	</select>
 	
 	<select id="totalCountIssueResult" parameterClass="map" resultClass="int">

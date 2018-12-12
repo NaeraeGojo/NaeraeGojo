@@ -224,19 +224,18 @@ label {
 	    	   var str = $('#bodytable tr:eq('+i+')').find('input[name=test]').val();//<f로 준이유
                insertNm += str+"/";
             }
-// 			if(report_content == '' || report_title == '' || report_content ){ 
-// 				alert("빈 항목이 존재합니다.");
-// 				return false;
-// 			}
+			if(report_content == '' || report_title == ''){ 
+				alert("빈 항목이 존재합니다.");
+				return false;
+			}
 			
-// 			if(pw_code == null || pw_code == ''){
-// 				alert("인력비었다");
-// 				return false;
-// 			}
-// 			if(file1 == ''){
-// 				alert("제안요청서 첨부파일을 등록해 주세요.")
-// 				return false;
-// 			}
+			
+			var file1 = $('#file01').val();
+			if(file1 == ''){
+				alert("파일을 등록 선택해 주세요.");
+				return false;
+		    }
+			
 
 			$('#reportForm').attr('action','${pageContext.request.contextPath }/user/report/report_FinalInsert.do');
 			$('#reportForm').submit();
@@ -258,19 +257,17 @@ label {
 	    	   var str = $('#bodytable tr:eq('+i+')').find('input[name=test]').val();//<f로 준이유
                insertNm += str+"/";
             }
-// 			if(report_content == '' || report_title == '' || report_content ){ 
-// 				boalert("빈 항목이 존재합니다.");
-// 				return false;
-// 			}
+			if(report_content == '' || report_title == '' || report_content ){ 
+				alert("빈 항목이 존재합니다.");
+				return false;
+			}
 			
-// 			if(pw_code == null || pw_code == ''){
-// 				boalert("인력비었다");
-// 				return false;
-// 			}
-// 			if(file1 == ''){
-// 				boalert("제안요청서 첨부파일을 등록해 주세요.")
-// 				return false;
-// 			}
+			
+			var file1 = $('#file01').val();
+			if(file1 == ''){
+				alert("파일을 등록 선택해 주세요.");
+				return false;
+		    }
 
 			$('#reportForm').attr('action','${pageContext.request.contextPath }/user/report/report_FinalInsertSave.do');
 			$('#reportForm').submit();

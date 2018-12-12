@@ -65,6 +65,7 @@ $(function(){
 				<div class="col-md-6">
 					<div class="box box-solid">
 						<div class="box-header with-border">
+							<input type="hidden" value="${projectList.project_code }">						
 							<a class="aa" name="${projectList.project_code }" id="${projectList.project_code }"> 
 								<c:if test="${projectList.pw_percent eq 100}">
 									<span class="label label-success">완료</span>

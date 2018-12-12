@@ -54,7 +54,13 @@
 
 	<select id="getPwc" parameterClass="map" resultClass="pwcVO">
 		<include refid="selectAll"/>
-		and pwc_code = #pwc_code#
+			and pwc_code = #pwc_code#
+			<dynamic>
+				<isNotEmpty property="pwc_name">
+					or (pwc_name = #pwc_name#
+						and project_code = #project_code#)
+				</isNotEmpty>
+			</dynamic>
 	</select>
 	
 	<update id="updatePwc" parameterClass="pwcVO">

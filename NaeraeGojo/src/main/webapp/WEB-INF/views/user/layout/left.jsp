@@ -11,6 +11,7 @@
         <div class="pull-left image">
          <c:if test="${!empty PHOTO.emp_code}">
           <img src="/sora/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image" style="height: 50px;">
+          <img src="/img_user/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
          </c:if>
          <c:if test="${empty PHOTO.emp_code}">
          <img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -126,6 +127,7 @@
           </ul>
         </li>
         
+        <c:if test="${LOGIN_EMPINFO.emp_role eq 'MANAGER'}">
          <li class="treeview">
           <a href="#">
             <i class="fa fa-clock-o">
@@ -138,22 +140,7 @@
             <li><a href="${pageContext.request.contextPath}/user/scheduler/schedulerList.do"><i class="fa fa-circle-o"></i>스케줄러</a></li>
           </ul>
         </li>
-        
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="${pageContext.request.contextPath}/pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="${pageContext.request.contextPath}/pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="${pageContext.request.contextPath}/pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="${pageContext.request.contextPath}/pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-          </ul>
-        </li>
+        </c:if>
        
       </ul>
     </section>

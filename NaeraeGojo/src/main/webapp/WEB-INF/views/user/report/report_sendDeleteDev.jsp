@@ -198,14 +198,15 @@ label {
 						<c:forEach items="${vo.items }" var="reportFileItem" varStatus="stat">
 			                <div class="form-group">
 			                  <label for="exampleInputFile" class="col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">파일 입력</font></font></label>
-			                  <div class="col-sm-10 control-label">
+			                  <div class="col-sm-10 control-label" id="filediv">
 			                  	  <a id="${reportFileItem.report_file_code }" href="${pageContext.request.contextPath }/user/reportfile/reportFileDownload.do?report_file_code=${reportFileItem.report_file_code }">
 											${reportFileItem.report_file_name}</a>
 			                  </div>
 			                </div>
                 		</c:forEach>
-
-
+                		<c:if test="${vo.report_save_dev eq 'y' }" >
+								<input type="button" value="파일수정" id="filebtn">
+						</c:if>
 					</div>
 					<div class="box-footer clearfix">
 						<input value="목록" type="button"  id="reList" class="btn btn-sm btn-warning btn-flat pull-right"> 
@@ -282,6 +283,14 @@ label {
 </div>
 <script type="text/javascript">
 	$(function() {
+		
+		$('#filebtn').click(function(){
+			$('#filediv').empty();
+			$('#filediv').append('<input type="file" name="files">');
+		});
+		
+		
+		
 		//Initialize Select2 Elements
 		$('.select2').select2()
 

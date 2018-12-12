@@ -366,6 +366,7 @@ public class ReportController {
 		String emp_code = null;
 		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		rvo.setEmp_code(emp_code);
+		rvo.setReport_save_dev("y");
 		service.insertReportSave(rvo, files);
 		
 		return "redirect:/user/report/report_listDev.do";

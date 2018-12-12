@@ -35,11 +35,10 @@
 }
 
 .pwcont {
-	margin-left: 160px;
-	margin-right: 160px;
-	width: 80%;
-	display: inline-block;
-	text-align: initial;
+	width: 100%;
+    display: inline-block;
+    text-align: initial;
+    padding: 0px 15px;
 }
 
 .input_foot {
@@ -396,41 +395,6 @@ $(function() {
 	</div>
 </div>
 
-<div class="row">
-	<div class="pwcont">
-		<div class="col-md-12">
-			<div class="box box-2team">
-
-				<div class="box-header with-border">
-					<b class="box-title">댓글</b> <br>
-				</div>
-
-				<!-- /.box-header -->
-				<div class="box-body">
-					<form role="form" id="recsUpForm" class="form-horizontal"
-						enctype="multipart/form-data" method="post"
-						action="${pageContext.request.contextPath }/user/project/recs/recsUpdate.do">
-						
-						<input type="hidden" name="project_code" value="${rrv.project_code}" />
-						<input type="hidden" name="recsroom_code" value="${rrv.recsroom_code}" />
-
-						<div class="form-group">
-							<label for="name" class="col-sm-2 control-label">제목</label>
-							<div class="col-sm-6">
-								<input id="name" type="text" name="recsroom_title_view"
-								class="form-control view_form">
-								<input id="name" type="text" name="recsroom_title"
-								class="form-control up_form" style="border-radius: 1em;">
-							</div>
-						</div>
-
-						
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
 <!-- 파일 업로드 모달 창 -->
 <div class="modal fade" id="fileUpForm">

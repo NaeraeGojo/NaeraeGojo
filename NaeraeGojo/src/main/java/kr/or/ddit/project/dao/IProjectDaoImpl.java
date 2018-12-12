@@ -40,7 +40,6 @@ public class IProjectDaoImpl implements IProjectDao{
 	public List<SuggestVO> suggestList(Map<String, String> params) throws SQLException {
 		return client.queryForList("project.suggestList", params);
 	}
-	
 
 	@Override
 	public int totalCount(Map<String, String> params) throws SQLException {
@@ -49,6 +48,7 @@ public class IProjectDaoImpl implements IProjectDao{
 
 	@Override
 	public void insertProjectInfo(ProjectVO projectInfo) throws SQLException {
+		client.update("project.updateSuggestStatus", projectInfo);
 		client.insert("project.insertProject", projectInfo);
 		client.update("project.updateJoinProjectCode", projectInfo);
 	}

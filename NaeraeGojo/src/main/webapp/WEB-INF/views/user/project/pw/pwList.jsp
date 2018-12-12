@@ -29,11 +29,10 @@
 }
 
 .pwcont{
-	margin-left: 160px;
-    margin-right: 160px;
-    width: 80%;
+	width: 100%;
     display: inline-block;
     text-align: initial;
+    padding: 0px 15px;
 }
 
 .btn_pw_upper{
@@ -248,6 +247,9 @@ $(function(){
 	            alert(error);
 	        }
 	        , success : function(json){
+	        	if(json.jung == 'true'){
+	        		boalert("이미 존재하는 분류 명 입니다.")
+	        	}
 	        	rePwc();
 	        }
 	        
@@ -332,9 +334,9 @@ $(function(){
               </div>
               
             </div>
-            ${pagingUtil}
+            
           </div>
-          
+          ${page}
         </div>
         
         <form action="${pageContext.request.contextPath}/user/project/pw/pwList.do" method="post" class="form-inline pull-right"

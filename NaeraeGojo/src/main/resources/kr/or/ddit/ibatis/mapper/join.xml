@@ -8,6 +8,7 @@
 	<typeAlias alias="rqppsVO" type="kr.or.ddit.vo.RqppsVO"/>
 	<typeAlias alias="mpJoinVO" type="kr.or.ddit.vo.MpJoinVO"/>
 	<typeAlias alias="empVO" type="kr.or.ddit.vo.EmpVO"/>
+	<typeAlias alias="positionVO" type="kr.or.ddit.vo.PositionVO"/>
 	
 	<!-- column이 select와 같이 사용되면 select의 파라메터로 전달된다 -->
 	<!-- fileitem.fileItems의 결과가 리스트로 만들어지고 items에 저장된다. -->
@@ -221,11 +222,11 @@
 		
 	</select>
 	
-	<update id="deleteAdd" parameterClass="map">
-		UPDATE JOIN
-		SET JOIN_DELETE = 'y'
+	<delete id="deleteAdd" parameterClass="map">
+		delete 
+        from JOIN
 		WHERE JOIN_CODE = #join_code#
-	</update>
+	</delete>
 	
 	<update id="updateStatus" parameterClass="map">
 		UPDATE JOIN
@@ -256,6 +257,24 @@
 <!-- 			set rqpps_delete = 'y' -->
 <!-- 			where rqpps_code = #rqpps_code# -->
 <!-- 	</update> -->
+
+    <select id="insertList" parameterClass="map" resultClass="empVO">
+        SELECT A.EMP_CODE, A.EMP_NAME, A.EMP_DEPARTMENT, A.EMP_LEVEL
+        FROM EMP A
+        WHERE NOT EXISTS (SELECT * 
+                        FROM JOIN B 
+                        WHERE A.EMP_CODE = B.EMP_CODE
+                        and B.PROJECT_CODE = #project_code#)
+        AND A.EMP_DELETE = 'n'
+        ORDER BY EMP_DEPARTMENT
+    </select>
+    
+    <select id="getPositionList" resultClass="positionVO">
+		SELECT *
+		FROM POSITION
+		WHERE POSITION_NAME != 'PM'
+		AND POSITION_NAME != 'PL'
+    </select>
 	
 </sqlMap>
 

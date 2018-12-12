@@ -137,6 +137,9 @@ $(function(){
 
 <style>
 
+.form-control[readonly]{
+   background-color: white;
+}
 
 </style>
 
@@ -237,21 +240,21 @@ $(function(){
 								<label for="name" class="col-sm-2 control-label">관련프로젝트</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="project_name"
-										class="form-control" style="border-radius: 1em;">
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="name" class="col-sm-2 control-label">보낸사람</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="send_emp"
-										class="form-control" style="border-radius: 1em;">
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="name" class="col-sm-2 control-label">받은날짜</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="feedback_st"
-										class="form-control" style="border-radius: 1em;">
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
 								</div>
 							</div>
 
@@ -268,7 +271,7 @@ $(function(){
 								<label for="contents" class="col-sm-2 control-label">피드백내용</label>
 								<textarea id="contents" name="feedback_content"
 									class="col-sm-10" rows="10"
-									style="width: 68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+									style="width: 68%; border: 1px solid #d2d2d2; border-radius: 1em;" readonly="readonly"></textarea>
 							</div>
 
 							<!-- /.box -->

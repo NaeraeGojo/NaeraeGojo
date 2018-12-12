@@ -22,6 +22,7 @@
         <result property="meeting_code" column="meeting_code"/>
         <result property="pw_function" column="pw_function"/>
         <result property="project_code" column="project_code"/>
+        <result property="emp_code" column="emp_code"/>
         <result property="pw_code" column="pw_code"/>
         <result property="items" column="meeting_code" select="meetingFile.meetFileItems"/> 
     </resultMap>
@@ -81,14 +82,13 @@
     </select>
     
     <select id="meetingInfo" parameterClass="map" resultMap="meetingMap">
-        select    a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code
+        select    a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code, a.emp_code
         from      meeting a, meet_pw b, pw c, project d
         where     a.meeting_code=b.meeting_code 
                     and c.pw_code = b.pw_code
                     and c.project_code = d.project_code
                     and a.meeting_code = #meeting_code#
                     and a.meeting_delete = 'n'
-                    group by a.meeting_title, a.meeting_content, a.meeting_code, d.project_name, c.pw_function, d.project_code, c.pw_code
     </select>
     
     

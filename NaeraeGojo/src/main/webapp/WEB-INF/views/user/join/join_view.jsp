@@ -284,63 +284,6 @@ $(function(){
 	    });
 	});
 	
-	function select(value){
-		//한번클릭만됨
-	//		var check = value;
-	//		$('.selbox').val('');
-	//		$('#test123').val(value);
-	
-	
-	// 이건 클릭하자마자 그 버튼이 disabled 됨 selected에 id값
-	//	if (value == 'PM/특급') {
-	//			$('#test123').attr('disabled', 'true');
-	//	     } else {
-	//	    	 $('#test123').attr('disabled', 'false');
-	//	     }		
-	// optional에  id값
-	// 되긴되는데 뭔가 찝찝함
-	var headers = $('.test123 option:checked');
-            // 반복문을 써서 반복 : for문보다는 jQuery의 each문이 사용하기 편리
-	
-	
-            for (var i = 0; i < headers.length; i++) {
-// 				list.push($(headers[i]).val())
-//             	alert($(headers[i]).val());
-                if($(headers[i]).val("PL")){
-//                 	$("select option[value='']").attr("selected", true);
-                	$(headers[i]).find("option[value='']").val();
-                }
-           		$(this).val("PL");
-            }
-
-//         	$("form[name='"+formName+  "'] select[name='"+objId+"'] option").remove();  
-//          $("form[name='"+formName+  "'] select[name='"+objId+"']").append("<option value="">==SELECT==</option>");
-			
-
-	
-// 	if (value == 'PL') {
-// 			$("select option[value*='PL']").prop('disabled',true);
-// 			$("select option[value*='PL']").css("background","red");
-// 	     } else {
-// 			$("select option[value*='PL']").prop('disabled',false);
-// 	     }		
-	
-	//	if (value == 'PM/특급') {
-	//			$("select option[value*='PM/특급']").prop('disabled',false);
-	//	     } else {
-	//			$('#test123 option').first().attr('selected', 'selected');
-	//	     }		
-	
-	//javascript
-	//	var selectbox = document.getElementById("selectId");
-	//	selectbox.selectedIndex = 0;
-	//jquery
-	//	var selectbox = $("#test123");
-	//	selectbox.selectedIndex = 0;
-	
-	//	$('select').find('option:first').attr('selected', 'selected'); 셀렉트박스 초기화
-	
-		}
 
 
 </script>

@@ -20,7 +20,7 @@ public class SuggestVO {
 	private List<SuggestFileVO> items;
 	private String suggest_reg_date;
 	private String rqpps_code;
-	
+	private String suggest_status;
 	
 	
 	//temp
