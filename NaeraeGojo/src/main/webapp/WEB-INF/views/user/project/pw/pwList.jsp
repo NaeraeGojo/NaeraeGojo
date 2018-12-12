@@ -247,6 +247,9 @@ $(function(){
 	            alert(error);
 	        }
 	        , success : function(json){
+	        	if(json.jung == 'true'){
+	        		boalert("이미 존재하는 분류 명 입니다.")
+	        	}
 	        	rePwc();
 	        }
 	        

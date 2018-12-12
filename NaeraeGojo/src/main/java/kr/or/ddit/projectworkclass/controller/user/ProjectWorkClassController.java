@@ -53,20 +53,33 @@ public class ProjectWorkClassController {
 	
 	@RequestMapping("pwcInsert")
 	public ModelAndView insertProjectWorkClass(ProjectWorkClassVO pv, HttpSession session
-										,ModelAndView mav) throws Exception{
+										,ModelAndView mav
+										, Map<String, String> params ) throws Exception{
 		String project_code = (String) session.getAttribute("project_code");
-		pv.setProject_code(project_code);
+		params.put("project_code", project_code);
+		params.put("pwc_name", pv.getPwc_name());
+		ProjectWorkClassVO pwcv = service.getPwc(params);
 		
-		EmpVO ev = (EmpVO) session.getAttribute("LOGIN_EMPINFO");
-		pv.setEmp_code(ev.getEmp_code());
-		
-		String pwc_code = service.insertPwc(pv);
-		pv.setPwc_code(pwc_code);
-		
-		mav.addObject("pwcv",pv);
+		if(pwcv != null){
+			String jung = "true";
+			
+			mav.addObject("jung",jung);
+			
+		}else{
+			pv.setProject_code(project_code);
+			
+			EmpVO ev = (EmpVO) session.getAttribute("LOGIN_EMPINFO");
+			pv.setEmp_code(ev.getEmp_code());
+			
+			String pwc_code = service.insertPwc(pv);
+			pv.setPwc_code(pwc_code);
+			
+			mav.addObject("pwcv",pv);
+			
+		}
 		mav.setViewName("jsonConvertView");
-		
 		return mav;
+		
 	}
 	
 	@RequestMapping("pwcDelete")

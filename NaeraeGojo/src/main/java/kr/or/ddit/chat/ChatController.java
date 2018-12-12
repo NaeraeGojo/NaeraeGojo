@@ -122,6 +122,7 @@ public class ChatController {
 	@RequestMapping("chatList")
 	public ModelAndView chatList(ModelAndView mav , String emp_code
 									,Map<String, String> params) throws Exception{
+		
 		params.put("emp_code", emp_code);
 		List<ChatRoomVO> crl = crservice.getChatList(params);
 		

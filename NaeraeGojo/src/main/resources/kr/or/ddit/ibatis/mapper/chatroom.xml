@@ -51,6 +51,7 @@
 	                , myroom2.chatroom_reg_date 
 	                , myroom2.chatroom_writer
 	                , myroom2.chatroom_writer_name
+	        order by chatroom_code desc
 	</select>
 	
 	
