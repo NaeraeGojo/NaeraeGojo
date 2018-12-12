@@ -372,7 +372,6 @@ public class JoinController {
 			params.clear();
 		}
 		andView.setViewName("jsonConvertView");
-		
 		return andView;
 	}
 	
