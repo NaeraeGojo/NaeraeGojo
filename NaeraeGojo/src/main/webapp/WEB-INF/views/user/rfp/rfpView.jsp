@@ -183,6 +183,11 @@ $(function(){
 			return false;
 		}
 		
+		if(rqpps_budget<=0){
+			boalert("예산은 음수가 될 수 없습니다.");
+			return false;
+		}
+		
 		var dateArr = rqpps_end_date.split('-');
 		
 		var rq_date = new Date(dateArr[0] , dateArr[1] -1, dateArr[2]);

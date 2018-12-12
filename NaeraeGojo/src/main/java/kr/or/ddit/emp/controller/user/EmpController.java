@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -258,9 +259,24 @@ public class EmpController {
 	
 	
 	@RequestMapping("empChatList")
-	public ModelAndView empChatList(ModelAndView mav, Map<String, String> params) throws Exception{
+	public ModelAndView empChatList(ModelAndView mav
+									, HttpSession session
+									, Map<String, String> params) throws Exception{
+		String emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		
 		List<EmpVO> el = service.empList(params);
-		mav.addObject("el",el);
+		
+		// 순환중 리스트의 조작을 위해 옮겨담기
+		List<EmpVO> el2 = new CopyOnWriteArrayList<EmpVO>(el);
+		
+		// 가져오는 목록에서 나는 빼기
+		for(EmpVO ev : el2){
+			if(ev.getEmp_code().equals(emp_code)){
+				el2.remove(ev);
+			}
+		}
+		
+		mav.addObject("el",el2);
 		mav.setViewName("jsonConvertView");
 		
 		return mav;

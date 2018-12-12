@@ -257,6 +257,11 @@ $(function(){
 			return false;
 		}
 		
+		if(suggest_cost<=0){
+			boalert("사업비는 0원 이하로 등록할 수 없습니다.");
+			return false;
+		}
+		
 		$('input[name=suggest_result]').val(suggest_result);
 		return true;
 	});
