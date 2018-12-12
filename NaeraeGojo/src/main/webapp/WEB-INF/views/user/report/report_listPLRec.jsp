@@ -40,7 +40,7 @@
 						<div class="tab-pane active" id="tab_1">
 							<div class="box-body">
 								<div class="table-responsive">
-									<table class="table no-margin" id="sendDelete">
+									<table class="table no-margin table-hover" id="sendDelete">
 										<thead>
 											<tr>
 												<th scope="col" width="10%">No.</th>
@@ -67,7 +67,7 @@
 												<td>${list.report_title }</td>
 												<td>${list.emp_name }</td>
 												<td>${list.report_day }</td>
-												<td>3</td>
+												<td>${list.report_hit }</td>
 											</tr>
 										</c:forEach>
 										</tbody>
