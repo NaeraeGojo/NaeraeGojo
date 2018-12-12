@@ -1,6 +1,7 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 요청주소 :
     	화면 : 개발자 로그인 시 화면
     -->
@@ -111,9 +112,17 @@
 			<div class="col-md-6 ">
 				<div class="box box-solid callout callout-2team rfps">
 					<div class="box-header with-border">
-						<a class="a_view" name="${item.rqpps_code }" href=""> <span
-							class="label label-success">완료임박</span>
-							<h2>${item.rqpps_name }</h2>
+						<a class="a_view" name="${item.rqpps_code }" href="">
+<!-- 						 <span class="label label-success">완료임박</span> -->
+							<h2 title="${item.rqpps_name }">
+			              	<c:if test="${ item.rqpps_name.length() <= 14}">
+			              		${item.rqpps_name }
+			              	</c:if>
+			              	<c:if test="${ item.rqpps_name.length() > 14}">
+			              		${fn:substring(item.rqpps_name,0,13) }...
+			              	</c:if>
+			              	</h2>
+							
 						</a> <i style="font-size: 15px; margin-right: 5px;" class="pull-right">
 							${item.rqpps_nickname }</i>
 					</div>
