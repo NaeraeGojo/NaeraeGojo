@@ -11,11 +11,12 @@ function readURL(input) {
    	filetype = filepoint.toLowerCase();
    	if(filetype=='jpg'||filetype=='gif'||filetype=='png'||filetype=='jpeg'){
 		if (input.files && input.files[0]) {
-	      var reader = new FileReader();
-	      reader.onload = function(e) {
-	         $('#ShowImage').attr('src', e.target.result).width(235).height(315);
-	      };
-	      reader.readAsDataURL(input.files[0]);
+	      	var reader = new FileReader();
+	      	
+	      	reader.onload = function(e) {
+	        	$('#ShowImage').attr('src', e.target.result).width(235).height(315);
+	     	};
+	      	reader.readAsDataURL(input.files[0]);
 	   }
    	}
    	else{
