@@ -210,6 +210,8 @@ $(function(){
 			 return false;
 		}
 		
+		
+		
 		if($("select option:selected").val() !=null){
 			
 			var pwc_code= $("#pwcSelect option:selected").val();
@@ -276,7 +278,7 @@ $(function(){
                
             }
        });
-    },10000);
+    },5000);
 	
 	
 	 $(document).on('click', '.delete', function() {
