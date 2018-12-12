@@ -190,7 +190,6 @@ label {
             <table class="table no-margin" id="mView">
                   <thead>
                   <tr>
-                    <th scope="col" width="25%">소속부서</th>
                     <th scope="col" width="25%">레벨</th>
                     <th scope="col" width="25%">이름</th>
                     <th scope="col" width="25%">체크여부</th>
@@ -339,9 +338,9 @@ $(function () {
 						},
 				success : function(data){
 					console.log(data);
-// 					if(name == "특급"){
-// 						$('#vaseSpec').attr("disabled", true);
-// 					}
+					if(name == "특급"){
+						$('#vaseSpec').attr("disabled", true);
+					}
 					if(name == "고급"){
 						$('#vaseHigh').attr("disabled", true);
 					}
@@ -351,7 +350,7 @@ $(function () {
 					if(name == "초급"){
 						$('#vaseBegin').attr("disabled", true);
 					}
-					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' ){
+					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' && $('#vaseSpec').attr('disabled') == 'disabled'){
 						$('#lastCheck').attr("disabled", false);
 						$('#lastCheck').click(function(){
 							$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
@@ -377,13 +376,13 @@ $(function () {
 	
 $(document).on('click', '.level', function(){
 		name = $(this).parent().parent().find('th:eq(0)').text().trim();
-		alert(name);
+// 		alert(name);
 		
 		
 		
 		
 		var sel = $(this).parent().parent().find('label').text();
-		alert(sel);
+// 		alert(sel);
 		$('#spec1').attr('value', sel);
 		
 		
@@ -405,7 +404,7 @@ $(document).on('click', '.level', function(){
 // 					nextData += empLevelList[i].emp_code
 							 
 					code += '<tr>';
-					code += '<td>'+empLevelList[i].emp_department+'</td>';
+// 					code += '<td>'+empLevelList[i].emp_department+'</td>';
 					code += '<td>'+empLevelList[i].emp_level+'</td>';
 					code += '<td>'+empLevelList[i].emp_name+'</td>';
 					code += '<td><input type="checkbox" value="'+nextData+'" name="micro" class="flat-red" ></td>';
@@ -452,6 +451,11 @@ $(document).on('click', '.level', function(){
 					$('#inter').text(info.mp_inter);
 					$('#high').text(info.mp_high);
 					$('#spec').text(parseInt(info.mp_spec)-1);
+					}
+					if($('#spec').text()==0){
+						$('#vaseSpec').attr("disabled", true);
+					}else{
+						$('#vaseSpec').attr("disabled", false);
 					}
 				},
 				error : function(res){

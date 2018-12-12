@@ -110,7 +110,7 @@ $(function(){
 				alert("파일을 등록 선택해 주세요.");
 				return false;
 		    }
-	    	var file1 = $('#file02').val();
+	    	var file2 = $('#file02').val();
 			if(file2 == ''){
 				alert("파일을 등록 선택해 주세요.");
 				return false;
