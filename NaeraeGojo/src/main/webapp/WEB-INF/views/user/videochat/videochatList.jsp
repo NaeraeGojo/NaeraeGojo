@@ -56,7 +56,7 @@ table td {
 
 $(function(){
 	
-    $('input[type="checkbox"].flat-red').iCheck({
+    $('input[name="chkbox"].flat-red').iCheck({
         checkboxClass: 'icheckbox_flat-blue'
       });
     

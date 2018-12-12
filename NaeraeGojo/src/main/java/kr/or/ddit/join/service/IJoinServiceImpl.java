@@ -14,6 +14,7 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
+import kr.or.ddit.vo.PositionVO;
 import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 
@@ -120,6 +121,16 @@ public class IJoinServiceImpl implements IJoinService{
 	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
 	public void updateStatus(Map<String, String> params) throws SQLException {
 		joinDao.updateStatus(params);
+	}
+
+	@Override
+	public List<EmpVO> insertList(Map<String, String> params) throws SQLException {
+		return joinDao.insertList(params);
+	}
+
+	@Override
+	public List<PositionVO> getPositionList() throws SQLException {
+		return joinDao.getPositionList();
 	}
 
 }

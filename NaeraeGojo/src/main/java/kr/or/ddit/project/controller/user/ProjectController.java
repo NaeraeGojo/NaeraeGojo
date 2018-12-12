@@ -1,6 +1,7 @@
 package kr.or.ddit.project.controller.user;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,15 +16,19 @@ import kr.or.ddit.utils.RolePagingUtil;
 import kr.or.ddit.utils.RolePagingUtilJoin;
 import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
+import kr.or.ddit.vo.PositionVO;
 import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 import kr.or.ddit.vo.SuggestVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.sun.xml.internal.ws.api.model.MEP;
 
 @Controller
 @RequestMapping("/user/project/")
@@ -105,6 +110,14 @@ public class ProjectController {
 		int totalIng = service.totalIng(params);
 		int totalNew = service.totalNew(params);
 		
+		params.clear();
+		project_code = (String) session.getAttribute("project_code");
+		params.put("project_code",project_code);
+		List<EmpVO> empList = joinService.insertList(params);
+		List<PositionVO> positionList = joinService.getPositionList();
+		
+		andView.addObject("empList",empList);  // join 테이블 직원 제외한 emp_List
+		andView.addObject("positionList",positionList); // 포지션 리스트(DA, UA 등등)
 		andView.addObject("pagingUtil",pagingUtil.getPagingHtmls());
 		andView.addObject("projectInfo", projectInfo);
 		andView.addObject("joinList", joinList);
@@ -212,6 +225,55 @@ public class ProjectController {
 		params.put("project_code", project_code);
 		List<JoinVO> joinList = service.joinList(params);
 		andView.addObject("joinList",joinList);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	@RequestMapping("empArray")
+	public ModelAndView empArray(Map<String, String> params, ModelAndView andView,
+			HttpServletRequest request, EmpVO ev) throws SQLException{
+		
+		String[] level = request.getParameterValues("level[]");
+		String[] code = request.getParameterValues("code[]");
+		String[] name = request.getParameterValues("name[]");
+		String[] department = request.getParameterValues("department[]");
+		
+//		List<EmpVO> empArray = new ArrayList<>();
+		
+//		for (int i = 0; i < code.length; i++) {
+//			ev.setEmp_code(code[i]);
+//			ev.setEmp_name(name[i]);
+//			ev.setEmp_department(department[i]);
+//			ev.setEmp_level(level[i]);
+//			empArray.add(ev);
+//		}
+		
+		List<PositionVO> positionList = joinService.getPositionList();
+		
+		andView.addObject("level", level);
+		andView.addObject("code", code);
+		andView.addObject("name", name);
+		andView.addObject("department", department);
+		andView.addObject("positionList", positionList);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	@RequestMapping("empJoinInsert")
+	public ModelAndView empJoinInsert(Map<String, String> params, ModelAndView andView,
+			HttpServletRequest request, JoinVO jv, HttpSession session) throws SQLException{
+		
+		String[] emp_code = request.getParameterValues("emp_array[]");
+		String[] emp_position = request.getParameterValues("emp_position[]");
+		
+		
+		String project_code = (String) session.getAttribute("project_code");
+		for (int i = 0; i < emp_code.length; i++) {
+			
+			jv.setEmp_code(emp_code[i]);
+			jv.setPosition_name(emp_position[i]);
+			jv.setProject_code(project_code);
+			joinService.insertAdd(jv);
+		}
+		andView.addObject("project_code", project_code);
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
