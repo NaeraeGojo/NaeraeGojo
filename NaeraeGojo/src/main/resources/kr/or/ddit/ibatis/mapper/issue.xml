@@ -223,7 +223,8 @@
 		    ,B.EMP_NAME
 		FROM JOIN A, EMP B
 		WHERE A.EMP_CODE = B.EMP_CODE
-		AND RQPPS_CODE = #project_code#
+        AND A.JOIN_DELETE = 'n'
+		AND project_code = #project_code#
 	</select>
 	
 	<select id="totalCountIssueResult" parameterClass="map" resultClass="int">
