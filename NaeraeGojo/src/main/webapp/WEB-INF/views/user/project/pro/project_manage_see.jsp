@@ -266,6 +266,7 @@ $(function(){
         
         var emp_array = [];
         var emp_position = [];
+        
         $('select option:selected').each(function(i){
             if(this.text=='선택하여주세요') {
                 alert("역할을 선택하여 주세요.")
@@ -275,8 +276,6 @@ $(function(){
                 emp_array.push(this.value);
                 emp_position.push(this.text);
             }
-            emp_array.push(this.value);
-            emp_position.push(this.text);
         })
         
 //         if(emp_array.indextOf("선택하여주세요")){
