@@ -32,10 +32,19 @@ public class ReportVO {
 	private String report_feed_content;
 	private String report_save_dev;
 	private String report_save_pl;
+	private String report_hit;
 	
 	
 	
 	
+	
+	
+	public String getReport_hit() {
+		return report_hit;
+	}
+	public void setReport_hit(String report_hit) {
+		this.report_hit = report_hit;
+	}
 	public String getReport_save_pl() {
 		return report_save_pl;
 	}

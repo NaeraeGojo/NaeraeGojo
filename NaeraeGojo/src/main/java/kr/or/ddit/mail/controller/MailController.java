@@ -37,6 +37,7 @@ public class MailController {
 	public ModelAndView send(HttpSession sessionMail,
                 String email_nick,
                 String code,
+                String pass,
                 ModelAndView model) throws Exception {
      
       String host = "smtp.naver.com";
@@ -44,6 +45,7 @@ public class MailController {
       final String password = "protossA1";
       String to = email_nick+"@naver.com";
       String codeNum = code;
+      String Pass = pass;
       
       
       // Get the session object
@@ -83,7 +85,8 @@ public class MailController {
          // 메일 보낸 내용
          message.setText("회원가입을 하려면 해당 링크를 클릭해주세요~ \r\n"
         		 +"인증코드 : http://localhost/NaeraeGojo/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick
-        		 +"\r\n 사원번호 : "+codeNum);
+        		 +"\r\n 사원번호 : "+codeNum 
+        		 + "\r\n 비밀번호 : "+Pass);
          
          System.out.println(code);
          // send the message
@@ -93,6 +96,7 @@ public class MailController {
          e.printStackTrace();
       }
       model.addObject("emp_code", codeNum);
+      model.addObject("emp_pass", Pass);
       model.setViewName("jsonConvertView");
 //      model.setViewName("user/emp/empList");
       

@@ -4,11 +4,11 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
@@ -21,10 +21,7 @@ import kr.or.ddit.vo.PartVO;
 import kr.or.ddit.vo.UserFileVO;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -70,23 +67,6 @@ public class EmpController {
 			return andView;
 		}
 	}
-
-//	@RequestMapping(value="passCheck", method = RequestMethod.POST)
-//	public ModelAndView passCheck(String emp_code, String emp_email, String emp_pass,
-//			Map<String, String> params, EmpVO empPass,
-//			HttpServletRequest request, HttpServletResponse response,
-//			Model model, ModelMap modelMap, ModelAndView andView) throws Exception{
-//		params.put("emp_code", emp_code);
-//		params.put("emp_email", emp_email);
-//		
-//		empPass = service.empPass(params); 
-//		andView.addObject("empPass", empPass);
-//		andView.addObject("emp_pass", empPass.getEmp_pass());
-//		andView.addObject("emp_email", empPass.getEmp_email());
-//		andView.setViewName("jsonConvertView");
-//		
-//		return andView;
-//	}
 	
 	/**
 	 * 직원정보 수정창 
@@ -179,6 +159,18 @@ public class EmpController {
 	public ModelAndView empForm(ModelAndView andView) throws Exception{
 		List<PartVO> partList = partService.partList();		
 		
+		// 8자리 영문+숫자 랜덤코드 만들기
+		Random random = new Random();
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < 8; i++) {
+			if (random.nextBoolean()) {
+				buffer.append((char)(int)(random.nextInt(26)+97));
+			}else {
+				buffer.append((random.nextInt(10)));
+			}
+		}
+		
+		andView.addObject("password", buffer.toString());
 		andView.addObject("partList", partList);
 		andView.setViewName("user/emp/empForm");
 		return andView;
@@ -209,8 +201,11 @@ public class EmpController {
 		session.setAttribute("INSERT_EMP", empInfo);
 		
 		emp_code = empInfo.getEmp_code();
+		String emp_pass = empInfo.getEmp_pass();
+		
 		andView.addObject("emailId", emailId);
 		andView.addObject("emp_code", emp_code);
+		andView.addObject("emp_pass", emp_pass);
 		andView.setViewName("redirect:/user/emp/empList.do");
 		return andView;
 	}
@@ -223,16 +218,22 @@ public class EmpController {
 	 * @throws Exception
 	 */
 	@RequestMapping("updateEmp")
-	public ModelAndView updateEmp(EmpVO empInfo, ModelAndView andView, @RequestParam("files") MultipartFile[] files)throws Exception{
+	public ModelAndView updateEmp(EmpVO empInfo, ModelAndView andView, @RequestParam("files") MultipartFile[] files, HttpSession session)throws Exception{
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("emp_code", empInfo.getEmp_code());
 		UserFileVO ufv = userServ.userFileInfo(params);
 		if(ufv!=null){
 			service.updateEmpInfo(empInfo, files);
+//			ufv = userServ.userFileInfo(params);
+//			session.setAttribute("PHOTO", ufv);
 		}
 		else{
 			service.updateEmpInfo2(empInfo, files);
+//			ufv = userServ.userFileInfo(params);
+//			session.setAttribute("PHOTO", ufv);
 		}
+		ufv = userServ.userFileInfo(params);
+		session.setAttribute("PHOTO", ufv);
 		String message = URLEncoder.encode("수정이 완료되었습니다.", "UTF-8");
 		RedirectView rv = new RedirectView("empView.do?message="+message+ "&emp_code="+empInfo.getEmp_code());
 		rv.setExposeModelAttributes(false);
@@ -265,6 +266,7 @@ public class EmpController {
 		String emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
 		
 		List<EmpVO> el = service.empList(params);
+		mav.addObject("el",el);
 		
 		// 순환중 리스트의 조작을 위해 옮겨담기
 		List<EmpVO> el2 = new CopyOnWriteArrayList<EmpVO>(el);
