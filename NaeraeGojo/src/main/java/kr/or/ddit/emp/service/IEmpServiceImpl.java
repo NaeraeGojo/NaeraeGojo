@@ -68,6 +68,7 @@ public class IEmpServiceImpl implements IEmpService {
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
 	public void updateEmpInfo(EmpVO empInfo, MultipartFile[] files) throws SQLException {
+
 		dao.updateEmpInfo(empInfo);
 		
 		List<UserFileVO> ufv = fileMapper.picture_mapping(files, empInfo.getEmp_code());

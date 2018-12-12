@@ -179,7 +179,7 @@
    </head>
    
    <body>
-      <div class="row">
+      <div class="row" style="margin: 40px;">
          <div class="box box-warning">
             <div class="box-header with-border">
                  <h2 class="box-title"><b>이력등록</b></h2>
