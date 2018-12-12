@@ -160,6 +160,12 @@ label {
 /*     margin-right:50px;  */
 /*     margin-left:50px;  */
 /*  } */
+
+
+.form-control[readonly]{
+   background-color: white;
+}
+
 </style>
 
 
@@ -206,7 +212,7 @@ label {
                     <button type="button" id="modalBtn"  class="btn btn-info pull-right" >관련 업무수정</button>
                     <div id="pwdiv">
                     <c:forEach items="${meetingInfo}" var="meetingList" >
-                  		<input type="text" class="form-control" name="pw_function" value="${meetingList.pw_function }"  style="border-radius: 1em; width: auto;" >
+                  		<input type="text" class="form-control" name="pw_function" value="${meetingList.pw_function }"  style="border-radius: 1em; width: auto;" readonly="readonly">
                   		<input type="hidden" class="form-control" name="pw_code" value="${meetingList.pw_code }"  style="border-radius: 1em;" >
                     </c:forEach>
                     </div>

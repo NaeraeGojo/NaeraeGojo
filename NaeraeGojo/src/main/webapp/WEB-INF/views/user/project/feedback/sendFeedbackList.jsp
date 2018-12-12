@@ -136,6 +136,9 @@ $(function(){
 
 <style>
 
+.form-control[readonly]{
+   background-color: white;
+}
 
 </style>
 
@@ -224,7 +227,7 @@ $(function(){
 					<br />
 					<div class="box box-2team">
 						<div class="box-header with-border">
-							<b class="box-title">받은 피드백 상세내용</b><br /> <br />
+							<b class="box-title">보낸 피드백 상세내용</b><br /> <br />
 						</div>
 						<div class="box-body">
 
@@ -232,21 +235,21 @@ $(function(){
 								<label for="name" class="col-sm-2 control-label">관련 프로젝트</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="project_name"
-										class="form-control" style="border-radius: 1em;">
+										class="form-control" style="border-radius: 1em;" readonly="readonly"> 
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="name" class="col-sm-2 control-label">받은사람</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="receive_emp"
-										class="form-control" style="border-radius: 1em;">
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="name" class="col-sm-2 control-label">보낸날짜</label>
 								<div class="col-sm-8">
 									<input id="name" type="text" name="feedback_st"
-										class="form-control" style="border-radius: 1em;">
+										class="form-control" style="border-radius: 1em;" readonly="readonly">
 								</div>
 							</div>
 
@@ -255,7 +258,7 @@ $(function(){
 								<div class="col-sm-8">
 									<input id="writer" type="text" name="pw_function"
 										class="form-control" style="border-radius: 1em;" value=""
-										readonly="readonly">
+										readonly="readonly" readonly="readonly">
 								</div>
 							</div>
 
@@ -263,7 +266,7 @@ $(function(){
 								<label for="contents" class="col-sm-2 control-label">피드백내용</label>
 								<textarea id="contents" name="feedback_content"
 									class="col-sm-10" rows="10"
-									style="width: 68%; border: 1px solid #d2d2d2; border-radius: 1em;"></textarea>
+									style="width: 68%; border: 1px solid #d2d2d2; border-radius: 1em;" readonly="readonly"></textarea>
 							</div>
 
 							<!-- /.box -->
