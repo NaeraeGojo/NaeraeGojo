@@ -542,7 +542,6 @@ $(function(){
 	$(document).delegate('.btn_join_chat','click',function(){
 		var chatroom_code = $(this).attr('code');
 		
-		
 		var url = '${pageContext.request.contextPath}/user/chat/chatRoom.do';
 		var query = '?chatroom_code=' + chatroom_code;
 		
@@ -585,6 +584,7 @@ $(function(){
 	}
 	
 	getEmpList = function(){
+		
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/emp/empChatList.do'
 			, dataType : 'json'
