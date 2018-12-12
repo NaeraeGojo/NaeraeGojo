@@ -24,7 +24,7 @@ table td {
 $(function(){
     
     //상세내용
-    $('table tr:gt(0)').click(function(){
+    $('#listTable tr:gt(0)').click(function(){
         var meeting_code = $(this).find('td:eq(0) input').val();
         $(location).attr('href', '${pageContext.request.contextPath}/user/meetingFile/meetingFileView/' + meeting_code +'.do');
     });
@@ -54,7 +54,7 @@ $(function(){
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-                <table class="table no-margin table-hover">
+                <table class="table no-margin table-hover" id="listTable">
                   <thead>
                   <tr>
                     <th>No.</th>

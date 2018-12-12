@@ -14,6 +14,7 @@ import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.JoinVO;
 import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
+import kr.or.ddit.vo.PositionVO;
 import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 
@@ -97,7 +98,7 @@ public class IJoinDaoImpl implements IJoinDao{
 
 	@Override
 	public void deleteAdd(Map<String, String> params) throws SQLException {
-		client.update("join.deleteAdd",params);
+		client.delete("join.deleteAdd",params);
 	}
 
 	@Override
@@ -110,6 +111,16 @@ public class IJoinDaoImpl implements IJoinDao{
 	@Override
 	public void updateStatus(Map<String, String> params) throws SQLException {
 		client.update("join.updateStatus",params);
+	}
+
+	@Override
+	public List<EmpVO> insertList(Map<String, String> params) throws SQLException{
+		return client.queryForList("join.insertList", params);
+	}
+
+	@Override
+	public List<PositionVO> getPositionList() throws SQLException {
+		return client.queryForList("join.getPositionList");
 	}
 
 }

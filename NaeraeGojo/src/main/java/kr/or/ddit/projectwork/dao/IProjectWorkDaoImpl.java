@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,12 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 	public List<Map<String, String>> getPwChart(Map<String, String> params)
 			throws SQLException {
 		return client.queryForList("pw.getPwChart",params);
+	}
+
+	@Override
+	public List<EmpVO> getEmpList(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("pw.getEmpList",params);
 	}
 
 }

@@ -41,9 +41,10 @@
           A.EMP_CODE
           ,B.EMP_NAME
           ,A.JOIN_CODE
+          , B.EMP_DEPARTMENT
+          , A.POSITION_NAME
       FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
         WHERE A.EMP_CODE = B.EMP_CODE
-        AND A.RQPPS_CODE = C.RQPPS_CODE
         AND C.RQPPS_CODE = D.RQPPS_CODE
         AND D.SUGGEST_CODE = E.SUGGEST_CODE
         AND A.PROJECT_CODE = E.PROJECT_CODE
@@ -137,10 +138,15 @@
    </update>
    
    <select id="totalCountPL" parameterClass="map" resultClass="int">
-      SELECT COUNT(EMP_CODE)
-      FROM JOIN A, PROJECT B
-      WHERE A.PROJECT_CODE = B.PROJECT_CODE
-      AND EMP_CODE = #emp_code#
+      SELECT 
+         count(NVL(TRUNC(AVG(PW_PERCENT)),0)) AS PW_PERCENT
+      FROM PROJECT A, JOIN B, EMP C , PW
+      WHERE B.EMP_CODE = #emp_code#
+      AND PW.PROJECT_CODE(+) = A.PROJECT_CODE
+      AND B.EMP_CODE = C.EMP_CODE
+      AND B.PROJECT_CODE = A.PROJECT_CODE
+      AND A.PROJECT_DELETE = 'n'
+      GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, C.EMP_CODE
    </select>
    
    

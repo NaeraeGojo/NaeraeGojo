@@ -70,12 +70,8 @@ public class FreeboardController {
 	}
 	
 	@RequestMapping("freeboardView")
-	public ModelAndView freeboardView(String freeboard_code, String rnum, ModelAndView model, HttpServletRequest request,
+	public ModelAndView freeboardView(String freeboard_code, ModelAndView model, 
 			Map<String, String> params) throws Exception{
-		HttpSession session = request.getSession();
-		EmpVO empInfo = (EmpVO) session.getAttribute("LOGIN_EMPINFO");
-		String emp_code = empInfo.getEmp_code();
-		
 		params.put("freeboard_code", freeboard_code);
 		FreeBoardVO fbv = service.freeboardInfo(params);
 		
@@ -84,16 +80,16 @@ public class FreeboardController {
 		
 		fbv.setFreeboard_hit(String.valueOf(freeboard_hit));
 		
-		params.put("rnum", rnum);
-		List<FreeBoardAnsVO> replyList = service.replyFreeList(params);
+//		params.put("rnum", rnum);
+//		List<FreeBoardAnsVO> replyList = service.replyFreeList(params);
 		
 		MultipartFile[] files = {};
 		service.updateFreeboardInfo(fbv, files);
 				
 		model.addObject("fbv", fbv);
-		model.addObject("replyList", replyList);
-		model.addObject("emp_code", emp_code);
-		model.addObject("rnum", rnum);
+//		model.addObject("replyList", replyList);
+//		model.addObject("emp_code", emp_code);
+//		model.addObject("rnum", rnum);
 		
 		model.setViewName("user/project/freeboard/freeboardView");
 		
