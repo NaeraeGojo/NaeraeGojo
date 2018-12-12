@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.projectwork.dao.IProjectWorkDao;
+import kr.or.ddit.vo.EmpVO;
 import kr.or.ddit.vo.ProjectWorkVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,11 @@ public class IProjectWorkServiceImpl implements IProjectWorkService{
 	public List<Map<String, String>> getPwChart(Map<String, String> params)
 			throws SQLException {
 		return dao.getPwChart(params);
+	}
+
+	@Override
+	public List<EmpVO> getEmpList(Map<String, String> params) throws Exception {
+		return dao.getEmpList(params);
 	}
 
 }

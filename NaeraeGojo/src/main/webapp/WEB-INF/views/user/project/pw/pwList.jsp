@@ -331,9 +331,9 @@ $(function(){
               </div>
               
             </div>
-            ${pagingUtil}
+            
           </div>
-          
+          ${page}
         </div>
         
         <form action="${pageContext.request.contextPath}/user/project/pw/pwList.do" method="post" class="form-inline pull-right"
