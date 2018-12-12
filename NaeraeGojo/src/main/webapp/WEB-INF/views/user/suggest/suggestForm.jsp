@@ -220,6 +220,8 @@ $(function(){
 			return false;
 		}
 		
+		
+		
 		var dateArr = suggest_start_date.split('-');
 		var start_date = new Date(dateArr[0] , dateArr[1] -1, dateArr[2]);
 		
@@ -233,6 +235,10 @@ $(function(){
 			return false;
 		}
 		
+		if(suggest_cost<=0){
+			boalert("사업비는 0원 이하로 등록할 수 없습니다.");
+			return false;
+		}
 		
 		if(file1 == ''){
 			boalert("제안서 첨부파일을 등록해 주세요.")

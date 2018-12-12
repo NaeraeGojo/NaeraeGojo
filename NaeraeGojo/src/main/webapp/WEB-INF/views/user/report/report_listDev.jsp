@@ -64,7 +64,7 @@
 												</c:if>
 												<td>${list.emp_name }</td>
 												<td>${list.report_day }</td>
-												<td>3</td>
+												<td>${list.report_hit }</td>
 											</tr>
 										</c:forEach>
 										</tbody>

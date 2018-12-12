@@ -257,7 +257,8 @@
 	<select id="reportList" parameterClass="map" resultClass="reportVO">
 		select b.*
 		from (select rownum rnum, a.*
-				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS,A.REPORT_SAVE_DEV
+				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+				,A.REPORT_SAVE_DEV,A.REPORT_HIT
 						FROM REPORT A, EMP B
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE = #emp_code#
@@ -279,6 +280,7 @@
 		select b.*
 		from (select rownum rnum, a.*
 				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+				,A.REPORT_HIT
 						FROM REPORT A, EMP B
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE_PL = #emp_code#
@@ -301,7 +303,7 @@
 		select b.*
 		from (select rownum rnum, a.*
 				from (SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS,
-				A.REPORT_SAVE_PL
+				A.REPORT_SAVE_PL,A.REPORT_HIT
 						FROM REPORT A, EMP B
 						WHERE A.EMP_CODE = B.EMP_CODE
 						AND  A.EMP_CODE = #emp_code#
@@ -323,6 +325,7 @@
 		select b.*
 		from (select rownum rnum, a.*
 				from (  SELECT A.REPORT_CODE,A.REPORT_TITLE,B.EMP_NAME,A.REPORT_DAY,A.REPORT_PL_STATUS,A.REPORT_PM_STATUS
+				,A.REPORT_HIT
 		                  FROM REPORT A, EMP B
 		                  WHERE A.EMP_CODE = B.EMP_CODE
 		                  AND  A.EMP_CODE_PM = #emp_code#
@@ -540,6 +543,12 @@
 		 SET REPORT_SAVE_PL = 'n' 
 		 WHERE REPORT_CODE = #report_code#
 	</update>
+	
+	<update id="updateHit" parameterClass="map">
+          	UPDATE REPORT
+          		SET REPORT_HIT = REPORT_HIT+1 
+          	WHERE REPORT_CODE =#report_code#
+    </update>
 	
 	
 	

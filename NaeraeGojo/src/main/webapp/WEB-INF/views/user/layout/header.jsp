@@ -231,7 +231,7 @@
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<c:if test="${!empty PHOTO.emp_code}">
-								<img src="/sora/${PHOTO.user_file_save_name}" class="user-image" alt="User Image">
+								<img src="/img_user/${PHOTO.user_file_save_name}" class="user-image" alt="User Image">
 							 	</c:if>	
 							 	<c:if test="${empty PHOTO.emp_code}">
 								<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
@@ -246,7 +246,7 @@
 	<!-- User image -->
               					<li class="user-header">
               					<c:if test="${!empty PHOTO.emp_code}">
-									<img src="/sora/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
+									<img src="/img_user/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
 							 	</c:if>	
 							 	<c:if test="${empty PHOTO.emp_code}">
                 					<img src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -542,7 +542,6 @@ $(function(){
 	$(document).delegate('.btn_join_chat','click',function(){
 		var chatroom_code = $(this).attr('code');
 		
-		
 		var url = '${pageContext.request.contextPath}/user/chat/chatRoom.do';
 		var query = '?chatroom_code=' + chatroom_code;
 		
@@ -585,6 +584,7 @@ $(function(){
 	}
 	
 	getEmpList = function(){
+		
 		$.ajax({
 			url : '${pageContext.request.contextPath}/user/emp/empChatList.do'
 			, dataType : 'json'
@@ -631,38 +631,37 @@ $(function(){
 		})
 	}
 	
-// 	toCnt = function(){
+	toCnt = function(){
 		
-// 		var emp_code = '${LOGIN_EMPINFO.emp_code}'
+		var emp_code = '${LOGIN_EMPINFO.emp_code}'
 		
-// 		var listCnt	= '${listCnt}'
-// 		var receivefeedCnt = '${receivefeedCnt}'
-// 		var sendfeedCnt = '${sendfeedCnt}'
-// 		var videoChatCnt = '${videoChatCnt}'
-// 		var issueDamdangCnt = '${issueDamdangCnt}'
-// 		var projectAlarmCnt = '${projectAlarmCnt}'
+		var listCnt	= '${listCnt}'
+		var receivefeedCnt = '${receivefeedCnt}'
+		var sendfeedCnt = '${sendfeedCnt}'
+		var videoChatCnt = '${videoChatCnt}'
+		var issueDamdangCnt = '${issueDamdangCnt}'
+		var projectAlarmCnt = '${projectAlarmCnt}'
 		
-// 		$.ajax({
-//             type : 'post',
-//             url : '${pageContext.request.contextPath}/user/bell/totCnt.do',
-//             data : {'emp_code' : emp_code},
-//             dataType : 'json',
-//             error: function(xhr, status, error){
-//                 alert(error);
-//             },
-//             success : function(json){
+		$.ajax({
+            type : 'post',
+            url : '${pageContext.request.contextPath}/user/bell/totCnt.do',
+            data : {'emp_code' : emp_code},
+            dataType : 'json',
+            error: function(xhr, status, error){
+                alert(error);
+            },
+            success : function(json){
             
-//             	var data = "";
-// // 	            if(json.issueDamdangCnt > 0){
-// 	            if(json.listCnt + json.receivefeedCnt + json.sendfeedCnt + 
-// 	               json.videoChatCnt + json.issueDamdangCnt + json.projectAlarmCnt > 0){
-// 	            	data +=	'<span class="label label-warning">N</span>'
-// 	            	$('#tCount').append(data);
-// 	            }
-//             }
-//         });
-// 	}
- 	/* toCnt(); */
+            	var data = "";
+	            if(json.listCnt + json.receivefeedCnt + json.sendfeedCnt + 
+	               json.videoChatCnt + json.issueDamdangCnt + json.projectAlarmCnt > 0){
+	            	data +=	'<span class="label label-warning">N</span>'
+	            	$('#tCount').append(data);
+	            }
+            }
+        });
+	}
+ 	toCnt();
 	
 });
 

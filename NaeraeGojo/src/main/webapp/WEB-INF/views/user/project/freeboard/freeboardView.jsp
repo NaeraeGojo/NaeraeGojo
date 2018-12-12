@@ -354,6 +354,33 @@ $(function() {
 		</div>
 	</div>
 </div>
+ <!-- 파일 업로드 모달 창 --> 
+<div class="modal fade" id="fileUpForm">
+  <div class="modal-dialog" style="top:50%;">
+    <div class="modal-content center" style="width: 60%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">파일 변경</h4>
+      </div>
+      <div class="modal-body">
+      <form id="refileForm" enctype="multipart/form-data" method="post">
+      <input type="hidden" name="project_all_file_code">
+       <input type="file" class="filestyle" id="file01" name="refiles" data-buttonName="btn-primary">
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary btn_fileUp">수정</button>
+      </div>
+    </div>
+    </form>
+<!--     /.modal-content -->
+  </div>
+<!-- /.modal-dialog  -->
+</div>
+<!-- /.modal 
+ 
 <!-- 				<div class="container-fluid"> -->
 <!--                 Start Page Content -->
 <!--                 <div class="card"> -->
@@ -438,31 +465,3 @@ $(function() {
 <!--                 // End Page Content -->
 <!--        		</div> -->
 <!--             // End Container fluid  -->
-
- <!-- 파일 업로드 모달 창 --> 
-<!-- <div class="modal fade" id="fileUpForm"> -->
-<!--   <div class="modal-dialog" style="top:50%;"> -->
-<!--     <div class="modal-content center" style="width: 60%"> -->
-<!--       <div class="modal-header"> -->
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span></button> -->
-<!--         <h4 class="modal-title">파일 변경</h4> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<!--       <form id="refileForm" enctype="multipart/form-data" method="post"> -->
-<!--       <input type="hidden" name="project_all_file_code"> -->
-<!--        <input type="file" class="filestyle" id="file01" name="refiles" data-buttonName="btn-primary"> -->
-      
-<!--       </div> -->
-<!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">취소</button> -->
-<!--         <button type="button" class="btn btn-primary btn_fileUp">수정</button> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--     </form> -->
-<!--     /.modal-content -->
-<!--   </div> -->
-<!-- /.modal-dialog --> 
-<!-- </div> -->
-<!-- <!-- /.modal --> 
- 

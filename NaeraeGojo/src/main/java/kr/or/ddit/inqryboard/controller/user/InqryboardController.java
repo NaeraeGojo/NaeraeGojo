@@ -72,7 +72,9 @@ public class InqryboardController {
 		
 		ibv.setInqry_board_hit(String.valueOf(inqry_board_hit));
 		
-//		service.updateInqryInfo(ibv, files);
+		MultipartFile[] files = {};
+		service.updateInqryInfo(ibv, files);
+		
 		model.addObject("ibv", ibv);
 		model.setViewName("user/inqryboard/inqryView");
 		

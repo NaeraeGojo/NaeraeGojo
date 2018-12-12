@@ -508,7 +508,7 @@ function deleteEmp(join_code, emp_code) {
 						</button>
 						<h4 class="modal-title">내용 수정</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body" style="height: 220px">
 						<form id="update" method="post">
 							<input type="hidden" name="project_code"> 
 							<tr>

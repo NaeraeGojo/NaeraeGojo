@@ -189,7 +189,8 @@
 		from video_chat_room a, project b, join c, emp d
 		where a.project_code = b.project_code
 		and c.project_code = a.project_code 
-		and c.emp_code= d.emp_code
+		 and a.emp_code = d.emp_code
+    	and a.emp_code = c.emp_code
 		and c.position_name = 'PM'
 		and a.video_chat_room_code=#video_chat_room_code#
     </select>
@@ -232,13 +233,13 @@
     
     <select id="getPWList" parameterClass="map" resultClass="pwcVO">
         select c.pw_code, c.pw_function
-		from video_chat_room a, pwc b, pw c
-		where a.video_chat_room_code = #video_chat_room_code#
-		and b.pwc_code = c.pwc_code
-		and c.pwc_code = #pwc_code#
-		and b.pwc_delete = 'n'
-		and c.pw_delete = 'n'
-		and c.project_code = a.project_code
+			from video_chat_room a, pwc b, pw c
+			where a.video_chat_room_code = #video_chat_room_code#
+			and b.pwc_code = c.pwc_code
+			and c.pwc_code = #pwc_code#
+			and b.pwc_delete = 'n'
+			and c.pw_delete = 'n'
+			and c.project_code = a.project_code
     </select>
     
     <insert id="insertChatPw" parameterClass="chatpwVO">
@@ -264,17 +265,24 @@
     </insert>
     
     <select id="getchatPwList" parameterClass="map" resultClass="chatpwVO">
-     select a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name, b.pw_content, z.emp_name as PW_DAMDANG
-        from chat_pw a, pw b, pwc c, emp d, video_chat_room e, (select emp.emp_name, pw.pw_damdang
-                                                                from emp, pw
-                                                                where pw.pw_damdang = emp.emp_code)z
-        where a.pwc_code = c.pwc_code
-        and a.pw_code = b.pw_code
-        and d.emp_code = a.emp_code
-        and a.chat_pw_delete = 'n'
-        and a.video_room_code = #video_chat_room_code#
-        and z.pw_damdang = b.pw_damdang
-        group by a.chat_pw_code, a.chat_pw_date, b.pw_function, c.pwc_name, d.emp_name, b.pw_content, z.emp_name
+    select nvl(a.emp_name,'미정') as pw_damdang_name
+		        , b.*
+		        from emp a, (
+		                    select chat_pw.* 
+		                        ,pw.pw_function
+		                        ,pw.pw_content
+		                        ,pw.pw_damdang
+		                        ,pwc.pwc_name
+		                        ,emp.emp_name as emp_name
+		                        from chat_pw , pw, pwc, emp
+		                        where video_room_code = #video_chat_room_code#
+		                        and chat_pw.chat_pw_delete = 'n'
+		                        and chat_pw.pw_code = pw.pw_code
+		                        and chat_pw.pwc_code = pwc.pwc_code
+		                        and chat_pw.emp_code = emp.emp_code
+		                    ) b
+		    	where b.pw_damdang = a.emp_code(+)
+    
     </select>
     
     <update id="chat_pwDelete" parameterClass="string">

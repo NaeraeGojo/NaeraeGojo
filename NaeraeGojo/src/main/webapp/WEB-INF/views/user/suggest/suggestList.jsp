@@ -107,11 +107,11 @@ p {
                href="">
               	<span class="label label-success">${sv.suggest_result }</span>
               	<h2 title="${sv.suggest_title }">
-              	<c:if test="${ sv.suggest_title.length() <= 12}">
+              	<c:if test="${ sv.suggest_title.length() <= 14}">
               		${sv.suggest_title }
               	</c:if>
-              	<c:if test="${ sv.suggest_title.length() > 12}">
-              		${fn:substring(sv.suggest_title,0,11) }...
+              	<c:if test="${ sv.suggest_title.length() > 14}">
+              		${fn:substring(sv.suggest_title,0,13) }...
               	</c:if>
               	</h2>
               </a>

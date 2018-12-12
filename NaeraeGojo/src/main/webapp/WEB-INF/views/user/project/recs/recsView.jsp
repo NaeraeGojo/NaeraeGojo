@@ -35,11 +35,10 @@
 }
 
 .pwcont {
-	margin-left: 160px;
-	margin-right: 160px;
-	width: 80%;
-	display: inline-block;
-	text-align: initial;
+	width: 100%;
+    display: inline-block;
+    text-align: initial;
+    padding: 0px 15px;
 }
 
 .input_foot {

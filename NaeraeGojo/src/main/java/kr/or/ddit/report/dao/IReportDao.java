@@ -64,5 +64,6 @@ public interface IReportDao {
 	
 	public void saveDEV(Map<String,String> params) throws SQLException;
 	public void savePL(Map<String,String> params) throws SQLException;
+	public void updateHit(Map<String, String> params) throws SQLException;
 	
 }
