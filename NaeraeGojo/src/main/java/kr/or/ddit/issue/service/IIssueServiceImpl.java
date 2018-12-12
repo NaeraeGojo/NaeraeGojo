@@ -88,16 +88,16 @@ public class IIssueServiceImpl implements IIssueService{
 		return issueDao.joinEmpList(params);
 	}
 	
-	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
-	@Override
-	public int totalCountIssueResult(Map<String, String> params) throws SQLException {
-		int totalCount = 0;
-		try {
-			totalCount = issueDao.totalCountIssueResult(params);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return totalCount;
-	}
+//	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={Exception.class})
+//	@Override
+//	public int totalCountIssueResult(Map<String, String> params) throws SQLException {
+//		int totalCount = 0;
+//		try {
+//			totalCount = issueDao.totalCountIssueResult(params);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return totalCount;
+//	}
 
 }

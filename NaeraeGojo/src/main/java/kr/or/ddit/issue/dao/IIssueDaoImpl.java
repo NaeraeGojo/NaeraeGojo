@@ -72,9 +72,6 @@ public class IIssueDaoImpl implements IIssueDao {
 		return client.queryForList("issue.joinEmpList", params);
 	}
 
-	@Override
-	public int totalCountIssueResult(Map<String, String> params) throws SQLException {
-		return (int) client.queryForObject("issue.totalCountIssueResult", params);
-	}
+	
 
 }

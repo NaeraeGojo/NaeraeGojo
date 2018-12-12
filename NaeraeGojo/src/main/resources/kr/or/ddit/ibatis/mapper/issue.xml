@@ -227,16 +227,7 @@
 		AND project_code = #project_code#
 	</select>
 	
-	<select id="totalCountIssueResult" parameterClass="map" resultClass="int">
-		SELECT COUNT(ISSUE_CODE)
-		FROM ISSUE A, ISLEV B, EMP C, PW E
-		WHERE A.ISSUE_LEVEL = B.ISLEV_CODE
-        AND A.EMP_CODE = C.EMP_CODE
-        AND A.PW_CODE = E.PW_CODE
-        AND A.ISSUE_DELETE = 'n'
-        AND A.ISSUE_STATUS = 'y'
-		<include refid="searchCondition"/> 
-	</select>
+	
 	
 </sqlMap>
 

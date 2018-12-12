@@ -29,7 +29,7 @@ $(function(){
     	var issue_code = $(this).find('td:eq(0) input').val();
     	$.ajax({
     		type :"POST"
-    		, url : "${pageContext.request.contextPath}/user/bell/issueAlarm.do"
+    		, url : "${pageContext.request.contextPath}/user/bell/issueDamdangAlarm.do"
     		, data : {issue_code : $(this).find('td:eq(0) input').val()}
     		, contentType: "application/x-www-form-urlencoded; charset=UTF-8"
     		, error : function(request, status, error) {

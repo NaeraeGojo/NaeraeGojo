@@ -10,9 +10,23 @@
 .box-title {
 	font-size: 30px !important;
 }
-
-#divdiv {
-	height: 700px;
+#searchForm2{
+	margin-top: 35px;
+}
+.issueresultcont{
+	width: 100%;
+    display: inline-block;
+    text-align: initial;
+    padding: 0px 15px;
+}
+.btn_pw_upper{
+	color:white; 
+	background-color:#8cd636; 
+	border:1px outset; 
+	width : fit-content; 
+	margin-bottom:14px;
+	margin-left: 10px;
+	border-radius: 1em;
 }
 </style>
 <script type="text/javascript">
@@ -57,9 +71,22 @@ $(function(){
 </script>
 
 <div class="row">
+	<div class="issueresultcont">
+		<div class="col-md-4 pull-left" style="width: auto;">
+			<input id="issueChart" value="이슈 차트 조회" type="button" 
+				class="btn btn-lg btn_pw_upper" style="background-color: #6884c1;"
+				data-toggle="modal" data-target="#modal-default">
+		</div>
+		<div class="col-md-4 pull-right" style="width: auto;">
+			<input id="listBtn" value="프로젝트 목록" type="button" class="btn btn-lg btn_pw_upper"
+			style="background-color: #f39c12;">
+		</div>
+	</div>
+	
+	<div class="issueresultcont">
 	<div class="col-md-12">
 		<!-- Custom Tabs -->
-		<div class="nav-tabs-custom" id="divdiv">
+		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li><a href="${pageContext.request.contextPath}/user/project/issue/issueList.do">프로젝트 이슈</a></li>
 				<li class="active"><a href="${pageContext.request.contextPath}/user/project/issue/issueResultList.do">이슈 결과</a></li>
@@ -117,7 +144,7 @@ $(function(){
 						${pagingUtil}
 					</div>
 
-					<form action="${pageContext.request.contextPath}/user/project/issue/issueResultList.do" method="post" class="form-inline pull-right">
+					<form action="${pageContext.request.contextPath}/user/project/issue/issueResultList.do" method="post" class="form-inline pull-right" id="searchForm2">
 						<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" /> 
 						<select	class="form-control" name="search_keycode">
 							<option value="TOTAL">전체</option>
@@ -126,12 +153,10 @@ $(function(){
 							<option value="LEVEL">등급</option>
 						</select>
 						<button type="submit" class="btn btn-primary form-control">검색</button>
-						<button type="button" id="issueChart" class="btn btn-warning form-control">이슈 차트</button>
-<!-- 						<button type="button" id="insertIssue" class="btn btn-danger form-control">이슈 등록</button> -->
-						<button type="button" id="listBtn" class="btn btn-info form-control">프로젝트 목록</button>
 					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>
