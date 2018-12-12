@@ -164,7 +164,8 @@ public class ProjectController {
 	public ModelAndView updateProject(String project_code, ModelAndView andView,
 			ProjectVO projectInfo, HttpSession session, Map<String, String> params,
 			HttpServletRequest request) throws Exception{
-	
+		params.clear();
+		
 		params.put("project_code", project_code);
 		
 		service.updateProjectInfo(projectInfo);

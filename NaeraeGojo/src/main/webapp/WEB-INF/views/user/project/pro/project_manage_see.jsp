@@ -328,7 +328,7 @@ function deleteEmp(join_code, emp_code) {
 					</div>
 					<div class="modal-body" style="height: 220px">
 						<form id="update" method="post">
-							<input type="hidden" name="project_code"> 
+							<input type="hidden" name="project_code">
 							<tr>
 		              			<td style="width:60px;"><label class="control-label">프로젝트 명</label></td>
 		              			<td>
