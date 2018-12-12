@@ -6,6 +6,9 @@
 	text-align: center;
 	background-color: #f4f4f4;
 }
+.form-control[readonly]{
+	background-color: white;
+}
 
 .tLine {
 	background-color: #d2d2d2;
@@ -108,7 +111,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">관련 프로젝트</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="project_name" name="project_name">
+								<input type="text" class="form-control" id="project_name" name="project_name" readonly>
 							</div>
 						</div>
 
@@ -116,7 +119,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">관련 프로젝트 업무</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="pw_function" name="pw_function">
+								<input type="text" class="form-control" id="pw_function" name="pw_function" readonly>
 							</div>
 						</div>
 						
@@ -124,7 +127,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">작성자</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="emp_name" name="emp_name">
+								<input type="text" class="form-control" id="emp_name" name="emp_name" readonly>
 							</div>
 						</div>
 
@@ -195,7 +198,7 @@ label {
 
 					</div>
 					<div class="box-footer clearfix">
-						<input value="목록" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
+						<input value="목록" type="button" id="reList" class="btn btn-sm btn-warning btn-flat pull-right"> 
 						<input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:if test="${vo.report_save_pl eq 'y' }" >
 							<input value="등록" type="button" id="saveInsert" class="btn btn-sm btn-primary btn-flat pull-right"> 
@@ -333,7 +336,11 @@ label {
 	    $('#saveInsert').click(function(){
 	    	var  report_code = $('input[name=report_code]').val();
 	    	$(location).attr('href','${pageContext.request.contextPath}/user/report/savePL/'+report_code+'.do');
-	 });
+	 	});
+	    
+	    $('#reList').click(function() {
+			$(location).attr('href','${pageContext.request.contextPath}/user/report/report_listPL.do');
+		})
 
 	})
 </script>

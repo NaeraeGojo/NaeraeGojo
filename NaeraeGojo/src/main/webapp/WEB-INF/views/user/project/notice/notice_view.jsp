@@ -8,6 +8,9 @@
 .box-title {
 	font-size: 30px !important;
 }
+.form-control[readonly]{
+	background-color: white;
+}
 .btn-sm {
 	width : 80px;
 	margin-right:5px; 
@@ -46,7 +49,7 @@ label {
 					<label for="inputPassword3" class="col-sm-2 control-label">관련 프로젝트</label>
 					<div class="col-sm-9">
 						<!-- select -->
-						<select class="form-control" name="project_code" id="project_code" >
+						<select class="form-control" name="project_code" id="project_code" readonly>
 <!-- 	                   	 <option>프로젝트를 선택해주세요</option> -->
 <%-- 		                   <c:forEach items="${vo }" var="proName"> --%>
 		                    	<option value="${vo.project_code}">${vo.project_name}</option>
@@ -59,7 +62,7 @@ label {
                   <label for="inputPassword1" class="col-sm-2 control-label">제목</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="notice_title" name="notice_title">
+                    <input type="text" class="form-control" id="notice_title" name="notice_title" readonly>
                   </div>
                 </div>
                 
@@ -67,7 +70,7 @@ label {
                   <label for="inputPassword2" class="col-sm-2 control-label">작성자</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="emp_name" name="emp_name">
+                    <input type="text" class="form-control" id="emp_name" name="emp_name" readonly>
                   </div>
                 </div>
                 
