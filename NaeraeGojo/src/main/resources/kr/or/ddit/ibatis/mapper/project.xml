@@ -161,9 +161,16 @@
    
    <select id="suggestList" resultClass="suggestVO" parameterClass="map">
       SELECT 
-          SUGGEST_CODE
-          ,SUGGEST_TITLE
-      FROM SUGGEST
+          A.SUGGEST_CODE
+          ,A.SUGGEST_TITLE
+		  ,A.SUGGEST_STATUS	
+          ,C.RQPPS_NICKNAME
+          ,C.EMP_CODE
+      FROM SUGGEST A, EMP B, RQPPS C
+      WHERE A.RQPPS_CODE = C.RQPPS_CODE
+      AND C.EMP_CODE = B.EMP_CODE
+      AND A.SUGGEST_STATUS = 'n'
+      AND C.EMP_CODE = #emp_code#
    </select>
    
    <select id="totalComplete" resultClass="int" parameterClass="map">
@@ -224,6 +231,14 @@
          PROJECT_CODE = #project_code#
          ,JOIN_ALARM = 'y'  
       WHERE RQPPS_CODE = #rqpps_code#
+   </update>
+
+   <update id="updateSuggestStatus" parameterClass="projectVO">
+      UPDATE 
+          SUGGEST 
+      SET 
+         SUGGEST_STATUS = 'y'
+      WHERE SUGGEST_CODE = #suggest_code#
    </update>
    
    

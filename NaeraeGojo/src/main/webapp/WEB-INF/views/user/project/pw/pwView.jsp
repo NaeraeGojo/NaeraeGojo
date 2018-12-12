@@ -312,7 +312,13 @@ $(function(){
 	
 	// 피드백 받는 사람 
 	$('#btn_feedback').click(function(){
+		var pw_damdang = $('select[name=pw_damdang]').val();
+		if('${LOGIN_EMPINFO.emp_code}'== pw_damdang) {
+			boalert('본인에게는 피드백을 보낼 수 없습니다.');
+			return false;
+		}
 		$('#feedbackmodal').modal('show');
+		
 		$('input[name=receive_emp]').val('${pwv.DAMDANG_NAME}');
 	});
 	

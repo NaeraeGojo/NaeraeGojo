@@ -184,15 +184,14 @@
     </insert>
     
     <select id="getProjectNM" parameterClass="string" resultClass="projectVO">
-        select b.project_name, to_char(b.project_start, 'YYYY-MM-DD') as project_start, to_char(b.project_end, 'YYYY-MM-DD') as project_end
-                , d.emp_name, c.position_name,  a.emp_code
-		from video_chat_room a, project b, join c, emp d
-		where a.project_code = b.project_code
-		and c.project_code = a.project_code 
-		 and a.emp_code = d.emp_code
-    	and a.emp_code = c.emp_code
-		and c.position_name = 'PM'
-		and a.video_chat_room_code=#video_chat_room_code#
+		 select b.PROJECT_NAME, to_char(b.project_start, 'YYYY-MM-DD') as project_start, to_char(b.project_end, 'YYYY-MM-DD') as project_end
+		        , d.EMP_NAME, a.emp_code
+		 from video_chat_room a, project b, join c, emp d
+		 where a.PROJECT_CODE = b.PROJECT_CODE
+		 and a.PROJECT_CODE = c.PROJECT_CODE
+		 and c.POSITION_NAME = 'PM'
+		 and c.EMP_CODE = d.EMP_CODE
+		 and a.video_chat_room_code=#video_chat_room_code#
     </select>
     
     <update id="updateUrl" parameterClass="map">

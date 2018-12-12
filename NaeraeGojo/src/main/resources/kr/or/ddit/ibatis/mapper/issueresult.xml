@@ -22,7 +22,7 @@
 	</resultMap>
 	
 	<sql id="selectAll">
-		SELECT TO_NUMBER(B.ISSUE_RESULT_CODE) AS ISSUE_RESULT_CODE
+		SELECT ISSUE_RESULT_CODE
                ,A.ISSUE_CODE
                ,A.ISSUE_NAME
 			   ,B.ISSUE_RESULT_CONTENT
@@ -129,7 +129,7 @@
 		FROM  (SELECT ROWNUM RNUM, A.*
 				FROM ( <include refid="selectAll"/> 
 						<include refid="searchCondition"/> 
-						ORDER BY ISSUE_RESULT_CODE) A ) B
+						ORDER BY to_number(ISSUE_RESULT_CODE) asc ) A ) B
  		<![CDATA[				
 		WHERE B.RNUM <= #startCount#
 		 AND  B.RNUM >= #endCount#

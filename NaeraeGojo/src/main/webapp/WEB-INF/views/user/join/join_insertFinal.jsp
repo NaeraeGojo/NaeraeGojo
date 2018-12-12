@@ -14,6 +14,11 @@ td {text-align: left; }
  .no-margin {
     padding: 10px !important;
 }
+.123{
+	padding: 10px !important;
+
+}
+
 .box-title {
 	font-size: 30px !important;
 }
@@ -100,7 +105,7 @@ label {
                     <th scope="col" width="10%">
 <!--                     <button value="특급"  onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
 <!--                     <input value="등록" name="특급" onclick="level(this.name)"  type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right"> -->
-                    <input value="등록" name="특급" id="vaseSpec" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
+                    <input value="등록" name="특급"  id="vaseSpec" type="button" style="font-size: 20px; width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
                     </th>
                     <th scope="col" width="10%">
                     </th>
@@ -110,7 +115,7 @@ label {
                     <th scope="col" width="30%" id="cho">&emsp;&emsp;&emsp;&emsp;고급</th>
                     <td width="15%"><label id="high"></label></td>
                     <th scope="col" width="10%">
-                    <input value="등록" name="고급" id="vaseHigh" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
+                    <input value="등록" name="고급" id="vaseHigh" type="button" style="font-size: 20px; width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
 <!--                     <button value="고급" onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
@@ -121,7 +126,7 @@ label {
                     <th scope="col" width="30%" id="cho">&emsp;&emsp;&emsp;&emsp;중급</th>
                     <td width="15%"><label id="inter"></label></td>
                     <th scope="col" width="10%">
-                    <input value="등록" name="중급" id="vaseInter" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
+                    <input value="등록" name="중급" id="vaseInter" type="button" style="font-size: 20px; width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
 <!--                     <button value="중급"  onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
@@ -135,7 +140,7 @@ label {
                     <th scope="col" width="30%" id="cho">&emsp;&emsp;&emsp;&emsp;초급</th>
                     <td width="15%"><label id="begin"></label></td> 
                     <th scope="col" width="10%">
-                    <input value="등록" name="초급" id="vaseBegin" type="button" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
+                    <input value="등록" name="초급" id="vaseBegin" type="button" style="font-size: 20px; width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right level">
 <!--                     <button value="초급" onclick="level(this.value);" style="width : 150px; height : 50px;"  class="btn btn-sm btn-danger btn-flat pull-right">등록</button> -->
                     </th>
                     <th scope="col" width="10%">
@@ -176,7 +181,7 @@ label {
                 <div class="row">
 	<div class="col-md-12">
 <!--           Horizontal Form -->
-          <div class="box box-info" style="overflow:scroll; width:775px; height:320px;">
+          <div class="box box-info" style="overflow:scroll; width:870px; height:320px;">
             <form name="select_machine" class="form-horizontal">
               <div class="box-body">
               
@@ -190,9 +195,9 @@ label {
             <table class="table no-margin" id="mView">
                   <thead>
                   <tr>
-                    <th scope="col" width="25%">레벨</th>
-                    <th scope="col" width="25%">이름</th>
-                    <th scope="col" width="25%">체크여부</th>
+                    <th scope="col" width="36%">레벨</th>
+                    <th scope="col" width="36%">이름</th>
+                    <th scope="col" width="33%">체크여부</th>
                   </tr>
                   </thead>
                   <tbody id="bodytable">
@@ -208,6 +213,8 @@ label {
                <br>
 <!--                <button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right" >다음</button> -->
                
+               <div id="1234" class="123" style="padding-left: 670px;">
+               </div>
                <div>
                <input type="hidden" id="spec1" value=""/>
                </div>
@@ -296,26 +303,6 @@ $(function () {
 	      radioClass   : 'iradio_flat-red'
 	    })
 	    
-
-// 		 $('#exampleModal').click(function(){
-//            var appendList ="";
-//            $("input[name='micro']:checked").each(function() {
-//               var arr = $(this).val();
-//               parseInt($(c'#spec1').text())
-              
-//               var arrstr = arr.split('/');
-                 
-//               appendList += '<tr>'
-//                              + '<td>'
-//                              + arrstr[1]
-//                              + '</td>'
-//                              + '<td>'
-//                              + arrstr[0]
-//                              + '</td>'+
-//                          '<tr>';
-//            });
-//            $('#nextList').empty().append(appendList);
-// 		 });
 	    
 	    $('#aa').click(function(){
 	    	var len = $('#nextList tr').length;
@@ -339,29 +326,28 @@ $(function () {
 				success : function(data){
 					console.log(data);
 					if(name == "특급"){
+						$('#bodytable').empty();
 						$('#vaseSpec').attr("disabled", true);
 					}
 					if(name == "고급"){
+						$('#bodytable').empty();
 						$('#vaseHigh').attr("disabled", true);
 					}
 					if(name == "중급"){
+						$('#bodytable').empty();
 						$('#vaseInter').attr("disabled", true);
 					}
 					if(name == "초급"){
+						$('#bodytable').empty();
 						$('#vaseBegin').attr("disabled", true);
 					}
 					if($('#vaseBegin').attr('disabled') == 'disabled' && $('#vaseInter').attr('disabled') == 'disabled' && $('#vaseHigh').attr('disabled') == 'disabled' && $('#vaseSpec').attr('disabled') == 'disabled'){
+						$('#bodytable').empty();
 						$('#lastCheck').attr("disabled", false);
 						$('#lastCheck').click(function(){
 							$(location).attr('href','${pageContext.request.contextPath}/user/join/join_list.do');
 						});
 					}
-					
-					
-// 					 $('#exampleModal').removeClass('in');
-// 					 $('#aa').removeClass('in');
-// 					info = data.mpJoinInfo;
-// 					$('#spec1').text(info.mp_spec);
 				},
 				error : function(res){
 					alert(res.status);
@@ -393,6 +379,7 @@ $(document).on('click', '.level', function(){
 				console.log(data);
 				empLevelList = data.empLeveltest;
 				var code ='';
+				var code1 ='';
 				$('#bodytable').empty();
 				for (var i = 0; i < empLevelList.length; i++) {
 					nextData = "";
@@ -410,24 +397,55 @@ $(document).on('click', '.level', function(){
 					code += '<td><input type="checkbox" value="'+nextData+'" name="micro" class="flat-red" ></td>';
 					code += '</tr>';
 				}
-					code += '<tr>';
-					code += '	<td colspan="4">';
-					code += '		<button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right">다음</button>';
-					code += '	</td>';
-					code += '</tr>';
+					code1 += '<tr>';
+					code1 += '	<td colspan="4">';
+					code1 += '		<button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right" style="width:200px; height:50px; font-size: 25px;">다음</button>';
+					code1 += '	</td>';
+					code1 += '</tr>';
 				$('#bodytable').append(code);
-				
-				
-				
+				$('#1234').append(code1);
 		
 			},
 			error : function(res){
 				alert(res.status);
 			}
-			
-			
 		});
+// 		$.ajax({
+// 			url : '${pageContext.request.contextPath}/user/join/join_specialList.do?emp_level='+ name,
+// 			dataType: 'json',
+// 			success : function(data){
+// 				console.log(data);
+// 				empLevelList = data.empLeveltest;
+// 				var code ='';
+// 				$('#bodytable').empty();
+// 				for (var i = 0; i < empLevelList.length; i++) {
+// 					nextData = "";
+// 					nextData += empLevelList[i].emp_level
+// 							 +  "/"
+// 							 +  empLevelList[i].emp_name
+// 							 +  "/"
+// 							 +  empLevelList[i].emp_code;
+// // 					nextData += empLevelList[i].emp_code
+							 
+// 					code += '<tr>';
+// // 					code += '<td>'+empLevelList[i].emp_department+'</td>';
+// 					code += '<td>'+empLevelList[i].emp_level+'</td>';
+// 					code += '<td>'+empLevelList[i].emp_name+'</td>';
+// 					code += '<td><input type="checkbox" value="'+nextData+'" name="micro" class="flat-red" ></td>';
+// 					code += '</tr>';
+// 				}
+// 					code += '<tr>';
+// 					code += '	<td colspan="4">';
+// 					code += '		<button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right">다음</button>';
+// 					code += '	</td>';
+// 					code += '</tr>';
+// 				$('#bodytable').append(code);
 		
+// 			},
+// 			error : function(res){
+// 				alert(res.status);
+// 			}
+// 		});
 	});
 	
 	
@@ -464,28 +482,6 @@ $(document).on('click', '.level', function(){
 			});
 	};	
 	
-	//마지막 아작스 Insert
-// 	function insertList(value){
-// 			$.ajax({
-// 				url : '${pageContext.request.contextPath}/user/join/join_levelInsert.do?rqpps_name='+ value,
-// 				dataType: 'json',
-// 				success : function(data){
-// 					console.log(data);
-// 					info = data.mpJoinInfo;
-// 					$('#begin').text(info.mp_begin);
-// 					$('#inter').text(info.mp_inter);
-// 					$('#high').text(info.mp_high);
-// 					$('#spec').text(info.mp_spec);
-// 					$('#begin1').text(info.mp_begin);
-// 					$('#inter1').text(info.mp_inter);
-// 					$('#high1').text(info.mp_high);
-// 					$('#spec1').text(info.mp_spec);
-// 				},
-// 				error : function(res){
-// 					alert(res.status);
-// 				}
-// 			});
-// 	};	
 	
 	// 없어졌다 사라졌다를 생기는거는 document로 해야함 정적
 	$(document).on('click', '#modalNext', function(){
@@ -518,7 +514,7 @@ $(document).on('click', '.level', function(){
            });
            $('#nextList').empty().append(appendList);
 		   
-	    }else {
+	    }else{
 	       alert(limitNum + "명에 맞게 선택해 주세요.");
 		}
 	});

@@ -126,6 +126,7 @@
           </ul>
         </li>
         
+        <c:if test="${LOGIN_EMPINFO.emp_role eq 'MANAGER'}">
          <li class="treeview">
           <a href="#">
             <i class="fa fa-clock-o">
@@ -138,7 +139,7 @@
             <li><a href="${pageContext.request.contextPath}/user/scheduler/schedulerList.do"><i class="fa fa-circle-o"></i>스케줄러</a></li>
           </ul>
         </li>
-        
+        </c:if>
        
       </ul>
     </section>

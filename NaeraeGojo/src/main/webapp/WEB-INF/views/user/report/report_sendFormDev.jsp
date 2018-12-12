@@ -224,7 +224,7 @@ label {
 	    	   var str = $('#bodytable tr:eq('+i+')').find('input[name=test]').val();//<f로 준이유
                insertNm += str+"/";
             }
-			if(report_content == '' || report_title == '' || report_content ){ 
+			if(report_content == '' || report_title == ''){ 
 				alert("빈 항목이 존재합니다.");
 				return false;
 			}

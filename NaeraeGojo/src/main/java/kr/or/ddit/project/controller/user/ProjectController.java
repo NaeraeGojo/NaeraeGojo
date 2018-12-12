@@ -130,8 +130,11 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("projectForm")
-	public ModelAndView ProjectForm(HttpServletRequest request, 
+	public ModelAndView ProjectForm(HttpServletRequest request, String emp_code,
 			Map<String, String> params, HttpSession session, ModelAndView andView) throws Exception{
+		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		params.put("emp_code", emp_code);
 		
 		List<SuggestVO> suggestList = service.suggestList(params);
 		andView.addObject("suggestList", suggestList);
