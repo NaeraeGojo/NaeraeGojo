@@ -39,7 +39,7 @@ public class ProjectWorkController {
 		String project_code = (String) session.getAttribute("project_code");
 		params.put("project_code", project_code);
 		
-		List<EmpVO> el = vservice.getEmpList(params);
+		List<EmpVO> el = service.getEmpList(params);
 		model.addAttribute("el",el);
 		
 		return model;
