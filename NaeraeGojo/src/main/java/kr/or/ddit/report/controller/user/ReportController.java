@@ -179,7 +179,7 @@ public class ReportController {
 		params1.put("report_code", report_code);
 		List<ReportVO> stList = service.reportStatusPL(params1);
 //		vo = service.noticeAllInfo(params);
-//		service.updateHit(params);
+		service.updateHit(params);
 		andView.addObject("vo",vo);
 		andView.addObject("stList",stList);
 		andView.setViewName("user/report/report_sendDeletePL");
@@ -435,7 +435,7 @@ public class ReportController {
 		params1.put("report_code", report_code);
 		List<ReportVO> stList = service.reportStatusPL(params1);
 //		vo = service.noticeAllInfo(params);
-//		service.updateHit(params);
+		service.updateHit(params);
 		andView.addObject("vo",vo);
 		andView.addObject("stList",stList);
 		andView.setViewName("user/report/report_sendDeleteDev");
@@ -460,7 +460,7 @@ public class ReportController {
 		params1.put("report_code", report_code);
 		List<ReportVO> stList = service.reportStatusPL(params1);
 //		vo = service.noticeAllInfo(params);
-//		service.updateHit(params);
+		service.updateHit(params);
 		andView.addObject("vo",vo);
 		andView.addObject("stList",stList);
 		andView.setViewName("user/report/report_recViewPM");
@@ -493,7 +493,7 @@ public class ReportController {
 		params1.put("report_code", report_code);
 		List<ReportVO> stList = service.reportStatusPL(params1);
 //		vo = service.noticeAllInfo(params);
-//		service.updateHit(params);
+		service.updateHit(params);
 		andView.addObject("vo",vo);
 		andView.addObject("stList",stList);
 		andView.setViewName("user/report/report_recViewPL");

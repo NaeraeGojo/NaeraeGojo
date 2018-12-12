@@ -296,4 +296,10 @@ public class IReportServiceImpl implements IReportService{
 		dao.savePL(params);
 		
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW , rollbackFor={Exception.class})
+	public void updateHit(Map<String, String> params) throws SQLException {
+		dao.updateHit(params);
+	}
 }

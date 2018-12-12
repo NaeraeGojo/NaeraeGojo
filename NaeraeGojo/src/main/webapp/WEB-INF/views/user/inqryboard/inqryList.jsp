@@ -16,6 +16,15 @@
 	display: inline-block;
 	text-align: initial;
 }
+.btn_free_upper{
+	color:white; 
+	background-color:#8cd636; 
+	border:1px outset; 
+	width : fit-content; 
+	margin-bottom:14px;
+	margin-left: 10px;
+	border-radius: 1em;
+}
 </style>
     <!-- Main content -->
 <section class="content">	<!-- content 기본 큰 창 (기본설정)-->

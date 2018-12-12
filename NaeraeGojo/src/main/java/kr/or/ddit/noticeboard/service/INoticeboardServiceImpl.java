@@ -59,13 +59,14 @@ public class INoticeboardServiceImpl implements INoticeboardService {
 	public void insertNoticeboardInfo(NoticeBoardVO nbv, MultipartFile[] files)
 			throws SQLException {
 		String notice_code = noticeboardDao.insertNoticeboardInfo(nbv);
-		List<NoticeFileVO> nfvo = new ArrayList<NoticeFileVO>();
-		NoticeFileVO nfvo1 = noticeFileMapper.mapping(files[0], notice_code);
-		nfvo.add(nfvo1);
-		for(NoticeFileVO nfv : nfvo){
-			noticeFiledao.insertNoticeFile(nfv);
+		if (files[0].getSize()>0) {
+			List<NoticeFileVO> nfvo = new ArrayList<NoticeFileVO>();
+			NoticeFileVO nfvo1 = noticeFileMapper.mapping(files[0], notice_code);
+			nfvo.add(nfvo1);
+			for(NoticeFileVO nfv : nfvo){
+				noticeFiledao.insertNoticeFile(nfv);
+			}
 		}
-		
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=true, rollbackFor={RuntimeException.class,SQLException.class,NestableException.class})

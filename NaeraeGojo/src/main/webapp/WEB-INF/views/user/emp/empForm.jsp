@@ -18,10 +18,7 @@ function readURL(input) {
 }
 
 $(function() {
-	var today = new Date();
-	
-	String curTime = new SimpleDateFormat("yyyy-MM-dd").format(today);
-	
+	document.getElementById('now_date').valueAsDate = new Date();
 	$('#form_emp').submit(function() {
 		if (!$('input[name=emp_name]').val().validationNM()) {
 			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
@@ -31,10 +28,10 @@ $(function() {
 			alert("비밀번호를 바르게 입력해주세요.");
 			return false;
 		}
-		if (($('input[name=emp_pass]').val()) != ($('input[name=emp_pass_confirm]').val())) {
-			alert("비밀번호와 동일하게 입력해주세요.");
-			return false;
-		}
+// 		if (($('input[name=emp_pass]').val()) != ($('input[name=emp_pass_confirm]').val())) {
+// 			alert("비밀번호와 동일하게 입력해주세요.");
+// 			return false;
+// 		}
 
 		phone = $('select[name=emp_phone1]').val() + '-' + $('input[name=emp_phone2]').val() + '-' + $('input[name=emp_phone3]').val(); 
 		if (!phone.validationPHONE()) {
@@ -51,13 +48,12 @@ $(function() {
 		$('input[name=emp_email]').val(email);
 		$('input[name=emailId]').val($('input[name=emp_email1]').val());
 		
-// 		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
-// 			alert("입사일을 입력해주세요.");
-// 			return false;
-// 		}
+		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
+			alert("입사일을 입력해주세요.");
+			return false;
+		}
 		$('select[name=part_code]').val();
 		$('input[name=emp_major]').val();
-		$('input[name=emp_encpn]').val();
 		
 		return true;
 	});	
@@ -67,14 +63,6 @@ $(function() {
 		//(이전 페이지 이동으로 수정할 예정)
 	});
 	
-	
-	// 프로필 사진 업로드				
-	$('#picUpload').click(function() {
-		var url = "${pageContext.request.contextPath}/history/idPicFileUpload.do";
-		var options = "width = 375, height = 400, scrollbars = no";
-	
-		window.open(url, "증명사진업로드", options);
-	});
 });
 			
 
@@ -143,13 +131,12 @@ $(function () {
 										<tr>
 											<td rowspan="13" class="pic" colspan="2" style="vertical-align: bottom; width: 150px; text-align: center;">
 									        	<div align="center">
-<!-- 									        	<img id="ShowImage" src="../../img"/> -->
-									        	<img id="ShowImage" src="${pageContext.request.contextPath}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+									        	<img id="ShowImage" src="" />
 									        	</div>
 									        	<div style="width: 100%" align="center">
 									        	<br/>
 									            	<label class="btn btn-primary btn-file">
-									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" style="display: none;" accept="image/gif, image/jpg, image/jpeg, image/png" onchange="readURL(this);">
+									                    	프로필 사진 추가 <input type="file" class="form-control" name="files" accept="*.jpg, *.png" style="display: none;" onchange="readURL(this);">
 									             	</label>
 									            	size : 235x315 이하
 									         	</div>
@@ -167,15 +154,15 @@ $(function () {
 			                		<div class="row">
 			                			<label class="col-sm-3 control-label">비밀번호</label>
 		                  				<div class="col-sm-6">
-		                  					<input type="password" name="emp_pass" class="form-control" placeholder="비밀번호를 입력해주세요" style="border-radius: 1em;">
+		                  					<input type="password" name="emp_pass" class="form-control" value="${password }" style="border-radius: 1em;">
                							</div>                
                						</div>
-			                		<div class="row">
-			                			<label class="col-sm-3 control-label">비밀번호 확인</label>
-		                  				<div class="col-sm-6">
-		                  					<input type="password" name="emp_pass_confirm" class="form-control" placeholder="비밀번호를 다시 입력해주세요" style="border-radius: 1em;">
-               							</div>                
-               						</div>
+<!-- 			                		<div class="row"> -->
+<!-- 			                			<label class="col-sm-3 control-label">비밀번호 확인</label> -->
+<!-- 		                  				<div class="col-sm-6"> -->
+<!-- 		                  					<input type="password" name="emp_pass_confirm" class="form-control" placeholder="비밀번호를 다시 입력해주세요" style="border-radius: 1em;"> -->
+<!--                							</div>                 -->
+<!--                						</div> -->
 			                		<div class="row">
 		                				<label class="col-sm-3 control-label">성별</label>
 		                  				<div class="col-sm-6">
@@ -300,7 +287,7 @@ $(function () {
                 					<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 5px;">입사일</label>
 				                  		<div class="col-sm-5">
-											<input type="date" name="emp_encpn" value="curTime" class="form-control" style="border-radius: 1em;"/>
+											<input type="date" name="emp_encpn" id="now_date" class="form-control" style="border-radius: 1em;"/>
 			              				</div>
 			              			</div>
 			              				<input type="hidden" name="emp_delete" value="w" />
@@ -320,96 +307,4 @@ $(function () {
 		</div>
 	</div>
 	
-    <div class="modal fade" id="modal-primary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="container">
-		<div class="modal-dialog">
-  			<div class="modal-content">
-  				<div class="modal-header">
-      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        			<span aria-hidden="true">&times;</span></button>
-      				<h4 class="modal-title">프로젝트 이력 등록</h4>
-    			</div>
-    			<div class="modal-body">
-    			<div class="box box-warning">
-    			<form id="form_history">
-   				<br/>
-		            <div class="col-sm-4">			
-						<input type="button" value="프로젝트 이력추가" class="form-control bg-light-blue color-palette" style="border-radius: 1em;" onclick="add_div()"><br/>
-					</div>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<div id="room_type" >
-						<div class="row">
-							<label class="col-sm-3 control-label" style="margin-top: 3px;">프로젝트 명</label>
-					 		<div class="col-sm-5">
-								<input type="text" name="history_project_name" class="form-control" placeholder="프로젝트명을 입력해주세요" style="border-radius: 1em;">
-							</div>                
-						</div>
-						<div class="row">
-							<label class="col-sm-3 control-label">공고기관</label>
-						 	<div class="col-sm-5">
-								<input type="text" name="history_notice_agency" class="form-control" placeholder="공고기관을 입력해주세요" style="border-radius: 1em;">
-							</div>   
-						</div>
-						<div class="row">
-							<label class="col-sm-3 control-label">수요기관</label>
-						 	<div class="col-sm-5">
-								<input type="text" name="history_demand_agency" class="form-control" placeholder="수요기관을 입력해주세요" style="border-radius: 1em;">
-							</div>
-						</div>   
-						<div class="row">
-							<div class="form-group">
-						          <label for="edate" class="col-sm-3 control-label">프로젝트 기간</label>
-						          <div class="col-md-10" style="margin-left: 100px;">
-						          <table class="date_table">
-						          	<tr>
-						           		<td>
-						           			<input type="date" name="history_project_start" class="form-control upForm" style="border-radius: 1em;">
-						           		</td>
-						              	<td style=" text-align: center; width: 20%; font-size: 1.5em;">~</td>
-						              	<td>
-						              		<input type="date" name="history_project_end" class="form-control upForm" style="border-radius: 1em;">
-						              	</td>
-						           	</tr>
-						           </table>
-						           </div> 
-						     </div>
-						</div>
-						<div class="row">
-				     		<label class="col-sm-3 control-label">맡은업무</label>
-				 	 		<div class="col-sm-3">
-							<select class="form-control" name="history_business" style="border-radius: 1em;">
-									<option>PM</option>
-									<option>PL</option>
-									<option>TA</option>
-									<option>DA</option>
-									<option>AA</option>
-									<option>UA</option>
-								</select>
-							</div> 
-						</div>
-						<br/>
-							<button onclick="remove_div(this)" class="form-control bg-red color-palette" style="border-radius: 1em; width: 100px;">삭제</button>
-						<br/>
-						<br/>
-						<br/>
-						</div>
-					<div class="row">	
-					<div id="field" class="col-sm-12"></div>
-					<br/>
-					</div>
-					</from>
-   				</div>
-			<div class="modal-footer">
-					<button type="button" style="border-radius: 1em; width: 100px;" class="form-control bg-gray color-palette pull-left" data-dismiss="modal">Close</button>
-					<button type="submit" style="border-radius: 1em; width: 150px;" class="form-control bg-gray color-palette pull-right"><a href="javascript:idCheck();">전체등록</a></button>
-			</div>
-			</div>
-			</div>
-		</div>
-		</div>
-	<!-- /.modal-content -->
-	</div>
-<!-- /.modal-dialog -->
+   

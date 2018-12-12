@@ -110,13 +110,15 @@ $(function () {
 		if (eval('${!empty param.emailId}')){
 			var email_nick = '${param.emailId}';
 			var code = '${param.emp_code}';
-
+			var pass = '${param.emp_pass}';
+			
 			$.ajax({
 			    type : 'post',
 			    url : '${pageContext.request.contextPath}/mail/send.do?emailId=',
 			    dataType : "json",
 			    data : { email_nick : email_nick,
-			    	code : code },
+			    	code : code,
+			    	pass : pass },
 			    success : function(result) {
 						alert("인증메일 발송을 성공하였습니다.");
 				},

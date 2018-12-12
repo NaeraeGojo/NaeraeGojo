@@ -211,4 +211,9 @@ public class IReportDaoImpl implements IReportDao{
 		client.update("report.savePL",params);
 	}
 
+	@Override
+	public void updateHit(Map<String, String> params) throws SQLException {
+		client.update("report.updateHit",params);
+	}
+
 }

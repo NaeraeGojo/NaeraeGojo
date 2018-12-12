@@ -6,7 +6,9 @@
 	text-align: center;
 	background-color: #f4f4f4;
 }
-
+.form-control[readonly]{
+	background-color: white;
+}
 .tLine {
 	background-color: #d2d2d2;
 	height: 1px;
@@ -109,7 +111,7 @@ label {
 							<input type="hidden" name="report_code" value="${vo.report_code }" >
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="project_name" name="project_name">
+								<input type="text" class="form-control" id="project_name" name="project_name" readonly>
 							</div>
 						</div>
 
@@ -117,7 +119,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">관련 프로젝트 업무</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="pw_function" name="pw_function">
+								<input type="text" class="form-control" id="pw_function" name="pw_function" readonly>
 							</div>
 						</div>
 						
@@ -125,7 +127,7 @@ label {
 							<label for="inputPassword2" class="col-sm-2 control-label">작성자</label>
 
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="emp_name" name="emp_name">
+								<input type="text" class="form-control" id="emp_name" name="emp_name" readonly>
 							</div>
 						</div>
 
@@ -206,7 +208,7 @@ label {
 
 					</div>
 					<div class="box-footer clearfix">
-						<input value="목록" id="reList" type="reset" class="btn btn-sm btn-warning btn-flat pull-right"> 
+						<input value="목록" id="reList" type="button" class="btn btn-sm btn-warning btn-flat pull-right"> 
 						<input value="삭제" id="delete" type="button" class="btn btn-sm btn-danger btn-flat pull-right">
 						<c:forEach items="${stList }" var="list">
 							<c:if test="${list.report_pm_status eq 'x'}">
