@@ -112,7 +112,7 @@ $(function(){
                             }
                             , success : function(result) {
                             	
-                                boalert('받은 피드백이 삭제되었습니다.');
+                                boalert('보낸 피드백이 삭제되었습니다.');
                                 
                                 setTimeout(function(){
                                     $(location).attr('href', '${pageContext.request.contextPath}/user/feedback/feedbackList2.do');
