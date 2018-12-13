@@ -231,10 +231,10 @@ $(function(){
                     for (var j = 0; j < data.positionList.length; j++) {
                         
                         text += '<option value="'+data.code[i]+'">' + data.positionList[j].position_name + '</option>';
-                    }g
-                    text += '</select>';
-                    text += '</td>';
-                    text += '</tr>';
+                    }
+	                text += '</select>';
+	                text += '</td>';
+	                text += '</tr>';
                 }
                 $('#emp_table').empty().append(text);
                 
