@@ -180,9 +180,9 @@ $(function(){
 					<div class="form-group">
 						<label for="pblanc_board_link" class="col-sm-2 control-label">공고링크</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="공고링크"
+							<input type="text" class="form-control" style="border-radius: 1em; cursor: pointer " placeholder="공고링크"
 							id="pblanc_board_link" name="pblanc_board_link" value="${pblancboardInfo.pblanc_board_link}"
-							>
+							onClick="window.open('${pblancboardInfo.pblanc_board_link}')">
 						</div>
 					</div>
 
