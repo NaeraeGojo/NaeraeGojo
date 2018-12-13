@@ -77,10 +77,16 @@
             FROM ( <include refid="selectAll"/> 
                   <include refid="searchCondition"/> 
                   ORDER BY PROJECT_CODE) A ) B
+                  <dynamic>
+                  <isNotEmpty property="startCount">
+                  
        <![CDATA[            
       WHERE B.RNUM <= #startCount#
        AND  B.RNUM >= #endCount#
       ]]>
+      </isNotEmpty>
+      </dynamic>
+      
       ORDER BY B.RNUM DESC
    </select>   
    
