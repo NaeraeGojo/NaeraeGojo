@@ -55,6 +55,10 @@ $(function(){
 		$('input[name=emailId]').val($('input[name=emp_email1]').val());
 			
 		$('select[name=part_code]').val();
+		
+		var depart = $('#part option:selected').text();
+		var dp = depart.replace(/\s/gi, "");
+		$('input[name=emp_department]').val(dp);
 			
 		alert("수정이 완료되었습니다.");
 		return true;
@@ -340,6 +344,7 @@ $(function(){
 				                  		<div class="col-sm-5">
 											<label name="emp_encpn">${empInfo.emp_encpn.split(' ')[0]}</label>
 											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn.split(' ')[0]}" />
+											<input type="hidden" name="emp_department" />
 			              				</div>
 			              			</div>
 			              			<div class="row">

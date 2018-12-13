@@ -207,6 +207,7 @@
 		      ,PART_CODE     	=	#part_code#
 		      ,EMP_ROLE     	=	#emp_role#
 		      ,EMP_LEVEL     	=	#emp_level#
+		      ,EMP_DEPARTMENT   =	#emp_department#
 		 WHERE EMP_CODE 		=	#emp_code#
 	</update>
 
