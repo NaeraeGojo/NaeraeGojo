@@ -198,16 +198,16 @@ p {
 		<div class="small-box bg-green">
 			<div class="inner">
 				<h3>
-					53<sup style="font-size: 20px">%</sup>
+					53<sup style="font-size: 20px">개</sup>
 				</h3>
 
-				<p>오늘의 업무 진척률</p>
+				<p>오늘의 업무</p>
 			</div>
 			<div class="icon">
 				<i class="ion ion-stats-bars"></i>
 			</div>
-			<a href="#" class="small-box-footer">More info <i
-				class="fa fa-arrow-circle-right"></i></a>
+<!-- 			<a href="#" class="small-box-footer">More info <i -->
+<!-- 				class="fa fa-arrow-circle-right"></i></a> -->
 		</div>
 	</div>
 
