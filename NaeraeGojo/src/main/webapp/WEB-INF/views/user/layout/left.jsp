@@ -10,7 +10,6 @@
       <div class="user-panel">
         <div class="pull-left image">
          <c:if test="${!empty PHOTO.emp_code}">
-          <img src="/sora/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image" style="height: 50px;">
           <img src="/img_user/${PHOTO.user_file_save_name}" class="img-circle" alt="User Image">
          </c:if>
          <c:if test="${empty PHOTO.emp_code}">
