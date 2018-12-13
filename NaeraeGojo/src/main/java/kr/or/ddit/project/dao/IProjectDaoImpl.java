@@ -88,4 +88,10 @@ public class IProjectDaoImpl implements IProjectDao{
 		return (int) client.queryForObject("project.totalNew", params);
 	}
 
+	@Override
+	public String totalCountMain(Map<String, String> params)
+			throws SQLException {
+		return (String) client.queryForObject("project.totalCountMain", params);
+	}
+
 }
