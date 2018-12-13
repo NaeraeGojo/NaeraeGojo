@@ -46,6 +46,22 @@ public class EmpController {
 	@RequestMapping("empList2")
 	public void empList2(){}
 	
+//	@RequestMapping("mailCheck")
+//	public ModelAndView mailCheck(String emp_email, Map<String, String> params, 
+//			EmpVO ev, ModelAndView andView) throws Exception{
+//		params.put("emp_email", emp_email);
+//		ev = (EmpVO) service.empMail(params);
+//		if(ev == null){
+//			andView.addObject("emp_email", emp_email);
+//			andView.setViewName("jsonConvertView");
+//			return andView;
+//		}else{
+//			andView.setViewName("redirect:/user/emp/empForm.do");
+//			return andView;
+//		}
+//	}
+//	
+	
 	@RequestMapping("idCheck")
 	public ModelAndView idCheck(String emp_name, String emp_email, String emp_code,
 			Map<String, String> params, EmpVO empNum, ModelAndView andView) throws Exception{

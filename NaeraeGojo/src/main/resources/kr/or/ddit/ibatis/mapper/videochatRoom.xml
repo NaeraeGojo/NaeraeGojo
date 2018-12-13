@@ -290,6 +290,14 @@
         where chat_pw_code = #chat_pw_code#
     </update>
     
+    
+    <select id="pw_code" parameterClass="map" resultClass="chatpwVO">
+        select chat_pw_code
+        from chat_pw
+        where video_room_code = #video_chat_room_code#
+        and pw_code = #pw_code#
+    </select>
+    
 </sqlMap>
 
 
