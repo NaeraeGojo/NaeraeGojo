@@ -168,8 +168,9 @@ public class MailController {
 			   
 			   
 			   // 메일 보낸 내용
-			   message.setText("회원님의 분실한 비밀번호는 아래와 같습니다. \r\n"
-					   +"비밀번호 : "+pass);
+			   message.setContent("<p><h3>회원님의 분실한 비밀번호는 아래와 같습니다.</h3></p>"
+					   +"<p><h3> 비밀번호 : "+pass +"</h3></p>"
+					   +"<img src=\'https://t1.daumcdn.net/cfile/tistory/998778485A79C4CA0B\'>", "text/html; charset=utf-8");
 			   
 			   System.out.println(pass);
 			   // send the message
