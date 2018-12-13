@@ -26,5 +26,6 @@ public interface IProjectService {
 	public int totalComplete(Map<String, String> params) throws SQLException;
 	public int totalIng(Map<String, String> params) throws SQLException;
 	public int totalNew(Map<String, String> params) throws SQLException;
+	public String totalCountMain(Map<String, String> params) throws SQLException;
 
 }

@@ -148,8 +148,18 @@
       AND A.PROJECT_DELETE = 'n'
       GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, C.EMP_CODE
    </select>
-   
-   
+
+   <select id="totalCountMain" parameterClass="map" resultClass="string">
+	  SELECT 
+         count(NVL(TRUNC(AVG(PW_PERCENT)),0)) AS PW_PERCENT
+      FROM PROJECT A, JOIN B, EMP C , PW
+      WHERE B.EMP_CODE = #emp_code#
+      AND PW.PROJECT_CODE(+) = A.PROJECT_CODE
+      AND B.EMP_CODE = C.EMP_CODE
+      AND B.PROJECT_CODE = A.PROJECT_CODE
+      AND A.PROJECT_DELETE = 'n'
+      GROUP BY A.PROJECT_CODE, A.PROJECT_NAME, A.PROJECT_START, A.PROJECT_END, C.EMP_CODE
+   </select>
    
    <select id="joinList" resultClass="JoinVO" parameterClass="map">
       SELECT B.*

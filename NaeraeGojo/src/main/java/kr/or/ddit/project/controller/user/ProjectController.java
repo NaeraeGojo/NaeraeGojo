@@ -71,6 +71,7 @@ public class ProjectController {
 		params.put("search_keycode", search_keycode);
 		
 		int totalCount = service.totalCountPL(params);
+//		String totalCountMain = service.totalCountMain(params);
 		
 		RolePagingUtil pagingUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request, 4);
 		
@@ -80,6 +81,7 @@ public class ProjectController {
 		List<ProjectVO> projectList = service.projectList(params);
 		andView.addObject("pagingUtil",pagingUtil.getPagingHtmls());
 		andView.addObject("projectList", projectList);
+//		andView.addObject("totalCountMain", totalCountMain);
 		andView.setViewName("user/project/project_manage");
 		return andView;
 	}
@@ -126,6 +128,7 @@ public class ProjectController {
 		andView.addObject("totalNew", totalNew);
 		andView.addObject("project_code", project_code);
 		andView.setViewName("user/project/pro/project_manage_see");
+//		andView.setViewName("jsonConvertView");
 		return andView;
 	}
 	
@@ -278,6 +281,19 @@ public class ProjectController {
 			joinService.insertAdd(jv);
 		}
 		andView.addObject("project_code", project_code);
+		andView.setViewName("jsonConvertView");
+		return andView;
+	}
+	
+	@RequestMapping("totalCntMain")
+	public ModelAndView totalCntMain(ModelAndView andView, Map<String, String> params, HttpSession session) throws Exception{
+		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		
+		String totalCountMain = service.totalCountMain(params);
+		
+		andView.addObject("totalCountMain", totalCountMain); 
+
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
