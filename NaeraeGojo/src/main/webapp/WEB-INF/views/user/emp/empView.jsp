@@ -282,7 +282,7 @@ $(function () {
 			                    <td>${list.history_project_name }</td>
 			                    <td>${list.history_notice_agency }</td>
 			                    <td>${list.history_demand_agency }</td>
-			                    <td>${list.history_project_start }</td>
+			                    <td>${list.history_project_start.split(' ')[0] } ~ ${list.history_project_end.split(' ')[0]}</td>
 			                    <td>${list.history_business }</td>
 			                  </tr>
 			                  	</c:forEach>

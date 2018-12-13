@@ -67,17 +67,17 @@
 
             <li><a href="${pageContext.request.contextPath}/user/project/project_manage.do"><i class="fa fa-circle-o"></i>프로젝트 관리</a></li>
             
-            <c:if test="${LOGIN_EMPINFO.emp_role eq 'PL'}">
-            <li><a href="${pageContext.request.contextPath}/user/report/report_listPL.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li>
-            </c:if> 
+<%--             <c:if test="${LOGIN_EMPINFO.emp_role eq 'PL'}"> --%>
+<%--             <li><a href="${pageContext.request.contextPath}/user/report/report_listPL.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li> --%>
+<%--             </c:if>  --%>
             
-            <c:if test="${LOGIN_EMPINFO.emp_role eq 'PM'}">
-            <li><a href="${pageContext.request.contextPath}/user/report/report_listPM.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li>
-            </c:if> 
+<%--             <c:if test="${LOGIN_EMPINFO.emp_role eq 'PM'}"> --%>
+<%--             <li><a href="${pageContext.request.contextPath}/user/report/report_listPM.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li> --%>
+<%--             </c:if>  --%>
             
-            <c:if test="${LOGIN_EMPINFO.emp_role eq 'DEP'}">
-            <li><a href="${pageContext.request.contextPath}/user/report/report_listDev.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li>
-            </c:if> 
+<%--             <c:if test="${LOGIN_EMPINFO.emp_role eq 'DEP'}"> --%>
+<%--             <li><a href="${pageContext.request.contextPath}/user/report/report_listDev.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li> --%>
+<%--             </c:if>  --%>
 
           </ul>
         </li>
@@ -121,8 +121,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="${pageContext.request.contextPath}/user/pblancboard/pblancboardList.do"><i class="fa fa-circle-o"></i>공고게시판</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/inqryboard/inqryList.do"><i class="fa fa-circle-o"></i>문의게시판</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/noticeAll/notice_allList.do"><i class="fa fa-circle-o"></i>공지사항 게시판</a></li>
+<%--             <li><a href="${pageContext.request.contextPath}/user/inqryboard/inqryList.do"><i class="fa fa-circle-o"></i>문의게시판</a></li> --%>
+<%--             <li><a href="${pageContext.request.contextPath}/user/noticeAll/notice_allList.do"><i class="fa fa-circle-o"></i>공지사항 게시판</a></li> --%>
           </ul>
         </li>
         

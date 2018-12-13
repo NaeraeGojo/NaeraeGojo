@@ -55,6 +55,10 @@ $(function(){
 		$('input[name=emailId]').val($('input[name=emp_email1]').val());
 			
 		$('select[name=part_code]').val();
+		
+		var depart = $('#part option:selected').text();
+		var dp = depart.replace(/\s/gi, "");
+		$('input[name=emp_department]').val(dp);
 			
 		alert("수정이 완료되었습니다.");
 		return true;
@@ -304,7 +308,7 @@ $(function(){
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
-				                  			<select name="part_code" class="form-control" style="border-radius: 1em;">
+				                  			<select name="part_code" id="part" class="form-control" style="border-radius: 1em;">
 				                  				<c:forEach items="${partList }" var="list">
 						                  			<option value="${list.part_code}" <c:if test = "${empInfo.part_code eq list.part_code}">selected </c:if>>${list.part_name }</option>
 				                  				</c:forEach>
@@ -340,6 +344,7 @@ $(function(){
 				                  		<div class="col-sm-5">
 											<label name="emp_encpn">${empInfo.emp_encpn.split(' ')[0]}</label>
 											<input type="hidden" name="emp_encpn" value="${empInfo.emp_encpn.split(' ')[0]}" />
+											<input type="hidden" name="emp_department" />
 			              				</div>
 			              			</div>
 			              			<div class="row">

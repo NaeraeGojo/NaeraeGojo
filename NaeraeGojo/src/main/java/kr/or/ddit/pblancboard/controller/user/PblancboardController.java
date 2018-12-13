@@ -125,7 +125,7 @@ public class PblancboardController {
 		return "redirect:/user/pblancboard/pblancboardList.do";
 	}
 	
-//	@Scheduled(cron="* * * * * *")
+//	@Scheduled(cron="5 * * * * *")
 	public void crawling() throws Exception{
 		String KEY_WORD2 = "정부청사";   // 검색하고 싶은 단어.  영어로
 		// 한글은 더 해야함

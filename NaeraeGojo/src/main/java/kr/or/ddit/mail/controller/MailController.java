@@ -83,13 +83,18 @@ public class MailController {
          
          
          // 메일 보낸 내용
-         message.setContent("<h2>프로토스에 회원가입하신 여러분 반갑습니다~</h2>"+
-         		"<img src=\"https://cdn.pixabay.com/photo/2016/10/09/08/32/digital-marketing-1725340_960_720.jpg\">", "text/html");
-         message.setText("회원가입을 하려면 해당 링크를 클릭해주세요~ \r\n"
-        		 +"인증코드 : http://localhost/NaeraeGojo/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick
-        		 +"\r\n 사원번호 : "+codeNum 
-        		 + "\r\n 비밀번호 : "+Pass);
-         
+         message.setContent("<h2>회원가입을 완료하려면 아래 해당 로그인 페이지를 클릭해주세요~</h2><br/><br/>"
+        		+ "<a href=\'http://localhost/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick+"\'>"
+        				+ "<h3>http://localhost/user/join/loginForm.do</h3></a>"
+        		 +"<p> <h3>사원번호 : "+codeNum +"</h3></p>" 
+        		 +"<p> <h3>비밀번호 : "+Pass +"</h3></p>"
+        		 +"<img src=\'https://t1.daumcdn.net/cfile/tistory/998778485A79C4CA0B\'>", "text/html; charset=utf-8");
+
+         //         message.setText("회원가입을 하려면 해당 링크를 클릭해주세요~ \r\n"
+//        		 +"인증코드 : http://localhost/NaeraeGojo/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick
+//        		 +"\r\n 사원번호 : "+codeNum 
+//        		 + "\r\n 비밀번호 : "+Pass);
+//         
          System.out.println(code);
          // send the message
          Transport.send(message);
@@ -163,8 +168,9 @@ public class MailController {
 			   
 			   
 			   // 메일 보낸 내용
-			   message.setText("회원님의 분실한 비밀번호는 아래와 같습니다. \r\n"
-					   +"비밀번호 : "+pass);
+			   message.setContent("<p><h3>회원님의 분실한 비밀번호는 아래와 같습니다.</h3></p>"
+					   +"<p><h3> 비밀번호 : "+pass +"</h3></p>"
+					   +"<img src=\'https://t1.daumcdn.net/cfile/tistory/998778485A79C4CA0B\'>", "text/html; charset=utf-8");
 			   
 			   System.out.println(pass);
 			   // send the message

@@ -232,9 +232,9 @@ $(function(){
                         
                         text += '<option value="'+data.code[i]+'">' + data.positionList[j].position_name + '</option>';
                     }
-                    text += '</select>';
-                    text += '</td>';
-                    text += '</tr>';
+	                text += '</select>';
+	                text += '</td>';
+	                text += '</tr>';
                 }
                 $('#emp_table').empty().append(text);
                 
@@ -321,6 +321,8 @@ $(function(){
 
 
 function deleteEmp(join_code, emp_code) {
+	
+// 	if()
     if('${LOGIN_EMPINFO.emp_code}' == emp_code){
     	alert('본인은 삭제할 수 없습니다.');
     	return false;
@@ -369,26 +371,26 @@ function deleteEmp(join_code, emp_code) {
 							<div class="box-header with-border">
 								<ul class="nav nav-tabs">
 									<li class="active"><a href="#tab_2" data-toggle="tab"><font size="2">진행 현황</font></a></li>
-									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
+<!-- 									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li> -->
 								</ul>
 							</div>
 							
 							<div class="tab-content">
-								<div  class="tab-pane box-body"  id="tab_1">
-									<div class="table-responsive">
-										<table id="modal1" class="table no-margin table-hover">
-											<thead>
-												<tr>
-													<th>No.</th>
-													<th>업무</th>
-													<th>업무</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
+<!-- 								<div  class="tab-pane box-body"  id="tab_1"> -->
+<!-- 									<div class="table-responsive"> -->
+<!-- 										<table id="modal1" class="table no-margin table-hover"> -->
+<!-- 											<thead> -->
+<!-- 												<tr> -->
+<!-- 													<th>No.</th> -->
+<!-- 													<th>업무</th> -->
+<!-- 													<th>업무</th> -->
+<!-- 												</tr> -->
+<!-- 											</thead> -->
+<!-- 											<tbody> -->
+<!-- 											</tbody> -->
+<!-- 										</table> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 								<div class="tab-pane active box-body" id="tab_2">
 									<div class="row">
@@ -630,7 +632,6 @@ function deleteEmp(join_code, emp_code) {
             </div>
         </div>
         <div class="modal-footer" style="padding-bottom : 5px !important;  padding-top : 5px !important;">
-          <button type="back" class="btn btn-default btn-back">뒤로가기</button>
           <input type="button" id="insert1" value="등록" class="btn btn-primary ">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
