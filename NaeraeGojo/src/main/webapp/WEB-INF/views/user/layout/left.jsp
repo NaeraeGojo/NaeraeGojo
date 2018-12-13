@@ -67,9 +67,9 @@
 
             <li><a href="${pageContext.request.contextPath}/user/project/project_manage.do"><i class="fa fa-circle-o"></i>프로젝트 관리</a></li>
             
-            <c:if test="${LOGIN_EMPINFO.emp_role eq 'PL'}">
-            <li><a href="${pageContext.request.contextPath}/user/report/report_listPL.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li>
-            </c:if> 
+<%--             <c:if test="${LOGIN_EMPINFO.emp_role eq 'PL'}"> --%>
+<%--             <li><a href="${pageContext.request.contextPath}/user/report/report_listPL.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li> --%>
+<%--             </c:if>  --%>
             
             <c:if test="${LOGIN_EMPINFO.emp_role eq 'PM'}">
             <li><a href="${pageContext.request.contextPath}/user/report/report_listPM.do"><i class="fa fa-circle-o"></i>보고서 관리</a></li>

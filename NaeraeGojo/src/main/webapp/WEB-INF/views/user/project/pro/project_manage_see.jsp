@@ -230,8 +230,8 @@ $(function(){
                     text += '<option >선택하여주세요</option>';
                     for (var j = 0; j < data.positionList.length; j++) {
                         
-                        text += '<option value="'+data.code[i]+'">' + data.positionList[j].part_name + '</option>';
-                    }
+                        text += '<option value="'+data.code[i]+'">' + data.positionList[j].position_name + '</option>';
+                    }g
                     text += '</select>';
                     text += '</td>';
                     text += '</tr>';
@@ -371,26 +371,26 @@ function deleteEmp(join_code, emp_code) {
 							<div class="box-header with-border">
 								<ul class="nav nav-tabs">
 									<li class="active"><a href="#tab_2" data-toggle="tab"><font size="2">진행 현황</font></a></li>
-									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li>
+<!-- 									<li ><a href="#tab_1" data-toggle="tab"><font size="2">업무 목록</font></a></li> -->
 								</ul>
 							</div>
 							
 							<div class="tab-content">
-								<div  class="tab-pane box-body"  id="tab_1">
-									<div class="table-responsive">
-										<table id="modal1" class="table no-margin table-hover">
-											<thead>
-												<tr>
-													<th>No.</th>
-													<th>업무</th>
-													<th>업무</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
+<!-- 								<div  class="tab-pane box-body"  id="tab_1"> -->
+<!-- 									<div class="table-responsive"> -->
+<!-- 										<table id="modal1" class="table no-margin table-hover"> -->
+<!-- 											<thead> -->
+<!-- 												<tr> -->
+<!-- 													<th>No.</th> -->
+<!-- 													<th>업무</th> -->
+<!-- 													<th>업무</th> -->
+<!-- 												</tr> -->
+<!-- 											</thead> -->
+<!-- 											<tbody> -->
+<!-- 											</tbody> -->
+<!-- 										</table> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 								<div class="tab-pane active box-body" id="tab_2">
 									<div class="row">

@@ -78,11 +78,11 @@ $(function(){
 								</c:if>
 
 								<h2 title="${projectList.project_name }">
-									<c:if test="${ projectList.project_name.length() <= 12}">
+									<c:if test="${ projectList.project_name.length() <= 16}">
 				              		${projectList.project_name }
 				              	</c:if>
-									<c:if test="${ projectList.project_name.length() > 12}">
-				              		${fn:substring(projectList.project_name,0,11) }...
+									<c:if test="${ projectList.project_name.length() > 16}">
+				              		${fn:substring(projectList.project_name,0,15) }...
 				              	</c:if>
 								</h2>
 							</a>
