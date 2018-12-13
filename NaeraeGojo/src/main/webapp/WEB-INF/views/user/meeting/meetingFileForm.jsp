@@ -86,7 +86,7 @@ label {
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">관련업무</label>
                   <div class="col-sm-8" >
-                    <button type="button" id="modalBtn" class="btn btn-block btn-info pull-right" >관련업무 추가</button>
+                    <button type="button" id="modalBtn" class="btn btn-info pull-right" >관련업무 추가</button>
                     <div id="ttt" style="border-radius: 1em;" >
 <!--                         <input type="hidden" class="form-control" id ="pw_code" name="pw_code"> -->
                     </div>
@@ -192,9 +192,15 @@ $(function(){
 //                           + '<img id='+ i +' src="${pageContext.request.contextPath }/images/icons/check1.png">'
 //                           +'<img id=h'+ i +'  onclick="onoff('+ i +')" src="${pageContext.request.contextPath }/images/icons/check2.png"></td>'
 //                           +'<td id="pw_function" width="200" height="50"><input type="hidden" name="pw_code" value="'+modalPro.modalPro[i].pw_code+'">'+ modalPro.modalPro[i].pw_function +'</td></tr>');
-                         $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label>');
+                         $('#ff').append('<label><input type="checkbox" name="chkbox" class="flat-red" value="'+ modalPro.modalPro[i].pw_code +'">'+ modalPro.modalPro[i].pw_function +'</label><br>');
 //                          $('#ff').append('<label><input type="checkbox" class="flat-red"></label>');
+                         $('input[type="checkbox"].flat-red').iCheck({
+                             checkboxClass: 'icheckbox_flat-blue'
+                           });
                      }
+                     $('input[type="checkbox"].flat-red').iCheck({
+                         checkboxClass: 'icheckbox_flat-blue'
+                       });
                 }
         });
     });

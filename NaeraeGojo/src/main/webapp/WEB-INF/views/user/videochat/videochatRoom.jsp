@@ -59,9 +59,9 @@ ul, .collapse {
     margin-left: 20px;
 }
 
-#firstDiv {
-    border-right: 1px solid gray;
-}
+/* #firstDiv { */
+/*     border-right: 1px solid gray; */
+/* } */
 </style>
 
 
