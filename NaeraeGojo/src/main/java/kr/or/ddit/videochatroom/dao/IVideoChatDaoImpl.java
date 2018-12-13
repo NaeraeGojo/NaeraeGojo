@@ -118,4 +118,9 @@ public class IVideoChatDaoImpl implements IVideoChatDao{
 		client.update("videoRoom.chat_pwDelete", chat_pw_code);
 	}
 
+	@Override
+	public List<ChatPwVO> pw_code(Map<String, String> params) throws SQLException {
+		return  client.queryForList("videoRoom.pw_code", params);
+	}
+
 }

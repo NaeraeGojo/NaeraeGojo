@@ -50,6 +50,8 @@ public interface IVideoChatService {
 	public List<ChatPwVO> getchatPwLsit(Map<String, String> params) throws SQLException;
 
 	public void chat_pwDelete(String chat_pw_code) throws SQLException;
+
+	public List<ChatPwVO> pw_code(Map<String, String> params) throws SQLException;
 	 
 
 	
