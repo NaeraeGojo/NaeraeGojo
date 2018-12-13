@@ -42,12 +42,13 @@
           ,B.EMP_NAME
           ,A.JOIN_CODE
           , B.EMP_DEPARTMENT
-          , A.POSITION_NAME
-      FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E
+          , F.PART_NAME
+      FROM JOIN A, EMP B, RQPPS C, SUGGEST D, PROJECT E, PART F
         WHERE A.EMP_CODE = B.EMP_CODE
         AND C.RQPPS_CODE = D.RQPPS_CODE
         AND D.SUGGEST_CODE = E.SUGGEST_CODE
         AND A.PROJECT_CODE = E.PROJECT_CODE
+        AND B.PART_CODE = F.PART_CODE
         AND A.JOIN_DELETE = 'n'
         AND A.PROJECT_CODE = #project_code#
    </sql>
