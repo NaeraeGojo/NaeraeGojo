@@ -66,6 +66,10 @@ $(function() {
 		var nickname = nick.replace(/\s/gi, "");
 		$('input[name=emp_nick]').val(nickname);
 		
+		var depart = $('#part option:selected').text();
+		var dp = depart.replace(/\s/gi, "");
+		$('input[name=emp_department]').val(dp);
+		
 		var email00 = $('input[name=emp_email]').val();
 		
 		$.ajax({
@@ -314,6 +318,7 @@ $(function () {
 			              				</div>
 			              			</div>
 			              				<input type="hidden" name="emp_delete" value="w" />
+			              				<input type="hidden" name="emp_department" />
 								</div>
                				</div>
                			</div>

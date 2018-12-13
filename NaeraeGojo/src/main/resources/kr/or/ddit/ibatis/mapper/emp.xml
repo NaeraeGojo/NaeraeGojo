@@ -162,7 +162,7 @@
 	<!-- 직원등록 -->
 	<insert id="insertEmpInfo" parameterClass="empVO">
 		<selectKey keyProperty="emp_code" resultClass="string">
-         select emp_seq.nextval from dual
+         select to_char(sysdate, 'yyyymm')|| emp_seq.nextval from dual
       	</selectKey>
 		INSERT INTO EMP(EMP_CODE
 						,EMP_PASS
@@ -177,8 +177,9 @@
 						,EMP_ARMY
 						,EMP_PHONE
 						,EMP_ROLE
-						,PART_CODE)		
-		  	     VALUES( to_char(sysdate, 'yyyymm')||#emp_code#
+						,PART_CODE
+						,EMP_DEPARTMENT)		
+		  	     VALUES(#emp_code#
 						,#emp_pass#
 						,#emp_name#
 						,#emp_nick#
@@ -191,7 +192,8 @@
 						,#emp_army#
 						,#emp_phone#
 						,#emp_role#
-						,#part_code#)
+						,#part_code#
+						,#emp_department#)
 	</insert>
 	
 	<update id="updateEmpInfo" parameterClass="empVO">

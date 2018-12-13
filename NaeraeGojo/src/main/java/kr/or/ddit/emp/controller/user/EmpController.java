@@ -248,9 +248,12 @@ public class EmpController {
 //			session.setAttribute("PHOTO", ufv);
 		}
 		ufv = userServ.userFileInfo(params);
-		session.setAttribute("PHOTO", ufv);
 		empInfo = service.empInfo(params);
-		session.setAttribute("LOGIN_EMPINFO", empInfo);
+		
+      if(session.getAttribute("LOGIN_EMPINFO").equals(empInfo)){
+        session.setAttribute("PHOTO", ufv);
+        session.setAttribute("LOGIN_EMPINFO", empInfo);
+    }
 		
 		String message = URLEncoder.encode("수정이 완료되었습니다.", "UTF-8");
 		RedirectView rv = new RedirectView("empView.do?message="+message+ "&emp_code="+empInfo.getEmp_code());
