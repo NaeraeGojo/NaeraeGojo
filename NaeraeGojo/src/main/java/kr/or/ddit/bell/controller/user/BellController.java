@@ -146,8 +146,6 @@ public class BellController {
 		andView.addObject("projectAlarmCnt", projectAlarmCnt);
 		andView.addObject("issueDamdangCnt", issueDamdangCnt);
 		
-		System.out.println(listCnt);
-
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}

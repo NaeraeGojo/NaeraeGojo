@@ -112,7 +112,7 @@ $(function(){
 								<table class="table no-margin table-hover" id="issue">
 									<thead>
 										<tr id="trtr">
-											<th scope="col" width="5%" tex>No.</th>
+											<th scope="col" width="5%">No.</th>
 											<th scope="col" width="30%">이슈명</th>
 											<th scope="col" width="10%">발생일자</th>
 											<th scope="col" width="10%">이슈등급</th>

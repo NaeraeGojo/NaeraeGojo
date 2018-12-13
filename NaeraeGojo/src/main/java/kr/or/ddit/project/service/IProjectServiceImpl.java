@@ -128,4 +128,10 @@ public class IProjectServiceImpl implements IProjectService{
 		return totalNew;
 	}
 
+	@Override
+	public String totalCountMain(Map<String, String> params)
+			throws SQLException {
+		return dao.totalCountMain(params);
+	}
+
 }
