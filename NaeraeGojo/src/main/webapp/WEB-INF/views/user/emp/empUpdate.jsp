@@ -308,7 +308,7 @@ $(function(){
 		                			<div class="row">
 				                		<label class="col-sm-3 control-label" style="margin-top: 3px;">부서</label>
 				                  		<div class="col-sm-3">
-				                  			<select name="part_code" class="form-control" style="border-radius: 1em;">
+				                  			<select name="part_code" id="part" class="form-control" style="border-radius: 1em;">
 				                  				<c:forEach items="${partList }" var="list">
 						                  			<option value="${list.part_code}" <c:if test = "${empInfo.part_code eq list.part_code}">selected </c:if>>${list.part_name }</option>
 				                  				</c:forEach>
