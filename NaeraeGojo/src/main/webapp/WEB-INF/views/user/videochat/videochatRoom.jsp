@@ -204,13 +204,23 @@ $(function(){
 	});	
 	$('#addPw').click(function(){
 		
+// 		$('#parent li .function').each(function(i){
+// 			if(this.text == $("#pwSelect option:selected").val()){
+// 				alert('기존 업무가 등록되어있습니다.');
+// 	            return false;
+				
+// 			}
+// 		})
+		
+// 		if($('#parent li .function').text() == $("#pwSelect option:selected").val()){
+// 		}
+
+		
 		if($("#pwSelect option:selected").val() == null ||$("#pwSelect option:selected").val()=='' 
 			  ||$("#pwcSelect option:selected").val()=='대분류' || $("#pwSelect option:selected").val() =='관련 업무'){
 			alert('관련 업무를 선택하여 주세요');
 			 return false;
 		}
-		
-		
 		
 		if($("select option:selected").val() !=null){
 			
@@ -226,19 +236,26 @@ $(function(){
 				 , error : function(request, status, error) {
 					  alert ("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				 } , success : function(result) {
-					 var data = '';
-	                 data += '<ul class="nav nav-stacked" id="parent">';
-	                 for (var i = 0; i < result.chatPwList.length; i++) {
-	                     data += '<li class="panel"> <a data-toggle="collapse" data-parent="#parent" href="#'+result.chatPwList[i].chat_pw_code+'"><strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br>';
-	                     data += ' <label class="text-muted" >'; 
-	                     data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
-	                     data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
-	                     data +=  '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : ' + result.chatPwList[i].pw_content + ' </div>';
-	                     data +=  '</li>';
-	                 }
-	                 data +=  ' </ul>';    
-				   	$('#pwdiv').empty().append(data);
-					
+					 
+					 if(result.chatPwList == "있다"){
+						 alert("동일한 업무를 추가할 수 없습니다.");
+						 return false;
+					 } else if(result.chatPwList[0].chat_pw_code !=null){
+						 var data = '';
+		                 data += '<ul class="nav nav-stacked" id="parent">';
+		                 for (var i = 0; i < result.chatPwList.length; i++) {
+		                     data += '<li class="panel"> <a data-toggle="collapse" data-parent="#parent" href="#'+result.chatPwList[i].chat_pw_code+'"><strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br>';
+		                     data += ' <label class="text-muted function" >'; 
+		                     data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
+		                     data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
+		                     data +=  '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : ' + result.chatPwList[i].pw_content + ' </div>';
+		                     data +=  '</li>';
+		                 }
+		                 data +=  ' </ul>';    
+					   	$('#pwdiv').empty().append(data);
+						 
+					 }
+					 
 				 }
 			});
 		}
@@ -260,7 +277,7 @@ $(function(){
                 data += '<ul class="nav nav-stacked" id="parent">';
                 for (var i = 0; i < result.chatPwList.length; i++) {
                     data += '<li class="panel"> <a data-toggle="collapse" data-parent="#parent" href="#'+result.chatPwList[i].chat_pw_code+'"><strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br>';
-                    data += ' <label class="text-muted" >'; 
+                    data += ' <label class="text-muted" function>'; 
                     data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
                     data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
                     data += '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : '+ result.chatPwList[i].pw_content + ' </div>';
@@ -299,7 +316,7 @@ $(function(){
                  data += '<ul class="nav nav-stacked" id="parent">';
                  for (var i = 0; i < result.chatPwList.length; i++) {
                      data += '<li class="panel"> <a data-toggle="collapse" data-parent="#parent" href="#'+result.chatPwList[i].chat_pw_code+'"><strong><i class="fa fa-check-circle margin-r-5"></i>'+ result.chatPwList[i].pwc_name+'</strong><br>';
-                     data += ' <label class="text-muted" >'; 
+                     data += ' <label class="text-muted" function>'; 
                      data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
                      data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
                      data += '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : '+ result.chatPwList[i].pw_content + ' </div>';
@@ -371,7 +388,6 @@ $(function(){
 				        </div>
 				        <div id="scroll">
 				                 <div class="box-body" id="pwdiv">
-					
 					            </div>
 				        
 				        

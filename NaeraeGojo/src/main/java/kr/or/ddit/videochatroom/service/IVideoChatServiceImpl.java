@@ -135,4 +135,9 @@ public class IVideoChatServiceImpl implements IVideoChatService{
 		dao.chat_pwDelete(chat_pw_code);
 	}
 
+	@Override
+	public List<ChatPwVO> pw_code(Map<String, String> params) throws SQLException {
+		return dao.pw_code(params);
+	}
+
 }
