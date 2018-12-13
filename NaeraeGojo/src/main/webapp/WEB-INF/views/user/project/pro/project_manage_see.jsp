@@ -366,7 +366,7 @@ function deleteEmp(join_code, emp_code) {
 			<div class="row">
 				<div class="col-md-12">
 					<div class="nav-tabs-custom">
-						<div class="box box-2team" style="height:480px">
+						<div class="box box-2team" style="height:100%">
 							
 							<div class="box-header with-border">
 								<ul class="nav nav-tabs">

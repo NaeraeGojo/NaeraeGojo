@@ -15,14 +15,14 @@
 #localVideo {
     width:89%; 
     height : 250px;
-    border: 1px solid #dcdcdc;
+    border: 5px double #8080804d;
     margin-left: 10%;
 }
 #remoteVideo {
 
     width: 115%;
     height: 550px;
-    border: 1px solid #dcdcdc;
+    border: 5px double #8080804d;
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 5%;
@@ -377,7 +377,7 @@ $(function(){
                            <video id="localVideo" autoplay></video><br/>   <!--  로컬 -->
                         </div>
                     <br/>    
-				    <div class="dd box box-primary" id="secondDiv" style="width: 90%; float:right; height: 400px !important; " >
+				    <div class="dd box box-primary" id="secondDiv" style="width: 90%; float:right; height: 400px !important; border-bottom: 1px solid #26556e99;border-left: 1px solid #26556e99;border-right: 1px solid #26556e99;" >
 				        <div style="text-align: center;">  
 				             <label></label><br/>
 				            <b style="font-size: 1.8em;">관련 업무 확인하기</b>
