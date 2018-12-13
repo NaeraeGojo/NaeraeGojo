@@ -295,13 +295,15 @@ p {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>하나은행 디비구축</td>
-								<td>하나은행</td>
-								<td>0%</td>
-								<td>2018-12-27</td>
-							</tr>
+							<c:forEach items="${projectList}" var="projectList">
+								<tr>
+									<td><input type="hidden" value="${projectList.project_code }">${projectList.rnum }</td>
+									<td>${projectList.project_name }</td>
+									<td>${projectList.rqpps_notice_agency }</td>
+									<td>${projectList.pw_percent }</td>
+									<td>${projectList.project_end }</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
