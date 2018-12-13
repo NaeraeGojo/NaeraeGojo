@@ -632,7 +632,6 @@ function deleteEmp(join_code, emp_code) {
             </div>
         </div>
         <div class="modal-footer" style="padding-bottom : 5px !important;  padding-top : 5px !important;">
-          <button type="back" class="btn btn-default btn-back">뒤로가기</button>
           <input type="button" id="insert1" value="등록" class="btn btn-primary ">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
