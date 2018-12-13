@@ -60,6 +60,10 @@ public class IEmpDaoImpl implements IEmpDao{
 		return (EmpVO) client.queryForObject("emp.empNum", params);
 		
 	}
+	@Override
+	public EmpVO empMail(Map<String, String> params) throws SQLException {
+		return (EmpVO) client.queryForObject("emp.empEmail", params);
+	}
 
 	@Override
 	public EmpVO empPass(Map<String, String> params) throws SQLException {
@@ -92,10 +96,6 @@ public class IEmpDaoImpl implements IEmpDao{
 		}
 	}
 
-	@Override
-	public List<EmpVO> empMail(Map<String, String> params) throws SQLException {
-		return client.queryForList("emp.empMail", params);
-	}
 
 
 //	@Override

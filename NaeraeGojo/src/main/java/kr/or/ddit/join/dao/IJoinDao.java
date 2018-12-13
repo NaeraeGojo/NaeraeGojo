@@ -21,7 +21,7 @@ public interface IJoinDao {
 	public void deleteJoinInfo(Map<String,String> params) throws SQLException;
 	public void updateJoinInfo(JoinVO joinInfo) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
-	public List<RqppsVO> rqppsNm() throws SQLException;
+	public List<RqppsVO> rqppsNm(Map<String, String> params) throws SQLException;
 	public MpJoinVO mpList(Map<String, String> params) throws SQLException;
 	public List<EmpVO> empList1(Map<String, String> params) throws SQLException;
 	public List<JoinVO> joinFinalList(Map<String, String> params) throws SQLException;

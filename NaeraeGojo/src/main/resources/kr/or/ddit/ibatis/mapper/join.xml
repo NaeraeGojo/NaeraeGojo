@@ -142,9 +142,15 @@
 		order by b.rnum desc
 	</select>
 	
-	<select id="rqppsNm" resultClass="rqppsVO">
-		select rqpps_name,rqpps_code from rqpps
+	<select id="rqppsNm" parameterClass="map" resultClass="rqppsVO">
+		select b.rqpps_name,a.rqpps_code 
+			from join a ,rqpps b, emp c
+			where a.rqpps_code = b.rqpps_code
+			and   a.emp_code = c.emp_code
+			and   b.rqpps_now_condition = 1
+			and   a.emp_code = #emp_code#
 	</select>
+	
 	<select id="empList1" parameterClass="map" resultClass="empVO">
 		 SELECT EMP_NAME, EMP_LEVEL, EMP_CODE 
 		 FROM EMP
