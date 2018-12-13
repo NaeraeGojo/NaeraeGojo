@@ -24,4 +24,8 @@ public interface IProjectWorkService {
 
 	public List<EmpVO> getEmpList(Map<String, String> params) throws Exception;
 
+	public List<Map<String, String>> getAllMyPw(Map<String, String> params) throws Exception;
+
+	public String getAllPercent(Map<String, String> params) throws Exception;
+
 }

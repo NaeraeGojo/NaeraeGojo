@@ -164,6 +164,29 @@
 	        and b.project_code= #project_code#
     </select>
 	
+	<select id="getAllMyPw" parameterClass="map" resultClass="java.util.HashMap">
+		select pw.pw_function
+				, pw.pw_code 
+				, pw.pw_percent 
+				, to_char(pw.pw_eet,'yyyy-MM-dd') as pw_eet 
+		, project.project_name
+		    from pw , project
+		    where pw_damdang = #pw_damdang#
+		    and pw.pw_delete = 'n'
+		    and pw.project_code = project.project_code
+		    and pw_est &lt;= sysdate
+		    and pw_eet &gt;= sysdate
+	</select>
+	
+	
+	<select id="getAllPercent" parameterClass="map" resultClass="string">
+		select nvl(trunc(avg(pw_percent)),0) as allp
+			from pw
+	        where pw_damdang = #pw_damdang#
+	        and pw_delete = 'n'
+	</select>
+	
+	
 </sqlMap>
 
 
