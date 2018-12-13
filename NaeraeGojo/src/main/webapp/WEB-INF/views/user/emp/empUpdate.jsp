@@ -52,6 +52,7 @@ $(function(){
 			return false;
 		}
 		$('input[name=emp_email]').val(email);
+		$('input[name=emp_major]').val();
 		$('input[name=emailId]').val($('input[name=emp_email1]').val());
 			
 		$('select[name=part_code]').val();

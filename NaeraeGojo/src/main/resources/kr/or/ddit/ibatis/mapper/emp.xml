@@ -206,6 +206,7 @@
             ,EMP_EMAIL        =   #emp_email#
             ,PART_CODE        =   #part_code#
             ,EMP_ROLE        =   #emp_role#
+            ,EMP_MAJOR        =   #emp_major#
             ,EMP_LEVEL        =   #emp_level#
             ,EMP_DEPARTMENT   =   #emp_department#
        WHERE EMP_CODE       =   #emp_code#
