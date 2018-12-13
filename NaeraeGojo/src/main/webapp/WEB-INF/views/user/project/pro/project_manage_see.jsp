@@ -321,6 +321,8 @@ $(function(){
 
 
 function deleteEmp(join_code, emp_code) {
+	
+// 	if()
     if('${LOGIN_EMPINFO.emp_code}' == emp_code){
     	alert('본인은 삭제할 수 없습니다.');
     	return false;
@@ -339,7 +341,7 @@ function deleteEmp(join_code, emp_code) {
 	        	for (var i = 0; i < data.joinList.length; i++) {
 	        		text +='<li>';
 	        		text +='<span class="handle"> <i class="fa fa-user"></i></span>';
-	        		text +='<span class="text"><input type="hidden" name="emp_code" value="'+data.joinList[i].emp_code+'">['+data.joinList[i].emp_department + '] &ensp;' + data.joinList[i].emp_name+ '('+data.joinList[i].part_name +')</span>';
+	        		text +='<span class="text"><input type="hidden" name="emp_code" value="'+data.joinList[i].emp_code+'">['+data.joinList[i].emp_department + '] &ensp;' + data.joinList[i].emp_name+ '('+data.joinList[i].position_name +')</span>';
 	        		text +='<div class="tools"><i class="fa fa-remove"  onclick="deleteEmp('+data.joinList[i].join_code +','+data.joinList[i].emp_code+')"></i></div>';
 	        		text +='</li>';
 				}
@@ -484,7 +486,7 @@ function deleteEmp(join_code, emp_code) {
 						<c:forEach items="${joinList}" var="joinList">
 						<li>
 							<span class="handle"> <i class="fa fa-user"></i></span>
-							<span class="text"><input type="hidden" name="emp_code" value="${joinList.emp_code }">[${joinList.emp_department }] &ensp;${joinList.emp_name }(${joinList.part_name })</span> 
+							<span class="text"><input type="hidden" name="emp_code" value="${joinList.emp_code }">[${joinList.emp_department }] &ensp;${joinList.emp_name }(${joinList.position_name })</span> 
 							<div class="tools"><i class="fa fa-remove"  onclick="deleteEmp(${joinList.join_code },${joinList.emp_code })"></i></div>
 						</li>
 						</c:forEach>
