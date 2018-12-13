@@ -173,10 +173,12 @@
             select video_chat_join_seq.nextval from dual
         </selectKey>   
         insert into video_chat_join (video_chat_join_code
+                                    , video_chat_join_intime
 								   , emp_code
 								   , video_chat_room_code
                                      )
                               values (#video_chat_join_code#
+                                    , sysdate
                                    , #emp_code#
                                    , #video_chat_room_code#
                                    
