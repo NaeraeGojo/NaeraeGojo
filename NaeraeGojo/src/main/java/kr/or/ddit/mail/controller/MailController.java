@@ -84,8 +84,8 @@ public class MailController {
          
          // 메일 보낸 내용
          message.setContent("<h2>회원가입을 완료하려면 아래 해당 로그인 페이지를 클릭해주세요~</h2><br/><br/>"
-        		+ "<a href=\'http://localhost/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick+"\'>"
-        				+ "<h3>http://localhost/user/join/loginForm.do</h3></a>"
+        		+ "<a href=\'http://192.168.0.60/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick+"\'>"
+        				+ "<h3>http://192.168.0.60/user/join/loginForm.do</h3></a>"
         		 +"<p> <h3>사원번호 : "+codeNum +"</h3></p>" 
         		 +"<p> <h3>비밀번호 : "+Pass +"</h3></p>"
         		 +"<img src=\'https://t1.daumcdn.net/cfile/tistory/998778485A79C4CA0B\'>", "text/html; charset=utf-8");
