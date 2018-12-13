@@ -278,6 +278,14 @@ $(function(){
 	"use strict";
     
     refresh = function(search_keycode,search_keyword){
+    	var d1 = new Date();
+    	var d2 = new Date();
+    	
+    	
+    	// 더미날짜 위한 날짜설정
+    	d1 = thisdate(d1);
+    	d2 = thisdate(d2);
+    	
     	$('.gantt').empty();
     	
     	var testArray = new Array();
@@ -299,7 +307,13 @@ $(function(){
     			}
     			var name1 = '';
     			var nameGo = '';
+    			
     			$.each(json.pc,function(i,v){
+    				
+    				var vd1 = v.PW_EST;
+    				var vd2 = v.PW_EET;
+    				
+    				
     				nameGo = v.PWC_NAME;
     				if(name1 == nameGo){
     					nameGo = '';
