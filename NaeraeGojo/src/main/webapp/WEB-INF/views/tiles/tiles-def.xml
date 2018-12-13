@@ -5,7 +5,7 @@
 <tiles-definitions>
 
 	<definition name="usermain" template="/WEB-INF/views/user/mainTemplate.jsp">
-		<put-attribute name="title" value="엄마 미안해!!"></put-attribute>
+		<put-attribute name="title" value="Protoss"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/user/layout/header.jsp"></put-attribute>
 		<put-attribute name="left" value="/WEB-INF/views/user/layout/left.jsp"></put-attribute>
 		<put-attribute name="content_header" value="/WEB-INF/views/user/content_header.jsp"></put-attribute>
@@ -13,7 +13,7 @@
 	</definition>
 	
 	<definition name="main_project" template="/WEB-INF/views/user/mainTemplate_prev.jsp">
-		<put-attribute name="title" value="엄마 미안해!!"></put-attribute>
+		<put-attribute name="title" value="Protoss"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/user/layout/header.jsp"></put-attribute>
 		<put-attribute name="left" value="/WEB-INF/views/user/layout/left.jsp"></put-attribute>
 		<put-attribute name="content_header" value="/WEB-INF/views/user/content_header.jsp"></put-attribute>

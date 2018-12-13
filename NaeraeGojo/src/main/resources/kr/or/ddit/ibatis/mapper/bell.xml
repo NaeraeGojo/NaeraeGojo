@@ -198,7 +198,7 @@
                         AND A.EMP_CODE = C.EMP_CODE
                         AND A.PW_CODE = E.PW_CODE
                         AND D.PROJECT_CODE = E.PROJECT_CODE
-                        AND F.RQPPS_CODE = G.SUGGEST_CODE
+                        AND F.RQPPS_CODE = G.RQPPS_CODE
                         AND D.SUGGEST_CODE = G.SUGGEST_CODE
                         AND A.ISSUE_ALARM = 'n'
                         AND A.EMP_DAMDANG = 'n'

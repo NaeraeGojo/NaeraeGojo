@@ -117,7 +117,7 @@ function setCalendar(data){
 	}
   	toCntMain();
   	
-  toProjectCnt = function(){
+    toProjectCnt = function(){
 		
 		var emp_code = '${LOGIN_EMPINFO.emp_code}'
 		
@@ -149,6 +149,35 @@ function setCalendar(data){
       });
 	}
 	toProjectCnt();
+	
+//   	projectListMain = function(){
+		
+// 		var emp_code = '${LOGIN_EMPINFO.emp_code}'
+
+// 		$.ajax({
+//           type : 'post',
+//           url : '${pageContext.request.contextPath}/user/project/projectListMain.do',
+//           data : {'emp_code' : emp_code},
+//           dataType : 'json',
+//           error: function(xhr, status, error){
+//               alert(error);
+//           },
+//           success : function(json){
+          
+// 			var data = ""
+// 				data += '<tr>'
+// 			 	data += '<td>1</td>'
+// 				data += '<td>dd</td>'
+// 				data += '<td>하나은행</td>'
+// 				data += '<td>0%</td>'
+// 				data += '<td>2018-12-27</td>'
+// 			 	data += '</tr>'); 
+// 			$('.plist tbody').append(data);
+// 			}
+//          }
+//       });
+// 	}
+// 	projectListMain();
 };
 </script>    
     
@@ -198,16 +227,16 @@ p {
 		<div class="small-box bg-green">
 			<div class="inner">
 				<h3>
-					53<sup style="font-size: 20px">%</sup>
+					53<sup style="font-size: 20px">개</sup>
 				</h3>
 
-				<p>오늘의 업무 진척률</p>
+				<p>오늘의 업무</p>
 			</div>
 			<div class="icon">
 				<i class="ion ion-stats-bars"></i>
 			</div>
-			<a href="#" class="small-box-footer">More info <i
-				class="fa fa-arrow-circle-right"></i></a>
+<!-- 			<a href="#" class="small-box-footer">More info <i -->
+<!-- 				class="fa fa-arrow-circle-right"></i></a> -->
 		</div>
 	</div>
 
@@ -255,7 +284,7 @@ p {
 			</ul>
 			<div class="tab-content no-padding">
 				<div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-					<table class="table no-margin table-hover">
+					<table class="table no-margin table-hover plist">
 						<thead>
 							<tr>
 								<th scope="col" width="10%">No.</th>

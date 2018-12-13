@@ -106,7 +106,10 @@ public class JoinController {
 			UserFileVO ufv = userServ.userFileInfo(param1);
 			session.setAttribute("PHOTO", ufv);
 			
-			return "forward:/user/join/mainForm.do";
+			
+			
+			
+			return "redirect:/user/join/mainForm.do";
 		}
 	}
 
@@ -123,16 +126,16 @@ public class JoinController {
 
 	// 메인화면 Controller [개발자 로그인]
 	@RequestMapping("mainForm")
-	public String mainForm(HttpSession session, Map<String, String> params,
-			Model model) throws Exception {
-		EmpVO empInfo = empServ.empInfo(params);
-		if (session.getAttribute("LOGIN_EMPINFO") == null) {
-			return "redirect:/user/join/loginForm.do";
-		} else {
-			Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
-			session.setAttribute("publicKeyMap", publicKeyMap);
-			return "user/join/mainForm";
-		}
+	public Model mainForm(Model model
+							, HttpSession session
+							, Map<String, String> params) throws Exception {
+		Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
+		session.setAttribute("publicKeyMap", publicKeyMap);
+		
+		
+		
+		
+		return model;
 	}
 
 	public ModelAndView joinList(HttpServletRequest request, HttpSession session)
