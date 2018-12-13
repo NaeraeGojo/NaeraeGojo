@@ -60,8 +60,8 @@ public class IJoinServiceImpl implements IJoinService{
 	}
 
 	@Override
-	public List<RqppsVO> rqppsNm() throws SQLException {
-		return joinDao.rqppsNm();
+	public List<RqppsVO> rqppsNm(Map<String, String> params) throws SQLException {
+		return joinDao.rqppsNm(params);
 	}
 
 	@Override

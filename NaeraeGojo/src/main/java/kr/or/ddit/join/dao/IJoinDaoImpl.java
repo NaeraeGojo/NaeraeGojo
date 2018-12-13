@@ -56,8 +56,8 @@ public class IJoinDaoImpl implements IJoinDao{
 	}
 
 	@Override
-	public List<RqppsVO> rqppsNm() throws SQLException {
-		return client.queryForList("join.rqppsNm");
+	public List<RqppsVO> rqppsNm(Map<String, String> params) throws SQLException {
+		return client.queryForList("join.rqppsNm",params);
 	}
 
 	@Override

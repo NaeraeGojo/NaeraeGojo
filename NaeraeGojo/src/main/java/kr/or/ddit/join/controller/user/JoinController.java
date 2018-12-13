@@ -187,17 +187,19 @@ public class JoinController {
 
 	@RequestMapping("join_insert")
 	public ModelAndView join_insert(ModelAndView andView) throws Exception {
-		List<RqppsVO> rqName = service.rqppsNm();
+//		List<RqppsVO> rqName = service.rqppsNm();
 		// List<EmpVO> empList = service.empList();
-		andView.addObject("rqName", rqName);
+//		andView.addObject("rqName", rqName);
 		// andView.addObject("empList",empList);
 		andView.setViewName("user/join/join_insert");
 		return andView;
 	}
 
 	@RequestMapping("join_insertFinal")
-	public ModelAndView join_insertFinal(ModelAndView andView) throws Exception {
-		List<RqppsVO> rqName = service.rqppsNm();
+	public ModelAndView join_insertFinal(ModelAndView andView,HttpSession session,String emp_code, Map<String, String> params) throws Exception {
+		emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		List<RqppsVO> rqName = service.rqppsNm(params);
 		andView.addObject("rqName", rqName);
 		andView.setViewName("user/join/join_insertFinal");
 		return andView;
