@@ -1,5 +1,6 @@
-<%@ page language="JAVA" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="JAVA" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<jsp:useBean id="toDay" class="java.util.Date" />    
 <style>
  .no-margin {
     padding: 10px !important;
@@ -145,7 +146,7 @@ $(function(){
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">예산</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" style="border-radius: 1em;" placeholder="예산"
+								<input type="number" class="form-control" style="border-radius: 1em;" placeholder="예산"
 								id="pblanc_board_budget" name="pblanc_board_budget">
 							</div>
 						</div>
@@ -154,7 +155,7 @@ $(function(){
 							<label for="inputEmail3" class="col-sm-2 control-label">제안서 마감일자</label>
 							<div class="col-sm-8">
 								<input type="date" class="form-control" style="border-radius: 1em;" placeholder="공고일자"
-								id="pblanc_board_end_proposal" name="pblanc_board_end_proposal">
+								id="pblanc_board_end_proposal" name="pblanc_board_end_proposal" value="<fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd" />">
 							</div>
 						</div>
 						

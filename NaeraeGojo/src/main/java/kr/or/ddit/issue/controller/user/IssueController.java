@@ -38,9 +38,12 @@ public class IssueController {
 	
 	@RequestMapping("riskList")
 	public ModelAndView riskList(HttpServletRequest request, HttpSession session,
-			String search_keyword, String search_keycode, String currentPage, 
+			String search_keyword, String search_keycode, String currentPage, String emp_code,
 			Map<String, String> params, ModelAndView andView ) throws Exception{
 		
+		emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();		
+		params.put("emp_code", emp_code);
+
 		if(currentPage == null || currentPage == ""){
 			currentPage = "1";
 		}
@@ -143,7 +146,7 @@ public class IssueController {
 		params.put("search_keyword", search_keyword);
 		params.put("search_keycode", search_keycode);
 		
-		int totalCount = service.totalCountIssueResult(params);
+		int totalCount = service2.totalCountIssueResult(params);
 		
 		RolePagingUtil pagingUtil = new RolePagingUtil(Integer.parseInt(currentPage),totalCount,request);
 		

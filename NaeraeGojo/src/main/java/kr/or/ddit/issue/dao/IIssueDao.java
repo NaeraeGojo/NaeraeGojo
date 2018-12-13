@@ -17,7 +17,6 @@ public interface IIssueDao {
 	public void deleteIssueInfo(Map<String,String> params) throws SQLException;
 	public void updateIssueInfo(IssueVO issueInfo) throws SQLException;
 	public int totalCount(Map<String, String> params) throws SQLException;
-	public int totalCountIssueResult(Map<String, String> params) throws SQLException;
 	public void updateHit(Map<String, String> params) throws SQLException;
 	public List<ProjectWorkVO> pwList(Map<String, String> params) throws SQLException;
 	public List<JoinVO> joinEmpList(Map<String, String> params) throws SQLException;

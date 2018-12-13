@@ -18,6 +18,7 @@ public class PblancBoardVO {
 	private String pblanc_board_hit;
 	private String emp_code;
 	private String emp_name;
+	private String emp_role;
 	private List<AllFileVO> items;
 
 }

@@ -15,7 +15,7 @@ $(function(){
 		$(location).attr('href','${pageContext.request.contextPath}/user/pblancboard/pblancboardForm.do');
 	});
 
-	$('table tr:gt(0)').click(function(){
+	$('#pbForm tr:gt(0)').click(function(){
 		var pblanc_board_code = $(this).find('td:eq(0) input').val();
 		var rnum = $(this).find('td:eq(0)').text();
 		
@@ -53,7 +53,7 @@ $(function(){
 				</div>
 				<div class="box-body">
 					<div class="table-responsive">
-						<table class="table no-margin table-hover">
+						<table class="table no-margin table-hover" id="pbForm">
 							<thead>
 								<tr>
 									<th scope="col" width="5%" tex>No.</th>
@@ -97,7 +97,9 @@ $(function(){
 			<option value="PBLANC">공고기관</option>
 		</select>
 		<button type="submit" class="btn btn-primary form-control">검색</button>
+		<c:if test="${LOGIN_EMPINFO.emp_role eq 'MANAGER'}">
 		<button type="button" id="insertPblanc" class="btn btn-danger form-control">공고 등록</button>
+		</c:if>
 	</form>
 	
 </section>

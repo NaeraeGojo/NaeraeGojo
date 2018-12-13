@@ -106,6 +106,17 @@ public class BellController {
 		return andView;
 	}
 	
+	@RequestMapping("issueDamdangAlarm")
+	public ModelAndView issueDamdangAlarm(ModelAndView andView, String issue_code, Map<String, String> param) throws Exception{
+		
+		param.put("issue_code", issue_code);
+//		service.issueAlarm(param);
+		
+		andView.addObject("dd", "가즈아");
+		andView.setViewName("jsonConvertView"); 
+		return andView;
+	}
+
 	@RequestMapping("deleteProjectAlarm")
 	public String deleteProjectAlarm(String join_code, Map<String, String> params) throws Exception{
 		

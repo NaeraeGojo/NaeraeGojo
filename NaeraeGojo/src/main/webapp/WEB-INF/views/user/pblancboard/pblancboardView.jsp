@@ -1,5 +1,7 @@
 <%@ page language="JAVA" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
+
 <style>
  .no-margin {
     padding: 10px !important;
@@ -178,16 +180,16 @@ $(function(){
 					<div class="form-group">
 						<label for="pblanc_board_link" class="col-sm-2 control-label">공고링크</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" style="border-radius: 1em; cursor: pointer" placeholder="공고링크"
+							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="공고링크"
 							id="pblanc_board_link" name="pblanc_board_link" value="${pblancboardInfo.pblanc_board_link}"
-							onClick="window.open('${pblancboardInfo.pblanc_board_link}')">
+							>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="pblanc_board_budget" class="col-sm-2 control-label">예산</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" style="border-radius: 1em;" placeholder="예산"
+							<input type="number" class="form-control" style="border-radius: 1em;" placeholder="예산"
 							id="pblanc_board_budget" name="pblanc_board_budget" value="${pblancboardInfo.pblanc_board_budget}"></div>
 					</div>
 
