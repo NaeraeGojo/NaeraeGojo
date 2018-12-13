@@ -14,12 +14,11 @@
 	font-size: 30px !important;
 }
 
-.freecont {
-	margin-left: 160px;
-	margin-right: 160px;
-	width: 80%;
-	display: inline-block;
-	text-align: initial;
+.freecont{
+	width: 100%;
+    display: inline-block;
+    text-align: initial;
+    padding: 0px 15px;
 }
 
 .form-control[disabled] {
