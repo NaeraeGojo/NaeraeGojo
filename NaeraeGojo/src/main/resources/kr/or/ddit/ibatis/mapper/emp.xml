@@ -25,7 +25,7 @@
 	
 	<!-- 중복 이메일 찾기 -->
 	<select id="empEmail" parameterClass="map" resultClass="empVO">
-		SELECT emp_email
+		SELECT *
 		  FROM EMP
 		  WHERE EMP_EMAIL = #emp_email#
 	</select>

@@ -29,6 +29,7 @@ function readURL(input) {
 
 $(function() {
 	document.getElementById('now_date').valueAsDate = new Date();
+	
 	$('#form_emp').submit(function() {
 		if (!$('input[name=emp_name]').val().validationNM()) {
 			alert("성명을 바르게 입력해주세요. 2-4자리 한글로 입력해주세요.");
@@ -46,24 +47,39 @@ $(function() {
 			alert("이메일을 바르게 입력해주세요.");
 			return false;
 		}
-		$('input[name=emp_email]').val(email);
-		$('input[name=emailId]').val($('input[name=emp_email1]').val());
+		var email1 = $('input[name=emp_email]').val(email);
+
+// 		$.ajax({
+// 			 url : '${pageContext.request.contextPath}/user/emp/mailCheck.do',
+// 			 data : { emp_email : email1},
+// 			 dataType : 'json',
+// 			 success : function(json) {
+// 				 alert("해당 이메일을 사용할 수 있습니다.");
+// 			}
+// 			 ,
+// 			 error : function(result) {
+// 				 alert("중복된 이메일로 사용할 수 없습니다.");
+// 				 return false;
+// 			}
+// 		});
+		 $('input[name=emailId]').val($('input[name=emp_email1]').val());
+			
+			if (!$('input[name=emp_encpn]').val().validationENCPN()) {
+				alert("입사일을 입력해주세요.");
+				return false;
+			}
+			if ($('input[name=emp_major]').val() == ""){
+				alert("전공을 입력해주세요.");
+				return false;
+			}
+			$('select[name=part_code]').val();
+			
+			var nick =$('#part option:selected').text()+"_"+$('input[name=emp_name]').val();
+			var nickname = nick.replace(/\s/gi, "");
+			$('input[name=emp_nick]').val(nickname);
+			
+			return true;
 		
-		if (!$('input[name=emp_encpn]').val().validationENCPN()) {
-			alert("입사일을 입력해주세요.");
-			return false;
-		}
-		if ($('input[name=emp_major]').val() == ""){
-			alert("전공을 입력해주세요.");
-			return false;
-		}
-		$('select[name=part_code]').val();
-		
-		var nick =$('#part option:selected').text()+"_"+$('input[name=emp_name]').val();
-		var nickname = nick.replace(/\s/gi, "");
-		$('input[name=emp_nick]').val(nickname);
-		
-		return true;
 	});	
 	
 	$('input[name=list]').click(function(){
