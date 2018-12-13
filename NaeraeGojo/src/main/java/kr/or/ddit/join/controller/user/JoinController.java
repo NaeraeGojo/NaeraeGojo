@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.join.service.IJoinService;
+import kr.or.ddit.projectwork.service.IProjectWorkService;
 import kr.or.ddit.rqpps.service.IRqppsService;
 import kr.or.ddit.userfile.service.IUserFileService;
 import kr.or.ddit.utils.CryptoGenerator;
@@ -52,10 +53,14 @@ public class JoinController {
 	@Autowired
 	private IRqppsService rfpService;
 	
+	@Autowired
+	private IProjectWorkService pwService;
+	
 	@Resource
 	private IUserFileService userServ;
 	@Resource
 	private CryptoGenerator cryptoGen;
+	
 
 	// 로그아웃 Controller
 	@RequestMapping("logout")
@@ -132,9 +137,17 @@ public class JoinController {
 		Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
 		session.setAttribute("publicKeyMap", publicKeyMap);
 		
+		String emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		
+		params.put("pw_damdang", emp_code);
+		
+		List<Map<String, String>> apwl = pwService.getAllMyPw(params);
+		
+		String aper = pwService.getAllPercent(params);
 		
 		
-		
+		model.addAttribute("apwl",apwl);
+		model.addAttribute("aper",aper);
 		return model;
 	}
 

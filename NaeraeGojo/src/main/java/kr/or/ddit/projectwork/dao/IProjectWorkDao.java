@@ -23,4 +23,8 @@ public interface IProjectWorkDao {
 	public List<Map<String, String>> getPwChart(Map<String, String> params) throws SQLException;
 
 	public List<EmpVO> getEmpList(Map<String, String> params) throws SQLException;
+
+	public List<Map<String, String>> getAllMyPw(Map<String, String> params) throws SQLException;
+
+	public String getAllPercent(Map<String, String> params) throws SQLException;
 }
