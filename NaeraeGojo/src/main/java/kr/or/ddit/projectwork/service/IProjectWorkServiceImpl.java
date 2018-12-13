@@ -67,4 +67,15 @@ public class IProjectWorkServiceImpl implements IProjectWorkService{
 		return dao.getEmpList(params);
 	}
 
+	@Override
+	public List<Map<String, String>> getAllMyPw(Map<String, String> params)
+			throws Exception {
+		return dao.getAllMyPw(params);
+	}
+
+	@Override
+	public String getAllPercent(Map<String, String> params) throws Exception {
+		return dao.getAllPercent(params);
+	}
+
 }

@@ -62,4 +62,15 @@ public class IProjectWorkDaoImpl implements IProjectWorkDao{
 		return client.queryForList("pw.getEmpList",params);
 	}
 
+	@Override
+	public List<Map<String, String>> getAllMyPw(Map<String, String> params)
+			throws SQLException {
+		return client.queryForList("pw.getAllMyPw",params);
+	}
+
+	@Override
+	public String getAllPercent(Map<String, String> params) throws SQLException {
+		return (String) client.queryForObject("pw.getAllPercent",params);
+	}
+
 }

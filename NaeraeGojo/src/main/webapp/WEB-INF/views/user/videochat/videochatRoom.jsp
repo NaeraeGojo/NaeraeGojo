@@ -13,17 +13,28 @@
 /* } */
 
 #localVideo {
-    width:31%; 
-    height : 190px;
-    margin: 7px; 
-    border: 1px solid #dcdcdc;
-    float: right;
+    width:89%; 
+    height : 250px;
+    border: 5px double #8080804d;
+    margin-left: 10%;
 }
 #remoteVideo {
-    width:68%; 
-    height : 450px;
-    margin: 7px; 
-    border: 1px solid #dcdcdc;
+
+    width: 115%;
+    height: 550px;
+    border: 5px double #8080804d;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+
+}
+
+.box-header.with-border {
+
+    border-bottom: 1px solid #f4f4f4;
+    margin-left: 5%;
+    margin-right: 2.2%;
+
 }
 
 #urlText {
@@ -37,8 +48,8 @@
 
 #scroll{
     overflow-y:scroll;
-    height: 520px;
-    width: 90%
+    height: 270px;
+    width: 98%
 }
 
 .bootstrap-dialog{
@@ -248,7 +259,7 @@ $(function(){
 		                     data += ' <label class="text-muted function" >'; 
 		                     data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
 		                     data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
-		                     data +=  '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : ' + result.chatPwList[i].pw_content + ' </div>';
+		                     data +=  '<label>담당자 : '+result.chatPwList[i].pw_damdang_name +'</label>' + '<br>'+'업무 내용 : ' + result.chatPwList[i].pw_content + ' </div>';
 		                     data +=  '</li>';
 		                 }
 		                 data +=  ' </ul>';    
@@ -280,7 +291,7 @@ $(function(){
                     data += ' <label class="text-muted" function>'; 
                     data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
                     data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
-                    data += '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : '+ result.chatPwList[i].pw_content + ' </div>';
+                    data += '<label>담당자 : '+result.chatPwList[i].pw_damdang_name +'</label>' + '<br>'+'업무 내용 : '+ result.chatPwList[i].pw_content + ' </div>';
                     data +=  '</li>';
                 }
                 data +=  ' </ul>';
@@ -295,7 +306,7 @@ $(function(){
                
             }
        });
-    },5000);
+    },1000000);
 	
 	
 	 $(document).on('click', '.delete', function() {
@@ -319,7 +330,7 @@ $(function(){
                      data += ' <label class="text-muted" function>'; 
                      data += result.chatPwList[i].pw_function + '</label><div class="tools pull-right delete" style="cursor: pointer;" name="'+result.chatPwList[i].chat_pw_code+'"><i class="fa fa-remove"></div></i></a>';
                      data +=  '<div id="'+result.chatPwList[i].chat_pw_code+'" class="collapse">';
-                     data += '<label>담당자 : '+result.chatPwList[i].pw_damdang +'</label>' + '<br>'+'업무 내용 : '+ result.chatPwList[i].pw_content + ' </div>';
+                     data += '<label>담당자 : '+result.chatPwList[i].pw_damdang_name +'</label>' + '<br>'+'업무 내용 : '+ result.chatPwList[i].pw_content + ' </div>';
                      data +=  '</li>';
                  }
                  data +=  ' </ul>';
@@ -341,8 +352,8 @@ $(function(){
 		
 			<div class="box box-2team">
 				<div class="box-header with-border">
-					<b class="box-title"><label><h3>${projectInfo.project_name }_</h3></label> 화상회의 </b> / ${projectInfo.position_name } : ${projectInfo.emp_name } <br/>
-					프로젝트 기간 :  ${projectInfo.project_start} ~ ${projectInfo.project_end}
+					<b class="box-title"><label><h2>${projectInfo.project_name }_</h2></label> 화상회의 </b> <br/>
+					<label>프로젝트 기간 :  ${projectInfo.project_start} ~ ${projectInfo.project_end}</label>
 					
 					<c:if test="${projectInfo.emp_code == LOGIN_EMPINFO.emp_code }">
 					   <button id="startBtn" class="btn btn-warning btn-lg btn-flat pull-right" >회의시작</button>
@@ -354,19 +365,19 @@ $(function(){
 				<div class="box-body">
 				
 				    <!--화상회의화면 div  -->
-				    <div class="dd" id="firstDiv" style="width: 66%; float: left; margin-right: 20px; height: 680px !important;">
+				    <div class="dd" id="firstDiv" style="width: 50%; float: left; margin-right: 5%; margin-left:5% height: 680px !important;">
 					    <div>
 						   <video id="remoteVideo" autoplay></video>            <!--  원격카메ㅏ -->
-						   <video id="localVideo" autoplay></video><br/>   <!--  로컬 -->
-
-	<!-- 				       <video src="" ></video> -->
-	<!-- 				       <video src="" ></video> -->
-	<!-- 				       <video src="" ></video> -->
 						</div>
 						
 					</div>
 				    <!--관련업무  div -->
-				    <div class="dd box box-primary" id="secondDiv" style="width: 28%; float: right;  height: 680px !important; " >
+				    <div  style="width: 30%; float:right; height: 480px !important; margin-right: 2%;" >
+				        <div style="float: right;">
+                           <video id="localVideo" autoplay></video><br/>   <!--  로컬 -->
+                        </div>
+                    <br/>    
+				    <div class="dd box box-primary" id="secondDiv" style="width: 90%; float:right; height: 400px !important; border-bottom: 1px solid #26556e99;border-left: 1px solid #26556e99;border-right: 1px solid #26556e99;" >
 				        <div style="text-align: center;">  
 				             <label></label><br/>
 				            <b style="font-size: 1.8em;">관련 업무 확인하기</b>
@@ -383,7 +394,7 @@ $(function(){
 			                <select class="form-control select2" id="pwSelect" style="width: 40%; float: left; margin-right: 5px;  " >
 			                  <option selected="selected">관련 업무</option>
 			                </select>
-			                <button id="addPw" class="btn btn-block btn-primary btn-sm" style="width: 15%; height: 33px; font-size: 1.1em;">추가</button>
+			                <button id="addPw" class="btn btn-block btn-primary btn-sm" style="width: 15%; height: 33px; float:left; font-size: 1.1em;">추가</button>
                         </div>
 				        </div>
 				        <div id="scroll">
@@ -394,10 +405,11 @@ $(function(){
 				        </div>
 				    
 				    </div> <!-- 관련업무 div  끝 -->
+				    </div> <!-- 관련업무 div  끝 -->
 				   
 				    <br />
 			
-					<div class="box-footer clearfix" style="margin-top: 700px;">
+					<div class="box-footer clearfix" style="margin-top: 650px;">
 						<div class="col-sm-12">
 						  <c:if test="${projectInfo.emp_code != LOGIN_EMPINFO.emp_code }">
 							<button  style="width: 80px;" id="endBtn" class="btn btn-danger btn-lg btn-flat pull-right">나가기</button>

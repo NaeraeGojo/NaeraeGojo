@@ -564,7 +564,7 @@ $(function(){
 	          	  class="btn btn-info btn-flat pull-right btn_bottom">
 	          	  
 	          	<input value="피드백 보내기" type="button" id="btn_feedback" 
-	          	 class="btn btn-warning btn-flat pull-right btn_bottom" name="feedback">
+	          	 class="btn btn-warning btn-flat pull-right btn_bottom" name="feedback" style="width: 120px;">
          </div>
             
         </form>
