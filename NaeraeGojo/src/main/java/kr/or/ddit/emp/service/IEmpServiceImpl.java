@@ -120,7 +120,7 @@ public class IEmpServiceImpl implements IEmpService {
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
 	@Override
-	public List<EmpVO> empMail(Map<String, String> params) throws SQLException {
+	public EmpVO empMail(Map<String, String> params) throws SQLException {
 		return dao.empMail(params);
 	}
 

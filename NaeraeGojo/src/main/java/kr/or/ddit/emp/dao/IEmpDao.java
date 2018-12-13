@@ -13,7 +13,7 @@ public interface IEmpDao {
 	public void empInfoW(Map<String,String> params) throws SQLException;
 
 	public List<EmpVO> empList(Map<String, String> params) throws SQLException;
-	public List<EmpVO> empMail(Map<String, String> params) throws SQLException;
+	public EmpVO empMail(Map<String, String> params) throws SQLException;
 	
 	public String insertEmpInfo(EmpVO empInfo) throws SQLException;
 	public void insertUserFile(List<UserFileVO> ufv) throws SQLException;

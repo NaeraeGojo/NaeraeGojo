@@ -178,7 +178,7 @@
 						,EMP_PHONE
 						,EMP_ROLE
 						,PART_CODE)		
-		  	     VALUES(#emp_code#
+		  	     VALUES( to_char(sysdate, 'yyyymm')||#emp_code#
 						,#emp_pass#
 						,#emp_name#
 						,#emp_nick#

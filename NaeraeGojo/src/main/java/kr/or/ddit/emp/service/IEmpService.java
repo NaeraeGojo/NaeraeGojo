@@ -23,5 +23,5 @@ public interface IEmpService {
 	public void updateUserFile(List<UserFileVO> ufv) throws SQLException;
 	public void updateEmpInfo2(EmpVO empInfo, MultipartFile[] files) throws SQLException;
 	
-	public List<EmpVO> empMail(Map<String, String> params) throws SQLException;
+	public EmpVO empMail(Map<String, String> params) throws SQLException;
 }
