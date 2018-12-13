@@ -83,6 +83,8 @@ public class MailController {
          
          
          // 메일 보낸 내용
+         message.setContent("<h2>프로토스에 회원가입하신 여러분 반갑습니다~</h2>"+
+         		"<img src=\"https://cdn.pixabay.com/photo/2016/10/09/08/32/digital-marketing-1725340_960_720.jpg\">", "text/html");
          message.setText("회원가입을 하려면 해당 링크를 클릭해주세요~ \r\n"
         		 +"인증코드 : http://localhost/NaeraeGojo/user/join/loginForm.do?emp_code="+codeNum+"&emailNick="+ email_nick
         		 +"\r\n 사원번호 : "+codeNum 
