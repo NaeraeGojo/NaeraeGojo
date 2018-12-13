@@ -71,7 +71,7 @@ label {
                   <div class="col-sm-8">
                   <!-- select -->
                   <select class="form-control" onchange="change(this.value);">
-                    <option>선택해주세요</option>
+                    <option id="selectPlease">선택해주세요</option>
                    <c:forEach items="${rqName }" var="rqList">
                     <option value="${rqList.rqpps_code}">${rqList.rqpps_name}</option>
                    </c:forEach>
@@ -181,7 +181,7 @@ label {
                 <div class="row">
 	<div class="col-md-12">
 <!--           Horizontal Form -->
-          <div class="box box-info" style="overflow:scroll; width:870px; height:320px;">
+          <div class="box box-info" style="overflow:scroll; width:770px; height:320px;">
             <form name="select_machine" class="form-horizontal">
               <div class="box-body">
               
@@ -213,7 +213,7 @@ label {
                <br>
 <!--                <button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right" >다음</button> -->
                
-               <div id="1234" class="123" style="padding-left: 670px;">
+<!--                <div id="1234" class="123" style="padding-left: 670px;"> -->
                </div>
                <div>
                <input type="hidden" id="spec1" value=""/>
@@ -397,13 +397,13 @@ $(document).on('click', '.level', function(){
 					code += '<td><input type="checkbox" value="'+nextData+'" name="micro" class="flat-red" ></td>';
 					code += '</tr>';
 				}
-					code1 += '<tr>';
-					code1 += '	<td colspan="4">';
-					code1 += '		<button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right" style="width:200px; height:50px; font-size: 25px;">다음</button>';
-					code1 += '	</td>';
-					code1 += '</tr>';
+					code += '<tr>';
+					code += '	<td colspan="4">';
+					code += '		<button id="modalNext" type="button" class="btn btn-sm btn-info btn-flat pull-right" style="width:70px; height:30px; font-size: 15px;">다음</button>';
+					code += '	</td>';
+					code += '</tr>';
 				$('#bodytable').append(code);
-				$('#1234').append(code1);
+// 				$('#1234').append(code1);
 		
 			},
 			error : function(res){

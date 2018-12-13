@@ -29,7 +29,7 @@ p {
 	padding-right: 200px;
 }
 .pull-right{
-	margin-right: 200px;
+/* 	margin-right: 200px; */
 }
 .rfpIn{
 	background: lightgray;
@@ -89,8 +89,8 @@ p {
          
          
 		</div>
+		</div>
 		${page }
-		
 		
 		<form action="${pageContext.request.contextPath }/user/join/join_list.do" method="post" class="form-inline pull-right">
 		

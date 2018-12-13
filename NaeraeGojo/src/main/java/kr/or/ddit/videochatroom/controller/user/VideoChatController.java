@@ -286,19 +286,29 @@ public class VideoChatController {
 			String pwc_code, ChatPwVO cpv, String video_chat_room_code) throws Exception{
 		
 		String emp_code = ((EmpVO) session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
-		
-		
-		cpv.setEmp_code(emp_code);
-		cpv.setPwc_code(pwc_code);
-		cpv.setPw_code(pw_code);
-		cpv.setVideo_room_code(video_chat_room_code);
-		
-		String chat_pw_code= service.insertChatPw(cpv);
-		
 		params.put("video_chat_room_code", video_chat_room_code);
-		List<ChatPwVO> chatPwList = service.getchatPwLsit(params);
+		params.put("pw_code", pw_code);
 		
-		andView.addObject("chatPwList",chatPwList);
+		List<ChatPwVO> ddd = service.pw_code(params);
+		
+		if(ddd.size()>0){
+			andView.addObject("chatPwList","있다");
+		}else{
+			params.clear();
+			
+			cpv.setEmp_code(emp_code);
+			cpv.setPwc_code(pwc_code);
+			cpv.setPw_code(pw_code);
+			cpv.setVideo_room_code(video_chat_room_code);
+			
+			String chat_pw_code= service.insertChatPw(cpv);
+			
+			params.put("video_chat_room_code", video_chat_room_code);
+			List<ChatPwVO> chatPwList = service.getchatPwLsit(params);
+			
+			andView.addObject("chatPwList",chatPwList);
+			
+		}
 		andView.setViewName("jsonConvertView");
 		return andView;
 	}
