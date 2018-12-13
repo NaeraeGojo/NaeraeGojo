@@ -183,7 +183,7 @@
 				where b.rnum <= #startCount#
 				and b.rnum >= #endCount#
 				]]>		
-				order by b.rnum asc
+				order by b.rnum desc
 	
 	</select>
 	

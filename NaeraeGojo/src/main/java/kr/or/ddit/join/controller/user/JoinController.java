@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.emp.service.IEmpService;
 import kr.or.ddit.join.service.IJoinService;
+import kr.or.ddit.project.service.IProjectService;
+import kr.or.ddit.projectwork.service.IProjectWorkService;
 import kr.or.ddit.rqpps.service.IRqppsService;
 import kr.or.ddit.userfile.service.IUserFileService;
 import kr.or.ddit.utils.CryptoGenerator;
@@ -25,6 +27,7 @@ import kr.or.ddit.vo.MpJoinVO;
 import kr.or.ddit.vo.MpVO;
 import kr.or.ddit.vo.NotEmpVO;
 import kr.or.ddit.vo.NoticeBoardVO;
+import kr.or.ddit.vo.ProjectVO;
 import kr.or.ddit.vo.ReportVO;
 import kr.or.ddit.vo.RqppsVO;
 import kr.or.ddit.vo.UserFileVO;
@@ -52,10 +55,17 @@ public class JoinController {
 	@Autowired
 	private IRqppsService rfpService;
 	
+	@Autowired
+	private IProjectWorkService pwService;
+	
 	@Resource
 	private IUserFileService userServ;
 	@Resource
 	private CryptoGenerator cryptoGen;
+	
+	@Autowired
+	private IProjectService proService;
+	
 
 	// 로그아웃 Controller
 	@RequestMapping("logout")
@@ -106,7 +116,10 @@ public class JoinController {
 			UserFileVO ufv = userServ.userFileInfo(param1);
 			session.setAttribute("PHOTO", ufv);
 			
-			return "forward:/user/join/mainForm.do";
+			
+			
+			
+			return "redirect:/user/join/mainForm.do";
 		}
 	}
 
@@ -123,16 +136,26 @@ public class JoinController {
 
 	// 메인화면 Controller [개발자 로그인]
 	@RequestMapping("mainForm")
-	public String mainForm(HttpSession session, Map<String, String> params,
-			Model model) throws Exception {
-		EmpVO empInfo = empServ.empInfo(params);
-		if (session.getAttribute("LOGIN_EMPINFO") == null) {
-			return "redirect:/user/join/loginForm.do";
-		} else {
-			Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
-			session.setAttribute("publicKeyMap", publicKeyMap);
-			return "user/join/mainForm";
-		}
+	public Model mainForm(Model model
+							, HttpSession session
+							, Map<String, String> params) throws Exception {
+		Map<String, String> publicKeyMap = cryptoGen.getGeneratePairKey(session);
+		session.setAttribute("publicKeyMap", publicKeyMap);
+		
+		String emp_code = ((EmpVO)session.getAttribute("LOGIN_EMPINFO")).getEmp_code();
+		params.put("emp_code", emp_code);
+		params.put("pw_damdang", emp_code);
+		
+		List<ProjectVO> projectList = proService.projectList(params);
+		List<Map<String, String>> apwl = pwService.getAllMyPw(params);
+		
+		String aper = pwService.getAllPercent(params);
+		
+		
+		model.addAttribute("projectList",projectList);
+		model.addAttribute("apwl",apwl);
+		model.addAttribute("aper",aper);
+		return model;
 	}
 
 	public ModelAndView joinList(HttpServletRequest request, HttpSession session)
